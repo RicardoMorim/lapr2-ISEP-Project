@@ -6,10 +6,11 @@ The teams consists of students identified in the following table.
 
 | Student Number | Name              |
 |----------------|-------------------|
-| **1XXXXXX**    | Name of student 1 |
-| **1XXXXXX**    | Name of student 2 |
-| **1XXXXXX**    | Name of student 3 |
-| **1XXXXXX**    | Name of student 4 |
+| **1230481**    | Ricardo Morim     |
+| **1221018**    | Afonso Marques    |
+| **1230929**    | Ana Filipa Alves  |
+| **1231170**    | Gonçalo Fernandes |
+| **1231151**    | Marisa Afonso     |
 
 # 2. Task Distribution ###
 
