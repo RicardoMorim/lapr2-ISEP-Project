@@ -2,34 +2,31 @@
 'skinparam monochrome true
 skinparam packageStyle rectangle
 'skinparam shadowing false
-
-skinparam rectangle{
-    BorderColor yellow
-}
-
 'title Use Case Diagram Example
-
 left to right direction
 
-rectangle "System Actors" as actors {
-    actor Freelancer
-    actor "Organization\nEmployee" as Employee
-}
-
-
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
+    actor Collaborator
+    actor "Human Resources Manager (HRM)" as HRM
+    actor "Fleet Manager (FM)" as FM
+    actor "Green Spaces Manager (GSM)" as GSM
+    actor "Green Spaces User (GSU)" as GSU
 
 rectangle "Use Cases" as usecases{
-    usecase "UC6 - Create a Task" as UC6
-    Employee --> UC6
+    usecase "UC1 - Register skills" as UC1
+    usecase "UC2 - Register a job" as UC2
+    usecase "UC3 - Register a collaborator" as UC3
+    usecase "UC4 - Assign one or more skills" as UC4
+    usecase "UC5 - Generate a team proposal" as UC5
+    usecase "UC6 - Register a vehicle" as UC6
+    usecase "UC7 - Register a vehicle’s check-up" as UC7
+    usecase "UC8 - List the vehicles needing the check-up" as UC8
+    HRM --> UC1
+    HRM --> UC2
+    HRM --> UC3
+    HRM --> UC4
+    HRM --> UC5
+    FM --> UC6
+    FM --> UC7
+    FM --> UC8
 }
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-end note
-
 @enduml
