@@ -2,25 +2,33 @@
 
 ## Functionality
 
-_Specifies functionalities that:  
-&nbsp; &nbsp; (i) are common across several US/UC;  
-&nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
+_Specifies functionalities that:_
 
-(fill in here)
+_are common across several US/UC;_
+_are not related to US/UC, namely: Audit, Reporting and Security._
+
+> - The application must support the English language.
+> - All images should be in SVG format.
 
 ## Usability
 
-_Evaluates the user interface. It has several subcategories,
+_Evaluates the client interface. It has several subcategories,
 among them: error prevention; interface aesthetics and design; help and
-documentation; consistency and standards._
+documentation; consistency and standards. Practically speaking, usability
+is about the ability of the expected client(s) to operate our product under
+the expected operating conditions._
 
-(fill in here )
+> - The application should have a client-friendly environment.
+> - The application should be easy to use.
+> - The application should be intuitive.
 
 ## Reliability
 
 _Refers to the integrity, compliance and interoperability of the software. The requirements to be considered are: frequency and severity of failure, possibility of recovery, possibility of prediction, accuracy, average time between failures._
 
-(fill in here )
+> - The application needs to be secure and protected against attacks.
+> - The application should not crash.
+> - The application must support the English language.
 
 ## Performance
 
