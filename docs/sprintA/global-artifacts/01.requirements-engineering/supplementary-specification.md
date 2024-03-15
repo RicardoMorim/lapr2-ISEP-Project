@@ -34,7 +34,7 @@ _Refers to the integrity, compliance and interoperability of the software. The r
 
 _Evaluates the performance requirements of the software, namely: response time, start-up time, recovery time, memory consumption, CPU usage, load capacity and application availability._
 
-(fill in here )
+> - The application shouldn't have any delays when operating.
 
 ## Supportability
 
@@ -58,7 +58,15 @@ _Specifies or constraints the code or construction of a system such
 such as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
-(fill in here )
+> - The application must be developed in Java.
+> - The application must be developed using the IntelliJ IDE or NetBeans.
+> - CamelCase standard should be used.
+> - Javadoc should be used to generate useful documentation.
+> - There should be unit tests for all methods.
+> - The unit tests should be implemented using JUnit 5 framework.
+> - The JaCoCo plugin should be used to generate the coverage report.
+> - All the images/figures produced during the software development process should be recorded in
+    SVG format.
 
 ### Interface Constraints
 
