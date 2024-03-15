@@ -1,0 +1,26 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US003 Alternative Two
+
+autonumber
+
+actor "HRM" as HRM
+participant ":System" as System
+
+activate HRM
+
+    HRM -> System :
+        activate System
+
+            System --> HRM :
+        deactivate System
+
+        HRM -> System :
+        activate System
+
+            System --> HRM :
+        deactivate System
+@enduml
