@@ -1,11 +1,25 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+actor "HRM" as HRM
+participant "System" as System
 
-autonumber
+HRM -> System: Request to register skill
+activate System
+System -> System: Validate request
+alt Valid request
+    System -> System: Display skill registration form
+    System -> HRM: Provide skill details
+else Invalid request
+    System --> HRM: Notify invalid request
+end
 
-HR -> Bob: Authentication Request
-Bob --> HR: Authentication Response
+HRM -> System: Provide skill details
+System -> System: Validate skill details
+alt Valid skill details
+    System -> System: Save skill information
+    System --> HRM: Notify successful skill registration
+else Invalid skill details
+    System --> HRM: Notify invalid skill details
+end
 
-HR -> Bob: Another authentication Request
-HR <-- Bob: another authentication Response
+deactivate System
 @enduml

@@ -82,7 +82,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
