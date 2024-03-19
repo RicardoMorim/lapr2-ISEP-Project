@@ -1,0 +1,18 @@
+@startuml
+class HRM {
+    + Request to registerSkill()
+    + ProvideSkillDetails()
+}
+
+class System {
+    + DisplaySkillRegistrationForm()
+    + ValidateSkillDetails()
+    + SaveSkillInformation()
+    + NotifyInvalidRequest()
+    + NotifyInvalidSkillDetails()
+    + NotifySuccessfulRegistration()
+}
+
+HRM -- System : interacts with
+
+@enduml
