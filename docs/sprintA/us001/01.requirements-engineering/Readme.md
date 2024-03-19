@@ -1,11 +1,11 @@
-# US006 - Create a Task 
+# US001 - Register skills that a collaborator may have
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Human Resources Manager (HRM), I want to register skills that a collaborator may have.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -17,13 +17,34 @@ As an organization employee, I want to create a new task in order to be further 
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Do I need to add skills  by writing them or can I just give a file with all of the skills?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Both are acceptable since the business the same the crucial difference resides in the UX.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Does the HRM need to see the confirmation of the success of the operation and the skills added or just the success of the operation?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** It will depend if you opt to insert one skill or a set of skills in a batch. Maybe some adaptation needed.
+
+> **Question:** Is there any other possible outcome like if the HMR does not put the requested data, do I need to ask the user to register a different competence?
+> 
+> **Answer:** This US is quite simple, atm a skill is simply a name.
+
+> **Question:** Which information can be introduced to create a new skill?
+>
+> **Answer:** The name of the skill.
+
+> **Question:** Which information is mandatory for creating a new skill?
+>
+> **Answer:** The name of the skill.
+
+> **Question:** Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
+>
+> **Answer:** All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
+
+> **Question:** What criteria is necessary to register a skill?
+>
+> **Answer:** The skill name, for example: Pruner, Heavy vehicle driver, 
+
 
 ### 1.3. Acceptance Criteria
 
@@ -33,7 +54,7 @@ As an organization employee, I want to create a new task in order to be further 
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US004 - Create a task category". 
 
 ### 1.5 Input and Output Data
 
@@ -61,11 +82,7 @@ As an organization employee, I want to create a new task in order to be further 
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 

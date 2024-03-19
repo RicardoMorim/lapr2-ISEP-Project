@@ -12,15 +12,16 @@ participant ":System" as System
 
 activate HRM
 
-    HRM -> System :
+    HRM -> System : requests to create a new collaborator, specifying their job and essential characteristics.
         activate System
 
-            System --> HRM :
+            System --> HRM :  requests data (collaborator info, job, characteristics of the job)
+
         deactivate System
 
-        HRM -> System :
+        HRM -> System : types requested data
         activate System
 
-            System --> HRM :
+            System --> HRM : displays an error dialog indicating that there is already a collaborator with the same name.
         deactivate System
 @enduml
