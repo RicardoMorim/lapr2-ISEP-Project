@@ -1,11 +1,11 @@
-# US006 - Create a Task 
+# US002 - Register a job that a collaborator need to have 
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -17,14 +17,41 @@ As an organization employee, I want to create a new task in order to be further 
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:**  What are the input data for creating a profession?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** The name of the profession: Gardener, Paver, Electrician, Operator, ...
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** What is the acceptance criteria when are creating a job that already exists and what does the system do?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** By definition a set can´t have duplicates. Assuring no duplicates is not a business rule is a technical issue.
 
+> **Question:** Is it relevant to associate a specific area or sector with each Job? (For example, "Gardener" would be inserted in the "Maintenance" sector)
+> 
+> **Answer:**  it is not necessary to the extent that there are no US to suggest that it might ever be necessary
+
+> **Question:** Should you include information such as salary, type of hire (full-time or part-time), and type of work (face-to-face, remote or hybrid) in the Job? Or does this information fit better within the scope of the employee, or maybe it's not even necessary?
+>
+> **Answer:** idem
+
+> **Question:** What other information do you think you need to associate with the Job?
+>
+> **Answer:** for now none
+
+> **Question:**
+>
+> **Answer:** 
+
+> **Question:**
+>
+> **Answer:**
+
+> **Question:**
+>
+> **Answer:**
+
+> **Question:**
+>
+> **Answer:**
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
@@ -63,10 +90,3 @@ As an organization employee, I want to create a new task in order to be further 
 
 ![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
-
-### 1.7 Other Relevant Remarks
-
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
