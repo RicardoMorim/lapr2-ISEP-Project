@@ -2,7 +2,7 @@
 actor "Human Resources Manager (HRM)" as HRM
 
 participant "System" as System
-
+autonumber
 HRM -> System: Request to register job
 activate System
 loop while HRM provides job details

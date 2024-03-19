@@ -1,7 +1,7 @@
 @startuml
 actor "HRM" as HRM
 participant "System" as System
-
+autonumber
 HRM -> System: Request to register skill(s)
 activate System
 
