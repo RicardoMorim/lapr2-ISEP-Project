@@ -3,9 +3,9 @@
 
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+HR -> Bob: Authentication Request
+Bob --> HR: Authentication Response
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+HR -> Bob: Another authentication Request
+HR <-- Bob: another authentication Response
 @enduml
