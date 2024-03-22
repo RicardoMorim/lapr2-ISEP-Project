@@ -10,19 +10,26 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Business Transactions**
 
-* 
+* Planning
+* Construction
+* Maintenance
 
 ---
 
-**Transaction Line Itemss**
+**Transaction Line Items**
 
-* 
+* Plant material
+* Urban furniture
+* Irrigation Systems and drinking fountains
+* Lighting systems and power supply
+* Drainage systems
 
 ---
 
 **Product/Service related to a Transaction or Transaction Line Item**
 
-* 
+* Tasks
+* Teams
 
 ---
 
@@ -33,14 +40,19 @@ To identify domain conceptual classes, start by making a list of candidate conce
 ---  
 
 **Roles of People or Organizations**
-
-* 
+* Human Resources Manager 
+* Vehicle and Equipment Crew Manager
+* Collaborator
+* Green Spaces Manager
+* Green Spaces user
 
 ---
 
 **Places**
 
-* 
+* Garden
+* Medium-sized park
+* Large-sized park
 
 ---
 
