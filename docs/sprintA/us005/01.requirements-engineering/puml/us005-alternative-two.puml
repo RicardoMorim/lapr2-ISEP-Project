@@ -1,0 +1,21 @@
+@startuml
+!theme plain
+
+title System Sequence Diagram (SSD) - Alternative Two - "Not enough collaborators to form a team"
+
+actor HRM
+entity "HRM UI" as UI
+entity "HRM Controller" as Controller
+entity "Organization" as Org
+entity "Team Proposal" as Proposal
+entity "InsufficientCollaboratorsException" as ICE
+
+HRM -> UI : Request to generate team proposal
+UI -> Controller : generateTeamProposal(maxTeamSize, requiredSkills)
+Controller -> Org : getCollaboratorsWithSkills(requiredSkills)
+Org --> Controller : collaborators
+Controller -> ICE : throwInsufficientCollaborators()
+ICE --> UI : showError("Not enough collaborators to form a team")
+UI --> HRM : Display error message
+
+@enduml

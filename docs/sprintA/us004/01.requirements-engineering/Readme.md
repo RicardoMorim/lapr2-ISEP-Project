@@ -1,4 +1,4 @@
-# US006 - Create a Task
+# US004 - Add a skill to a collaborator
 
 ## 1. Requirements Engineering
 
@@ -10,9 +10,7 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 **From the specifications document:**
 
-> Each collaborator must have a unique id
-
-> Using the id, the user must choose the collaborator and add a skill
+> Skills are what enables a collaborator to do a certain task
 
 **From the client clarifications:**
 
@@ -58,8 +56,8 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 **Output Data:**
 
-* All the skills of the collaborator
 * (In)Success of the operation
+* The updated skills of the collaborator
 
 ### 1.6. System Sequence Diagram (SSD)
 
