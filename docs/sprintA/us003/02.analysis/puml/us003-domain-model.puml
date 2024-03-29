@@ -34,7 +34,9 @@ class Collaborator {
 
 
 'Relationships
-
+HRM "*" -- "1..*" Collaborator : registers >
+HRM -- "1" Job : assigns >
+Job "*" -- "1..*" Collaborator : assigned to >
 
 }
 
