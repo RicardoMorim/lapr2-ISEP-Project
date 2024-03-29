@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US007
+
+actor "FM" as FM
+participant ":System" as System
+
+activate FM
+
+    FM -> System : asks to list the vehicles needing the check-up
+        activate System
+
+    System --> FM : types requested data
+        deactivate System
+
+    FM -> System : asks to register a vehicle check-up
+        activate System
+
+    System --> FM : requests data (vehicle identification,date)
+        deactivate System
+
+    FM -> System : confirms data
+        activate System
+
+    System --> FM : displays operation success
+        deactivate System
+
+@enduml
