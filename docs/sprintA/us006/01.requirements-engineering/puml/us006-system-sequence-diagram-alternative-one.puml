@@ -15,7 +15,7 @@ activate System
 alt Valid request
 System -> System: Validates request
     System -> System: Displays vehicle registration form
-    System -> FM : Requests vehicle data (brand, model, type, tare,gross weight, current Km, register date, acquisition date, maintenance/check up frequency, vehicle plate)
+    System -> FM : Requests vehicle data (model, brand, type, tare,gross weight, current Km, register date, acquisition date, maintenance/check up frequency, vehicle plate)
 else Invalid request
     System --> FM: Notifies invalid request
 end
