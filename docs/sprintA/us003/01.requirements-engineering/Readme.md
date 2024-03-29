@@ -1,19 +1,18 @@
-# US003 - Register a collaborator and characteristics
+# US003 - Register a collaborator with a job and essential characteristics
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Human Resources Manager, I want to register a collaborator with a job and essential characteristics.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>	Each collaborator is characterized by a name, a birthdate, admission date, an address, contact (email or phone number), an identification document and its identification number.
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
 
 **From the client clarifications:**
 
@@ -21,43 +20,49 @@ As an organization employee, I want to create a new task in order to be further 
 >
 > **Answer:** It's not common and most improbable to have different individual with same name in the same context, however it’s ID documentation number should be unique for sure.
 
-> **Question:** What characteristics are important to success the register?
->
-> **Answer:** I believe that question was already answered, name, birthdate, admission date, id doc type, id doc number, contact info (email, mobile), address.
-
 > **Question:** Which information is mandatory to insert a collaborator in the program (fundamental characteristics)?
 >
-> **Answer:** Name, birth date, admission date, address, contact info (mobile and email), taxpayer number, ID doc type and respective number.
+> **Answer:** Name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type and respective number.
 
 > **Question:** Does the HRM select the job from a list that we display?
 >
 > **Answer:** Displaying or not, It's a matter of UX, the dev team should decide about it, but the valid jobs are the ones created within the US02.
 
+> **Question:**  The term "fundamental characteristics" is mentioned in US003. What, precisely, are those characteristics?
+>
+> **Answer:** The essential data are name, birthdate, admission date, address, contact (email or phone number), an identification document and its identification number.
+
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC2:** Every collaborator must have an associated job.
+* **AC3:** Name, birthdate, admission date, address, contact info (mobile and e-mail), taxpayer number, ID doc type, ID number.
 
-### 1.4. Found out Dependencie
-s
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+### 1.4. Found out Dependencies
+
+* There is a dependency on "US002 - Register a job that a collaborator need to have" as there must be a job to associate to every collaborator.
+
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * Name
+    * Birthdate 
+    * Admission date
+    * Address
+    * Contact info (mobile and e-mail)
+    * Taxpayer number
+    * Identification document 
+    * Identification document number
+
 	
 * Selected data:
-    * a task category 
+    * a Job
 
 **Output Data:**
 
@@ -78,4 +83,4 @@ s
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* None
