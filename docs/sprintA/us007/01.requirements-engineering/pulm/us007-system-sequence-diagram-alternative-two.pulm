@@ -24,10 +24,10 @@ activate FM
     System --> FM : requests data (vehicle identification,date)
         deactivate System
 
-    FM -> System : confirms data
+    FM -> System : types requests data
         activate System
 
-    System --> FM : displays operation success
+    System --> FM : shows error (nonexistent vehicle)
         deactivate System
 
 @enduml
