@@ -1,0 +1,30 @@
+@startuml
+!theme plain
+
+class Collaborator {
+    +String name
+    +Date birthdate
+    +Date admissionDate
+    +String address
+    +String contactInfo
+    +String idDocType
+    +String idDocNumber
+    -List<Skill> skills
+}
+
+class Skill {
+    +String name
+    +String description
+}
+
+class HRM {
+    +void registerSkills()
+    +void registerJob()
+    +void registerCollaborator()
+    +void assignSkillsToCollaborator(Collaborator, Skill)
+}
+
+HRM --> Skill : assignSkillsToCollaborator(Collaborator, Skill)
+Skill --> Collaborator : add the desired skills to the collaborator
+note right of HRM : US04 - As an HRM, I want to assign one or more skills to a collaborator.
+@enduml

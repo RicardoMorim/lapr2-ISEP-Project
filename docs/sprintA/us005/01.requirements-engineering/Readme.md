@@ -1,72 +1,105 @@
-# US006 - Create a Task 
-
+# US005 - As a HRM, I want to generate a team proposal automatically.
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+This user story focuses on creating an automated system that allows the HRM to form teams efficiently by specifying the
+team size and necessary skills. The system should then propose a team that meets these criteria.
 
-### 1.2. Customer Specifications and Clarifications 
+### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> The HRM can generate a team proposal automatically.
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> The HRM can specify the team size and the skills needed.
+
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** I would to know which business rules apply for the input data to generate a team proposal.
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Max and min team size, and a a list of skills needed.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** I would like to ask if, in this US, there should be any more information in the team generated beyond
+> the collaborators in which it consists?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** The information shouldd contain each of team members and the its skills.
+
+> **Question:** I would also like to know if a collaborator can be in more than one team at the same time?
+>
+> **Answer:** No.
+
+> **Question:** What information will the customer provide?
+>
+> **Answer:** The customer provide the max size of the team and a set of skills.
+
+> **Question:** What should the output of the automation be? (should it just store the team proposal or show it to the
+> customer?)  Will the team proposal be a document about all the instructions of each team member/worker?
+>
+> **Answer:** The systems provide team proposals and HRM can accept of refuse the proposals. In the future (not in this
+> sprint) HRM may decide to edit the team.
+
+> **Question:** How does it generate the team if there are not enough employees?
+>
+> **Answer:** The system should provide information why it can't generate a team.
+
+> **Question:** How does he propose a team, for what purpose? (Is there any predefinition)?
+>
+> **Answer:** There is no purpose, at least in this sprint.
+
+> **Question:** What are the input data to automatically generate a team?
+>
+> **Answer:** the max size of the team (for instance 4)
+> and the skill needed: 4 tree pruner and 1 light vehicle driver
+> meaning that one team member have 2 skills.
+
+> **Question:** Are the skills(input) typed or selected.<br>
+> Does the output show the team members with or without their skills?
+>
+> **Answer:** The ux/ui is up to the dev team.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** The HRM must provide the minimum and maximum team size and the necessary skills.
+* **AC2:** If the system cannot generate a team, it must inform the HRM.
+* **AC3:** The system must propose a team that meets the criteria.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
+  characteristics." as there must be at least one collaborator to be chosen for the team.
+* There is a dependency on "US004 - As an HRM, I want to assign one or more skills to a collaborator." - as there must
+  be a way to update the collaborator's skills so that the system can create the best team possible.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
+    * The maximum team size
+    * The minimum team size
+    * The skills needed
+
 * Selected data:
-    * a task category 
+    * The Collaborators
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
+* The proposed team
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
+#### Alternative One - Operation Success
 
-#### Alternative One
+![us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg](svg/us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+#### Alternative Two - Not enough collaborators to form a team
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
+![us005-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two____Not_enough_collaborators_to_form_a_team_.svg](svg/us005-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two____Not_enough_collaborators_to_form_a_team_.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* The teams are temporary, and the collaborators can be assigned to different teams in the future.
