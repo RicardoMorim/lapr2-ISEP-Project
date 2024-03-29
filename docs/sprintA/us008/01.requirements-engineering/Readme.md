@@ -1,58 +1,52 @@
-# US006 - Create a Task 
+# US008 - List of the vehicles needing check-up
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As an FM, I want to list the vehicles needing the check-up.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
-
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>	The system should provide a list of vehicles that need maintenance or check-ip based on their maintenance/check-up frequency and current kilometers.
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Can the vehicles get placed automatically on a list or the one listing has to be the FM?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** The list of vehicles is automatically created but the creation is triggered by the FM.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** What information will appear on the final list regarding the vehicle,besides the needing for check-up?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** Data that allow to identify the vehicle like Plate, brand and model, as well as, the data that allowed to select/insert te vehicle in the list, number of kms, frequency of checkup and the last checkup.
+
+> **Question** Are there acceptance criteria when asking for the list?
+> 
+> **Answer** The list must clearly identify the vehicles through: plate number, brand, model and the that justified the checkup need.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** The system is required to produce a roster of vehicles schedules for check-ups, considering their check-up intervals and current kilometers.
+* **AC2:** The list must include pertinent information like ID/VIN, brand, model and current kilometers.
+* **AC3:** Accessibility to the list should be seamless for the Facilities Manager.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US006 - Register a vehicle" as there is a need to have vehicles registered in the system with information, such as current kilometers and checkup frequency, in order to list vehicles needing check-up.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
-* Selected data:
-    * a task category 
+* None
 
 **Output Data:**
 
-* List of existing task categories
+* List of vehicles needing check-up
+* Vehicle information 
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -61,12 +55,12 @@ As an organization employee, I want to create a new task in order to be further 
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us008-system-sequence-diagram-alternative-one.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative Two](svg/us008-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* 
