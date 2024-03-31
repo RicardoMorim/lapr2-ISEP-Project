@@ -11,9 +11,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
-
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>	A newly developed skill needs to be stored within a list of skills for future reference, allowing for its assignment to one or multiple workers later on.
 
 **From the client clarifications:**
 
@@ -50,26 +48,21 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 * **AC1:** All required fields must be filled in.
 * **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC3:** When creating a skill with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US004 - Create a task category". 
+* There is a dependency on "US004 - Add a skill to a collaborator". 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
     * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
+
 * Selected data:
-    * a task category 
+    * none
 
 **Output Data:**
 
@@ -83,3 +76,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 #### Alternative One
 
 ![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one.svg)
+
+#### Alternative Two
+
+### 1.7 Other Relevant Remarks

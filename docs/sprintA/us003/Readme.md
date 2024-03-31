@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US003 - Register a collaborator with a job and essential characteristics 
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
