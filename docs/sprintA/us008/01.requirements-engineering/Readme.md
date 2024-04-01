@@ -64,4 +64,6 @@ As an FM, I want to list the vehicles needing the check-up.
 
 ### 1.7 Other Relevant Remarks
 
-* 
+* Verify the accuracy and currency of the generated list.
+* Create a user-friendly interface featuring intuitive navigation and filtering capabilities for effortless access to the list of vehicles needing check-ups. 
+* Incorporate filtering and sorting functionalities into the system, allowing users to organize the list by various criteria (vehicle brand or check-up due date).
