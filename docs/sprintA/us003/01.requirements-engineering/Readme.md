@@ -5,7 +5,7 @@
 
 ### 1.1. User Story Description
 
-As a Human Resources Manager, I want to register a collaborator with a job and essential characteristics.
+As a Human Resources Manager (HRM), I want to register a collaborator with a job and essential characteristics.
 
 ### 1.2. Customer Specifications and Clarifications 
 
