@@ -36,6 +36,7 @@ As an FM, I want to list the vehicles needing the check-up.
 ### 1.4. Found out Dependencies
 
 * There is a dependency on "US006 - Register a vehicle" as there is a need to have vehicles registered in the system with information, such as current kilometers and checkup frequency, in order to list vehicles needing check-up.
+* There is a dependency on "US007 - Register a vehicle's check-up" - The system's capacity to identify vehicles requiring inspection depends on their registered check-up status.
 
 ### 1.5 Input and Output Data
 
