@@ -62,8 +62,6 @@ As an HRM, I want to assign one or more skills to a collaborator.
 ### 1.6. System Sequence Diagram (SSD)
 
 
-#### Alternative One
-
 ![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks

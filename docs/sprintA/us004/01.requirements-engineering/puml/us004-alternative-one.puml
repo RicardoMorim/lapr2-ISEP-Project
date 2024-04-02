@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD)
+
 
 autonumber
 
@@ -15,17 +15,21 @@ activate Employee
     Employee -> System : asks to add a skill to a collaborator
     activate System
 
-    loop while Data is invalid
-        System --> Employee : requests data (i.e. name or id of the collaborator, and skill)
-        deactivate System
 
-        Employee -> System : types requested data
-        activate System
+    System --> Employee : requests data (i.e. name or id of the collaborator, and skill)
+    deactivate System
 
-        System --> System : Validates data
-    end
+    Employee -> System : types requested data
+    activate System
 
-    System --> Employee : Updates the collaborator with the skill and displays all the skills of the collaborator
+
+    System --> Employee : shows the collaborator chosen and the skill to add
+    deactivate System
+
+    Employee -> System : confirms the data
+    activate System
+
+    System --> Employee : shows the success of the operation
     deactivate System
 
 @enduml

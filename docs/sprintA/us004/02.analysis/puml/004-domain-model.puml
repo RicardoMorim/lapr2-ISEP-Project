@@ -1,6 +1,5 @@
 @startuml
 !theme plain
-title US04 - As an HRM, I want to assign one or more skills to a collaborator.
 
 'left to right direction
 
@@ -8,65 +7,42 @@ hide methods
 hide circle
 
 class company{
-    +String name
-    +String address
-    +String contactInfo
-    -List<Job> jobs
-    -List<Skill> skills
-    -List<HRM> hrms
-    -List<Collaborator> collaborators
+     name
+     address
+     contactInfo
 
 }
 
 class Collaborator {
-    +String name
-    +Date birthdate
-    +Date admissionDate
-    -String address
-    -String contactInfo
-    -String idDocType
-    -String idDocNumber
-    -List<Skill> skills
+     name
+     birthdate
+     admissionDate
+     address
+     TaxpayerNumber
+     contactInfo
+     idDocType
+     idDocNumber
 }
 
 class Skill {
-    +String name
-    +String description
+    name
 }
 
 class HRM {
-    +String name
-    +Date birthdate
-    +Date admissionDate
-    +String address
-    -Int Taxpayer number
-    -String contactInfo
-    -String idDocType
-    -String idDocNumber
+    name
+    birthdate
+    admissionDate
+    address
+    Taxpayer number
+    contactInfo
+    idDocType
+    idDocNumber
 }
 
-class addSkillToCollaborator{
-    +String collaborator
-    +Skill skill
-}
-
-company --> HRM : has
-
-HRM --> Collaborator : manages
-
-HRM --> Skill : Creates
-
-Skill --> company : gets addded to
-
-
-HRM --> addSkillToCollaborator : can
-
-
-HRM <--> company : choose a skill
-
-
-addSkillToCollaborator <--> Collaborator : add the skill
-
-
+company "1" - "*" HRM : has 1...* >
+company "1" -- "*" Collaborator : has >
+HRM "1" -- "*" Skill : registers >
+HRM "1" - "*" Collaborator : registers >
+Skill "0...*" -left "*" Collaborator : is assigned to >
 
 @enduml

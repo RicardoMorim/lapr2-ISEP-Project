@@ -60,6 +60,18 @@ team size and necessary skills. The system should then propose a team that meets
 >
 > **Answer:** The ux/ui is up to the dev team.
 
+> **Question:** I would to know which business rules apply for the input data to generate a team proposal.
+> 
+> **Answer:** max and min team size, and a a list of skills needed.
+>For instance:
+>min: 3
+>max: 4
+
+> **Question:** Can a collaborator have no skills assigned?
+> 
+> **Answer:** Yes.
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The HRM must provide the minimum and maximum team size and the necessary skills.

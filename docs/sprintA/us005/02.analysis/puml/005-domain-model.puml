@@ -1,6 +1,5 @@
 @startuml
 !theme plain
-title US05 -  As a HRM, I want to generate a team proposal automatically.
 
 'left to right direction
 
@@ -8,57 +7,49 @@ hide methods
 hide circle
 
 class company{
-    +String name
-    +String address
-    +String contactInfo
-    -List<Job> jobs
-    -List<Skill> skills
-    -List<HRM> hrms
-    -List<Collaborator> collaborators
+     name
+     address
+     contactInfo
+
 }
 
 class Collaborator {
-    +String name
-    +Date birthdate
-    +Date admissionDate
-    -String address
-    -String contactInfo
-    -String idDocType
-    -String idDocNumber
-    -List<Skill> skills
+     name
+     birthdate
+     admissionDate
+     address
+     TaxpayerNumber
+     contactInfo
+     idDocType
+     idDocNumber
 }
 
-
+class Team{
+    collaborators
+}
 
 class HRM {
-    +String name
-    +Date birthdate
-    +Date admissionDate
-    +String address
-    -Int Taxpayer number
-    -String contactInfo
-    -String idDocType
-    -String idDocNumber
+    name
+    birthdate
+    admissionDate
+    address
+    Taxpayer number
+    contactInfo
+    idDocType
+    idDocNumber
 }
 
-class assignTeam{
-    +List<Skill> requiredSkill
-    +Int minimumTeamSize
-    +Int maximumTeamSize
+class Task {
+    duration
+    status
+    cost
+    description
 }
 
-
-company --> HRM : has
-
-
-HRM --> assignTeam : can
-
-
-HRM <--> company : choose a skill
-
-
-assignTeam --> Collaborator : chooses collaborators\n with the required skills
-
-Collaborator --> HRM : returns the\nchoosen collaborators
-
+company "1" - "1...*" HRM : has >
+company "1" -- "*" Collaborator : has >
+HRM "1" - "*" Team : generates >
+Team "1" - "*" Collaborator : composed by >
+Team "1" - "1...*" Task : has >
+HRM "1" - "*" Task : creates  >
 @enduml
