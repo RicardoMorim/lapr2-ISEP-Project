@@ -1,6 +1,6 @@
 @startuml
 !theme plain
-title US04 - As an HRM, I want to assign one or more skills to a collaborator.
+title US05 -  As a HRM, I want to generate a team proposal automatically.
 
 'left to right direction
 
@@ -15,7 +15,6 @@ class company{
     -List<Skill> skills
     -List<HRM> hrms
     -List<Collaborator> collaborators
-
 }
 
 class Collaborator {
@@ -29,10 +28,7 @@ class Collaborator {
     -List<Skill> skills
 }
 
-class Skill {
-    +String name
-    +String description
-}
+
 
 class HRM {
     +String name
@@ -45,28 +41,24 @@ class HRM {
     -String idDocNumber
 }
 
-class addSkillToCollaborator{
-    +String collaborator
-    +Skill skill
+class assignTeam{
+    +List<Skill> requiredSkill
+    +Int minimumTeamSize
+    +Int maximumTeamSize
 }
+
 
 company --> HRM : has
 
-HRM --> Collaborator : manages
 
-HRM --> Skill : Creates
-
-Skill --> company : gets addded to
-
-
-HRM --> addSkillToCollaborator : can
+HRM --> assignTeam : can
 
 
 HRM <--> company : choose a skill
 
 
-addSkillToCollaborator <--> Collaborator : add the skill
+assignTeam --> Collaborator : chooses collaborators\n with the required skills
 
-
+Collaborator --> HRM : returns the\nchoosen collaborators
 
 @enduml

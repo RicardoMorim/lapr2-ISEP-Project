@@ -11,11 +11,21 @@ entity "Team Proposal" as Proposal
 
 HRM -> UI : Request to generate team proposal
 UI -> Controller : generateTeamProposal(maxTeamSize, requiredSkills)
-Controller -> Org : getCollaboratorsWithSkills(requiredSkills)
-Org --> Controller : collaborators
-Controller -> Proposal : createProposal(collaborators, maxTeamSize, minTeamSize)
-Proposal --> Controller : teamProposal
-Controller --> UI : teamProposal
-UI --> HRM : Show team proposal
+
+loop until valid data
+    Controller -> Org : getCollaboratorsWithSkills(requiredSkills)
+    Org --> Controller : collaborators
+    Controller -> Proposal : createProposal(collaborators, maxTeamSize, minTeamSize)
+    Proposal --> Controller : teamProposal
+    alt data is invalid
+        Controller --> UI : request additional data
+        UI --> HRM : request additional data
+        HRM -> UI : provide additional data
+        UI -> Controller : additional data provided
+    else data is valid
+        Controller --> UI : teamProposal
+        UI --> HRM : Show team proposal
+    end
+end
 
 @enduml

@@ -38,8 +38,8 @@ As an HRM, I want to assign one or more skills to a collaborator.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** If the collaborator doesn't exist the system must let the user re-choose the collaborator
-* **AC3** If the collaborator already has the skill chosen, the user must be alerted, and the operation aborted.
+* **AC2:** The collaborator must exist in the system.
+* **AC3** The collaborator must not have the skill already.
 
 ### 1.4. Found out Dependencies
 
@@ -61,7 +61,6 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
 
 #### Alternative One
 
