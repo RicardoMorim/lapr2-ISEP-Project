@@ -11,6 +11,7 @@ title System Sequence Diagram (SSD) - Alternative One
 activate FM
 
 FM -> System : Requests to register a vehicle
+loop while FM doesn't finish registering a vehicle
 activate System
 alt Valid request
 System -> System: Validates request
@@ -35,5 +36,5 @@ deactivate System
 
     System -> FM: Notifies successful vehicle registration
 deactivate System
-
+end
 @enduml
