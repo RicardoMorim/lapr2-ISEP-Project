@@ -41,6 +41,6 @@ class FM {
     password
 }
 
-Organization "1" - "0..*" FM : has >
+Organization  -- "*" Vehicle : owns >
 FM "1" -- "*" Vehicle : registers >
 @enduml
