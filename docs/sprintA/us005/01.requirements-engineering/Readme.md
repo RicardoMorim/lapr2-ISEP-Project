@@ -111,3 +111,4 @@ team size and necessary skills. The system should then propose a team that meets
 ### 1.7 Other Relevant Remarks
 
 * The teams are temporary, and the collaborators can be assigned to different teams in the future.
+* The HRM can refuse to accept the proposed team.

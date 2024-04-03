@@ -1,16 +1,15 @@
 @startuml
 !theme plain
 
-'left to right direction
-
 hide methods
 hide circle
 
 class company{
-     name
-     address
-     contactInfo
-
+         name
+         vatNumber
+         website
+         phoneNumber
+         email
 }
 
 class Collaborator {
@@ -18,7 +17,6 @@ class Collaborator {
      birthdate
      admissionDate
      address
-     TaxpayerNumber
      contactInfo
      idDocType
      idDocNumber
@@ -40,16 +38,18 @@ class HRM {
 }
 
 class Task {
-    duration
-    status
-    cost
-    description
+        reference
+        description
+        informalDesc
+        technicalDesc
+        duration
+        cost
 }
 
-company "1" - "1...*" HRM : has >
-company "1" -- "*" Collaborator : has >
+company "1" - "0...*" HRM : has >
+company "1" -- "0...*" Collaborator : has >
 HRM "1" - "*" Team : generates >
-Team "1" - "*" Collaborator : composed by >
-Team "1" - "1...*" Task : has >
-HRM "1" - "*" Task : creates  >
+Team "1" - "1...*" Collaborator : composed by >
+Team "1" - "0...*" Task : has >
+HRM "1" - "0...*" Task : creates  >
 @enduml

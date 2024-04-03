@@ -7,10 +7,11 @@ hide methods
 hide circle
 
 class company{
-     name
-     address
-     contactInfo
-
+         name
+         vatNumber
+         website
+         phoneNumber
+         email
 }
 
 class Collaborator {
@@ -18,14 +19,14 @@ class Collaborator {
      birthdate
      admissionDate
      address
-     TaxpayerNumber
      contactInfo
      idDocType
      idDocNumber
 }
 
-class Skill {
-    name
+class TechnicalSkill {
+        shortDescription
+        fullDescription
 }
 
 class HRM {
@@ -41,8 +42,8 @@ class HRM {
 
 company "1" - "*" HRM : has 1...* >
 company "1" -- "*" Collaborator : has >
-HRM "1" -- "*" Skill : registers >
+HRM "1" -- "*" TechnicalSkill : registers >
 HRM "1" - "*" Collaborator : registers >
-Skill "0...*" -left "*" Collaborator : is assigned to >
+TechnicalSkill "0...*" -left "*" Collaborator : is assigned to >
 
 @enduml
