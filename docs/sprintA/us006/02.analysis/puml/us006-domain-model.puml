@@ -9,12 +9,6 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-class Organization {
-    name
-    address
-    contactInfo
-
-}
 
 class Vehicle {
     model
@@ -29,18 +23,4 @@ class Vehicle {
     vehiclePlate
 }
 
-class FM {
-    name
-    birthdate
-    admissionDate
-    address
-    taxpayerNumber
-    contactInfo
-    idDocType
-    idDocNumber
-    password
-}
-
-Organization  -- "*" Vehicle : owns >
-FM "1" -- "*" Vehicle : registers >
 @enduml
