@@ -4,8 +4,7 @@
 
 ### 1.1. User Story Description
 
-This user story focuses on creating an automated system that allows the HRM to form teams efficiently by specifying the
-team size and necessary skills. The system should then propose a team that meets these criteria.
+As a HRM, I want to generate a team proposal automatically.
 
 ### 1.2. Customer Specifications and Clarifications
 

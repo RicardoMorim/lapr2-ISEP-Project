@@ -4,7 +4,7 @@
 
 ### 1.1. User Story Description
 
-As an HRM, I want to assign one or more skills to a collaborator.
+As a HRM, I want to add a skill to a collaborator.
 
 ### 1.2. Customer Specifications and Clarifications
 
@@ -26,7 +26,7 @@ As an HRM, I want to assign one or more skills to a collaborator.
 > **Question:** Is there any certification/proof needed to register a skill to a collaborator?
 
 > **Answer:** no.
- 
+
 > **Question:** Is there any limit of skills or a minimum number of skills?
 
 > **Answer:** No.
@@ -40,6 +40,8 @@ As an HRM, I want to assign one or more skills to a collaborator.
 * **AC1:** All required fields must be filled in.
 * **AC2:** The collaborator must exist in the system.
 * **AC3** The collaborator must not have the skill already.
+* **AC4:** The skill must exist in the system.
+
 
 ### 1.4. Found out Dependencies
 
@@ -60,7 +62,6 @@ As an HRM, I want to assign one or more skills to a collaborator.
 * The updated skills of the collaborator
 
 ### 1.6. System Sequence Diagram (SSD)
-
 
 ![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
 
