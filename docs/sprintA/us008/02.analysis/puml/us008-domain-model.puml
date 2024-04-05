@@ -31,6 +31,6 @@ class Brand {
 }
 
 Vehicle "1" -- "*" VehicleCheckup: has >
-Vehicle "1" -- "1..*" Brand: has an >
+Vehicle "1" -- "1..*" Brand: has >
 
 @enduml
