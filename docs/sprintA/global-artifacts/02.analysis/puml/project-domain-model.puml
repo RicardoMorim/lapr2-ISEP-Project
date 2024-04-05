@@ -14,7 +14,11 @@ title Domain Model
 '  -description
 '}
 
-
+class VehicleCheckup {
+    IdVehicle
+    Date
+    CurrentKms
+}
 
 class Task {
     reference
@@ -57,7 +61,7 @@ class FeatureTS{
 '}
 
 
-class Veicle{
+class Vehicle{
     model
     brand
     type
@@ -86,6 +90,10 @@ class Collaborator {
     identification number
 }
 
+class Brand {
+    model
+}
+
 'Platform "1" -- "*" Organization : has registered >
 'Platform "1" -- "*" Category : defines >
 'Organization "1" - "0...*" Employee : has >
@@ -99,11 +107,14 @@ TechnicalSkill "*" - "1" ActivityArea: regarding an >
 
 Category "*" - "*" TechnicalSkill :  : requires >
 (Category, TechnicalSkill) . FeatureTS
+Employee "1" - "0...*" VehicleCheckup :  > registers
 
 'Organization "1" -left "1" PostalAddress : located At >
-Employee "1" - "0...*" Veicle : registers >
-'Organization "1" - "0...*" Veicle : owns >
+Employee "1" -- "0...*" Vehicle : registers >
+'Organization "1" - "0...*" Vehicle : owns >
 
+Vehicle "1" - "*" VehicleCheckup : has >
+Vehicle "1" - "0...*" Brand : has >
 TechnicalSkill "*" -- "1" Collaborator : is added to >
 Employee "1" - "0...*" TechnicalSkill : registers >
 Employee "1" - "0...*" Job : registers >

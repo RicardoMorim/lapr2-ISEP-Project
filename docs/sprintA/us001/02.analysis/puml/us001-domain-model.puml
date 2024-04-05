@@ -1,18 +1,20 @@
 @startuml
-class HRM {
-    + Request to registerSkill()
-    + ProvideSkillDetails()
+
+hide circle
+hide methods
+
+title Register a Skill
+
+class registerSkill {
+    technicalSkill
 }
 
-class System {
-    + DisplaySkillRegistrationForm()
-    + ValidateSkillDetails()
-    + SaveSkillInformation()
-    + NotifyInvalidRequest()
-    + NotifyInvalidSkillDetails()
-    + NotifySuccessfulRegistration()
+class TechnicalSkill{
+    Name
+    SmallDescription
+    FullDescription
 }
 
-HRM -- System : interacts with
+registerSkill -  TechnicalSkill : registers >
 
 @enduml
