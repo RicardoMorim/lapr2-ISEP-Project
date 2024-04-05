@@ -1,10 +1,8 @@
 @startuml
 !theme plain
 
-title System Sequence Diagram (SSD) - Alternative One
 
-
-actor "HRM" as Employee
+actor "Human Resources\nManager" as Employee
 participant ":System" as System
 
 activate Employee

@@ -4,52 +4,31 @@
 hide methods
 hide circle
 
-class company{
-         name
-         vatNumber
-         website
-         phoneNumber
-         email
+title Domain Model
+
+class TeamProposal{
+    minNumberOfCollaborators
+    maxNumberOfCollaborators
+    jobs
+    technicalSkills
+
 }
 
-class Collaborator {
-     name
-     birthdate
-     admissionDate
-     address
-     contactInfo
-     idDocType
-     idDocNumber
+
+class TechnicalSkill {
+        name
+        shortDescription
+        fullDescription
 }
 
-class Team{
-    collaborators
+class Job{
+    title
+    description
 }
 
-class HRM {
-    name
-    birthdate
-    admissionDate
-    address
-    Taxpayer number
-    contactInfo
-    idDocType
-    idDocNumber
-}
 
-class Task {
-        reference
-        description
-        informalDesc
-        technicalDesc
-        duration
-        cost
-}
+TeamProposal "1" -- "0...*" TechnicalSkill : requires >
+TeamProposal "1" -- "0...*" Job : requires >
 
-company "1" - "0...*" HRM : has >
-company "1" -- "0...*" Collaborator : has >
-HRM "1" - "*" Team : generates >
-Team "1" - "1...*" Collaborator : composed by >
-Team "1" - "0...*" Task : has >
-HRM "1" - "0...*" Task : creates  >
+
 @enduml
