@@ -10,15 +10,11 @@ hide methods
 
 title Domain Model US007
 
-class FleetManager {
-
-}
-
 class VehicleCheckup {
     IdVehicle
     Date
     CurrentKms
 }
 
-FleetManager "1" - "0..*" VehicleCheckup : registers >
+VehicleCheckup : registers >
 @enduml

@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+title Domain Model US008
+
+class VehicleCheckup {
+    date
+    currentKm
+}
+
+class Vehicle {
+    vehiclePlate
+    vin
+    maintenanceDate
+    tareWeight
+    grossWeight
+    currentKm
+    acquisitionDate
+    type
+}
+
+class Brand {
+    model
+}
+
+Vehicle "1" -- "*" VehicleCheckup: has >
+Vehicle "1" -- "1..*" Brand: has an >
+
+@enduml
