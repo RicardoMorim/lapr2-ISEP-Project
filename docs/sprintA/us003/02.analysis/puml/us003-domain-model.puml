@@ -10,7 +10,7 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
+title Domain Model - US003
 
 class Job {
     title
@@ -23,7 +23,6 @@ class Collaborator {
     admission date
     address
     contact
-    taxpayer number
     identification document
     identification number
 
