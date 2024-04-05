@@ -56,7 +56,6 @@ As a Human Resources Manager (HRM), I want to register a collaborator with a job
     * admission date
     * address
     * contact info (mobile and e-mail)
-    * taxpayer number
     * identification document 
     * identification document number
 
