@@ -13,7 +13,7 @@ team size and necessary skills. The system should then propose a team that meets
 
 > The HRM can generate a team proposal automatically.
 
-> The HRM can specify the team size and the skills needed.
+> The HRM must specify the team size and the skills needed.
 
 
 **From the client clarifications:**
@@ -61,22 +61,23 @@ team size and necessary skills. The system should then propose a team that meets
 > **Answer:** The ux/ui is up to the dev team.
 
 > **Question:** I would to know which business rules apply for the input data to generate a team proposal.
-> 
+>
 > **Answer:** max and min team size, and a a list of skills needed.
->For instance:
->min: 3
->max: 4
+> For instance:
+> min: 3
+> max: 4
 
 > **Question:** Can a collaborator have no skills assigned?
-> 
+>
 > **Answer:** Yes.
-
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The HRM must provide the minimum and maximum team size and the necessary skills.
 * **AC2:** If the system cannot generate a team, it must inform the HRM.
 * **AC3:** The system must propose a team that meets the criteria.
+* **AC4:** The HRM must be able to accept or refuse the proposed team.
+* **AC5:** In case of error, it should be displayed to the HRM in a user-friendly manner.
 
 ### 1.4. Found out Dependencies
 
@@ -104,9 +105,9 @@ team size and necessary skills. The system should then propose a team that meets
 
 ### 1.6. System Sequence Diagram (SSD)
 
-#### Alternative One 
-![us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg](svg/us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
+#### Alternative One
 
+![us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg](svg/us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
 ### 1.7 Other Relevant Remarks
 

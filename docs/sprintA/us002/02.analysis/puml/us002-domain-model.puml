@@ -1,19 +1,11 @@
 @startuml
-class HRM {
-    + RequestToRegisterJob()
-    + ProvideJobDetails()
-}
 
-class System {
-    + ValidateRequest()
-    + DisplayJobRegistrationForm()
-    + ValidateJobDetails()
-    + SaveJobInformation()
-    + NotifyInvalidRequest()
-    + NotifyInvalidJobDetails()
-    + NotifySuccessfulRegistration()
-}
+hide circle
+hide methods
 
-HRM -- System : interacts with
+class Job {
+    title
+    description
+}
 
 @enduml

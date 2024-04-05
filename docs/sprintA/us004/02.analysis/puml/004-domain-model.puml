@@ -3,47 +3,29 @@
 
 'left to right direction
 
+title Domain Model
+
 hide methods
 hide circle
 
-class company{
-         name
-         vatNumber
-         website
-         phoneNumber
-         email
-}
+
 
 class Collaborator {
-     name
-     birthdate
-     admissionDate
-     address
-     contactInfo
-     idDocType
-     idDocNumber
+    name
+    birthdate
+    admission date
+    address
+    contact
+    identification document
+    identification number
 }
 
 class TechnicalSkill {
+        name
         shortDescription
         fullDescription
 }
 
-class HRM {
-    name
-    birthdate
-    admissionDate
-    address
-    Taxpayer number
-    contactInfo
-    idDocType
-    idDocNumber
-}
-
-company "1" - "*" HRM : has 1...* >
-company "1" -- "*" Collaborator : has >
-HRM "1" -- "*" TechnicalSkill : registers >
-HRM "1" - "*" Collaborator : registers >
-TechnicalSkill "0...*" -left "*" Collaborator : is assigned to >
+TechnicalSkill "0...*" - "*" Collaborator : is assigned to >
 
 @enduml
