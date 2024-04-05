@@ -3,19 +3,35 @@
 
 title System Sequence Diagram (SSD) - Alternative One
 
-actor HRM
-entity "HRM UI" as UI
-entity "HRM Controller" as Controller
-entity "Organization" as Org
-entity "Team Proposal" as Proposal
 
-HRM -> UI : Request to generate team proposal
-UI -> Controller : generateTeamProposal(maxTeamSize, requiredSkills)
-Controller -> Org : getCollaboratorsWithSkills(requiredSkills)
-Org --> Controller : collaborators
-Controller -> Proposal : createProposal(collaborators, maxTeamSize, minTeamSize)
-Proposal --> Controller : teamProposal
-Controller --> UI : teamProposal
-UI --> HRM : Show team proposal
+actor "HRM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to generate a new team proposal
+    activate System
+
+        System --> Employee : requests maximum and minimum team size
+    deactivate System
+
+    Employee -> System : types requested data
+    activate System
+
+        System --> Employee : Displays team skills for selection.
+    deactivate System
+
+    Employee -> System : selects the skills that the team needs to have
+
+    activate System
+
+        System --> Employee : shows the team proposal
+    deactivate System
+
+    Employee -> System : accepts or refuses the team proposal
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
 
 @enduml

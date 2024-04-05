@@ -51,18 +51,18 @@ As a Human Resources Manager (HRM), I want to register a collaborator with a job
 **Input Data:**
 
 * Typed data:
-    * Name
-    * Birthdate 
-    * Admission date
-    * Address
-    * Contact info (mobile and e-mail)
-    * Taxpayer number
-    * Identification document 
-    * Identification document number
+    * name
+    * birthdate 
+    * admission date
+    * address
+    * contact info (mobile and e-mail)
+    * taxpayer number
+    * identification document 
+    * identification document number
 
 	
 * Selected data:
-    * a Job
+    * a job
 
 **Output Data:**
 

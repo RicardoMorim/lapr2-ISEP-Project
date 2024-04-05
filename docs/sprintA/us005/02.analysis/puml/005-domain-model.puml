@@ -1,8 +1,6 @@
 @startuml
 !theme plain
 
-'left to right direction
-
 hide methods
 hide circle
 
@@ -24,9 +22,8 @@ class Collaborator {
      idDocNumber
 }
 
-class TechnicalSkill {
-        shortDescription
-        fullDescription
+class Team{
+    collaborators
 }
 
 class HRM {
@@ -40,10 +37,19 @@ class HRM {
     idDocNumber
 }
 
-company "1" - "*" HRM : has 1...* >
-company "1" -- "*" Collaborator : has >
-HRM "1" -- "*" TechnicalSkill : registers >
-HRM "1" - "*" Collaborator : registers >
-TechnicalSkill "0...*" -left "*" Collaborator : is assigned to >
+class Task {
+        reference
+        description
+        informalDesc
+        technicalDesc
+        duration
+        cost
+}
 
+company "1" - "0...*" HRM : has >
+company "1" -- "0...*" Collaborator : has >
+HRM "1" - "*" Team : generates >
+Team "1" - "1...*" Collaborator : composed by >
+Team "1" - "0...*" Task : has >
+HRM "1" - "0...*" Task : creates  >
 @enduml

@@ -12,31 +12,25 @@ hide methods
 
 'title Domain Model
 
-class HRM {
-}
-
 class Job {
     title
     description
 }
 
 class Collaborator {
-    Name
-    Birthdate
-    Admission date
-    Address
-    Contact
-    Taxpayer number
-    Identification document
-    Identification number
+    name
+    birthdate
+    admission date
+    address
+    contact
+    taxpayer number
+    identification document
+    identification number
 
 }
 
-
 'Relationships
-HRM "*" -- "1..*" Collaborator : registers >
-HRM -- "1" Job : assigns >
-Job "*" -- "1..*" Collaborator : assigned to >
+Job "1" -- "1..*" Collaborator : assigned to >
 
 }
 

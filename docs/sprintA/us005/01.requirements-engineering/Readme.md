@@ -20,7 +20,7 @@ team size and necessary skills. The system should then propose a team that meets
 
 > **Question:** I would to know which business rules apply for the input data to generate a team proposal.
 >
-> **Answer:** Max and min team size, and a a list of skills needed.
+> **Answer:** Max and min team size, and a list of skills needed.
 
 > **Question:** I would like to ask if, in this US, there should be any more information in the team generated beyond
 > the collaborators in which it consists?
@@ -60,6 +60,18 @@ team size and necessary skills. The system should then propose a team that meets
 >
 > **Answer:** The ux/ui is up to the dev team.
 
+> **Question:** I would to know which business rules apply for the input data to generate a team proposal.
+> 
+> **Answer:** max and min team size, and a a list of skills needed.
+>For instance:
+>min: 3
+>max: 4
+
+> **Question:** Can a collaborator have no skills assigned?
+> 
+> **Answer:** Yes.
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The HRM must provide the minimum and maximum team size and the necessary skills.
@@ -92,14 +104,11 @@ team size and necessary skills. The system should then propose a team that meets
 
 ### 1.6. System Sequence Diagram (SSD)
 
-#### Alternative One - Operation Success
-
+#### Alternative One 
 ![us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg](svg/us005-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
-#### Alternative Two - Not enough collaborators to form a team
-
-![us005-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two____Not_enough_collaborators_to_form_a_team_.svg](svg/us005-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two____Not_enough_collaborators_to_form_a_team_.svg)
 
 ### 1.7 Other Relevant Remarks
 
 * The teams are temporary, and the collaborators can be assigned to different teams in the future.
+* The HRM can refuse to accept the proposed team.
