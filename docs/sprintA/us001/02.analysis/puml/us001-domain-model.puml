@@ -1,20 +1,19 @@
 @startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
 
 hide circle
 hide methods
 
-title Register a Skill
+title Register Skill
 
-class registerSkill {
-    technicalSkill
+class Skill {
+skill name
 }
-
-class TechnicalSkill{
-    Name
-    SmallDescription
-    FullDescription
-}
-
-registerSkill -  TechnicalSkill : registers >
 
 @enduml
