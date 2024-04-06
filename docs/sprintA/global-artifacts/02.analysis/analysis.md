@@ -38,17 +38,20 @@ Iterative Development".
 
 **Transaction Records**
 
-*
+* Agenda
+* Checkup Register
+* Work Log
 
 ---  
 
 **Roles of People or Organizations**
 
-* Human Resources Manager
+* Human Resources Manager - HRM
+* Fleet Manager - VFM
 * Vehicle and Equipment Crew Manager
 * Collaborator
-* Green Spaces Manager
-* Green Spaces user
+* Green Spaces Manager - GSM
+* Green Spaces User - GSU
 
 ---
 
@@ -62,67 +65,82 @@ Iterative Development".
 
 **Noteworthy Events**
 
-*
+* Team Formation
+* CheckUp
+* Registering, Listing, Generating, Assigning.
 
 ---
 
 **Physical Objects**
 
-*
+* Vehicles
+* Equipment
+* Machines
 
 ---
 
 **Descriptions of Things**
 
-*
+* Skills set
+* Job Descriptions
 
 ---
 
 **Catalogs**
 
-*
+* Skills Catalog
+* Vehicle Catalog
+* Model Catalog
 
 ---
 
 **Containers**
 
-*
+* Team
+* Task
+* Collaborator
+* Vehicle
 
 ---
 
 **Elements of Containers**
 
-*
-
+* Team Members
+* Skills
+* Job
+* Brand, Type, Model, CheckUp
 ---
 
 **Organizations**
 
-*
+* MusgoSublime - MS
 
 ---
 
 **Other External/Collaborating Systems**
 
-*
+* User Portal
+
 
 ---
 
 **Records of finance, work, contracts, legal matters**
 
-*
+* Admission date
+
 
 ---
 
 **Financial Instruments**
 
-*
+* None
 
 ---
 
 **Documents mentioned/used to perform some work/**
 
-*
+* Reports
+* Documents
 
 ---
 
