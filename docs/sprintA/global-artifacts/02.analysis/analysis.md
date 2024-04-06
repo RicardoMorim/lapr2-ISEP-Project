@@ -157,10 +157,15 @@ remembering, or it is derivable from the List of Common Associations:
 - **_A_** is related with a transaction (item) of **_B_**
 - etc.
 
-| Concept (A) 		 | Association   	 | Concept (B) |
-|----------------|:---------------:|------------:|
-| C1  	          |  verb1    		 	  |          C2 |
-| ...  	         |   ...    		 	   |         ... |
+| Concept (A) 		 |  Association   	  | Concept (B) |
+|----------------|:-----------------:|------------:|
+| Task  	        | assign to    		 	 |        Team |
+| Collaborator   | assign to    		 	 |        Team |
+| Vehicles       |      used by      |       Task |
+
+
+
+
 
 ## Domain Model
 
