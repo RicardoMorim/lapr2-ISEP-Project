@@ -7,6 +7,9 @@ _Specifies functionalities that:_
 _are common across several US/UC;_
 _are not related to US/UC, namely: Audit, Reporting and Security._
 
+> - The application should be capable of recording certain information.
+> - The application should provide funcionalities that allow organization and strutucture of the information presented.
+> - The application should provide services that gives management and security for a better use.
 > - The application must support the English language.
 > - All images should be in SVG format.
 
@@ -50,7 +53,8 @@ configurability, installability, scalability and more._
 
 _Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
 
-(fill in here )
+> - The application must be developed in Java.
+> - The application must be developed using the IntelliJ IDE or NetBeans.
 
 ### Implementation Constraints
 
@@ -58,8 +62,7 @@ _Specifies or constraints the code or construction of a system such
 such as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
-> - The application must be developed in Java.
-> - The application must be developed using the IntelliJ IDE or NetBeans.
+> - The graphical user interface application must be developed in JavaFX 11.
 > - CamelCase standard should be used.
 > - Javadoc should be used to generate useful documentation.
 > - There should be unit tests for all methods.
@@ -73,10 +76,13 @@ database integrity, resource limits, operating system._
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
 
-(fill in here )
+> - All application users need to go through the authentication process.
+> - The application must have a simple interface and easy navigation to simplify usage for all users.
+> - The application must be easily accessible both via computer and mobile devices.
+> - The application must provide feedback to users when they perform any operation.
 
 ### Physical Constraints
 
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
-(fill in here )
+> - Regular backups should be performed to uphold data integrity and avert system malfunctions.
