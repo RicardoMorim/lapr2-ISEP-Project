@@ -65,7 +65,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 ### 1.4. Found out Dependencies
 
-* There are no dependencies on US004. 
+None.
 
 ### 1.5 Input and Output Data
 
