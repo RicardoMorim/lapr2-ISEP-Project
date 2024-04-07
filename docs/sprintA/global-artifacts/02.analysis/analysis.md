@@ -47,7 +47,7 @@ Iterative Development".
 **Roles of People or Organizations**
 
 * Human Resources Manager - HRM
-* Fleet Manager - VFM
+* Fleet Manager - FM
 * Vehicle and Equipment Crew Manager
 * Collaborator
 * Green Spaces Manager - GSM
@@ -67,7 +67,10 @@ Iterative Development".
 
 * Team Formation
 * CheckUp
-* Registering, Listing, Generating, Assigning.
+* Registering
+* Listing
+* Generating
+* Assigning
 
 ---
 
@@ -157,10 +160,26 @@ remembering, or it is derivable from the List of Common Associations:
 - **_A_** is related with a transaction (item) of **_B_**
 - etc.
 
-| Concept (A) 		 | Association   	 | Concept (B) |
-|----------------|:---------------:|------------:|
-| C1  	          |  verb1    		 	  |          C2 |
-| ...  	         |   ...    		 	   |         ... |
+| Concept (A) 		   |   Association   	    |            Concept (B) |
+|------------------|:--------------------:|-----------------------:|
+| Employee         |       creates        |                   Task |
+| Task             |     cataloged as     |               Category |
+| Category         |       requires       |         TechnicalSkill |
+| TechnicalSkill   |     regarding an     |           ActivityArea |
+| Employee         |      registers       |         TechnicalSkill |
+| TechnicalSkill   |     is added to      |           Collaborator |
+| Employee         |      registers       |                Vehicle |
+| Vehicle          |         has          |   Brand/VehicleCheckup |
+| Employee         |      registers       |         VehicleCheckup |
+| Employee         |      registers       |                    Job |
+| Job              |       assigned       |           Collaborator |
+| Employee         |      registers       |           Collaborator |
+
+
+
+
+
+
 
 ## Domain Model
 

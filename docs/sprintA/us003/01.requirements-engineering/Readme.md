@@ -1,4 +1,4 @@
-# US003 - Register a collaborator with a job and essential characteristics
+# US003 - Register a collaborator with a job and characteristics
 
 
 ## 1. Requirements Engineering
