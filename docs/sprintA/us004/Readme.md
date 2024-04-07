@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US004 - Add a skill to a collaborator 
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

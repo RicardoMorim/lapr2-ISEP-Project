@@ -1,4 +1,4 @@
-# US002 - Register a job that a collaborator need to have 
+# US002 - Register a job 
 
 
 ## 1. Requirements Engineering
