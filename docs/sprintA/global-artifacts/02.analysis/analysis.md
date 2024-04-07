@@ -47,7 +47,7 @@ Iterative Development".
 **Roles of People or Organizations**
 
 * Human Resources Manager - HRM
-* Fleet Manager - VFM
+* Fleet Manager - FM
 * Vehicle and Equipment Crew Manager
 * Collaborator
 * Green Spaces Manager - GSM
@@ -67,7 +67,10 @@ Iterative Development".
 
 * Team Formation
 * CheckUp
-* Registering, Listing, Generating, Assigning.
+* Registering
+* Listing
+* Generating
+* Assigning
 
 ---
 
@@ -180,8 +183,6 @@ remembering, or it is derivable from the List of Common Associations:
 
 ## Domain Model
 
-**Do NOT forget to identify concept atributes too.**
 
-**Insert below the Domain Model Diagram in a SVG format**
 
 ![Domain Model](svg/project-domain-model.svg)
