@@ -53,6 +53,7 @@ As a HRM, I want to add a skill to a collaborator.
 
 * There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
   characteristics." - there has to be at least one collaborator to be assigned a skill
+* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be at least one skill to be assigned to a collaborator
 
 ### 1.5 Input and Output Data
 
