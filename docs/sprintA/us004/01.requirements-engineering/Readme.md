@@ -16,24 +16,30 @@ As a HRM, I want to add a skill to a collaborator.
 
 > **Question:** Can any skill be registered to any collaborator/job? Or should they be associated in categories in
 > association with a specific job?
-
+>
 > **Answer:** There is no association, it totally depends on the CV of the collaborator.
 
 > **Question:** Should it be possible to add the same skill to a collaborator multiple times?
-
+>
 > **Answer:** That does not make sense.
 
 > **Question:** Is there any certification/proof needed to register a skill to a collaborator?
-
+>
 > **Answer:** no.
 
 > **Question:** Is there any limit of skills or a minimum number of skills?
-
+>
 > **Answer:** No.
 
 > **Question:** Is there any special characteristic to be able to add a skill to a collaborator?
-
+>
 > **Answer:** No.
+
+> **Question:** Can a collaborator have no skills assigned?
+>
+> **Answer:** Yes.
+
+
 
 ### 1.3. Acceptance Criteria
 

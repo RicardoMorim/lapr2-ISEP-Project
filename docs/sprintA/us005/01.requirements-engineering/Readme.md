@@ -70,6 +70,8 @@ As a HRM, I want to generate a team proposal automatically.
 >
 > **Answer:** Yes.
 
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The HRM must provide the minimum and maximum team size and the necessary skills.

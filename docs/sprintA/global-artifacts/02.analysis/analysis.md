@@ -183,8 +183,6 @@ remembering, or it is derivable from the List of Common Associations:
 
 ## Domain Model
 
-**Do NOT forget to identify concept atributes too.**
 
-**Insert below the Domain Model Diagram in a SVG format**
 
 ![Domain Model](svg/project-domain-model.svg)
