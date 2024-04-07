@@ -47,7 +47,7 @@ Iterative Development".
 **Roles of People or Organizations**
 
 * Human Resources Manager - HRM
-* Fleet Manager - VFM
+* Fleet Manager - FM
 * Vehicle and Equipment Crew Manager
 * Collaborator
 * Green Spaces Manager - GSM
@@ -67,7 +67,10 @@ Iterative Development".
 
 * Team Formation
 * CheckUp
-* Registering, Listing, Generating, Assigning.
+* Registering
+* Listing
+* Generating
+* Assigning
 
 ---
 
