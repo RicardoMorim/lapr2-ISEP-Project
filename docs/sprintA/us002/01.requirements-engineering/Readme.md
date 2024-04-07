@@ -37,21 +37,59 @@ As an HRM, I want to register a job that a collaborator need to have.
 >
 > **Answer:** for now none
 
-> **Question:**
+> **Question:** Can special characters and numbers be entered when registering a job?
 >
-> **Answer:** 
+> **Answer:** no;
 
-> **Question:**
+> **Question:** I assume that a job name cannot be empty. Is that right?
 >
-> **Answer:**
+> **Answer:** that's right
 
-> **Question:**
+> **Question:** For registering a job into system manager needs to type just "Job tilte" ?
+>we do not need other attributes such as below:
+>1. Job ID, for identifying each job from Administration prespective.
+>2. Job category : for classifying jobs like gardening, drivers, administration employees , etc
+>3. Job Skills: for assigning qualified employee/collaborator in future (having same qualities and skills)
+>or other attributes...
 >
-> **Answer:**
+> **Answer:** I'll repeat:
+>a job is just the job name!
+>1. Don't know what means job ID, because in the client perspective, a job is just the job name;
+>2. there is no job category;
+>3. There is the concept of skill but not directly related (atm) with job;
 
-> **Question:**
+
+> **Question:** After register a job/vehicle's checkup should a message (sucess or failure) or a resume of the register appear?
 >
-> **Answer:**
+> **Answer:** the UX/UI is up to dev teams.
+
+> **Question:** Should we add a description or anything atribute for the Job registration? 
+> 
+> **Answer:** not need to, job is just a name;
+
+> **Question:** The id of Job is generated authomatically by the system?
+> 
+> **Answer:** don't know what is job id, job is just a name;
+
+> **Question:** I guess a job can be asign to a collaborator if he has the skills require for this job. How do we manage this relation. Does he HRM do it manually, or should we have an atribute in job specifiying the skills needed.
+> 
+> **Answer:** no; a colaborator is hired for a job and can have skills or not;
+
+> **Question:** Do the job has to be register before registering a collaborator?
+> 
+> **Answer:** a colaborator is hired for a (valid) job;
+
+> **Question:** When we register a team, the collaborators has to have a job?
+> 
+> **Answer:**  see the previous 2 questions/answers;
+
+> **Question:** What do you want to see as an output?
+> 
+> **Answer:** the UX/UI is to be decided by dev team.
+ 
+
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
@@ -83,8 +121,6 @@ As an HRM, I want to register a job that a collaborator need to have.
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
-
-**_Other alternatives might exist._**
 
 #### Alternative One
 

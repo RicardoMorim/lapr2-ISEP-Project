@@ -43,6 +43,19 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 >
 > **Answer:** The skill name, for example: Pruner, Heavy vehicle driver, 
 
+> **Question:** The indentificator of the skill will be the name, or the system will generate authomatically and Id when the manager insert the name?
+> 
+> **Answer:** A skill is just a name, can be a composition os words like "Light Vehicle Driving Licence".
+>I have no knowledge about systems IDs.
+
+> **Question:** which is the difference between collaborator and employ? And employ could have skills? HRM, VFM, GSM and GSU are employers?
+>
+> > **Answer:** Employee and collaborator are synonyms.
+
+> **Question:** Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
+> 
+> **Answer:** it's not required to do so.
+ 
 
 ### 1.3. Acceptance Criteria
 
@@ -71,12 +84,10 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
 #### Alternative One
 
 ![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
+
 
 ### 1.7 Other Relevant Remarks
