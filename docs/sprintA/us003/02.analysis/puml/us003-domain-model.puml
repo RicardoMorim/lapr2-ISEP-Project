@@ -23,13 +23,14 @@ class Collaborator {
     admission date
     address
     contact
+    taxpayer number
     identification document
     identification number
 
 }
 
 'Relationships
-Job "1" -- "1..*" Collaborator : assigned to >
+Job "1" -- "1...*" Collaborator : assigned to >
 
 }
 

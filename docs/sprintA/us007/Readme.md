@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US007 - Register a vehicle's check-up
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

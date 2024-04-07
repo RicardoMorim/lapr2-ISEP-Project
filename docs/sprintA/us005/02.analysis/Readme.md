@@ -1,4 +1,4 @@
-# US005 - As a HRM, I want to generate a team proposal automatically.
+# US005 - Generate a team proposal
 
 ## 2. Analysis
 

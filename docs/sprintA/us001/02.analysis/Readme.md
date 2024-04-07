@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US001 - Register skills that a collaborator may have 
 
 ## 2. Analysis
 

@@ -1,6 +1,7 @@
 @startuml
-!theme plain
 
+
+title System Sequence Diagram
 
 actor "Human Resources\nManager" as Employee
 participant ":System" as System
@@ -23,13 +24,18 @@ activate Employee
 
     activate System
 
-        System --> Employee : shows the team proposal
-    deactivate System
+        alt team can be generated
+            System --> Employee : shows the team proposal
+            deactivate System
 
-    Employee -> System : accepts or refuses the team proposal
-    activate System
+            Employee -> System : accepts or refuses the team proposal
+            activate System
 
-        System --> Employee : displays operation success
-    deactivate System
+                System --> Employee : displays operation success
+            deactivate System
+        else team cannot be generated
+            System --> Employee : informs that a team cannot be generated
+            deactivate System
+        end
 
 @enduml

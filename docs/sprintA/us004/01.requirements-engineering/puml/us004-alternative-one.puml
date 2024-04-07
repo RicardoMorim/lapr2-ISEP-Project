@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-
+title System Sequence Diagram
 
 autonumber
 
@@ -16,12 +16,17 @@ activate Employee
     activate System
 
 
-    System --> Employee : requests data (i.e. name or id of the collaborator, and skill)
+    System --> Employee : requests the collaborator to add the skill
     deactivate System
 
     Employee -> System : types requested data
     activate System
 
+    System --> Employee : Shows the available skills and asks which ones to add
+    deactivate System
+
+    Employee -> System : chooses the skill(s) to add
+    activate System
 
     System --> Employee : shows the collaborator chosen and the skill to add
     deactivate System
