@@ -29,7 +29,6 @@ class Vehicle {
     vehiclePlate
 }
 
-
-Vehicle "1" -- "*" VehicleCheckup: has >
+Vehicle "1" -- "0...*" VehicleCheckup: has >
 
 @enduml
