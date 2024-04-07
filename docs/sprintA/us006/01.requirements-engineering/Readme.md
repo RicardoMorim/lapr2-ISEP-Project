@@ -55,7 +55,7 @@ In theory If there is no need to register a vehicle, no vehicles will be registe
 * **AC3:** The license plate should only be accepted if it is a 6-character combination consisting of letters and numbers.
 ### 1.4. Found out Dependencies
 
-None.
+* None.
 
 ### 1.5 Input and Output Data
 

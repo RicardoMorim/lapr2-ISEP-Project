@@ -65,7 +65,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 ### 1.4. Found out Dependencies
 
-None.
+* None.
 
 ### 1.5 Input and Output Data
 

@@ -98,7 +98,7 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.4. Found out Dependencies
 
-None.
+* None.
 
 ### 1.5 Input and Output Data
 
