@@ -16,5 +16,4 @@ class VehicleCheckup {
     currentKms
 }
 
-VehicleCheckup : registers >
 @enduml
