@@ -23,6 +23,7 @@ class Collaborator {
     admission date
     address
     contact
+    taxpayer number
     identification document
     identification number
 
