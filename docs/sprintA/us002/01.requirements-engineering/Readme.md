@@ -98,7 +98,7 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Register a collaborator and characteristics" as there must be at least one task category to classify the task being created.
+None.
 
 ### 1.5 Input and Output Data
 
