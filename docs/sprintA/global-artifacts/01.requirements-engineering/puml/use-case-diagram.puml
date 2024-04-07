@@ -10,9 +10,9 @@ rectangle "System Actors" as actors{
 
 }
 rectangle "Use Cases" as usecases{
-    usecase "UC1 - Register skills" as UC1
+    usecase "UC1 - Register a skill" as UC1
     usecase "UC2 - Register a job" as UC2
-    usecase "UC3 - Register a collaborator" as UC3
+    usecase "UC3 - Register a collaborator and characteristics" as UC3
     usecase "UC4 - Assign one or more skills" as UC4
     usecase "UC5 - Generate a team proposal" as UC5
     usecase "UC6 - Register a vehicle" as UC6
