@@ -30,7 +30,7 @@ class Collaborator {
 }
 
 'Relationships
-Job "1" -- "1..*" Collaborator : assigned to >
+Job "1" -- "1...*" Collaborator : assigned to >
 
 }
 
