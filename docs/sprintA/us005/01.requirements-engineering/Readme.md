@@ -82,9 +82,8 @@ As a HRM, I want to generate a team proposal automatically.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
-  characteristics." as there must be at least one collaborator to be chosen for the team.
-* There is a dependency on "US004 - As an HRM, I want to assign one or more skills to a collaborator." - as there must
+* There is a dependency on "US003 - Register a collaborator and characteristics" as there must be at least one collaborator to be chosen for the team.
+* There is a dependency on "US004 - Assign one or more skills" - as there must
   be a way to update the collaborator's skills so that the system can create the best team possible.
 
 ### 1.5 Input and Output Data

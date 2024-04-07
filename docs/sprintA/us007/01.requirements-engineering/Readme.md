@@ -39,7 +39,7 @@ Between 1992-2005 00-00-XX
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US008 - List the vehicles needing the check-up" as there must be a vehicle existent to associate a checkup.
+* There is a dependency on "US006 - Register a vehicle" as there must be a vehicle existent to associate a checkup.
 
 ### 1.5 Input and Output Data
 

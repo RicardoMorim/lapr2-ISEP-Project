@@ -1,4 +1,4 @@
-# US003 - Register a collaborator with a job and characteristics
+# US003 - Register a collaborator and characteristics
 
 
 ## 1. Requirements Engineering
@@ -43,7 +43,7 @@ As a Human Resources Manager (HRM), I want to register a collaborator with a job
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - Register a job that a collaborator need to have" as there must be a job to associate to every collaborator.
+* There is a dependency on "US002 - Register a job " as there must be a job to associate to every collaborator.
 
 
 ### 1.5 Input and Output Data

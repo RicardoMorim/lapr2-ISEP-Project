@@ -1,4 +1,4 @@
-# US001 - Register skills that a collaborator may have
+# US001 - Register a skill
 
 
 ## 1. Requirements Engineering
@@ -65,7 +65,7 @@ As a Human Resources Manager (HRM), I want to register skills that a collaborato
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US004 - Add a skill to a collaborator". 
+* There are no dependencies on US004. 
 
 ### 1.5 Input and Output Data
 
