@@ -44,6 +44,10 @@ In theory If there is no need to register a vehicle, no vehicles will be registe
 >
 > **Answer:** Again, duplication of data is not a business rule is technical one, since by definition in a set you cant have duplicates.
 
+> **Question:** What are the validation requirements for the vehicle ID?
+>
+> **Answer:** After 2020: AA-00-AA Between 2005-2020 00-AA-00 Between 1992-2005 00-00-XX
+>
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
