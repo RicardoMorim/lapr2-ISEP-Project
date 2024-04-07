@@ -11,26 +11,25 @@ hide methods
 title Domain Model US008
 
 class VehicleCheckup {
+    idVehicle
     date
     currentKm
 }
 
 class Vehicle {
-    vehiclePlate
-    vin
-    maintenanceDate
-    tareWeight
+    model
+    brand
+    type
+    tare
     grossWeight
     currentKm
+    registerDate
     acquisitionDate
-    type
+    maintenanceFrequency
+    vehiclePlate
 }
 
-class Brand {
-    model
-}
 
 Vehicle "1" -- "*" VehicleCheckup: has >
-Vehicle "1" -- "1..*" Brand: has >
 
 @enduml

@@ -11,9 +11,9 @@ hide methods
 title Domain Model US007
 
 class VehicleCheckup {
-    IdVehicle
-    Date
-    CurrentKms
+    idVehicle
+    date
+    currentKms
 }
 
 VehicleCheckup : registers >
