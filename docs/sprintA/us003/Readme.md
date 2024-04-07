@@ -1,4 +1,4 @@
-# US003 - Register a collaborator with a job and characteristics 
+# US003 - Register a collaborator and characteristics 
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
