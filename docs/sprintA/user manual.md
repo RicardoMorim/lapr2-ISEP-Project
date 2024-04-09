@@ -21,10 +21,14 @@
 
 ###  1. Register a skill | Human Resources Manager
 
-This feature allows 
+This feature allows the Human Resources Manager (HRM) to register a skill to the system.
 
 #### Step by step
 
+1. Open the HRM system.
+2. Select the option to register a skill.
+3. Input the skill name and description.
+4. Confirm the data.
 
 ### 2. Register a job | Human Resources Manager
 
@@ -39,9 +43,17 @@ This feature allows the Human Resources Manager (HRM) to add a job to the system
 
 ### 3. Register a collaborator and characteristics | Human Resources Manager
 
-This feature allows
+This features provides the HRM the ability to register a collaborator with job-related information and characteristics.
 
 #### Step by step
+
+1. Log in to the HRM system.
+2. Access the section for creating a new collaborator.
+3. Choose to create a new collaborator.
+4. Enter the requested data for the new collaborator with personal information and job details.
+5. Upon inputting the data, the system will present all entered information for a review. Review the entered information.
+6. Confirm the provided data by selecting the appropriate option on the collaborator.
+7. Upon confirmation, the system will display a success message confirming the creation of new collaborator.
 
 
 ### 4. Assign one or more skills | Human Resources Manager
@@ -61,7 +73,7 @@ This feature allows
 This feature allows the FM (Fleet Manager) to register a new vehicle and its characteristics in the system.
 
 #### Step by step
-1. Log into the system as an FM
+1. Log into the system as an FM.
 2. Navigate to the vehicle registration section.
 3. Choose to register a new vehicle.
 4. Fill in the form with the necessary vehicle information.
