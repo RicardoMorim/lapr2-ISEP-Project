@@ -29,18 +29,11 @@ class Employee {
 
 class Skill {
     - String name
-    - String skillCategory
     - String informalDescription
     - String technicalDescription
 
 
     + Skill(name, skillCategory, informalDescription, technicalDescription)
-}
-
-class skillCategory {
-    - String description
-
-    + skillCategory(description)
 }
 
 class Organization {
@@ -55,13 +48,11 @@ class Organization {
     + anyEmployeeHasEmail(email)
     + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
     + createSkill(name, SkillCategory, informalDescription, technicalDescription)
+    + addSkillToEmployee(skill, employee)
     - getEmployeeByEmail(email)
 
 }
 
-class SkillCategoryRepository {
-    + getTaskCategoryByDescription(description)
-}
 
 class OrganizationRepository {
     + getOrganizationByEmployeeEmail(email)
@@ -70,57 +61,47 @@ class OrganizationRepository {
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getSkillCategory()
+    + getSkill()
     + getOrganizationRepository()
 }
 
-class CreateTechnicalSkillController {
-    + CreateTechnicalSkillController(organizationRepository, technicalSkillRepository)
-    + getSkillCategories()
-    + createSkill(name, SkillCategory,informalDescription, technicalDescription)
+class AddSkillToACollaboratorController {
+    + AddSkillToACollaboratorController(technicalSkillRepository, organizationRepository)
+    + getSkills()
+    + createSkill\(name,informalDescription, technicalDescription)
     + assignSkillToEmployee(skill, employee)
-    - getSkillCategoryByName(skillName)
     - getEmployeeFromSession()
 }
 
-note right of CreateTechnicalSkillController
+note right of AddSkillToACollaboratorController
     - userEmail is obtained
     from the user session
     - categoryDescription
     is retrieved from selected data
 end note
 
-note bottom of SkillCategoryRepository
-    - used for displaying
-    the category list
-end note
 
-class CreateTechnicalSkillUI {
+class AddSkillToACollaboratorUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateTechnicalSkillUI .> CreateTechnicalSkillController
+AddSkillToACollaboratorUI .> AddSkillToACollaboratorController
 
-CreateTechnicalSkillController .> Repositories : repositories
+AddSkillToACollaboratorController .> Repositories : repositories
 
-Repositories -> "1" SkillCategoryRepository
 
-CreateTechnicalSkillController ..> skillCategory
-CreateTechnicalSkillController ..> OrganizationRepository : organizationRepository
-CreateTechnicalSkillController ..> SkillCategoryRepository : SkillCategoryRepository
+AddSkillToACollaboratorController ..> OrganizationRepository : organizationRepository
 
 Repositories --> "1" OrganizationRepository
 
 OrganizationRepository --> "*" Organization
 ApplicationSession --> "1" UserSession : userSession
 
-CreateTechnicalSkillController ..> "1" Organization : organization
-CreateTechnicalSkillController ..> ApplicationSession
-CreateTechnicalSkillController ..> UserSession
-Skill "*" --> "1" skillCategory : skillCategory
-SkillCategoryRepository "1" --> "*" skillCategory : skillCategory
+AddSkillToACollaboratorController ..> "1" Organization : organization
+AddSkillToACollaboratorController ..> ApplicationSession
+AddSkillToACollaboratorController ..> UserSession
 Organization "1" --> "*" Skill : skills
 Skill --> Employee : createdBy
 
