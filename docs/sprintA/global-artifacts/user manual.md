@@ -20,9 +20,23 @@ EcoSphere is a robust solution crafted to streamline and optimize the oversight 
 Its main goals are centered on fostering efficient organization, upkeep, and improvement of green areas, with a focus on ensuring their well-being and long-term viability. For that it creates a team with various collaborators with different skills and jobs, assigning tasks and improving regular check-ups.
 
 
-### Struture
+### Structure
+
+The application is structured into distinct modules, each tailored to fulfill specific functions while remaining interconnected to deliver a seamless user experience.
+* Dashboard: The central hub where users can access key metrics, notifications, and quick links to various functions.
+* Inventory Management: Allows users to catalog and track resources such as plants, tools, equipment, and materials essential for green space maintenance.
+* Task Management: Enables users to create, assign, and track tasks related to maintenance activities, ensuring efficient allocation of resources and timely completion of assignments.
+* Reporting and Analytics: Provides comprehensive reporting functionalities, including data analysis tools to monitor the health and performance of green spaces over time.
+* Communication: Facilitates communication and collaboration among team members.
+* Documentation: Stores essential documents, manuals, guidelines, and references relevant to green space management for easy access and reference.
 
 ### Main Features
+
+* Inventory tracking and management
+* Task assignment and tracking
+* Reporting and analytics
+* Communication tools
+* Document storage and access
 
 ### Diagram
 
