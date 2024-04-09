@@ -28,9 +28,13 @@ This feature allows
 
 ### 2. Register a job | Human Resources Manager
 
-This feature allows
+This feature allows the Human Resources Manager (HRM) to add a job to the system
 
-#### Step by step
+### Step by step
+1. Open the HRM system.
+2. Select the option to register a job
+3. Input the job name and description
+4. Confirm the data
 
 
 ### 3. Register a collaborator and characteristics | Human Resources Manager
@@ -54,9 +58,15 @@ This feature allows
 
 ### 6. Register a vehicle | Human Resources Manager
 
-This feature allows
+This feature allows the FM (Fleet Manager) to register a new vehicle and its characteristics in the system.
 
 #### Step by step
+1. Log into the system as an FM
+2. Navigate to the vehicle registration section.
+3. Choose to register a new vehicle.
+4. Fill in the form with the necessary vehicle information.
+5. Confirm the entered data.
+
 
 ### 7. Register a Vehicle's Check-up | Fleet Manager
 
