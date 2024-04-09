@@ -6,6 +6,9 @@
 
 
 ## Introduction
+The user manual contains information on how to use and operate the application developed. It has a glossary that explains some of the more complex terms as well as some system features explained to contribute to the better understanding of the application. This also specifies the features of the application and has a list of possible situations that might help the user identify and solve various issues that may occur while using the application.
+
+To support the activity of MusgoSublime, our application pretends to help in the planning, construction and maintenance of green spaces for collective use.
 ### Purpose and Scope
 
 
