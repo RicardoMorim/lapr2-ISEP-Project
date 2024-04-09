@@ -229,5 +229,9 @@ dist/
 nbdist/
 .nb-gradle/
 
+./docs/pi_sem2_2023_24_en_v2.0.pdf
+
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij+all,eclipse,git,netbeans,java
 ~$*
+
+

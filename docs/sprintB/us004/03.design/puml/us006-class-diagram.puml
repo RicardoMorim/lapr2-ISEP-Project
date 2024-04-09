@@ -1,0 +1,129 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class Employee {
+    - name
+    - email
+    - position
+    - phone
+}
+
+class Skill {
+    - String name
+    - String skillCategory
+    - String informalDescription
+    - String technicalDescription
+
+
+    + Skill(name, skillCategory, informalDescription, technicalDescription)
+}
+
+class skillCategory {
+    - String description
+
+    + skillCategory(description)
+}
+
+class Organization {
+    - String name
+    - String vatNumber
+    - String website
+    - String phone
+    - String email
+
+    - addSkill(Skill)
+    - validateSkill(skill)
+    + anyEmployeeHasEmail(email)
+    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
+    + createSkill(name, SkillCategory, informalDescription, technicalDescription)
+    - getEmployeeByEmail(email)
+
+}
+
+class SkillCategoryRepository {
+    + getTaskCategoryByDescription(description)
+}
+
+class OrganizationRepository {
+    + getOrganizationByEmployeeEmail(email)
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getSkillCategory()
+    + getOrganizationRepository()
+}
+
+class CreateTechnicalSkillController {
+    + CreateTechnicalSkillController(organizationRepository, technicalSkillRepository)
+    + getSkillCategories()
+    + createSkill(name, SkillCategory,informalDescription, technicalDescription)
+    + assignSkillToEmployee(skill, employee)
+    - getSkillCategoryByName(skillName)
+    - getEmployeeFromSession()
+}
+
+note right of CreateTechnicalSkillController
+    - userEmail is obtained
+    from the user session
+    - categoryDescription
+    is retrieved from selected data
+end note
+
+note bottom of SkillCategoryRepository
+    - used for displaying
+    the category list
+end note
+
+class CreateTechnicalSkillUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+CreateTechnicalSkillUI .> CreateTechnicalSkillController
+
+CreateTechnicalSkillController .> Repositories : repositories
+
+Repositories -> "1" SkillCategoryRepository
+
+CreateTechnicalSkillController ..> skillCategory
+CreateTechnicalSkillController ..> OrganizationRepository : organizationRepository
+CreateTechnicalSkillController ..> SkillCategoryRepository : SkillCategoryRepository
+
+Repositories --> "1" OrganizationRepository
+
+OrganizationRepository --> "*" Organization
+ApplicationSession --> "1" UserSession : userSession
+
+CreateTechnicalSkillController ..> "1" Organization : organization
+CreateTechnicalSkillController ..> ApplicationSession
+CreateTechnicalSkillController ..> UserSession
+Skill "*" --> "1" skillCategory : skillCategory
+SkillCategoryRepository "1" --> "*" skillCategory : skillCategory
+Organization "1" --> "*" Skill : skills
+Skill --> Employee : createdBy
+
+Organization --> "*" Employee : employs
+
+@enduml
