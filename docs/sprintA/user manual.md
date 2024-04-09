@@ -71,13 +71,33 @@ This features provides the HRM the ability to register a collaborator with job-r
 
 ### 4. Assign one or more skills | Human Resources Manager
 
-This feature allows
+This feature allows the Human Resources Manager (HRM) to add one or more skills to a collaborator.
+
+
+#### Step by step
+1. Open the HRM system.
+2. Select the option to add one or more skills to a collaborator.
+3. Select the skills
+4. Select the collaborator
+5. Confirm the data
+
+
 
 #### Step by step
 
 ### 5. Generate a team proposal | Human Resources Manager
 
-This feature allows
+This feature allows the Human Resources Manager (HRM) to generate a team proposal automatically for a task.
+
+### Step by step
+1. Open the HRM system.
+2. Select the option to generate a team proposal
+3. Select the required skills
+4. Select the required jobs
+5. Select the minimum and maximum amount of collaborators
+6. Confirm the data
+7. Accept or refuse the team proposal
+
 
 #### Step by step
 
