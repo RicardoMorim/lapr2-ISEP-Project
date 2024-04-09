@@ -1,7 +1,7 @@
 # User Manual
 
 
-### [Glossary](global-artifacts/01.requirements-engineering/glossary.md)
+### [Glossary](01.requirements-engineering/glossary.md)
 
 
 
@@ -26,8 +26,7 @@ Its main goals are centered on fostering efficient organization, upkeep, and imp
 
 ### Diagram
 
-
-
+![Diagram](01.requirements-engineering/svg/use-case-diagram.svg)
 
 
 ## Features/Functions
