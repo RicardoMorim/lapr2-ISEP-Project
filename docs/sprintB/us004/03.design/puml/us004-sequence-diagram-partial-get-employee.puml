@@ -6,7 +6,7 @@ skinparam shadowing false
 
 
 'hide footbox
-participant ":CreateTaskController" as CTRL
+participant ":CreateSkillController" as CTRL
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO

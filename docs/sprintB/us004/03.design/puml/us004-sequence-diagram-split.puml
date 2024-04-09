@@ -7,82 +7,63 @@ autonumber
 
 'hide footbox
 actor "Organization Employee" as ADM
-participant ":CreateSkillUI" as UI
-participant ":CreateSkillController" as CTRL
+participant ":AddSkillUI" as UI
+participant ":AddSkillController" as CTRL
 participant "organization\n:Organization" as ORG
 
 activate ADM
 
-    ADM -> UI : asks to create a new Skill
+    ADM -> UI : asks to add one or more skills to a collaborator
 
     activate UI
 
-        UI -> CTRL** : create
-        UI -> CTRL : getSkillCategories()
+        UI -> CTRL** : add
+        UI -> CTRL : getSkills()
         ref over CTRL
-            Get Skill Category List
+            Get Skills List
 
         end ref
 
         activate CTRL
 
-            CTRL --> UI : SkillCategoryList
+            CTRL --> UI : SkillList
         deactivate CTRL
 
-        UI --> ADM : shows skill category list and asks to select one
+        UI --> ADM : shows skill list and asks to select one or more
     deactivate UI
 
-    ADM -> UI : selects a skill category
+    ADM -> UI : selects the desired skills
     activate UI
 
-        UI --> ADM : requests data
-    deactivate UI
+        UI --> CTRL : requests existing collaborators
 
-    ADM -> UI : types requested data (name, SkillCategory, informalDescription, technicalDescription)
-    activate UI
-
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
-
-    ADM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : createSkill(name, SkillCategory, informalDescription, technicalDescription)
         activate CTRL
 
-            CTRL -> CTRL : getSkillCategoryByName(skillName)
-            activate CTRL
+            CTRL --> UI : returns collaborator list
+        deactivate CTRL
 
-                ref over CTRL
-                    Get Skill Category Object
+    deactivate UI
 
-                end ref
 
-                CTRL --> CTRL : SkillCategory
-            deactivate CTRL
 
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
 
-                ref over CTRL
-                    Get Employee
+        UI --> ADM : shows collaborator list and asks to select one to add the desired skills
+    deactivate UI
 
-                end ref
-                CTRL -> CTRL : employee
-            deactivate CTRL
+    ADM -> UI : selects the desired collaborator
+    activate UI
 
-            CTRL -> ORG: createSkill(name, SkillCategory, informalDescription, technicalDescription)
+        UI -> CTRL : addSkill(skills, collaborator)
+        activate CTRL
+
+            CTRL -> ORG : addSkill(skills, collaborator)
+
             activate ORG
 
-                ref over ORG
-                    Create Skill
-
-                end
-
-                ORG --> CTRL : skill
+                ORG -> ORG : addSkill(skills, collaborator)
+                ORG --> CTRL : operation success
             deactivate ORG
-
-            CTRL --> UI: skill
+            CTRL --> UI : operation success
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI
