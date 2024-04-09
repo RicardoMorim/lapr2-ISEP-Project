@@ -11,9 +11,22 @@
 
 ## System Overview
 
-### General Descriptions
+### Objectives
+
+MusgoSublime is an organization dedicated to the planning, construction and maintenance of green spaces for collective use in their multiple dimensions.
+
+EcoSphere is a robust solution crafted to streamline and optimize the oversight of natural environments and help MusgoSublime.
+
+Its main goals are centered on fostering efficient organization, upkeep, and improvement of green areas, with a focus on ensuring their well-being and long-term viability. For that it creates a team with various collaborators with different skills and jobs, assigning tasks and improving regular check-ups.
+
+
+### Struture
 
 ### Main Features
+
+### Diagram
+
+
 
 
 
@@ -36,9 +49,9 @@ This feature allows the Human Resources Manager (HRM) to add a job to the system
 
 ### Step by step
 1. Open the HRM system.
-2. Select the option to register a job
-3. Input the job name and description
-4. Confirm the data
+2. Select the option to register a job.
+3. Input the job name and description.
+4. Confirm the data.
 
 
 ### 3. Register a collaborator and characteristics | Human Resources Manager
