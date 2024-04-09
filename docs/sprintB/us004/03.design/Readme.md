@@ -53,7 +53,7 @@ user story, but it is split in partial diagrams to better illustrate the interac
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us004-sequence-diagram-split.svg)
 
 **Get Task Category List Partial SD**
 

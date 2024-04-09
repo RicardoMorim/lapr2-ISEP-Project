@@ -7,38 +7,38 @@ autonumber
 
 'hide footbox
 actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+participant ":CreateSkillUI" as UI
+participant ":CreateSkillController" as CTRL
 participant "organization\n:Organization" as ORG
 
 activate ADM
 
-    ADM -> UI : asks to create a new task
+    ADM -> UI : asks to create a new Skill
 
     activate UI
 
         UI -> CTRL** : create
-        UI -> CTRL : getTaskCategories()
+        UI -> CTRL : getSkillCategories()
         ref over CTRL
-            Get Task Category List
+            Get Skill Category List
 
         end ref
 
         activate CTRL
 
-            CTRL --> UI : taskCategoryList
+            CTRL --> UI : SkillCategoryList
         deactivate CTRL
 
-        UI --> ADM : shows task category list and asks to sleect one
+        UI --> ADM : shows skill category list and asks to select one
     deactivate UI
 
-    ADM -> UI : selects a task category
+    ADM -> UI : selects a skill category
     activate UI
 
         UI --> ADM : requests data
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description,\ninformal description, technical description,\nduration, cost)
+    ADM -> UI : types requested data (name, SkillCategory, informalDescription, technicalDescription)
     activate UI
 
         UI --> ADM : shows selected category and requested data
@@ -47,18 +47,18 @@ activate ADM
     ADM -> UI : submits data
     activate UI
 
-        UI -> CTRL : createTask(reference, description, informalDescription,\ntechnicalDescription,duration, cost, taskCategoryDescription)
+        UI -> CTRL : createSkill(name, SkillCategory, informalDescription, technicalDescription)
         activate CTRL
 
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
+            CTRL -> CTRL : getSkillCategoryByName(skillName)
             activate CTRL
 
                 ref over CTRL
-                    Get Task Category Object
+                    Get Skill Category Object
 
                 end ref
 
-                CTRL --> CTRL : taskCategory
+                CTRL --> CTRL : SkillCategory
             deactivate CTRL
 
             CTRL -> CTRL : getEmployeeFromSession()
@@ -71,18 +71,18 @@ activate ADM
                 CTRL -> CTRL : employee
             deactivate CTRL
 
-            CTRL -> ORG: createTask(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategory, employee)
+            CTRL -> ORG: createSkill(name, SkillCategory, informalDescription, technicalDescription)
             activate ORG
 
                 ref over ORG
-                    Create Task
+                    Create Skill
 
                 end
 
-                ORG --> CTRL : task
+                ORG --> CTRL : skill
             deactivate ORG
 
-            CTRL --> UI: task
+            CTRL --> UI: skill
             deactivate CTRL
             UI --> ADM: displays operation success
     deactivate UI
