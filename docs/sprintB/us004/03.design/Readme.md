@@ -65,7 +65,7 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Get Employee**
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
+![Sequence Diagram - Partial - Get Employee](svg/us004-sequence-diagram-partial-get-employee.svg)
 
 **Create Task**
 
