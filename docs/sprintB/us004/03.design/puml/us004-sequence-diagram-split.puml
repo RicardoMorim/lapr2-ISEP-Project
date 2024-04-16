@@ -65,7 +65,7 @@ activate ADM
 
             CTRL -> CTRL : getEmployeeByEmail(email)
 
-            CTRL -> ORG: addSkillToCollaborator(collaborator, skills)
+            CTRL -> ORG: addSkills(collaborator, skills)
             activate ORG
 
                 ref over ORG
