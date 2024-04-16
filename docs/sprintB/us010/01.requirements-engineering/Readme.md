@@ -1,93 +1,49 @@
-# US002 - Register a job 
+# US010 - Register the equipment used 
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an HRM, I want to register a job that a collaborator need to have.
+As a GSM, I want to know which piece(s) of equipment is/are used in each day so I can understand the users preferences.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>  The park is characterized by having the following equipment: walking paths, children's playground, picnic area, and exercise machines (gymnastics equipment).
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>	
 
 **From the client clarifications:**
 
-> **Question:**  What are the input data for creating a profession?
+> **Question:** In the US10 the client says they have an electronic device that allows the users to insert the equipment they used. How is that csv file sent to our product? Is it trough an API or is the GSM responsible for uploading the document before generating the list of equipment used in that day?
 >
-> **Answer:** The name of the profession: Gardener, Paver, Electrician, Operator, ...
+> **Answer:** 
 
-> **Question:** What is the acceptance criteria when are creating a job that already exists and what does the system do?
+> **Question:** Hello client, in US010 is mentioned that we have equipments, are the equipments mentioned all of them? If not which are missing? It is also mentioned that "EquipmentUsed.csv" file records 1000 users, what happens if there is a 1001 user? Should it replace any one of there that was already recorded?
 >
-> **Answer:** By definition a set can´t have duplicates. Assuring no duplicates is not a business rule is a technical issue.
+> **Answer:** 
 
-> **Question:** Is it relevant to associate a specific area or sector with each Job? (For example, "Gardener" would be inserted in the "Maintenance" sector)
+> **Question:** On the "EquipmentUsed.csv", are there only recorded the choices of 1000 users? Could the GSM request a different number, for example, the choices of 800 users? Is it a random selection, or is it the last responses?
 > 
-> **Answer:**  it is not necessary to the extent that there are no US to suggest that it might ever be necessary
+> **Answer:**  
 
-> **Question:** Should you include information such as salary, type of hire (full-time or part-time), and type of work (face-to-face, remote or hybrid) in the Job? Or does this information fit better within the scope of the employee, or maybe it's not even necessary?
+> **Question:** 
 >
-> **Answer:** idem
+> **Answer:** 
 
-> **Question:** What other information do you think you need to associate with the Job?
+> **Question:** 
 >
-> **Answer:** for now none
+> **Answer:** 
 
-> **Question:** Can special characters and numbers be entered when registering a job?
+> **Question:** 
 >
-> **Answer:** no;
+> **Answer:** 
 
-> **Question:** I assume that a job name cannot be empty. Is that right?
+> **Question:** 
 >
-> **Answer:** that's right
-
-> **Question:** For registering a job into system manager needs to type just "Job tilte" ?
->we do not need other attributes such as below:
->1. Job ID, for identifying each job from Administration prespective.
->2. Job category : for classifying jobs like gardening, drivers, administration employees , etc
->3. Job Skills: for assigning qualified employee/collaborator in future (having same qualities and skills)
->or other attributes...
->
-> **Answer:** I'll repeat:
->a job is just the job name!
->1. Don't know what means job ID, because in the client perspective, a job is just the job name;
->2. there is no job category;
->3. There is the concept of skill but not directly related (atm) with job;
-
-
-> **Question:** After register a job/vehicle's checkup should a message (sucess or failure) or a resume of the register appear?
->
-> **Answer:** the UX/UI is up to dev teams.
-
-> **Question:** Should we add a description or anything atribute for the Job registration? 
-> 
-> **Answer:** not need to, job is just a name;
-
-> **Question:** The id of Job is generated authomatically by the system?
-> 
-> **Answer:** don't know what is job id, job is just a name;
-
-> **Question:** I guess a job can be asign to a collaborator if he has the skills require for this job. How do we manage this relation. Does he HRM do it manually, or should we have an atribute in job specifiying the skills needed.
-> 
-> **Answer:** no; a colaborator is hired for a job and can have skills or not;
-
-> **Question:** Do the job has to be register before registering a collaborator?
-> 
-> **Answer:** a colaborator is hired for a (valid) job;
-
-> **Question:** When we register a team, the collaborators has to have a job?
-> 
-> **Answer:**  see the previous 2 questions/answers;
-
-> **Question:** What do you want to see as an output?
-> 
-> **Answer:** the UX/UI is to be decided by dev team.
- 
-
+> **Answer:** 
 
 
 ### 1.3. Acceptance Criteria
@@ -98,7 +54,7 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 ### 1.4. Found out Dependencies
 
-* None.
+* 
 
 ### 1.5 Input and Output Data
 
@@ -124,5 +80,5 @@ As an HRM, I want to register a job that a collaborator need to have.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us002-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us010-system-sequence-diagram.svg)
 
