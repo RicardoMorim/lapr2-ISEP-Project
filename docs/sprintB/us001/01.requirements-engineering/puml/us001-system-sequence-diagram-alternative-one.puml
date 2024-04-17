@@ -1,0 +1,35 @@
+@startuml
+actor "HRM" as HRM
+participant "System" as System
+autonumber
+HRM -> System: Request to register skill(s)
+activate System
+
+alt Valid request
+    System -> System: Display skill(s) registration form
+    System -> HRM: Provide skill(s) details
+else Invalid request
+    System --> HRM: Notify invalid request
+end
+
+loop while HRM enters skill(s) details
+alt Valid request
+    System -> System: Display skill(s) registration form
+    System -> HRM: Provide skill(s) details
+else Invalid request
+    System --> HRM: Notify invalid request
+end
+
+HRM -> System: Provide skill(s) details
+
+alt Valid skill(s) details
+System -> System: Validate skill(s) details
+    System -> System: Save skill(s) information
+    System --> HRM: Notify successful skill(s) registration
+else Invalid skill(s) details
+    System --> HRM: Notify invalid skill(s) details
+end
+end
+
+deactivate System
+@enduml
