@@ -19,7 +19,8 @@ As a GSM, I want to know which piece(s) of equipment is/are used in each day so 
 
 > **Question:** In the US10 the client says they have an electronic device that allows the users to insert the equipment they used. How is that csv file sent to our product? Is it trough an API or is the GSM responsible for uploading the document before generating the list of equipment used in that day?
 >
-> **Answer:** 
+> **Answer:** ATM you can assume that someone will upload the file (maybe the GSM).
+
 
 > **Question:** Hello client, in US010 is mentioned that we have equipments, are the equipments mentioned all of them? If not which are missing? It is also mentioned that "EquipmentUsed.csv" file records 1000 users, what happens if there is a 1001 user? Should it replace any one of there that was already recorded?
 >
@@ -27,9 +28,9 @@ As a GSM, I want to know which piece(s) of equipment is/are used in each day so 
 
 > **Question:** On the "EquipmentUsed.csv", are there only recorded the choices of 1000 users? Could the GSM request a different number, for example, the choices of 800 users? Is it a random selection, or is it the last responses?
 > 
-> **Answer:**  
+> **Answer:** Since the data doesn't contain any data concerning the users, the file simply contains 1000 answers/choices.
 
-> **Question:** 
+> **Question:** Should the program allow to save the result pie chart or just show it on the screen?
 >
 > **Answer:** 
 
