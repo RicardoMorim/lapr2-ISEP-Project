@@ -1,0 +1,19 @@
+@startuml
+
+hide circle
+hide methods
+
+title Domain Model
+
+class RegisterJob{
+    job
+}
+
+class Job {
+    title
+    description
+}
+
+RegisterJob - Job: registers >
+
+@enduml
