@@ -1,22 +1,15 @@
 @startuml
-'https://plantuml.com/use-case-diagram
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-:Main Admin: as Admin
-(Use the application) as (Use)
+actor "Green Space Manager (GSM)" as GSM
+participant ":System" as System
+autonumber
 
-User -> (Start)
-User --> (Use)
+title System Sequence Diagram - US012
+activate GSM
 
-Admin ---> (Use)
 
-note right of Admin : This is an example.
 
-note right of (Use)
-A note can also
-be on several lines
-end note
-
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
 @enduml
