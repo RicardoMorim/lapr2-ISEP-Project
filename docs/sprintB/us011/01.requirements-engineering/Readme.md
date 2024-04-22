@@ -1,11 +1,11 @@
-# US003 - Register a collaborator and characteristics
+# US011 - Collect data from the user portal
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Human Resources Manager (HRM), I want to register a collaborator with a job and essential characteristics.
+As a GSM, I want to be able to collect data from the user portal about the use of the park, so that I may understand the use of the park by different age groups.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -43,7 +43,7 @@ As a Human Resources Manager (HRM), I want to register a collaborator with a job
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - Register a job " as there must be a job to associate to every collaborator.
+* There is a dependency on "US010 - Register the equipment used- " as there must be a job to associate to every collaborator.
 
 
 ### 1.5 Input and Output Data

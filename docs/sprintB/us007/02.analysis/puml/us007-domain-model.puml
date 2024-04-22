@@ -13,7 +13,22 @@ title Domain Model US007
 class VehicleCheckup {
     idVehicle
     date
-    currentKms
+    currentKm
 }
+
+class Vehicle {
+    model
+    brand
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+    vehiclePlate
+}
+
+Vehicle "1" -- "0...*" VehicleCheckup: has >
 
 @enduml
