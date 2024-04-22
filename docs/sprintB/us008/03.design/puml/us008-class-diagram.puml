@@ -1,0 +1,81 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam line type polyline
+
+class VFM {
+}
+
+class Vehicle {
+    - vin
+    - vehiclePlate
+    - tareWeight
+    - grossWeight
+    - currentKm
+    - acquisitionDate
+    - maintenanceFrequency
+    - type
+
+    + Vehicle(vin, vehiclePlate, tareWeight, grossWeight,currentKm, acquisitionDate, maintenanceFrequency, type)
+}
+
+class Brand {
+    - model
+
+    + Brand(model)
+}
+
+class VehicleRepository {
+    + registerVehicle(vin, brand, model, vehiclePlate, tareWeight,grossWeight, currentKm, acquisitionDate, maintenanceFrequency)
+    + validateVIN(vin)
+    + getVehiclesNeedingMaintenance()
+}
+
+class BrandRepository {
+    + getBrands()
+    + getModelByBrand(brand)
+}
+
+class MaintenanceReport {
+    - reportDetails
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getBrandRepository()
+    + getVehicleRepository()
+}
+
+class ListMaintenanceController {
+    + getVehiclesList()
+    + generateMaintenanceList(vehiclesList)
+}
+
+class ListMaintenanceUI {
+}
+
+VFM -> ListMaintenanceUI
+
+Repositories -> Repositories : instance
+
+ListMaintenanceUI .> ListMaintenanceController
+
+ListMaintenanceController .> Repositories : repositories
+
+Repositories -> "1" VehicleRepository
+
+ListMaintenanceController ..> VehicleRepository : vehicleRepository
+
+VehicleRepository --> "*" Vehicle
+
+Vehicle --> "1" Brand : brand
+
+Repositories -> "1" BrandRepository
+
+ListMaintenanceController ..> Brand
+ListMaintenanceController ..> BrandRepository : brandRepository
+
+MaintenanceReport --> Vehicle
+
+@enduml

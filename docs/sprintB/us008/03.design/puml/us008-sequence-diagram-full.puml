@@ -13,7 +13,7 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant "maintenanceReport\n:MaintenanceReport" as MaintenanceReport
+participant "maintenanceList\n:MaintenanceList" as MaintenanceList
 
 activate VFM
 
@@ -48,10 +48,10 @@ activate VFM
 
         UI --> UI : keep vehicleList
 
-        UI -> CTRL : generateMaintenanceReport(vehiclesList)
+        UI -> CTRL : generateMaintenanceList(vehiclesList)
         activate CTRL
 
-            CTRL -> CTRL : createMaintenanceReport(vehiclesList)
+            CTRL -> CTRL : createMaintenanceList(vehiclesList)
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -66,25 +66,25 @@ activate VFM
                     PLAT --> CTRL: MaintenanceRepository
                 deactivate PLAT
 
-                CTRL -> MaintenanceRepository : createMaintenanceReport(vehiclesList)
+                CTRL -> MaintenanceRepository : createMaintenanceList(vehiclesList)
                 activate MaintenanceRepository
 
-                    MaintenanceRepository -> MaintenanceReport : createMaintenanceReport(vehiclesList)
-                    activate MaintenanceReport
+                    MaintenanceRepository -> MaintenanceList : createMaintenanceList(vehiclesList)
+                    activate MaintenanceList
 
-                    MaintenanceReport --> MaintenanceRepository : maintenanceReport
-                    deactivate MaintenanceReport
+                    MaintenanceList --> MaintenanceRepository : maintenanceList
+                    deactivate MaintenanceList
 
-                MaintenanceRepository --> CTRL : maintenanceReport
+                MaintenanceRepository --> CTRL : maintenanceList
                 deactivate MaintenanceRepository
 
-            CTRL --> CTRL : maintenanceReport
+            CTRL --> CTRL : maintenanceList
             deactivate CTRL
 
-            CTRL --> UI : maintenanceReport
+            CTRL --> UI : maintenanceList
         deactivate CTRL
 
-        UI --> VFM : shows report
+        UI --> VFM : shows list
     deactivate UI
 
 deactivate VFM
