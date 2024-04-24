@@ -11,19 +11,18 @@ title System Sequence Diagram - US006
 activate FM
 
 FM -> System : Requests to register a vehicle
-loop while FM doesn't finish registering all vehicles
 activate System
 
-    System -> FM : Requests vehicle data (model, brand, type, tare,gross weight, current Km, register date, acquisition date, maintenance/check up frequency, vehicle plate)
+    System --> FM : Requests vehicle data (model, brand, type, tare,gross weight, current Km, register date, acquisition date, maintenance/check up frequency, vehicle plate)
 
 deactivate System
+loop while Invalid data
     FM -> System : Types requested data
     activate System
-loop while Invalid data
 alt Valid data
 System -> System: Validates vehicle details
-    System -> System: Saves vehicle information
-    System -> FM : Shows all data and requests confirmation
+    System --> System: Saves vehicle information
+    System --> FM : Shows all data and requests confirmation
 else Invalid data
 System --> FM: Notifies invalid vehicle details
 end
@@ -31,8 +30,7 @@ end
 deactivate System
     FM -> System : Confirms data
     activate System
-end
-    System -> FM: Notifies successful vehicle registration
+    System --> FM: Notifies successful vehicle registration
 deactivate System
 
 @enduml
