@@ -5,53 +5,94 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
-participant ":Repositories" as RepositorySingleton
+actor "HRM" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as GlobRepo
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
+participant ":Collaborator" as CLB
+participant "jobRepository:\nJobRepository" as jobRepository
 
-activate ADM
 
-        ADM -> UI : asks to create a new task
+activate HRM
+
+        HRM -> UI : wants to register a new collaborator
 
         activate UI
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getTaskCategories()
+            UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
+
+            HRM -> UI : provides the needed info
+
+            'UI --> HRM: shows a verication dialog
+            'HRM -> UI: confirms collaborator creation
+
+            UI -> CTRL: createCLB(name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
+
             activate CTRL
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+                CTRL -> GlobRepo : getInstance()
+                activate GlobRepo
 
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
+                    GlobRepo --> CTRL: repositories
+                deactivate GlobRepo
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+                CTRL -> PLAT : getCollaboratorRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: taskCategoryRepository
+                    PLAT --> CTRL: collaboratorRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
+                CTRL -> CLBREP : createCLB((name, birthdate, contactMobile, email, address, zipCode,\n city, documentType[], documentCode, admissionDate)
 
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
-
-                CTRL --> UI : taskCategoryList
             deactivate CTRL
+
+            activate CLBREP
+            CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType[], documentCode, admissionDate)
+            deactivate CLBREP
+            activate CLB
+            CLB -> CLB : verifyFilled(collaborator)
+            activate CLB
+            CLB -> CLB : verifyMobile(collaborator)
+            activate CLB
+            CLB -> CLB : verifyEmail(collaborator)
+            activate CLB
+            CLB -> CLB : verifyZipCode(collaborator)
+            activate CLB
+            CLB -> CLB : verifyBirth(collaborator)
+            activate CLB
+
+            loop for all documentType objects
+            CLB -> CLB : verifyDocumentCode(collaborator)
+            activate CLB
+            CLB --> CLB
+            deactivate CLB
+            end loop
+
+            CLB --> CLB
+            deactivate CLB
+            CLB --> CLB
+            deactivate CLB
+            CLB --> CLB
+            deactivate CLB
+            CLB --> CLB
+            deactivate CLB
+            CLB --> CLB
+            deactivate CLB
+
+            CLB -->CLBREP : collaborator
+            deactivate CLB
+            activate CLBREP
+
+
+
+
+
+
+
 
             UI --> ADM : shows task category list\n and asks to sleect one
         deactivate UI
