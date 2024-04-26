@@ -1,0 +1,25 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 20
+
+participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
+participant ":Maintenance" as Maintenance
+
+-> MaintenanceRepository :  maintenance
+               group Create maintenance
+            activate MaintenanceRepository
+
+            MaintenanceRepository -> Maintenance** : create(date, current Km)
+            activate Maintenance
+
+                Maintenance -> Maintenance : verifyFilled(maintenance)
+                Maintenance -> Maintenance : verifySpecialCharacters(maintenance)
+                Maintenance --> MaintenanceRepository : maintenance
+               deactivate
+               end
+                <-- MaintenanceRepository : maintenance
+
+@enduml
