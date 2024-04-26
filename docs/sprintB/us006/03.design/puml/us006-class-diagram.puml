@@ -96,13 +96,13 @@ note bottom of TaskCategoryRepository
     the category list
 end note
 
-class CreateTaskUI {
+class RegisterVehicleUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateTaskUI .> CreateTaskController
+RegisterVehicleUI .> CreateTaskController
 
 CreateTaskController .> Repositories : repositories
 
