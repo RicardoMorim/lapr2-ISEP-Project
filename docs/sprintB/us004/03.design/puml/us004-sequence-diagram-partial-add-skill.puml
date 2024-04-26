@@ -3,41 +3,37 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
+participant "CollaboratorController" as CTRL
 participant "skill\n:Skill" as SKILL
 
 autonumber 16
--> ORG: addSkills(Skills, employee)
+-> CTRL: addSkills(Skills, collaborator)
 
 autonumber 16.1
-activate ORG
+activate CTRL
     group add Skills to Collaborator
 
-        ORG -> SKILL: addSkills (skills, employee)
-
-
-        activate SKILL
         loop for each skill in Skills
-            SKILL -> employee: addSkill(skill, employee)
+            CTRL -> Collaborator: addSkill(skill)
         end
 
-        activate employee
+        activate Collaborator
         alt if error
-            employee -> SKILL: return error
-            SKILL -> ORG: return error
+            Collaborator -> SKILL: return error
+            SKILL -> CTRL: return error
+            <-- CTRL : return error
         else if success
-            employee -> SKILL: return updated skill list
-            SKILL -> ORG: return updated skill list
-
+            Collaborator -> SKILL: return updated skill list
+            SKILL -> CTRL: return updated skill list
+            <-- CTRL : return the updated skill list
         end
 
-        deactivate employee
-        deactivate SKILL
+        deactivate Collaborator
+    deactivate SKILL
     end
 
     autonumber 17
-    <-- ORG : return the updated skill list or error
-deactivate ORG
+deactivate CTRL
 
 
 @enduml

@@ -9,23 +9,6 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
-}
-
-class UserSession
-{
-    + getUserEmail()
-}
-
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
 
 class Skill {
     - String name
@@ -36,75 +19,47 @@ class Skill {
     + Skill(name, skillCategory, informalDescription, technicalDescription)
 }
 
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addSkill(Skill)
-    - validateSkill(skill)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createSkill(name, SkillCategory, informalDescription, technicalDescription)
-    + addSkillToEmployee(skill, employee)
-    - getEmployeeByEmail(email)
-
-}
-
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
-
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getSkill()
-    + getOrganizationRepository()
-}
-
-class AddSkillToACollaboratorController {
-    + AddSkillToACollaboratorController(technicalSkillRepository, organizationRepository)
+class SkillController {
+    + SkillController(technicalSkillRepository, organizationRepository)
     + getSkills()
     + createSkill\(name,informalDescription, technicalDescription)
     + assignSkillToEmployee(skill, employee)
     - getEmployeeFromSession()
 }
 
-note right of AddSkillToACollaboratorController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
 
 
 class AddSkillToACollaboratorUI {
 }
 
-Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
+class CollaboratorRepository{
+    + getCollaborators()
+}
 
-AddSkillToACollaboratorUI .> AddSkillToACollaboratorController
+class SkillRepository{
+    + getSkills()
+}
+class Collaborators{
+    -String name
+    -String birthdate
+    -String admission date
+    -String address
+    -Int contact
+    -String identification document
+    -String identification number
+    -List<Skill> skills
+}
 
-AddSkillToACollaboratorController .> Repositories : repositories
+class CollaboratorController{
+    + getCollaboratorByEmail(collaborators)
+}
 
+AddSkillToACollaboratorUI --> SkillController
+SkillController -> SkillRepository
+AddSkillToACollaboratorUI -> CollaboratorController
+CollaboratorController -> CollaboratorRepository
+CollaboratorRepository "1" -> "0..." Collaborators : Contains
+SkillRepository "1" -> "0..." Skill : Contains
 
-AddSkillToACollaboratorController ..> OrganizationRepository : organizationRepository
-
-Repositories --> "1" OrganizationRepository
-
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
-
-AddSkillToACollaboratorController ..> "1" Organization : organization
-AddSkillToACollaboratorController ..> ApplicationSession
-AddSkillToACollaboratorController ..> UserSession
-Organization "1" --> "*" Skill : skills
-Skill --> Employee : createdBy
-
-Organization --> "*" Employee : employs
 
 @enduml

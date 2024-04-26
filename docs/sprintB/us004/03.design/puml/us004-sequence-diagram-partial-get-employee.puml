@@ -6,67 +6,29 @@ skinparam shadowing false
 
 
 'hide footbox
-participant ":AddSkillController" as CTRL
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
+participant ":CollaboratorController" as CTRL
+participant "CollaboratorRepository" as REP
 
 autonumber 14
--> CTRL : getEmployeeFromSession()
+-> CTRL : getCollaboratorByEmail(email)
+    group get collaborator by email
+        CTRL -> REP: getCollaboratorList()
+        activate REP
+             REP -> CTRL: returns collaborator list
+        deactivate REP
+
+        CTRL -> CTRL: get the collaborator\nwith the desired email
+    end
 autonumber 14.1
 activate CTRL
 
-    group Get Employee
-        CTRL -> _APP: getInstance()
-        activate _APP
-            _APP -> CTRL: appSession
-        deactivate _APP
 
-        CTRL -> APP: getCurrentSession()
-        activate APP
-
-            APP --> CTRL: currentSession
-        deactivate APP
-
-        CTRL -> SESSAO: email = getUserEmail()
-        activate SESSAO
-
-            SESSAO --> CTRL: email
-        deactivate SESSAO
-
-        CTRL -> PLAT: getOrganizationRepository()
-        activate PLAT
-
-            PLAT --> CTRL: organizationRepository
-        deactivate PLAT
-
-        CTRL -> OrganizationRepository: getOrganizationByUserEmail(email)
-        activate OrganizationRepository
-
-            loop [for each organization
-                OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                activate ORG
-
-                     ORG --> OrganizationRepository : true/false
-                deactivate ORG
-            end
-
-            OrganizationRepository --> CTRL : organization
-
-        deactivate OrganizationRepository
-
-        CTRL -> ORG: getEmployeeByEmail(email)
-        activate ORG
-
-            ORG --> CTRL : employee
-        deactivate ORG
-    end
     autonumber 15
-    <-- CTRL : employee
+    alt if collaborator exists
+        <--CTRL: return collaborator
+    else collaborator does not exist
+        <-- CTRL : return an error
+    end
 deactivate CTRL
 
 @enduml
