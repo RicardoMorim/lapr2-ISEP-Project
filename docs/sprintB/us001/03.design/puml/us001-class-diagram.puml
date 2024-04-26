@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Human Resources Manager" as HRM
+participant ":RegisterSkillsUI" as RSUI
+participant ":RegisterSkillsController" as RSC
+
+HRM -> RSUI: asks to register a new skill that a collaborator may have
+RSUI -> RSC: create
+
+@enduml
