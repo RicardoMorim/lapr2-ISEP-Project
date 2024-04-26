@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "organization\n:Organization" as ORG
+participant "skill\n:Skill" as SKILL
+
+autonumber 16
+-> ORG: addSkills(Skills, employee)
+
+autonumber 16.1
+activate ORG
+    group add Skills to Collaborator
+
+        ORG -> SKILL: addSkills (skills, employee)
+
+
+        activate SKILL
+        loop for each skill in Skills
+            SKILL -> employee: addSkill(skill, employee)
+        end
+
+        activate employee
+        alt if error
+            employee -> SKILL: return error
+            SKILL -> ORG: return error
+        else if success
+            employee -> SKILL: return updated skill list
+            SKILL -> ORG: return updated skill list
+
+        end
+
+        deactivate employee
+        deactivate SKILL
+    end
+
+    autonumber 17
+    <-- ORG : return the updated skill list or error
+deactivate ORG
+
+
+@enduml
