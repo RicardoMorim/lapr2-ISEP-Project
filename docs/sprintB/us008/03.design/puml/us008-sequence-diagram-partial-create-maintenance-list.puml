@@ -7,17 +7,17 @@ participant ":ListMaintenanceController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant "maintenanceReport\n:MaintenanceReport" as MaintenanceReport
+participant "maintenanceList\n:MaintenanceList" as MaintenanceList
 
 autonumber 12
--> CTRL : createMaintenanceReport(vehiclesList)
+-> CTRL : createMaintenanceList(vehiclesList)
 
 autonumber 12.1
 
 activate CTRL
-    group Create Maintenance Report
+    group Create Maintenance List
 
-        CTRL -> CTRL : createMaintenanceReport(vehiclesList)
+        CTRL -> CTRL : createMaintenanceList(vehiclesList)
                     activate CTRL
 
                         CTRL -> RepositorySingleton : getInstance()
@@ -32,19 +32,19 @@ activate CTRL
                             PLAT --> CTRL: MaintenanceRepository
                         deactivate PLAT
 
-                        CTRL -> MaintenanceRepository : createMaintenanceReport(vehiclesList)
+                        CTRL -> MaintenanceRepository : createMaintenanceList(vehiclesList)
                         activate MaintenanceRepository
 
-                            MaintenanceRepository -> MaintenanceReport : createMaintenanceReport(vehiclesList)
-                            activate MaintenanceReport
+                            MaintenanceRepository -> MaintenanceList : createMaintenanceList(vehiclesList)
+                            activate MaintenanceList
 
-                            MaintenanceReport --> MaintenanceRepository : maintenanceReport
-                            deactivate MaintenanceReport
+                            MaintenanceList --> MaintenanceRepository : maintenanceList
+                            deactivate MaintenanceList
 
-                        MaintenanceRepository --> CTRL : maintenanceReport
+                        MaintenanceRepository --> CTRL : maintenanceList
                         deactivate MaintenanceRepository
 
-                    CTRL --> CTRL : maintenanceReport
+                    CTRL --> CTRL : maintenanceList
                     deactivate CTRL
 
     end group

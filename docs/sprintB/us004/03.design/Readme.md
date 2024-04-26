@@ -4,40 +4,37 @@
 
 ### 3.1. Rationale
 
-
-
-| Interaction ID | Question: Which class is responsible for...   | Answer               | Justification (with patterns)                                                                                 |
-|:---------------|:----------------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?              | CreateTaskUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                     | CreateTaskController | Controller                                                                                                    |
-| 			  		        | 	... instantiating a new Task?                | Organization         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		        | ... knowing the user using the system?        | UserSession          | IE: cf. A&A component documentation.                                                                          |
-| 			  		        | 							                                       | Organization         | IE: knows/has its own Employees                                                                               |
-| 			  		        | 							                                       | Employee             | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		     | 							                                       |                      |                                                                                                               |
-| Step 3  		     | 	...saving the inputted data?                 | Task                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		     | 	...knowing the task categories to show?      | System               | IE: Task Categories are defined by the Administrators.                                                        |
-| Step 5  		     | 	... saving the selected category?            | Task                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		     | 							                                       |                      |                                                                                                               |              
-| Step 7  		     | 	... validating all data (local validation)?  | Task                 | IE: owns its data.                                                                                            | 
-| 			  		        | 	... validating all data (global validation)? | Organization         | IE: knows all its tasks.                                                                                      | 
-| 			  		        | 	... saving the created task?                 | Organization         | IE: owns all its tasks.                                                                                       | 
-| Step 8  		     | 	... informing operation success?             | CreateTaskUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID                                                      | Question: Which class is responsible for... | Answer             | Justification (with patterns)                                                                                 |
+|:--------------------------------------------------------------------|:--------------------------------------------|:-------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?            | AddSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		                                                             | 	... coordinating the US?                   | AddSkillController | Controller                                                                                                    |
+| 			  		                                                             | 	... knowing the list of skills             | SkillRepository    | IE: Pure Fabrication                                                                                          |
+| 			  		                                                             | ... knowing the user using the system?      | UserSession        | IE: cf. A&A component documentation.                                                                          |
+| 			  		                                                             | 							                                     | Organization       | IE: knows/has its own Employees                                                                               |
+| 			  		                                                             | 							                                     | Employee           | IE: knows its own data (e.g. email)                                                                           |
+| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					      | AddSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?            | AddSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                                                                     | ... store the collaborator chosen?          | AssignSkillUI      | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?             | AssignSkillUI      | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?            | AssignSkillUI      | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                                                                     | ... validate skill                          | Organization       | IE: owns its data.                                                                                            |
+|                                                                     | ... adding skill                            | Organization       | IE: owns its data.                                                                                            |
+|                                                                     | ... saving the collaborator's skills        | Organization       | IE: knows all its collaborators.                                                                              |
+| Step 6: Displays operation success 		                               | ... interacting with the actor?							      | Assign skill UI    | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
 * Organization
-* Task
+* Skill
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* CreateTaskUI
-* CreateTaskController
+* AddSkillUI
+* AddSkillController
 
 ## 3.2. Sequence Diagram (SD)
-
 
 ### Full Diagram
 

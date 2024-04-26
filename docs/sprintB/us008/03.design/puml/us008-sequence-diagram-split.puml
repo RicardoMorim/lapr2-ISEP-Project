@@ -14,7 +14,7 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant "maintenanceReport\n:MaintenanceReport" as MaintenanceReport
+participant "maintenanceList\n:MaintenanceList" as MaintenanceList
 activate VFM
 
     VFM -> UI : requests to list vehicles needing maintenance
@@ -30,23 +30,23 @@ activate VFM
 
         UI --> UI : keep vehicleList
 
-        UI -> CTRL : createMaintenanceReport(vehiclesList)
+        UI -> CTRL : createMaintenanceList(vehiclesList)
         activate CTRL
 
-        CTRL -> MaintenanceRepository: createMaintenanceReport(vehicleList)
+        CTRL -> MaintenanceRepository: createMaintenanceList(vehicleList)
         activate MaintenanceRepository
 
 
-        MaintenanceRepository --> CTRL: maintenanceReport
+        MaintenanceRepository --> CTRL: maintenanceList
         deactivate MaintenanceRepository
 
-        CTRL --> CTRL : maintenanceReport
+        CTRL --> CTRL : maintenanceList
 
 
-            CTRL --> UI : maintenanceReport
+            CTRL --> UI : maintenanceList
         deactivate CTRL
 
-        UI --> VFM : shows maintenance report
+        UI --> VFM : shows maintenance List
     deactivate UI
 
 deactivate VFM

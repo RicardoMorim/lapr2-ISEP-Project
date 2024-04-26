@@ -29,20 +29,16 @@ activate ADM
             CTRL --> UI : SkillList
         deactivate CTRL
 
-        loop while adding skills
-            UI --> ADM : shows skill list and asks to select one
-            ADM -> UI : selects a skill
-        end
-    deactivate UI
-
-    activate UI
 
         UI --> ADM : requests desired collaborator's email
     deactivate UI
 
     ADM -> UI : types requested email
     activate UI
-
+        loop while adding skills
+            UI --> ADM : shows skill category list that the collaborator does not have\nand asks to select one
+            ADM -> UI : selects a skill
+        end
         UI --> ADM : shows selected skills and requested email\nand asks for confirmation
     deactivate UI
 
