@@ -13,7 +13,7 @@ alt Valid Request
             activate System
             System --> QAM: Asks for input of variable size
             deactivate System
-        loop QAM provides input of variable size
+        loop while  QAM provides input of variable size
             QAM -> System: Provides input of variable size
             activate System
             System --> QAM: Confirms input of variable size
