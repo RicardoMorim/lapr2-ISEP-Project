@@ -25,6 +25,10 @@ activate VFM
         UI -> CTRL : getVehiclesList()
         activate CTRL
 
+            ref over CTRL
+                Get Vehicle List
+            end ref
+
             CTRL --> UI : vehicleList
         deactivate CTRL
 
@@ -36,6 +40,9 @@ activate VFM
         CTRL -> MaintenanceRepository: createMaintenanceList(vehicleList)
         activate MaintenanceRepository
 
+            ref over MaintenanceRepository
+                Create Maintenance List
+            end ref
 
         MaintenanceRepository --> CTRL: maintenanceList
         deactivate MaintenanceRepository
