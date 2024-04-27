@@ -62,11 +62,11 @@ Between 1992-2005 00-00-XX
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us007-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us007-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____US007.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us007-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative Two](svg/us007-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____US007.svg)
 
 ### 1.7 Other Relevant Remarks
 
