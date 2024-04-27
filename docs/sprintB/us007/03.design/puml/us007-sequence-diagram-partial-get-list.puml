@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 3
+
+participant ":RegisterMaintenanceController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+
+
+        -> CTRL : getVehiclesList()
+        activate CTRL
+            group Get Vehicle List
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getVehicleRepository()
+            activate PLAT
+
+                PLAT --> CTRL: VehicleRepository
+            deactivate PLAT
+
+            CTRL -> VehicleRepository : getVehiclesList()
+            activate VehicleRepository
+
+                VehicleRepository --> CTRL : vehicleList
+            deactivate VehicleRepository
+
+            end
+             <-- CTRL : vehicleList
+            deactivate CTRL
+
+@enduml
