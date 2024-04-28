@@ -10,7 +10,7 @@ autonumber
 title System Sequence Diagram - US006
 activate FM
 
-FM -> System : Requests to register a vehicle
+FM -> System : Requests to register a new vehicle
 activate System
 System --> FM : Requests vehicle plate
 deactivate System

@@ -9,12 +9,12 @@ autonumber
 actor "Fleet Manager (FM)" as FM
 participant ":RegisterVehicleUI" as UI
 participant ":VehicleController" as CTRL
-participant "vehicleRepository\n:VehicleRepository" as vehicleRep
-participant "vehicle\n:Vehicle" as vehicle
+participant "vehicle\n:Vehicle" as vehicleRep
+participant "vehicleAttributes\n:VehicleAttributes" as vehicle
 
 activate FM
 
-        FM -> UI : requests to register a vehicle
+        FM -> UI : requests to register a new vehicle
         activate UI
 
         UI --> FM : asks for vehicle plate
@@ -85,9 +85,9 @@ activate FM
         deactivate UI
         FM -> UI : confirms data
         activate UI
-        UI --> CTRL : saveNewVehicle(tare weight, gross weight, current Km, \nregister date, acquisition date, maintenance frequency, \nplate, brand, model, type)
+        UI --> CTRL : saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
         activate CTRL
-        CTRL --> vehicleRep : saveNewVehicle(tare weight, gross weight, current Km, \nregister date, acquisition date, maintenance frequency, \nplate, brand, model, type)
+        CTRL --> vehicleRep : saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
         activate vehicleRep
         vehicleRep --> CTRL : success
         deactivate vehicleRep
