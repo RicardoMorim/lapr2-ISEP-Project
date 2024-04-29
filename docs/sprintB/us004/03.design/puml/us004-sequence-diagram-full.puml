@@ -14,9 +14,9 @@ participant "SkillRepository:\nSkillRepository" as SkillRepository
 
 
 activate ADM
-    ADM -> UI : asks to add SkillRepository
+    ADM -> UI : asks to add one or more Skills to a collaborator
     activate UI
-        UI -> ADM: Aks the desired collaborator's email
+        UI -> ADM: Asks the desired collaborator's email
     deactivate UI
     ADM -> UI : writes the collaborator's email
 
@@ -27,9 +27,9 @@ activate ADM
             alt collaborator not found
                 CollaboratorCTRL -> UI: returns an error
                 UI -> ADM: shows the error and quits the operation
-            else collaborator found
-                CollaboratorCTRL -> UI: returns collaborator
             end
+
+                CollaboratorCTRL -> UI: returns collaborator
         deactivate CollaboratorCTRL
         UI -> SkillCTRL: getSkills()
         activate SkillCTRL

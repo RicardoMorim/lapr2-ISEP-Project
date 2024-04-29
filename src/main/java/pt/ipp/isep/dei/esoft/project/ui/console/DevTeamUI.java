@@ -12,11 +12,11 @@ public class DevTeamUI implements Runnable {
     public void run() {
         System.out.println("\n");
         System.out.println("--- DEVELOPMENT TEAM -------------------");
-        System.out.println("  Student Name 1 - 1XXXXXX@isep.ipp.pt");
-        System.out.println("  Student Name 2 - 1XXXXXX@isep.ipp.pt");
-        System.out.println("  Student Name 3 - 1XXXXXX@isep.ipp.pt");
-        System.out.println("  Student Name 4 - 1XXXXXX@isep.ipp.pt");
-        System.out.println("  Student Name 5 - 1XXXXXX@isep.ipp.pt");
+        System.out.println("  Ricardo Morim - 1230481@isep.ipp.pt");
+        System.out.println("  Afonso Marques - 1221018@isep.ipp.pt");
+        System.out.println("  Filipa Alves - 1230929@isep.ipp.pt");
+        System.out.println("  Gonçalo Fernandes - 1231170@isep.ipp.pt");
+        System.out.println("  Marisa Afonso - 1231151@isep.ipp.pt");
         System.out.println("\n");
     }
 }

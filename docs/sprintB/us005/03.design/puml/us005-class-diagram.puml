@@ -21,15 +21,13 @@ class Skill {
 
 class SkillController {
     + getSkillList()
-    + assignSkillToEmployee(skill, employee)
 }
 
 
 
 class AddSkillToACollaboratorUI {
 
-    + AddASkillsToACollaborator(skill, collaborator)
-    + getCollaborators()
+    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
     + getSkillList()
 }
 
@@ -40,6 +38,7 @@ class CollaboratorRepository{
 class SkillRepository{
     + getSkillList()
 }
+
 class Collaborators{
     -String name
     -String birthdate
@@ -52,14 +51,15 @@ class Collaborators{
 }
 
 class CollaboratorController{
-    + getCollaboratorByEmail(collaborators)
-    + AddASkillsToACollaborator(Skills, collaborator)
+
+    + getCollaboratorList()
+    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
 }
 
-AddSkillToACollaboratorUI --> SkillController
-SkillController -> SkillRepository
-AddSkillToACollaboratorUI -> CollaboratorController
-CollaboratorController -> CollaboratorRepository
+AddSkillToACollaboratorUI "1" --> "1" SkillController: starts
+SkillController "1" -> "1" SkillRepository: accesses
+AddSkillToACollaboratorUI "1" -> "1" CollaboratorController: starts
+CollaboratorController "1" -> "1" CollaboratorRepository: accesses
 CollaboratorRepository "1" -> "0..." Collaborators : Contains
 SkillRepository "1" -> "0..." Skill : Contains
 
