@@ -18,204 +18,164 @@ participant "jobRepository:\nJobRepository" as jobRepository
 activate HRM
 
         HRM -> UI : wants to register a new collaborator
+        activate UI
+
+        UI -> CTRL** : create
+
+        UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
+        deactivate UI
+
+        HRM -> UI : types requested data
+        activate UI
+
+        UI -> CTRL: get job List
+        deactivate UI
+
+        activate CTRL
+
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
+
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
+
+            CTRL -> PLAT : getJobRepository()
+            activate PLAT
+
+            PLAT -->  CTRL: jobRepository
+            deactivate PLAT
+
+            CTRL -> jobRepository : getJobs()
+            activate jobRepository
+
+            jobRepository --> CTRL : jobsList
+            deactivate collaboratorRepository
+
+
+            CTRL --> UI : job List
+        deactivate CTRL
 
         activate UI
 
-            UI -> CTRL** : create
-
-            UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
-
-            HRM -> UI : provides the needed info
-
-            'UI --> HRM: shows a verication dialog
-            'HRM -> UI: confirms collaborator creation
-
-            UI -> CTRL: createCLB(name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
-
-            activate CTRL
-
-                CTRL -> GlobRepo : getInstance()
-                activate GlobRepo
-
-                    GlobRepo --> CTRL: repositories
-                deactivate GlobRepo
-
-                CTRL -> PLAT : getCollaboratorRepository()
-                activate PLAT
-
-                    PLAT --> CTRL: collaboratorRepository
-                deactivate PLAT
-
-                CTRL -> CLBREP : createCLB((name, birthdate, contactMobile, email, address, zipCode,\n city, documentType[], documentCode, admissionDate)
-
-            deactivate CTRL
-
-            activate CLBREP
-            CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType[], documentCode, admissionDate)
-            deactivate CLBREP
-            activate CLB
-            CLB -> CLB : verifyFilled(collaborator)
-            activate CLB
-            CLB -> CLB : verifyMobile(collaborator)
-            activate CLB
-            CLB -> CLB : verifyEmail(collaborator)
-            activate CLB
-            CLB -> CLB : verifyZipCode(collaborator)
-            activate CLB
-            CLB -> CLB : verifyBirth(collaborator)
-            activate CLB
-
-            loop for all documentType objects
-            CLB -> CLB : verifyDocumentCode(collaborator)
-            activate CLB
-            CLB --> CLB
-            deactivate CLB
-            end loop
-
-            CLB --> CLB
-            deactivate CLB
-            CLB --> CLB
-            deactivate CLB
-            CLB --> CLB
-            deactivate CLB
-            CLB --> CLB
-            deactivate CLB
-            CLB --> CLB
-            deactivate CLB
-
-            CLB -->CLBREP : collaborator
-            deactivate CLB
-            activate CLBREP
-
-
-
-
-
-
-
-
-            UI --> ADM : shows task category list\n and asks to sleect one
+        UI --> HRM : shows the list of jobs and requests to select one
         deactivate UI
 
-    ADM -> UI : selects a task category
-    activate UI
 
-        UI --> ADM : requests data
-    deactivate UI
+        HRM -> UI : select the job
+        activate UI
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
-    activate UI
+        UI --> HRM: shows all data and requests for confirmation
+        deactivate UI
 
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
+        HRM -> UI: confirms the data
+        activate UI
 
-    ADM -> UI : submits data
-    activate UI
+        UI -> CTRL : create collaborator
 
-        UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
+        deactivate UI
+
         activate CTRL
 
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
-            activate CTRL
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
 
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
+            CTRL -> PLAT : getCollaboratorRepository()
+            activate PLAT
 
-                CTRL -> PLAT : getTaskCategoryRepository()
-                activate PLAT
+            PLAT -->  CTRL: collaboratorRepository
+            deactivate PLAT
 
-                    PLAT -> CTRL : taskCategoryRepository
-                deactivate PLAT
+            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+        deactivate CTRL
 
-                CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-                activate TaskCategoryRepository
+        activate CLBREP
+        CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+        deactivate CLBREP
 
-                    TaskCategoryRepository --> CTRL : taskCategory
-                deactivate TaskCategoryRepository
-                    CTRL --> CTRL : taskCategory
-            deactivate CTRL
+        activate CLB
+        CLB -> CLB : verifyFilled(collaborator)
+        activate CLB
+        CLB -> CLB : verifyMobile(collaborator)
+        activate CLB
+        CLB -> CLB : verifyEmail(collaborator)
+        activate CLB
+        CLB -> CLB : verifyZipCode(collaborator)
+        activate CLB
+        CLB -> CLB : verifyBirth(collaborator)
+        activate CLB
+        CLB -> CLB : verifyTaxpayerNumber(collaborator)
+        activate CLB
 
-            |||
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
+        loop for all documentType objects
+            CLB -> CLB : verifyDocumentCode(collaborator)
+            activate CLB
 
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
+            CLB --> CLB
+            deactivate CLB
+        end loop
 
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
 
-                CTRL -> APP: getCurrentSession()
-                activate APP
+        CLB -->CLBREP : collaborator
+        deactivate CLB
+        activate CLBREP
 
-                    APP --> CTRL: currentSession
-                deactivate APP
+        CLBREP -> CLBREP : check for duplicates (taxpayerNumber)
+        activate CLBREP
+        CLBREP --> CLBREP
+        deactivate CLBREP
 
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
+        CLBREP -> CLBREP: addCollaborator(collaborator)
+        CLBREP --> CTRL : collaborator
+        deactivate CLBREP
 
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
-                activate PLAT
-
-                    PLAT --> CTRL: organizationRepository
-                deactivate PLAT
-
-
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                activate OrganizationRepository
-
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                        activate ORG
-
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
-
-                CTRL -> ORG: getEmployeeByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : employee
-                deactivate ORG
-
-                CTRL --> CTRL : employee
-            deactivate CTRL
-
-            |||
-            CTRL -> ORG: createTask(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, , taskCategory, employee)
-            activate ORG
-
-                ORG -> TAREFA**: create(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
-                ORG -> ORG: addTask (task)
+        CLBREP -> CLBREP: addCollaborator(collaborator)
+        CLBREP --> CTRL : collaborator
+        deactivate CLBREP
+        activate CTRL
 
 
-                activate ORG
-                    ORG -> ORG: validateTask(task)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
 
-                    ORG --> ORG
-                deactivate ORG
+        CTRL --> UI : success
+        deactivate CTRL
 
-                ORG --> CTRL : task
+        activate UI
+        UI --> HRM : shows success message (collaborator created successfully)
+        deactivate UI
 
-            deactivate ORG
 
-            CTRL --> UI: task
-            deactivate CTRL
-            UI --> ADM: displays operation success
-    deactivate UI
+deactivate HRM
 
-deactivate ADM
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @enduml
