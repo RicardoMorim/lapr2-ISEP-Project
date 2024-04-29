@@ -6,19 +6,23 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                           | Question: Which class is responsible for... | Answer                        | Justification (with patterns)                                                                                |
-|:---------------------------------------------------------|:--------------------- |:------------------------------|:-------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to register a vehicle's check-up 	  		      |	... interacting with the actor? | RegisterMaintenanceUI         | Pure Fabrication|
-| 			  		                                                  |	... coordinating the US? | RegisterMaintenanceController | Controller                                                                                                   |
-| Step 2: shows all registered vehicles needing check-up		 |							 |                               |                                                                                                              |
-| Step 3: selects a vehicle 		                             |	...saving the inputted data? | Task                          | IE: object created in step 1 has its own data.                                                               |
-| Step 4:  		                                              |	...knowing the task categories to show? | System                        | IE: Task Categories are defined by the Administrators.                                                       |
-| Step 5  		                                               |	... saving the selected category? | Task                          | IE: object created in step 1 is classified in one Category.                                                  |
-| Step 6  		                                               |							 |                               |                                                                                                              |              
-| Step 7  		                                               |	... validating all data (local validation)? | Task                          | IE: owns its data.                                                                                           | 
-| 			  		                                                  |	... validating all data (global validation)? | Organization                  | IE: knows all its tasks.                                                                                     | 
-| 			  		                                                  |	... saving the created task? | Organization                  | IE: owns all its tasks.                                                                                      | 
-| Step 8  		                                               |	... informing operation success?| CreateTaskUI                  | IE: is responsible for user interactions.                                                                    | 
+| Interaction ID                                         | Question: Which class is responsible for...                 | Answer                        | Justification (with patterns) |
+|:-------------------------------------------------------|:------------------------------------------------------------|:------------------------------|:------------------------------|
+| Step 1: asks to register a vehicle's check-up 		       | 	... interacting with the actor?                            | RegisterMaintenanceUI         | Pure Fabrication              |
+| 			  		                                                | 	... coordinating the US?                                   | RegisterMaintenanceController | Controller                    | 
+| Step 2: shows all registered vehicles needing check-up | 	... ... providing the Vehicles needing check-up list?      | VehicleRepository             | Information Expert            |
+|                                                        | 	... displaying the form containing the list of jobs?       | RegisterMaintenance           | Information Expert        |
+| Step 3: selects a vehicle                              | 	... temporarily keeping the inputted data?                 | RegisterMaintenance           | Information Expert            |
+| Step 4: requests data (idVehicle, date, currentKm)  		 | 	... displaying the form for the actor to input data?						 | RegisterMaintenance           | Information Expert            |
+| Step 5: types requested data  		                       | 	... temporarily keeping the inputted data?                 | RegisterMaintenance           | Information Expert            |
+| Step 6: shows all data and requests confirmation  		   | 	... displaying all information before submitting?          | RegisterMaintenance           | Information Expert            |
+| 			  		                                                | 	... displaying the form for the actor to confirm?          | RegisterMaintenance           | Information Expert            |
+| Step 7: confirms data  		                              | 	... instantiating a new check-up?                          | VehicleRepository             | Pure Fabrication              |
+| 			  		                                                | 	... saving the inputted data?                              | Maintenance                   | Information Expert            |
+| 			  		                                                | 	... validating the data locally (mandatory data)?          | Maintenance                   | Information Expert            |
+| 			  		                                                | 	... validating the data globally (duplicate data)?         | Vehicle                       | Information Expert            |
+| 			  		                                                | 	... saving the created check-up?                           | VehicleRepository             | Information Expert            |
+| Step 8: displays operation success  		                 | ... informing operation success?                            | RegisterMaintenance           | Information Expert            |          
 
 ### Systematization ##
 
