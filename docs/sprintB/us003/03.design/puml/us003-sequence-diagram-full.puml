@@ -7,7 +7,7 @@ autonumber
 
 actor "HRM" as HRM
 participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+participant ":CollaboratorController" as CTRL
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
 participant ":Collaborator" as CLB
 participant "jobRepository:\nJobRepository" as jobRepository
@@ -32,8 +32,8 @@ activate HRM
             CTRL -> jobRepository : getJobs()
             activate jobRepository
 
-            jobRepository --> CTRL : jobsList
-            deactivate collaboratorRepository
+            jobRepository -> CTRL : jobsList
+            deactivate jobRepository
 
 
             CTRL --> UI : job List
@@ -61,22 +61,21 @@ activate HRM
         activate CTRL
 
             CTRL -> CLB** : createCLB(name, birthdate, contactMobile, email, address,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
-        deactivate CTRL
 
+                activate CLB
+                    CLB -> CLB : verifyCollaborator()
 
+                    CLB -> CTRL : returnCollaborator()
+                deactivate CLB
 
-        activate CLB
-        CLB -> CLB : verifyCollaborator()
+                CTRL -> CLBREP: addCollaborator(collaborator)
 
+                activate CLBREP
 
-        CLB -> CTRL: addCollaborator(collaborator)
+                   CLBREP --> CTRL : success
+                deactivate CLBREP
 
-
-        activate CTRL
-
-
-
-        CTRL --> UI : success
+                CTRL --> UI : success
         deactivate CTRL
 
         activate UI
@@ -85,23 +84,6 @@ activate HRM
 
 
 deactivate HRM
-
-
-@enduml
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @enduml

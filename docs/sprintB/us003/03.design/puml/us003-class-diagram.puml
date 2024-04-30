@@ -11,8 +11,8 @@ skinparam classAttributeIconSize 0
 class RegisterCollaboratorUI {
 }
 
-class RegisterCollaboratorController {
-    + createCLB(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType, identificationNumber, admissionDate : Date, identificationNumber : String, job : Job)
+class CollaboratorController {
+    + createCLB(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType, identificationNumber, admissionDate : String, identificationNumber : String, job : Job)
     + assignJob(job : Job) : void
     + getInstance() : JobRepository
     + getInstance() : CollaboratorRepository
@@ -21,7 +21,7 @@ class RegisterCollaboratorController {
 
 
 class CollaboratorRepository {
-    + create(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : Date, taxpayerNumber : int, job : Job)
+    + create(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
     + checkForDuplicates() : void
     + addCollaborator(collaborator) : void
 
@@ -30,6 +30,7 @@ class CollaboratorRepository {
 class JobRepository {
     +createJob(title : String) : Job
     +checkForDuplicates() : void
+    +validateJob() : void
 }
 
 class Collaborator {
@@ -42,8 +43,8 @@ class Collaborator {
     - admissionDate : Date
     - job : Job
     - taxpayerNumber : int
-    + Collaborator(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, zipCode : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : Date, taxpayerNumber : int, job : Job)
-    + verifyFilled(collaborator) : void
+    + Collaborator(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, zipCode : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
+    + verifyCollaborator(collaborator) : void
     - documentType : String
     - identificationNumber : String
 }
@@ -51,18 +52,17 @@ class Collaborator {
 class Job {
     - title : String
     + Job(title : String)
-    +verifyFilled(job : Job) : void
-    +verifySpecialCharacters(job : Job) : void
+    +verifyJob(job : Job) : void
 }
 
 
 
-RegisterCollaboratorUI ..> RegisterCollaboratorController
+RegisterCollaboratorUI ..> CollaboratorController
 
 
 CollaboratorRepository --> "*" Collaborator : collaborators
-RegisterCollaboratorController ..> CollaboratorRepository : collaboratorRepository
-RegisterCollaboratorController ..> JobRepository : jobRepository
+CollaboratorController ..> CollaboratorRepository : collaboratorRepository
+CollaboratorController ..> JobRepository : jobRepository
 JobRepository --> "*" Job : jobs
 
 
