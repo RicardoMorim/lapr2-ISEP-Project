@@ -9,33 +9,15 @@ autonumber
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":RegisterMaintenanceUI" as UI
 participant ":RegisterMaintenanceController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
-participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant ":Maintenance" as Maintenance
 
 activate VFM
 
     VFM -> UI : requests to list vehicles needing maintenance
     activate UI
 
-        UI -> CTRL** : create
-
         UI -> CTRL : getVehiclesList()
         activate CTRL
-
-            CTRL -> RepositorySingleton : getInstance()
-            activate RepositorySingleton
-
-                RepositorySingleton --> CTRL: repositories
-            deactivate RepositorySingleton
-
-            CTRL -> PLAT : getVehicleRepository()
-            activate PLAT
-
-                PLAT --> CTRL: VehicleRepository
-            deactivate PLAT
 
             CTRL -> VehicleRepository : getVehiclesList()
             activate VehicleRepository
@@ -67,23 +49,16 @@ activate VFM
             UI -> CTRL : data (date, current Km)
             activate CTRL
 
-            CTRL -> PLAT : getMaintenanceRepository()
-            activate PLAT
+            CTRL -> VehicleRepository : register maintenance
+            activate VehicleRepository
 
-            PLAT --> CTRL : MaintenanceRepository
-            deactivate
+            activate VehicleRepository
 
-            CTRL -> MaintenanceRepository : register maintenance
-            activate MaintenanceRepository
-
-            MaintenanceRepository -> Maintenance** : create(date, current Km)
-            activate Maintenance
-
-               Maintenance -> Maintenance : verifyFilled(maintenance)
-               Maintenance -> Maintenance : verifySpecialCharacters(maintenance)
-               Maintenance --> MaintenanceRepository : maintenance
+               VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
+               VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
+               VehicleRepository --> VehicleRepository : maintenance
                deactivate
-               MaintenanceRepository --> CTRL : maintenance
+               VehicleRepository --> CTRL : maintenance
                deactivate
                CTRL --> UI : maintenance
                deactivate
