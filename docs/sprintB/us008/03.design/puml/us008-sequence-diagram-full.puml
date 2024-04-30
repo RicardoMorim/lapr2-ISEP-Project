@@ -9,7 +9,6 @@ autonumber
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":ListMaintenanceUI" as UI
 participant ":VehicleController" as CTRL
-participant ":Repositories" as RepositorySingleton
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 
@@ -37,7 +36,7 @@ activate VFM
         activate CTRL
 
             CTRL -> CTRL : createMaintenanceList(vehiclesList)
-            activate CTRL
+
 
             CTRL --> UI : maintenanceList
         deactivate CTRL
