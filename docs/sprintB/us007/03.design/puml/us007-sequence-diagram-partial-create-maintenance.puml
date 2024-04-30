@@ -5,21 +5,20 @@ skinparam shadowing false
 
 autonumber 20
 
-participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant ":Maintenance" as Maintenance
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
--> MaintenanceRepository :  maintenance
-               group Create maintenance
-            activate MaintenanceRepository
+-> VehicleRepository :  register maintenance
+               group Register maintenance
+            activate VehicleRepository
 
-            MaintenanceRepository -> Maintenance** : create(date, current Km)
-            activate Maintenance
 
-                Maintenance -> Maintenance : verifyFilled(maintenance)
-                Maintenance -> Maintenance : verifySpecialCharacters(maintenance)
-                Maintenance --> MaintenanceRepository : maintenance
+            activate VehicleRepository
+
+                VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
+                VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
+                    VehicleRepository --> VehicleRepository : maintenance
                deactivate
                end
-                <-- MaintenanceRepository : maintenance
+                <-- VehicleRepository : maintenance
 
 @enduml
