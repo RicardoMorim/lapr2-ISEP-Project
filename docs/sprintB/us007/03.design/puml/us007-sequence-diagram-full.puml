@@ -8,7 +8,7 @@ autonumber
 'hide footbox
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":RegisterMaintenanceUI" as UI
-participant ":RegisterMaintenanceController" as CTRL
+participant ":VehicleController" as CTRL
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 activate VFM
@@ -46,7 +46,6 @@ activate VFM
             VFM -> UI : Types data (date, current Km)
             activate UI
 
-            UI -> CTRL : data (date, current Km)
             activate CTRL
 
             CTRL -> VehicleRepository : register maintenance
