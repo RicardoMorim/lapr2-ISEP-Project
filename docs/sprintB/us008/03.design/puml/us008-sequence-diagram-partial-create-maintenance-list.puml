@@ -3,11 +3,8 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant ":ListMaintenanceController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
-participant "maintenanceList\n:MaintenanceList" as MaintenanceList
+participant ":VehicleController" as CTRL
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 autonumber 12
 -> CTRL : createMaintenanceList(vehiclesList)
@@ -17,36 +14,19 @@ autonumber 12.1
 activate CTRL
     group Create Maintenance List
 
-        CTRL -> CTRL : createMaintenanceList(vehiclesList)
-                    activate CTRL
+                        CTRL -> VehicleRepository : getMaintenanceRepository()
+                        activate VehicleRepository
 
-                        CTRL -> RepositorySingleton : getInstance()
-                        activate RepositorySingleton
+                            VehicleRepository --> CTRL: MaintenanceRepository
+                        deactivate VehicleRepository
 
-                            RepositorySingleton --> CTRL: repositories
-                        deactivate RepositorySingleton
+                        CTRL -> VehicleRepository : createMaintenanceList(vehiclesList)
+                        activate VehicleRepository
 
-                        CTRL -> PLAT : getMaintenanceRepository()
-                        activate PLAT
+                        VehicleRepository --> CTRL : maintenanceList
+                        deactivate VehicleRepository
 
-                            PLAT --> CTRL: MaintenanceRepository
-                        deactivate PLAT
-
-                        CTRL -> MaintenanceRepository : createMaintenanceList(vehiclesList)
-                        activate MaintenanceRepository
-
-                            MaintenanceRepository -> MaintenanceList : createMaintenanceList(vehiclesList)
-                            activate MaintenanceList
-
-                            MaintenanceList --> MaintenanceRepository : maintenanceList
-                            deactivate MaintenanceList
-
-                        MaintenanceRepository --> CTRL : maintenanceList
-                        deactivate MaintenanceRepository
-
-                    CTRL --> CTRL : maintenanceList
                     deactivate CTRL
-
     end group
 
     autonumber 13
