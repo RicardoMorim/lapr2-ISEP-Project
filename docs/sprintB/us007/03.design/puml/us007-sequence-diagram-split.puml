@@ -8,18 +8,13 @@ autonumber
 'hide footbox
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":RegisterMaintenanceUI" as UI
-participant ":RegisterMaintenanceController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
+participant ":VehicleController" as CTRL
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
-participant "maintenanceRepository:\nMaintenanceRepository" as MaintenanceRepository
 
 activate VFM
 
-    VFM -> UI : requests to list vehicles needing maintenance
+    VFM -> UI : requests to list vehicles
     activate UI
-
-        UI -> CTRL** : create
 
         UI -> CTRL : getVehiclesList()
         activate CTRL
@@ -49,25 +44,21 @@ activate VFM
             VFM -> UI : Types data (date, current Km)
             activate UI
 
-            UI -> CTRL : data (date, current Km)
+
+            UI -> CTRL : register maintenance
             activate CTRL
 
-            CTRL -> PLAT : getMaintenanceRepository()
-            activate PLAT
+            CTRL -> VehicleRepository : register maintenance
+            activate VehicleRepository
 
-            PLAT --> CTRL : MaintenanceRepository
-            deactivate
-
-            CTRL -> MaintenanceRepository : register maintenance
-            activate MaintenanceRepository
-
-                ref over MaintenanceRepository
-                    Create Maintenance
+                ref over VehicleRepository
+                    Register Maintenance
                 end
 
-               MaintenanceRepository --> CTRL : maintenance
-               deactivate
-               CTRL --> UI : maintenance
+            CTRL <-- VehicleRepository : maintenance
+            deactivate
+
+               CTRL --> UI: maintenance
                deactivate
                UI --> VFM : Displays maintenance data
                UI --> VFM : requests confirmation
