@@ -5,26 +5,19 @@ skinparam shadowing false
 
 autonumber 3
 
-participant ":RegisterMaintenanceController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
+participant ":VehicleController" as CTRL
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 
         -> CTRL : getVehiclesList()
         activate CTRL
             group Get Vehicle List
-            CTRL -> RepositorySingleton : getInstance()
-            activate RepositorySingleton
 
-                RepositorySingleton --> CTRL: repositories
-            deactivate RepositorySingleton
+            CTRL -> VehicleRepository : getVehicleRepository()
+            activate VehicleRepository
 
-            CTRL -> PLAT : getVehicleRepository()
-            activate PLAT
-
-                PLAT --> CTRL: VehicleRepository
-            deactivate PLAT
+                VehicleRepository --> CTRL: VehicleRepository
+            deactivate VehicleRepository
 
             CTRL -> VehicleRepository : getVehiclesList()
             activate VehicleRepository
