@@ -3,40 +3,36 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant ":CreateTaskController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant ":CollaboratorController" as CTRL
+participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
+participant ":Collaborator" as CLB
+participant "jobRepository:\nJobRepository" as jobRepository
 
 autonumber 12
--> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
-
-autonumber 12.1
+-> CTRL : create collaborator
+autonumber 13
 
 activate CTRL
-    group Get Task Category
-        CTRL -> RepositorySingleton : getInstance()
-        activate RepositorySingleton
+    group Register collaborator
+        CTRL -> CLB** : createCLB(name, birthdate, contactMobile, email, address,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
 
-            RepositorySingleton --> CTRL: repositories
-        deactivate RepositorySingleton
+        activate CLB
+            CLB -> CLB : verifyCollaborator()
 
-        CTRL -> PLAT : getTaskCategoryRepository()
-        activate PLAT
+            CLB -> CTRL : returnCollaborator()
+        deactivate CLB
 
-            PLAT -> CTRL : taskCategoryRepository
-        deactivate PLAT
+        CTRL -> CLBREP: addCollaborator(collaborator)
 
-        CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-        activate TaskCategoryRepository
+        activate CLBREP
 
-            TaskCategoryRepository --> CTRL : taskCategory
-        deactivate TaskCategoryRepository
+            CLBREP -> CTRL : sucess
+        deactivate CLBREP
 
     end group
 
-    autonumber 13
-    <-- CTRL : taskCategory
+    autonumber 18
+    <-- CTRL : sucess
 
 deactivate CTRL
 

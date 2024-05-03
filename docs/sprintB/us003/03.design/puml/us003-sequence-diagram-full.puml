@@ -7,6 +7,7 @@ autonumber
 
 actor "HRM" as HRM
 participant ":RegisterCollaboratorUI" as UI
+participant ":JobController" as JC
 participant ":CollaboratorController" as CTRL
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
 participant ":Collaborator" as CLB
@@ -24,20 +25,20 @@ activate HRM
         HRM -> UI : types requested data
         activate UI
 
-        UI -> CTRL: get job List
+        UI -> JC: get job list
 
 
-        activate CTRL
+        activate JC
 
-            CTRL -> jobRepository : getJobs()
+            JC -> jobRepository : getJobs()
             activate jobRepository
 
-            jobRepository -> CTRL : jobsList
+            jobRepository -> JC : jobsList
             deactivate jobRepository
 
 
-            CTRL --> UI : job List
-        deactivate CTRL
+            JC --> UI : job list
+        deactivate JC
 
 
 
