@@ -13,7 +13,7 @@ autonumber 12
 autonumber 13
 
 activate CTRL
-    group Register collaborator
+    group Register Collaborator
         CTRL -> CLB** : createCLB(name, birthdate, contactMobile, email, address,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
 
         activate CLB
