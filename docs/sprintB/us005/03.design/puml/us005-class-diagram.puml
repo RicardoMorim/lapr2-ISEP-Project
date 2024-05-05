@@ -1,4 +1,4 @@
-x@startuml
+@startuml
 'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -9,13 +9,10 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-
 class Skill {
     - String name
     - String informalDescription
     - String technicalDescription
-
-
     + Skill(name, skillCategory, informalDescription, technicalDescription)
 }
 
@@ -23,45 +20,48 @@ class SkillController {
     + getSkillList()
 }
 
-
-
-class AddSkillToACollaboratorUI {
-
-    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
-    + getSkillList()
+class Collaborator {
+    - String name
+    - String birthdate
+    - String admission date
+    - String address
+    - Int contact
+    - String identification document
+    - String identification number
+    - List<Skill> skills
 }
 
-class CollaboratorRepository{
-    + getCollaborators()
-}
-
-class SkillRepository{
-    + getSkillList()
-}
-
-class Collaborators{
-    -String name
-    -String birthdate
-    -String admission date
-    -String address
-    -Int contact
-    -String identification document
-    -String identification number
-    -List<Skill> skills
-}
-
-class CollaboratorController{
-
+class CollaboratorController {
     + getCollaboratorList()
     + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
 }
 
-AddSkillToACollaboratorUI "1" --> "1" SkillController: starts
-SkillController "1" -> "1" SkillRepository: accesses
-AddSkillToACollaboratorUI "1" -> "1" CollaboratorController: starts
-CollaboratorController "1" -> "1" CollaboratorRepository: accesses
-CollaboratorRepository "1" -> "0..." Collaborators : Contains
-SkillRepository "1" -> "0..." Skill : Contains
+class AddSkillToACollaboratorUI {
+    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
+    + getSkillList()
+}
 
+class CollaboratorRepository {
+    + getCollaborators()
+}
+
+class SkillRepository {
+    + getSkillList()
+}
+
+class Repositories {
+    + getInstance()
+    + getCollaboratorRepository()
+    + getSkillRepository()
+}
+
+AddSkillToACollaboratorUI "1" --> "1" SkillController: starts
+SkillController "1" -> "1" Repositories: accesses
+AddSkillToACollaboratorUI "1" -> "1" CollaboratorController: starts
+CollaboratorController "1" -> "1" Repositories: accesses
+Repositories --> CollaboratorRepository: contains
+Repositories --> SkillRepository: contains
+CollaboratorRepository "1" -> "0..." Collaborator : Contains
+SkillRepository "1" -> "0..." Skill : Contains
 
 @enduml

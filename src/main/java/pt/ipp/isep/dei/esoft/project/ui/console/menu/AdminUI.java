@@ -1,7 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
+import pt.ipp.isep.dei.esoft.project.application.controller.*;
+import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -12,15 +13,30 @@ import java.util.List;
  */
 
 public class AdminUI implements Runnable {
+    private CollaboratorController collaboratorController;
+    private JobController jobController;
+    private SkillController skillController;
+    private VehicleController vehicleController;
+
     public AdminUI() {
+        System.out.println("AdminUI");
+        this.collaboratorController = new CollaboratorController();
+        this.jobController = new JobController();
+        this.skillController = new SkillController();
+        this.vehicleController = new VehicleController();
     }
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-
-        options.add(new MenuItem("Option 2", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("Option 3", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Register a skill that a collaborator may have.", new RegisterSkillUI()));
+        options.add(new MenuItem("Resgister a job that a collaborator may have.", new RegisterJobUI()));
+        options.add(new MenuItem("Register a collaborator", new RegisterCollaboratorUI()));
+        options.add(new MenuItem("Add a skill to a collaborator", new AddSkillToCollaboratorUI()));
+        options.add(new MenuItem("Generate a team proposal automatically", new GenerateTeamProposalUI()));
+        options.add(new MenuItem("Register Vehicle", new RegisterVehicleUI()));
+        options.add(new MenuItem("Register Vehicle maintenance", new RegisterVehicleMaintenanceUI()));
+        options.add(new MenuItem("Get a list of vehicles needing maintenance", new ListVehiclesNeedingMaintenanceUI()));
+        options.add(new MenuItem("Get best water pipe routes.", new GetBestPipeRoutesUI()));
 
         int option = 0;
         do {
