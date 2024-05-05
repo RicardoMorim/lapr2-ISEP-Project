@@ -1,0 +1,181 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HRM" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as GlobRepo
+participant "repositories\n:Repositories" as PLAT
+participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
+participant ":Collaborator" as CLB
+participant "jobRepository:\nJobRepository" as jobRepository
+
+
+activate HRM
+
+        HRM -> UI : wants to register a new collaborator
+        activate UI
+
+        UI -> CTRL** : create
+
+        UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
+        deactivate UI
+
+        HRM -> UI : types requested data
+        activate UI
+
+        UI -> CTRL: get job List
+        deactivate UI
+
+        activate CTRL
+
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
+
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
+
+            CTRL -> PLAT : getJobRepository()
+            activate PLAT
+
+            PLAT -->  CTRL: jobRepository
+            deactivate PLAT
+
+            CTRL -> jobRepository : getJobs()
+            activate jobRepository
+
+            jobRepository --> CTRL : jobsList
+            deactivate collaboratorRepository
+
+
+            CTRL --> UI : job List
+        deactivate CTRL
+
+        activate UI
+
+        UI --> HRM : shows the list of jobs and requests to select one
+        deactivate UI
+
+
+        HRM -> UI : select the job
+        activate UI
+
+        UI --> HRM: shows all data and requests for confirmation
+        deactivate UI
+
+        HRM -> UI: confirms the data
+        activate UI
+
+        UI -> CTRL : create collaborator
+
+        deactivate UI
+
+        activate CTRL
+
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
+
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
+
+            CTRL -> PLAT : getCollaboratorRepository()
+            activate PLAT
+
+            PLAT -->  CTRL: collaboratorRepository
+            deactivate PLAT
+
+            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+        deactivate CTRL
+
+        activate CLBREP
+        CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+        deactivate CLBREP
+
+        activate CLB
+        CLB -> CLB : verifyFilled(collaborator)
+        activate CLB
+        CLB -> CLB : verifyMobile(collaborator)
+        activate CLB
+        CLB -> CLB : verifyEmail(collaborator)
+        activate CLB
+        CLB -> CLB : verifyZipCode(collaborator)
+        activate CLB
+        CLB -> CLB : verifyBirth(collaborator)
+        activate CLB
+        CLB -> CLB : verifyTaxpayerNumber(collaborator)
+        activate CLB
+
+        loop for all documentType objects
+            CLB -> CLB : verifyDocumentCode(collaborator)
+            activate CLB
+
+            CLB --> CLB
+            deactivate CLB
+        end loop
+
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+        CLB --> CLB
+        deactivate CLB
+
+        CLB -->CLBREP : collaborator
+        deactivate CLB
+        activate CLBREP
+
+        CLBREP -> CLBREP : check for duplicates (taxpayerNumber)
+        activate CLBREP
+        CLBREP --> CLBREP
+        deactivate CLBREP
+
+        CLBREP -> CLBREP: addCollaborator(collaborator)
+        CLBREP --> CTRL : collaborator
+        deactivate CLBREP
+
+        CLBREP -> CLBREP: addCollaborator(collaborator)
+        CLBREP --> CTRL : collaborator
+        deactivate CLBREP
+        activate CTRL
+
+
+
+        CTRL --> UI : success
+        deactivate CTRL
+
+        activate UI
+        UI --> HRM : shows success message (collaborator created successfully)
+        deactivate UI
+
+
+deactivate HRM
+
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml

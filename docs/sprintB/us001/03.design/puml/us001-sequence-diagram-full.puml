@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as HRM
+participant ":RegisterSkillsUI" as RSUI
+participant ":RegisterSkillsController" as RSC
+participant ":Repositories" as R
+participant "repositories\n:Repositories" as RR
+participant "taskCategoryRepository\n:TaskCategoryRepository" as TCR
+
+activate HRM
+HRM -> RSUI: asks to register a new skill that a collaborator may have
+activate RSUI
+    RSUI -> RSC**: create
+    RSUI -> RSC: get all skill categories
+    activate RSC
+        RSC -> R: get Instance()
+        activate R
+        RSC <-- R: repositories
+        deactivate R
+        RSC -> RR: getCollaboratorRepository()
+        activate RR
+        RSC <-- RR: CollaboratorRepository
+        deactivate RR
+        RSC -> TCR: getAllCollaborators()
+        activate TCR
+        RSC <-- TCR: collaboratorsList
+        deactivate TCR
+    RSUI <-- RSC: collaboratorList
+    deactivate RSC
+HRM <-- RSUI : shows the list of collaborators to select
+deactivate RSUI
+HRM -> RSUI: selects a collaborator
+activate RSUI
+RSUI <-- HRM: requests skill(s) to be registered
+
+loop while HRM enters y
+deactivate RSUI
+HRM -> RSUI: selects a skill category
+activate RSUI
+HRM <-- RSUI: asks if there are more skill(s) to be registered
+deactivate RSUI
+HRM -> RSUI: enter x to stop or y to continue entering skills
+activate RSUI
+end
+    RSUI -> RSC: addSkills(collaborator, skillList)
+    activate RSC
+        RSC -> TCR  : addSkills(collaborator, skillList)
+        activate TCR
+            TCR -> TCR  : addSkills(collaborator, skillList)
+            RSC <-- TCR : operation success
+        deactivate TCR
+        RSUI <-- RSC: operation success
+    deactivate RSC
+HRM <-- RSUI: displays operation success
+deactivate HRM
+@enduml
