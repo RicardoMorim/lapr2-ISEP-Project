@@ -17,6 +17,7 @@ class Collaborator {
     contact
     identification document
     identification number
+    skills
 }
 
 class TechnicalSkill {
