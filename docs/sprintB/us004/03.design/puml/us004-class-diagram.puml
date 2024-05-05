@@ -1,4 +1,4 @@
-x@startuml
+@startuml
 'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -9,59 +9,79 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-
 class Skill {
     - String name
-    - String informalDescription
-    - String technicalDescription
+    - String shortDescription
+    - String Description
 
-
-    + Skill(name, skillCategory, informalDescription, technicalDescription)
+    + Skill(name, shortDescription, Description)
 }
 
 class SkillController {
     + getSkillList()
-    + assignSkillToEmployee(skill, employee)
+    + registerSkill(skill)
+    + updateSkill(skill, name, shortDescription, Description)
+    + removeSkill(skill)
 }
 
+class Collaborator {
+    - String email
+    - String name
+    - String address
+    - String phone
+    - Job job
+    - List<Skill> skills
+    - Date birthDate
+    - Date admissionDate
+    - String IDtype
+    - int taxpayerNumber
+    - int citizenNumber
+    - boolean isFree
 
+    + Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber, skills)
+    + addSkill(skill)
+    + removeSkill(skill)
+}
 
-class AddSkillToACollaboratorUI {
+class CollaboratorController {
+    + checkForDuplicateCollaborator(collaborator)
+    + registerCollaborator(name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + updateCollaborator(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + removeCollaborator(collaborator)
+    + addSkillToACollaborator(skill, collaborator)
+    + removeSkillFromACollaborator(skill, collaborator)
+}
 
-    + AddASkillsToACollaborator(skill, collaborator)
+class AddSkillToCollaboratorUI {
+}
+
+class SkillRepository {
+    + add(skill)
+    + remove(skill)
+    + update(skill, name, shortDescription, Description)
+    + getSkills()
+}
+
+class CollaboratorRepository {
+    + add(collaborator)
+    + remove(collaborator)
+    + update(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
     + getCollaborators()
-    + getSkillList()
 }
 
-class CollaboratorRepository{
-    + getCollaborators()
+class Repositories {
+    + getInstance()
+    + getSkillRepository()
+    + getCollaboratorRepository()
 }
 
-class SkillRepository{
-    + getSkillList()
-}
-class Collaborators{
-    -String name
-    -String birthdate
-    -String admission date
-    -String address
-    -Int contact
-    -String identification document
-    -String identification number
-    -List<Skill> skills
-}
-
-class CollaboratorController{
-    + getCollaboratorByEmail(collaborators)
-    + AddASkillsToACollaborator(Skills, collaborator)
-}
-
-AddSkillToACollaboratorUI --> SkillController
-SkillController -> SkillRepository
-AddSkillToACollaboratorUI -> CollaboratorController
-CollaboratorController -> CollaboratorRepository
-CollaboratorRepository "1" -> "0..." Collaborators : Contains
-SkillRepository "1" -> "0..." Skill : Contains
-
+AddSkillToCollaboratorUI --> SkillController
+AddSkillToCollaboratorUI --> CollaboratorController
+SkillController --> Repositories
+CollaboratorController --> Repositories
+Repositories --> SkillRepository
+Repositories --> CollaboratorRepository
+CollaboratorRepository "1" --> "0..." Collaborator : Contains
+SkillRepository "1" --> "0..." Skill : Contains
 
 @enduml
