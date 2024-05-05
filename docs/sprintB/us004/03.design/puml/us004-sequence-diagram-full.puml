@@ -11,29 +11,52 @@ participant ":AddSkillUI" as UI
 participant ":SkillController" as SkillCTRL
 participant ":CollaboratorController" as CollaboratorCTRL
 participant "SkillRepository:\nSkillRepository" as SkillRepository
+participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 
+
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 
 activate ADM
     ADM -> UI : asks to add one or more Skills to a collaborator
     activate UI
-        UI -> ADM: Asks the desired collaborator's email
+    UI -> CollaboratorCTRL** : create
+       UI -> CollaboratorCTRL: getCollaboratorList()
+       activate CollaboratorCTRL
+                       CollaboratorCTRL -> RepositorySingleton : getInstance()
+                       activate RepositorySingleton
+
+                           RepositorySingleton --> CollaboratorCTRL: repositories
+                       deactivate RepositorySingleton
+
+                       CollaboratorCTRL -> PLAT : getCollaboratorRepository()
+                       activate PLAT
+
+                           PLAT --> CollaboratorCTRL: CollaboratorRepository
+                       deactivate PLAT
+
+
+
+                       CollaboratorCTRL -> CollaboratorRepository : getCollaboratorList()
+                       activate CollaboratorRepository
+
+                    CollaboratorRepository -> CollaboratorCTRL: returns collaboratorList
+                deactivate CollaboratorRepository
+           CollaboratorCTRL -> UI: returns collaboratorList
+       deactivate CollaboratorCTRL
+       UI -> ADM: shows the collaborator list and asks to choose one
     deactivate UI
-    ADM -> UI : writes the collaborator's email
+    ADM -> UI : chooses the collaborator
 
     activate UI
-
-        UI -> CollaboratorCTRL: getCollaboratorByEmail(email)
-        activate CollaboratorCTRL
-            alt collaborator not found
-                CollaboratorCTRL -> UI: returns an error
-                UI -> ADM: shows the error and quits the operation
-            end
-
-                CollaboratorCTRL -> UI: returns collaborator
-        deactivate CollaboratorCTRL
-        UI -> SkillCTRL: getSkills()
+        UI -> SkillCTRL** : create
+        UI -> SkillCTRL : getSkills()
         activate SkillCTRL
-            SkillCTRL -> SkillRepository: getSkills()
+            SkillCTRL -> PLAT : getSkillRepository()
+            activate PLAT
+            PLAT --> SkillCTRL: SkillRepository
+            deactivate PLAT
+            SkillCTRL -> SkillRepository: getSkillsThatTheCollaboratorDoesNotHave(collaborator)
             activate SkillRepository
                 SkillRepository -> SkillCTRL: returns skills
             deactivate SkillRepository
@@ -46,15 +69,14 @@ activate ADM
     ADM -> UI: chooses the skills that he wants to add
 
     activate UI
-        UI -> SkillCTRL: addSkills(collaborator, skills)
-        activate SkillCTRL
-            SkillCTRL -> CollaboratorCTRL: addSkills(collaborator, skills)
-            activate CollaboratorCTRL
-                CollaboratorCTRL -> SkillCTRL: returns the added skills
-            deactivate CollaboratorCTRL
-            SkillCTRL -> UI: returns the added skills
-            deactivate SkillCTRL
-        UI -> ADM: shows the updated skill list
+        UI -> CollaboratorCTRL: addSkills(collaborator, skills)
+        activate CollaboratorCTRL
+        loop for each skill in skills
+            CollaboratorCTRL -> Collaborator** : addSkill(skill)
+        end
+        CollaboratorCTRL -> UI: returns success
+    deactivate CollaboratorCTRL
+    UI -> ADM: shows the updated collaborator information
     deactivate UI
 deactivate ADM
 
