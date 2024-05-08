@@ -47,7 +47,7 @@ class Repositories {
     + getVehicleRepository()
 }
 
-class ListMaintenanceController {
+class VehicleController {
     + getVehiclesList()
     + generateMaintenanceList(vehiclesList)
 }

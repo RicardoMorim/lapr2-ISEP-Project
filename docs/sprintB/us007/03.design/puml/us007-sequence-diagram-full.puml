@@ -9,6 +9,8 @@ autonumber
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":RegisterMaintenanceUI" as UI
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories:\nRepositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 activate VFM
@@ -18,6 +20,20 @@ activate VFM
 
         UI -> CTRL : getVehiclesList()
         activate CTRL
+
+        CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT : getVehicleRepository()
+        activate PLAT
+
+            PLAT --> CTRL: VehicleRepository
+        deactivate PLAT
+
+
 
             CTRL -> VehicleRepository : getVehiclesList()
             activate VehicleRepository
@@ -46,7 +62,15 @@ activate VFM
             VFM -> UI : Types data (date, current Km)
             activate UI
 
+            UI -> CTRL : register maintenance
             activate CTRL
+
+               CTRL -> PLAT : getMaintenanceRepository()
+                        activate PLAT
+
+                        PLAT --> CTRL : MaintenanceRepository
+                        deactivate
+
 
             CTRL -> VehicleRepository : register maintenance
             activate VehicleRepository
@@ -55,7 +79,7 @@ activate VFM
 
                VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
                VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
-               VehicleRepository --> VehicleRepository : maintenance
+               VehicleRepository -> VehicleRepository : maintenance
                deactivate
                VehicleRepository --> CTRL : maintenance
                deactivate

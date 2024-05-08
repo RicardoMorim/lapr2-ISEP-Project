@@ -1,23 +1,32 @@
 @startuml
+@startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-autonumber 3
+autonumber
+
 
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 
         -> CTRL : getVehiclesList()
         activate CTRL
             group Get Vehicle List
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
 
-            CTRL -> VehicleRepository : getVehicleRepository()
-            activate VehicleRepository
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
 
-                VehicleRepository --> CTRL: VehicleRepository
-            deactivate VehicleRepository
+            CTRL -> PLAT : getVehicleRepository()
+            activate PLAT
+
+                PLAT --> CTRL: VehicleRepository
+            deactivate PLAT
 
             CTRL -> VehicleRepository : getVehiclesList()
             activate VehicleRepository
@@ -28,5 +37,6 @@ participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
             end
              <-- CTRL : vehicleList
             deactivate CTRL
+
 
 @enduml

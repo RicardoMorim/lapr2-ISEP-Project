@@ -9,6 +9,8 @@ autonumber
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":RegisterMaintenanceUI" as UI
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 activate VFM
@@ -47,6 +49,12 @@ activate VFM
 
             UI -> CTRL : register maintenance
             activate CTRL
+
+            CTRL -> PLAT : getMaintenanceRepository()
+            activate PLAT
+
+            PLAT --> CTRL : MaintenanceRepository
+            deactivate
 
             CTRL -> VehicleRepository : register maintenance
             activate VehicleRepository
