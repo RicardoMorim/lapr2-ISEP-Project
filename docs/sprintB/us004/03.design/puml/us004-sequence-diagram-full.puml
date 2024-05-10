@@ -52,6 +52,11 @@ activate ADM
         UI -> SkillCTRL** : create
         UI -> SkillCTRL : getSkills()
         activate SkillCTRL
+        SkillCTRL -> RepositorySingleton : getInstance()
+             activate RepositorySingleton
+
+                  RepositorySingleton --> SkillCTRL: repositories
+             deactivate RepositorySingleton
             SkillCTRL -> PLAT : getSkillRepository()
             activate PLAT
             PLAT --> SkillCTRL: SkillRepository
