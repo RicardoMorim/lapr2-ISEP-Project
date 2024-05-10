@@ -13,11 +13,11 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories:\nRepositories" as PLAT
 participant "vehicleRepository\n:VehicleRepository" as vehicleRep
 participant "vehicle\n:Vehicle" as vehicle
-participant "vehicleAttributes\n:VehicleAttributes" as vehicleAtri
+
 
 activate FM
 
-        FM -> UI : requests to register a new vehicleAtri
+        FM -> UI : requests to register a new vehicleRep
         activate UI
 
         UI --> FM : asks for vehicle plate
@@ -63,16 +63,16 @@ activate FM
                                         RepositorySingleton --> CTRL: repositories
                                     deactivate RepositorySingleton
 
-                                    CTRL -> PLAT : getVehicleAttributes()
+                                    CTRL -> PLAT : getVehicleRepository()
                                     activate PLAT
 
-                                        PLAT -> CTRL : vehicleAttributes
+                                        PLAT -> CTRL : vehicleRepository
                                     deactivate PLAT
-        CTRL -> vehicleAtri : getVehicleBrandsList()
-        activate vehicleAtri
+        CTRL -> vehicleRep : getVehicleBrandsList()
+        activate vehicleRep
 
-        vehicleAtri --> CTRL : brandsList
-        deactivate vehicleAtri
+        vehicleRep --> CTRL : brandsList
+        deactivate vehicleRep
         CTRL --> UI : brandsList
         deactivate CTRL
         UI --> FM : asks to select brand
@@ -87,15 +87,15 @@ activate FM
                                         RepositorySingleton --> CTRL: repositories
                                     deactivate RepositorySingleton
 
-                                    CTRL -> PLAT : getVehicleAttributes()
+                                    CTRL -> PLAT : getVehicleRepository()
                                     activate PLAT
 
-                                        PLAT -> CTRL : vehicleAttributes
+                                        PLAT -> CTRL : vehicleRepository
                                     deactivate PLAT
-        CTRL -> vehicleAtri : getVehicleModelsList(brand)
-        activate vehicleAtri
-        vehicleAtri --> CTRL : modelsList
-        deactivate vehicleAtri
+        CTRL -> vehicleRep : getVehicleModelsList(brand)
+        activate vehicleRep
+        vehicleRep --> CTRL : modelsList
+        deactivate vehicleRep
         CTRL --> UI : modelsList
         deactivate CTRL
         UI --> FM : asks to select model
@@ -110,15 +110,15 @@ activate FM
                                         RepositorySingleton --> CTRL: repositories
                                     deactivate RepositorySingleton
 
-                                    CTRL -> PLAT : getVehicleAttributes()
+                                    CTRL -> PLAT : getVehicleRepository()
                                     activate PLAT
 
-                                        PLAT -> CTRL : vehicleAttributes
+                                        PLAT -> CTRL : vehicleRepository
                                     deactivate PLAT
-        CTRL -> vehicleAtri : getVehicleTypesList(model)
-        activate vehicleAtri
-        vehicleAtri --> CTRL : typesList
-        deactivate vehicleAtri
+        CTRL -> vehicleRep : getVehicleTypesList(model)
+        activate vehicleRep
+        vehicleRep --> CTRL : typesList
+        deactivate vehicleRep
         CTRL --> UI : typesList
         deactivate CTRL
         UI --> FM : asks to select type
