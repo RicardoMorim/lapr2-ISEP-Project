@@ -9,6 +9,8 @@ actor "HRM" as HRM
 participant ":RegisterCollaboratorUI" as UI
 participant ":JobController" as JC
 participant ":CollaboratorController" as CTRL
+participant ":Repositories" as GlobRepo
+participant "repositories\n:Repositories" as PLAT
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
 participant ":Collaborator" as CLB
 participant "jobRepository:\nJobRepository" as jobRepository
@@ -28,7 +30,22 @@ activate HRM
         UI -> JC: get job list
 
 
+
+
+
         activate JC
+
+            JC -> GlobRepo : getInstance()
+            activate GlobRepo
+
+            GlobRepo --> JC : repositories
+            deactivate GlobRepo
+
+            JC -> PLAT : getJobRepository()
+            activate PLAT
+
+            PLAT -->  JC: jobRepository
+            deactivate PLAT
 
             JC -> jobRepository : getJobs()
             activate jobRepository
@@ -38,6 +55,7 @@ activate HRM
 
 
             JC --> UI : job list
+
         deactivate JC
 
 
@@ -61,9 +79,28 @@ activate HRM
 
         activate CTRL
 
-            CTRL -> CLB** : createCLB(name, birthdate, contactMobile, email, address,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
 
-                activate CLB
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
+
+            CTRL -> PLAT : getCollaboratorRepository()
+            activate PLAT
+
+            PLAT -->  CTRL: collaboratorRepository
+            deactivate PLAT
+
+            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+
+
+            activate CLBREP
+            CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+
+            deactivate CLBREP
+
+
+            activate CLB
                     CLB -> CLB : verifyCollaborator()
 
                     CLB -> CTRL : returnCollaborator()
