@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US012 - As a GSM, I want to import a .csv file 
 
 ## 3. Design - User Story Realization
 

@@ -9,12 +9,15 @@ autonumber
 actor "Fleet Manager (FM)" as FM
 participant ":RegisterVehicleUI" as UI
 participant ":VehicleController" as CTRL
-participant "vehicle\n:Vehicle" as vehicleRep
-participant "vehicleAttributes\n:VehicleAttributes" as vehicle
+participant ":Repositories" as RepositorySingleton
+participant "repositories:\nRepositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as vehicleRep
+participant "vehicle\n:Vehicle" as vehicle
+participant "vehicleAttributes\n:VehicleAttributes" as vehicleAtri
 
 activate FM
 
-        FM -> UI : requests to register a new vehicle
+        FM -> UI : requests to register a new vehicleAtri
         activate UI
 
         UI --> FM : asks for vehicle plate
@@ -24,10 +27,19 @@ activate FM
         activate UI
         UI -> UI : validates vehicle plate
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
             UI -> CTRL : getVehicleByPlate(plate)
             activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
 
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                                        CTRL -> PLAT : getVehicleRepository()
+                                        activate PLAT
+
+                                            PLAT -> CTRL : vehicleRepository
+                                        deactivate PLAT
             CTRL -> vehicleRep : getVehicleByPlate(plate)
             activate vehicleRep
 
@@ -45,12 +57,22 @@ activate FM
         UI -> UI : validates vehicle info
         UI -> CTRL : getVehicleBrandsList()
         activate CTRL
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
 
-        CTRL -> vehicle : getVehicleBrandsList()
-        activate vehicle
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
 
-        vehicle --> CTRL : brandsList
-        deactivate vehicle
+                                    CTRL -> PLAT : getVehicleAttributes()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleAttributes
+                                    deactivate PLAT
+        CTRL -> vehicleAtri : getVehicleBrandsList()
+        activate vehicleAtri
+
+        vehicleAtri --> CTRL : brandsList
+        deactivate vehicleAtri
         CTRL --> UI : brandsList
         deactivate CTRL
         UI --> FM : asks to select brand
@@ -59,10 +81,21 @@ activate FM
         activate UI
         UI -> CTRL : getVehicleModelsList(brand)
         activate CTRL
-        CTRL -> vehicle : getVehicleModelsList(brand)
-        activate vehicle
-        vehicle --> CTRL : modelsList
-        deactivate vehicle
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleAttributes()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleAttributes
+                                    deactivate PLAT
+        CTRL -> vehicleAtri : getVehicleModelsList(brand)
+        activate vehicleAtri
+        vehicleAtri --> CTRL : modelsList
+        deactivate vehicleAtri
         CTRL --> UI : modelsList
         deactivate CTRL
         UI --> FM : asks to select model
@@ -71,10 +104,21 @@ activate FM
         activate UI
         UI -> CTRL : getVehicleTypesList(model)
         activate CTRL
-        CTRL -> vehicle : getVehicleTypesList(model)
-        activate vehicle
-        vehicle --> CTRL : typesList
-        deactivate vehicle
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleAttributes()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleAttributes
+                                    deactivate PLAT
+        CTRL -> vehicleAtri : getVehicleTypesList(model)
+        activate vehicleAtri
+        vehicleAtri --> CTRL : typesList
+        deactivate vehicleAtri
         CTRL --> UI : typesList
         deactivate CTRL
         UI --> FM : asks to select type
@@ -87,7 +131,22 @@ activate FM
         activate UI
         UI --> CTRL : saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
         activate CTRL
-        CTRL --> vehicleRep : saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+        CTRL --> vehicle : createNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+        activate vehicle
+        vehicle --> CTRL : vehicle
+        deactivate vehicle
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleRepository()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleRepository
+                                    deactivate PLAT
+        CTRL --> vehicleRep : storeVehicle(vehicle)
         activate vehicleRep
         vehicleRep --> CTRL : success
         deactivate vehicleRep
