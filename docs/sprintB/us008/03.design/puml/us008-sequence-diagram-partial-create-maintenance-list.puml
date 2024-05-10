@@ -4,9 +4,11 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
-autonumber 12
+autonumber 11
 -> CTRL : createMaintenanceList(vehiclesList)
 
 autonumber 12.1
@@ -14,24 +16,28 @@ autonumber 12.1
 activate CTRL
     group Create Maintenance List
 
-                        CTRL -> VehicleRepository : getMaintenanceRepository()
-                        activate VehicleRepository
+ CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
 
-                            VehicleRepository --> CTRL: MaintenanceRepository
-                        deactivate VehicleRepository
+        RepositorySingleton --> CTRL: repositories
+    deactivate RepositorySingleton
 
-                        CTRL -> VehicleRepository : createMaintenanceList(vehiclesList)
-                        activate VehicleRepository
+    CTRL -> PLAT : getVehicleRepository()
+    activate PLAT
 
-                        VehicleRepository --> CTRL : maintenanceList
-                        deactivate VehicleRepository
+        PLAT --> CTRL: VehicleRepository
+    deactivate PLAT
 
-                    deactivate CTRL
+    CTRL -> VehicleRepository : createMaintenanceList(vehiclesList)
+    activate VehicleRepository
+
+    VehicleRepository --> CTRL : maintenanceList
+    deactivate VehicleRepository
+
     end group
 
     autonumber 13
     <-- CTRL : taskCategory
-
 deactivate CTRL
 
 @enduml

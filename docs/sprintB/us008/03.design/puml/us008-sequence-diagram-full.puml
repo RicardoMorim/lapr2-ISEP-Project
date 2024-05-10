@@ -9,18 +9,33 @@ autonumber
 actor "Vehicle and Equipment Fleet Manager (VFM)" as VFM
 participant ":ListMaintenanceUI" as UI
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
 
 activate VFM
 
-    VFM -> UI :list vehicles needing maintenance
+    VFM -> UI :requests to list vehicles needing maintenance
     activate UI
 
 
 
         UI -> CTRL : getVehiclesList()
         activate CTRL
+
+         CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT : getVehicleRepository()
+        activate PLAT
+
+            PLAT --> CTRL: VehicleRepository
+        deactivate PLAT
+
 
             CTRL -> VehicleRepository : getVehiclesList()
             activate VehicleRepository
@@ -35,8 +50,11 @@ activate VFM
         UI -> CTRL : generateMaintenanceList(vehiclesList)
         activate CTRL
 
-            CTRL -> CTRL : createMaintenanceList(vehiclesList)
+            CTRL -> VehicleRepository : createMaintenanceList(vehiclesList)
+            activate VehicleRepository
 
+            VehicleRepository --> CTRL: maintenanceList
+            deactivate
 
             CTRL --> UI : maintenanceList
         deactivate CTRL

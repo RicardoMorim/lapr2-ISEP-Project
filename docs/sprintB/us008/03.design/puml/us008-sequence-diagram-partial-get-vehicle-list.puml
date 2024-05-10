@@ -8,29 +8,37 @@ autonumber
 'hide footbox
 
 participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 
-autonumber 3
+autonumber 2
 
  -> CTRL : getVehiclesList()
-autonumber 3.1
+autonumber 2.1
 activate CTRL
     group Get Vehicle List
 
-            CTRL ->VehicleRepository : getVehicleRepository()
-            activate VehicleRepository
+CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
 
-            VehicleRepository --> CTRL: VehicleRepository
-            deactivate VehicleRepository
+            RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
 
-            CTRL -> VehicleRepository : getVehiclesList()
-            activate VehicleRepository
+        CTRL -> PLAT : getVehicleRepository()
+        activate PLAT
 
-            VehicleRepository --> CTRL : vehiclesList
-            deactivate VehicleRepository
+            PLAT --> CTRL: VehicleRepository
+        deactivate PLAT
+
+        CTRL -> VehicleRepository : getVehiclesList()
+        activate VehicleRepository
+
+        VehicleRepository --> CTRL : vehiclesList
+        deactivate VehicleRepository
 
     end
 
-    autonumber 4
+    autonumber 3
     <-- CTRL  : vehicleList
 deactivate CTRL
 
