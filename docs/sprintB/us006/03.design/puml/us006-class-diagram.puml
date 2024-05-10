@@ -21,7 +21,7 @@ class VehicleController {
 class repositories {
 + getInstance()
 + getVehicleRepository()
-+ getVehicleAttributes()
+
 }
 
 class Vehicle {
@@ -43,24 +43,17 @@ class VehicleRepository {
 
     + storeVehicle(vehicle)
     + getVehicleByPlate(plate)
-}
-
-class VehicleAttributes {
-    - String brand
-    - String model
-    - String type
-
     + getVehicleBrandsList()
-    + getVehicleModelsList(brand)
-    + getVehicleTypesList(model)
+        + getVehicleModelsList(brand)
+        + getVehicleTypesList(model)
 }
 
 
 RegisterVehicleUI .> VehicleController
 VehicleController ..> repositories
-VehicleController .> VehicleAttributes
+
 VehicleController .> VehicleRepository
 VehicleRepository --> "*"Vehicle
 repositories ..> VehicleRepository
-repositories .> VehicleAttributes
+
 @enduml
