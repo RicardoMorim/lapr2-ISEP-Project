@@ -7,6 +7,10 @@ skinparam shadowing false
 
 participant ":JobController" as JC
 participant "jobRepository:\nJobRepository" as jobRepository
+participant ":JobController" as JC
+participant ":Repositories" as GlobRepo
+participant "repositories\n:Repositories" as PLAT
+participant "jobRepository:\nJobRepository" as jobRepository
 
 
 autonumber 3
@@ -15,13 +19,24 @@ autonumber 4
 activate JC
 
     group Get Job List
-        JC -> jobRepository: getJobs()
 
-        activate jobRepository
+        JC -> GlobRepo : getInstance()
+            activate GlobRepo
 
-        jobRepository -> JC: jobsList
-        deactivate jobRepository
+            GlobRepo --> JC : repositories
+            deactivate GlobRepo
 
+            JC -> PLAT : getJobRepository()
+            activate PLAT
+
+            PLAT -->  JC: jobRepository
+            deactivate PLAT
+
+            JC -> jobRepository : getJobs()
+            activate jobRepository
+
+            jobRepository -> JC : jobsList
+            deactivate jobRepository
 
     end
     autonumber 7
