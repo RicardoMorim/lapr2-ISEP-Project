@@ -61,11 +61,21 @@ activate HRM
         activate CTRL
 
             ref over CTRL
-            Register Collaborator
+            Get Collaborator Repository
             end ref
 
+            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+            deactivate CTRL
 
-                CTRL --> UI : success
+            activate CLBREP
+
+            ref over CLBREP
+            Register a Collaborator
+            end ref
+
+            CLBREP --> UI : success
+            deactivate CLBREP
+
         deactivate CTRL
 
         activate UI

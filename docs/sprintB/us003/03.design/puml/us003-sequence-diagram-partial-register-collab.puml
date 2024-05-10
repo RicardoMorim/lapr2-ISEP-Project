@@ -6,11 +6,11 @@ skinparam shadowing false
 participant ":CollaboratorController" as CTRL
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
 participant ":Collaborator" as CLB
-participant "jobRepository:\nJobRepository" as jobRepository
 
-autonumber 12
--> CTRL : create collaborator
-autonumber 13
+autonumber 21
+-> CTRL : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+
+autonumber 22
 
 activate CTRL
     group Register Collaborator
@@ -31,7 +31,7 @@ activate CTRL
 
     end group
 
-    autonumber 18
+    autonumber 27
     <-- CTRL : sucess
 
 deactivate CTRL
