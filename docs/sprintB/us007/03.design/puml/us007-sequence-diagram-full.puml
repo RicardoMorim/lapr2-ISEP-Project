@@ -79,7 +79,7 @@ activate VFM
 
                VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
                VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
-               VehicleRepository -> VehicleRepository : maintenance
+
                deactivate
                VehicleRepository --> CTRL : maintenance
                deactivate

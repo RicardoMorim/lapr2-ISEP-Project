@@ -36,7 +36,7 @@ class BrandRepository {
     + getModelByBrand(brand)
 }
 
-class MaintenanceReport {
+class MaintenanceList {
     - reportDetails
 }
 
@@ -47,7 +47,7 @@ class Repositories {
     + getVehicleRepository()
 }
 
-class VehicleController {
+class ListMaintenanceController {
     + getVehiclesList()
     + generateMaintenanceList(vehiclesList)
 }
@@ -76,6 +76,6 @@ Repositories -> "1" BrandRepository
 ListMaintenanceController ..> Brand
 ListMaintenanceController ..> BrandRepository : brandRepository
 
-MaintenanceReport --> Vehicle
+MaintenanceList --> Vehicle
 
 @enduml

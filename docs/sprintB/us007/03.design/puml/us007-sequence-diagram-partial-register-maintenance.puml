@@ -16,7 +16,7 @@ participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 
                 VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
                 VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
-                    VehicleRepository -> VehicleRepository : maintenance
+
                end
 
                 <-- VehicleRepository : maintenance

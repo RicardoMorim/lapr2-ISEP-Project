@@ -1,0 +1,56 @@
+@startuml
+
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+'class FleetManager{
+'}
+
+class RegisterVehicleCheckupUI{
+}
+
+class RegisterVehicleCheckupController{
+__
++RegisterVehicleController()
++getVehicleRepository()
+}
+
+class Repositories{
+__
+-Repositories()
++getInstance(): Repositories
++getVehicleRepository()
+}
+
+class VehicleCheckupRepository{
++RegisterVehicleCheckup(idVehicle, date, currentKm)
+}
+
+class VehicleCheckup{
+- String idVehicle
+- String date
+- int currentKm
+}
+
+RegisterVehicleCheckupUI .d.> RegisterVehicleCheckupController
+
+RegisterVehicleCheckupController .d.> Repositories
+
+RegisterVehicleCheckupController .d.> VehicleCheckupRepository
+
+RegisterVehicleCheckupController .r.> VehicleCheckup
+
+Repositories --> Repositories : instance
+
+Repositories -->"1" VehicleCheckupRepository
+
+VehicleCheckupRepository "1"-d->"*" VehicleCheckup
+
+VehicleCheckup "*"-r->"1" FleetManager : registered by
+@enduml
