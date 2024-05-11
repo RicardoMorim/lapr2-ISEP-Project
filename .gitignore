@@ -2,9 +2,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/maven,intellij+all,eclipse,git,netbeans,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,intellij+all,eclipse,git,netbeans,java
 
-# TODO - take this line when ready to commit src code
-src*
-*.java
 
 ### Eclipse ###
 .metadata
