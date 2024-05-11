@@ -6,35 +6,29 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                         | Question: Which class is responsible for...                 | Answer                        | Justification (with patterns) |
-|:-------------------------------------------------------|:------------------------------------------------------------|:------------------------------|:------------------------------|
-| Step 1: asks to register a vehicle's check-up 		       | 	... interacting with the actor?                            | RegisterMaintenanceUI         | Pure Fabrication              |
-| 			  		                                                | 	... coordinating the US?                                   | RegisterMaintenanceController | Controller                    | 
-| Step 2: shows all registered vehicles needing check-up | 	... ... providing the Vehicles needing check-up list?      | VehicleRepository             | Information Expert            |
-|                                                        | 	... displaying the form containing the list of jobs?       | RegisterMaintenance           | Information Expert        |
-| Step 3: selects a vehicle                              | 	... temporarily keeping the inputted data?                 | RegisterMaintenance           | Information Expert            |
-| Step 4: requests data (idVehicle, date, currentKm)  		 | 	... displaying the form for the actor to input data?						 | RegisterMaintenance           | Information Expert            |
-| Step 5: types requested data  		                       | 	... temporarily keeping the inputted data?                 | RegisterMaintenance           | Information Expert            |
-| Step 6: shows all data and requests confirmation  		   | 	... displaying all information before submitting?          | RegisterMaintenance           | Information Expert            |
-| 			  		                                                | 	... displaying the form for the actor to confirm?          | RegisterMaintenance           | Information Expert            |
-| Step 7: confirms data  		                              | 	... instantiating a new check-up?                          | VehicleRepository             | Pure Fabrication              |
-| 			  		                                                | 	... saving the inputted data?                              | Maintenance                   | Information Expert            |
-| 			  		                                                | 	... validating the data locally (mandatory data)?          | Maintenance                   | Information Expert            |
-| 			  		                                                | 	... validating the data globally (duplicate data)?         | Vehicle                       | Information Expert            |
-| 			  		                                                | 	... saving the created check-up?                           | VehicleRepository             | Information Expert            |
-| Step 8: displays operation success  		                 | ... informing operation success?                            | RegisterMaintenance           | Information Expert            |          
+| Interaction ID | Question: Which class is responsible for...       | Answer            | Justification (with patterns)                                                                                                   |
+|:---------------|:--------------------------------------------------|:------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| Step 1         | 	... interacting with the actor?                  | ListMaintenanceUI | Pure Fabrication: ListMaintenanceUI there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		        | 	... coordinating the US?                         | VehicleController | Controller                                                                                                                      |
+| Step 2         | 	displaying the form for the actor to input data? | ListMaintenanceUI | IE: ListMaintenanceUI is responsible for interacting with the user (Fleet Manager)                                              |
+| Step 3	        | 	...instaliating a new vehicle's checkup?         | VehicleRepository | IE:                                                                                                                             |
+| 		             | 	...saving the inputted data?                     | VehicleCheckup    | IE:                                                                                                                             |
+| 		             | 	... validating all data (local validation)       | VehicleCheckup    | IE:                                                                                                                             |
+| 			  		        | 	... validating all data (global validation)?     | VehicleRepository | IE: VehicleRepository knows all its vehicle's checkups.                                                                         | 
+| 			  		        | 	... saving the registered vehicle checkup?       | VehicleRepository | IE: VehicleRepository owns all its vehicle's checkups.                                                                          | 
+| Step 4  		     | 	... informing operation success?                 | ListMaintenanceUI | IE: ListMaintenanceUI is responsible for user interactions.                                                                     |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Maintenance
+* Vehicle
+* VehicleCheckup
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
-* RegisterMaintenanceUI
-* RegisterMaintenanceController
-* MaintenanceRepository
+* ListMaintenanceUI
+* VehicleController
 * VehicleRepository
 
 ## 3.2. Sequence Diagram (SD)
@@ -61,8 +55,8 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Create Maintenance**
 
-![Sequence Diagram - Partial - Create Maintenance](svg/us007-sequence-diagram-partial-create-maintenance.svg)
+![Sequence Diagram - Partial - Register Maintenance](svg/us007-sequence-diagram-partial-register-maintenance.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us006-class-diagram.svg)
+![Class Diagram](svg/us007-class-diagram.svg)
