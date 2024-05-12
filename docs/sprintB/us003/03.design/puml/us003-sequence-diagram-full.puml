@@ -91,7 +91,7 @@ activate HRM
             PLAT -->  CTRL: collaboratorRepository
             deactivate PLAT
 
-            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+            CTRL --> CLBREP : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
 
 
             activate CLBREP
