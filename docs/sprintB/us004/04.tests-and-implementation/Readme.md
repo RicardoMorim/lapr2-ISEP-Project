@@ -1,70 +1,143 @@
-# US004 - Add a Skill to a Collaborator 
+# US004 - Add a Skill to a Collaborator
 
-## 4. Tests 
+## 4. Tests
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Ensure that a skill can be added
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+    @Test
+    void addSkill() {
+        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
+        List<Skill> newSkills = col.addSkill(skill);
+        Skill addedSkill = newSkills.get(0);
+        Skill colaboratorSkill = col.getSkills().get(0);
+        assertEquals(skill, addedSkill);
+        assertEquals(skill, colaboratorSkill);
+    }
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+**Test 2:** Ensure that a skill added in the constructor can be removed
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+    @Test
+    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
+        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
+        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
+        List<Skill> skills = new ArrayList<>();
+        skills.add(skill);
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
+        assertEquals(skill, col.getSkills().get(0));
+        col.removeSkill(skill);
+        assertTrue(col.getSkills().isEmpty());
+    }
 
-_It is also recommended to organize this content by subsections._ 
+**Test 3:** Ensure that a skill added later to the collaborator can be removed
+
+    @Test
+    void removeSkillWithSkillsAddedLater() {
+        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
+        col.addSkill(skill);
+        assertEquals(skill, col.getSkills().get(0));
+        col.removeSkill(skill);
+        assertTrue(col.getSkills().isEmpty());
+    }
+
+**Test 4:** Ensure that a skill cannot be null or have null parameters
+
+    @Test
+    void addNullSkill() {
+        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Skill AllNull = new Skill(null, null, null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            col.addSkill(AllNull);
+        });
+
+        Skill nameNull = new Skill(null, "Desc", "Descrição");
+        assertThrows(IllegalArgumentException.class, () -> {
+            col.addSkill(nameNull);
+        });
+        Skill DescNull = new Skill("nome", "Desc", null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            col.addSkill(DescNull);
+        });
+        Skill ShortDescNull = new Skill("nome", null, "Descrição");
+        assertThrows(IllegalArgumentException.class, () -> {
+            col.addSkill(ShortDescNull);
+        });
+    }
+
+**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
+
+    @Test
+    void removeUnexistingSkill() {
+        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
+        assertThrows(IllegalArgumentException.class, () -> {
+            col.removeSkill(skill);
+        });
+    }
+
 
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class CollaboratorController
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
-
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
-
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
+    Collaborator old = collaborator.clone();
+    collaborator.addSkill(skill);
+    collaboratorRepository.update(old, collaborator);
 }
 ```
 
-### Class Organization
+### Class CollaboratorRepository
+
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
+    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
+    boolean operationSuccess = false;
 
-    addTask(task);
-        
-    return task;
+    if (collaborators.contains(oldCollaborator)) {
+        this.collaborators.remove(oldCollaborator);
+        operationSuccess = this.collaborators.add(newCollaborator);
+    }
+
+    if (!operationSuccess) {
+        throw new IllegalArgumentException("Collaborator not found.");
+    }
+
+    return newCollaborator;
 }
 ```
+### Class Collaborator
 
+```java
+    public Collaborator clone() {
+        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
+    }
 
-## 6. Integration and Demo 
+    public List<Skill> addSkill(Skill skill) {
+        if (this.skills.contains(skill)) {
+            throw new IllegalArgumentException("Collaborator already contains the skill");
+        }
+        if (skill.getSkillValues().contains(null)) {
+            throw new IllegalArgumentException("No parameter of the skill cannot be null");
+        }
+        this.skills.add(skill);
+    
+        return this.skills;
+    }
+```
 
-* A new option on the Employee menu options was added.
+## 6. Integration and Demo
 
-* For demo purposes some tasks are bootstrapped while system starts.
+* A new option on the admin menu options was added.
 
+* For demo purposes some skills are bootstrapped while system starts.
 
 ## 7. Observations
 

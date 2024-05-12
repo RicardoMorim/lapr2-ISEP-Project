@@ -20,7 +20,7 @@ class Vehicle {
     registerDate
     acquisitionDate
     maintenanceFrequency
-    vehiclePlate
+    plate
 }
 
 @enduml
