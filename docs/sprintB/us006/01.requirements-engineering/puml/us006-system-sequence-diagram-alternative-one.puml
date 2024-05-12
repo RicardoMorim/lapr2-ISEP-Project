@@ -10,29 +10,42 @@ autonumber
 title System Sequence Diagram - US006
 activate FM
 
-FM -> System : Requests to register a vehicle
-loop while FM doesn't finish registering a vehicle
+FM -> System : Requests to register a new vehicle
 activate System
+System --> FM : Requests vehicle plate
+deactivate System
+FM -> System : Types vehicle plate
+activate System
+System -> System : Validates vehicle plate
 
-System -> System: Validates request
-    System -> System: Displays vehicle registration form
-    System -> FM : Requests vehicle data (model, brand, type, tare,gross weight, current Km, register date, acquisition date, maintenance/check up frequency, vehicle plate)
+alt vehicle != null
+    System --> FM : Notifies that vehicle already exists
+    else vehicle == null
+    System --> FM : Requests vehicle data (tare weight, gross weight, current Km, \nregister date, acquisition date, maintenance frequency)
 
 deactivate System
     FM -> System : Types requested data
     activate System
-alt Valid data
-System -> System: Validates vehicle details
-    System -> System: Saves vehicle information
-    System -> FM : Shows all data and requests confirmation
-else Invalid data
-System --> FM: Notifies invalid vehicle details
-end
+
+System -> System: Validates vehicle data
+    System --> FM : Asks to select brand
+    deactivate System
+    FM -> System : Selects brand
+    activate System
+    System --> FM : Asks to select model
+    deactivate System
+    FM -> System : Selects model
+    activate System
+    System --> FM : Asks to select type
+    deactivate System
+    FM -> System : Selects type
+    activate System
+    System --> FM : Shows all data and requests confirmation
+    deactivate System
 deactivate System
     FM -> System : Confirms data
     activate System
-end
-    System -> FM: Notifies successful vehicle registration
+    System --> FM: Notifies successful vehicle registration
 deactivate System
-
+end
 @enduml

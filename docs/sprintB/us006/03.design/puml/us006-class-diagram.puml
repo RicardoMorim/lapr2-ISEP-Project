@@ -8,123 +8,52 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
 'left to right direction
+class RegisterVehicleUI {
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
+}
+class VehicleController {
+     + getVehicleByPlate(plate)
+     + getVehicleBrandsList()
+     + getVehicleModelsList(brand)
+     + getVehicleTypesList(model)
+     + saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+ }
+class repositories {
++ getInstance()
++ getVehicleRepository()
+
 }
 
-class UserSession
-{
-    + getUserEmail()
+class Vehicle {
+    - String brand
+    - String model
+    - String type
+    - String plate
+    - double tareWeight
+    - double grossWeight
+    - double currentKm
+    - String registerDate
+    - String acquisitionDate
+    - double maintenanceFrequency
+
+    + createNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+}
+class VehicleRepository {
+    - List<Vehicle> vehicles
+
+    + storeVehicle(vehicle)
+    + getVehicleByPlate(plate)
+    + getVehicleBrandsList()
+        + getVehicleModelsList(brand)
+        + getVehicleTypesList(model)
 }
 
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
+RegisterVehicleUI .> VehicleController
+VehicleController ..> repositories
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
-}
-
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
-}
-
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
-}
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
-
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
-}
-
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
-}
-
-note right of CreateTaskController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
-
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the category list
-end note
-
-class CreateTaskUI {
-}
-
-Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
-
-CreateTaskUI .> CreateTaskController
-
-CreateTaskController .> Repositories : repositories
-
-Repositories -> "1" TaskCategoryRepository
-
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
-
-Repositories --> "1" OrganizationRepository
-
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
-
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
-
-Organization --> "*" Employee : employs
+VehicleController .> VehicleRepository
+VehicleRepository --> "*"Vehicle
+repositories ..> VehicleRepository
 
 @enduml

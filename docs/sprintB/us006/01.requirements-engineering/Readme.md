@@ -62,9 +62,6 @@ In theory If there is no need to register a vehicle, no vehicles will be registe
 **Input Data:**
 
 * Typed data:
-    * Brand
-    * Model
-    * Type
     * Tare (Kg)
     * Gross weight (Kg)
     * Current Km (Km)
@@ -72,6 +69,10 @@ In theory If there is no need to register a vehicle, no vehicles will be registe
     * Acquisition date
     * Maintenance frequency (Km)
     * Plate
+* Selected data:
+  * Model
+  * Brand
+  * Type
 
 **Output Data:**
 

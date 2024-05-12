@@ -71,12 +71,12 @@ class Collaborator {
     identification number
 }
 
-Task "1" -- "*" Vehicle : requires >
+Task "*" -- "*" Vehicle : requires >
 
-Task "1" -- "1" TeamProposal : requires >
+Task "1" -- "*" TeamProposal : requires >
 
-TeamProposal "1" -- "0...*" TechnicalSkill : requires >
-TeamProposal "1" -- "0...*" Job : requires >
+TeamProposal "*" -- "*" TechnicalSkill : requires >
+
 
 
 Vehicle "1" - "*" VehicleCheckup : has >

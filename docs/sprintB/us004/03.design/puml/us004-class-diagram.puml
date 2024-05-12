@@ -1,4 +1,4 @@
-x@startuml
+@startuml
 'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -9,102 +9,79 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
-}
-
-class UserSession
-{
-    + getUserEmail()
-}
-
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
-
 class Skill {
     - String name
-    - String informalDescription
-    - String technicalDescription
+    - String shortDescription
+    - String Description
 
-
-    + Skill(name, skillCategory, informalDescription, technicalDescription)
+    + Skill(name, shortDescription, Description)
 }
 
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
+class SkillController {
+    + getSkillList()
+    + registerSkill(skill)
+    + updateSkill(skill, name, shortDescription, Description)
+    + removeSkill(skill)
+}
+
+class Collaborator {
     - String email
+    - String name
+    - String address
+    - String phone
+    - Job job
+    - List<Skill> skills
+    - Date birthDate
+    - Date admissionDate
+    - String IDtype
+    - int taxpayerNumber
+    - int citizenNumber
+    - boolean isFree
 
-    - addSkill(Skill)
-    - validateSkill(skill)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createSkill(name, SkillCategory, informalDescription, technicalDescription)
-    + addSkillToEmployee(skill, employee)
-    - getEmployeeByEmail(email)
-
+    + Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber, skills)
+    + addSkill(skill)
+    + removeSkill(skill)
 }
 
+class CollaboratorController {
+    + checkForDuplicateCollaborator(collaborator)
+    + registerCollaborator(name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + updateCollaborator(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + removeCollaborator(collaborator)
+    + addSkillToACollaborator(skill, collaborator)
+    + removeSkillFromACollaborator(skill, collaborator)
+}
 
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
+class AddSkillToCollaboratorUI {
+}
+
+class SkillRepository {
+    + add(skill)
+    + remove(skill)
+    + update(skill, name, shortDescription, Description)
+    + getSkills()
+}
+
+class CollaboratorRepository {
+    + add(collaborator)
+    + remove(collaborator)
+    + update(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + getCollaborators()
 }
 
 class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getSkill()
-    + getOrganizationRepository()
+    + getInstance()
+    + getSkillRepository()
+    + getCollaboratorRepository()
 }
 
-class AddSkillToACollaboratorController {
-    + AddSkillToACollaboratorController(technicalSkillRepository, organizationRepository)
-    + getSkills()
-    + createSkill\(name,informalDescription, technicalDescription)
-    + assignSkillToEmployee(skill, employee)
-    - getEmployeeFromSession()
-}
-
-note right of AddSkillToACollaboratorController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
-
-
-class AddSkillToACollaboratorUI {
-}
-
-Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
-
-AddSkillToACollaboratorUI .> AddSkillToACollaboratorController
-
-AddSkillToACollaboratorController .> Repositories : repositories
-
-
-AddSkillToACollaboratorController ..> OrganizationRepository : organizationRepository
-
-Repositories --> "1" OrganizationRepository
-
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
-
-AddSkillToACollaboratorController ..> "1" Organization : organization
-AddSkillToACollaboratorController ..> ApplicationSession
-AddSkillToACollaboratorController ..> UserSession
-Organization "1" --> "*" Skill : skills
-Skill --> Employee : createdBy
-
-Organization --> "*" Employee : employs
+AddSkillToCollaboratorUI --> SkillController
+AddSkillToCollaboratorUI --> CollaboratorController
+SkillController --> Repositories
+CollaboratorController --> Repositories
+Repositories --> SkillRepository
+Repositories --> CollaboratorRepository
+CollaboratorRepository "1" --> "0..." Collaborator : Contains
+SkillRepository "1" --> "0..." Skill : Contains
 
 @enduml
