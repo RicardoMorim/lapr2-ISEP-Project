@@ -8,8 +8,20 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
 'left to right direction
-
 class RegisterVehicleUI {
+
+}
+class VehicleController {
+     + getVehicleByPlate(plate)
+     + getVehicleBrandsList()
+     + getVehicleModelsList(brand)
+     + getVehicleTypesList(model)
+     + saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+ }
+class repositories {
++ getInstance()
++ getVehicleRepository()
+
 }
 
 class Vehicle {
@@ -24,30 +36,24 @@ class Vehicle {
     - String acquisitionDate
     - double maintenanceFrequency
 
-    + getVehicleByPlate(plate)
-    + saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+    + createNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
 }
+class VehicleRepository {
+    - List<Vehicle> vehicles
 
-class VehicleAttributes {
-    - String brand
-    - String model
-    - String type
-
-    + getVehicleBrandsList()
-    + getVehicleModelsList(brand)
-    + getVehicleTypesList(model)
-}
-
-class VehicleController {
+    + storeVehicle(vehicle)
     + getVehicleByPlate(plate)
     + getVehicleBrandsList()
-    + getVehicleModelsList(brand)
-    + getVehicleTypesList(model)
-    + saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+        + getVehicleModelsList(brand)
+        + getVehicleTypesList(model)
 }
-RegisterVehicleUI ..> VehicleController
-VehicleController ..> Vehicle
-VehicleController ..> VehicleAttributes
 
+
+RegisterVehicleUI .> VehicleController
+VehicleController ..> repositories
+
+VehicleController .> VehicleRepository
+VehicleRepository --> "*"Vehicle
+repositories ..> VehicleRepository
 
 @enduml

@@ -8,11 +8,16 @@ public class Repositories {
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
+    private final VehicleRepository vehicleRepository;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
+        vehicleRepository = new VehicleRepository();
+    }
+    public VehicleRepository getVehicleRepository() {
+        return vehicleRepository;
     }
 
     public static Repositories getInstance() {
