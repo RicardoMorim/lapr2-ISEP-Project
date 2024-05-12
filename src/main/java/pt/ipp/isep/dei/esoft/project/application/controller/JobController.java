@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Job;
-
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
@@ -23,7 +22,6 @@ public class JobController {
         this.jobRepository = jobRepository;
     }
 
-
     public JobRepository getJobRepository() {
         return jobRepository;
     }
@@ -44,7 +42,7 @@ public class JobController {
         if (job.getName() == null || job.getShortDescription() == null)
             throw new IllegalArgumentException("Job name or shortDescription parameters are null.");
 
-        if (job.getName().isEmpty() || job.getShortDescription().isEmpty()){
+        if (job.getName().isEmpty() || job.getShortDescription().isEmpty()) {
             System.out.println(job);
             throw new IllegalArgumentException("Job name or short description parameters are empty.");
         }
@@ -55,18 +53,17 @@ public class JobController {
         jobRepository.add(job);
     }
 
-    public Job registerJob(String name, String shortDescription, String description) throws IllegalArgumentException {
-        Job job = new Job(name, shortDescription, description);
+    public Job registerJob(String name, String shortDescription) throws IllegalArgumentException {
+        Job job = new Job(name, shortDescription);
         registerJob(job);
         return job;
     }
 
-    public void updateJob( Job job, String name, String shortDescription, String description) {
+    public void updateJob(Job job, String name, String shortDescription) {
         try {
             job.setName(name);
             job.setShortDescription(shortDescription);
-            job.setDescription(description);
-            this.jobRepository.update(job, name, shortDescription, description);
+            this.jobRepository.update(job, name, shortDescription);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

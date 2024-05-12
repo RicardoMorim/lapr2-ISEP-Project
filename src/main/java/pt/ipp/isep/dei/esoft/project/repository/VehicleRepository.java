@@ -9,6 +9,8 @@ public class VehicleRepository {
     private List<String> BrandList;
     private Map<String, List<String>> brandToModelsMap;
     private List<String> TypeList;
+    private final float percentageToNeedMaintenance = 0.85F;
+
 
 
     public VehicleRepository(List<Vehicle> vehicleList) {
@@ -37,23 +39,31 @@ public class VehicleRepository {
     }
 
     public List<Vehicle> getVehicleList() {
-        return vehicleList;
+        return new ArrayList<>(vehicleList);
     }
 
     public void addVehicle(Vehicle vehicle) {
+        if (vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle already exists");
         vehicleList.add(vehicle);
     }
 
     public void addVehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) {
         Vehicle vehicle = new Vehicle(plate, brand, model, type, tareWeight, grossWeight, CurrentKM, registerDate, acquisitionDate, checkupIntervalKM, kmLastMaintenance);
+        if (vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle already exists");
         vehicleList.add(vehicle);
     }
 
     public void removeVehicle(Vehicle vehicle) {
+        if (!vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle does not exist");
         vehicleList.remove(vehicle);
     }
 
     public Vehicle updateVehicle(Vehicle old_vehicle, Vehicle new_vehicle) {
+        if (!vehicleList.contains(old_vehicle))
+            throw new IllegalArgumentException("Vehicle does not exist");
         vehicleList.remove(old_vehicle);
         vehicleList.add(new_vehicle);
         return new_vehicle;
@@ -147,5 +157,50 @@ public class VehicleRepository {
         this.vehicleList = vehicleList;
     }
 
+    public List<Vehicle> bubbleSortVehicles(List<Vehicle> vehicles) {
+        int n = vehicles.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Vehicle currentVehicle = vehicles.get(j);
+                Vehicle nextVehicle = vehicles.get(j + 1);
+                int currentVehicleRemainingKM = currentVehicle.getKmNextMaintenance() - currentVehicle.getCurrentKM();
+                int nextVehicleRemainingKM = nextVehicle.getKmNextMaintenance() - nextVehicle.getCurrentKM();
+                if (currentVehicleRemainingKM > nextVehicleRemainingKM ||
+                        (currentVehicleRemainingKM == nextVehicleRemainingKM &&
+                                currentVehicle.getKmLastMaintenance() > nextVehicle.getKmLastMaintenance())) {
+                    // swap vehicles[j+1] and vehicles[j]
+                    swapVehicles(vehicles, j, j + 1);
+                }
+            }
+        }
+        return vehicles;
+    }
 
+    private void swapVehicles(List<Vehicle> vehicles, int i, int j) {
+        Vehicle temp = vehicles.get(i);
+        vehicles.set(i, vehicles.get(j));
+        vehicles.set(j, temp);
+    }
+
+    public List<Vehicle> getVehiclesNeedingMaintenance() {
+        List<Vehicle> sortedVehicles = bubbleSortVehicles(getVehicleList());
+        sortedVehicles.removeIf((vehicle -> vehicle.getCurrentKM() - vehicle.getKmLastMaintenance() < vehicle.getCheckupIntervalKM() * percentageToNeedMaintenance));
+        return sortedVehicles;
+    }
+
+    public List<String> getMaintenanceList(List<Vehicle> vehicles) {
+        List<String> maintenanceList = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            String vehicleInfo = "Plate: " + vehicle.getPlate() +
+                    ", Brand: " + vehicle.getBrand() +
+                    ", Model: " + vehicle.getModel() +
+                    ", CurrentKM: " + vehicle.getCurrentKM() +
+                    ", Checkup Frequency: " + vehicle.getCheckupIntervalKM() +
+                    ", KM of Last Checkup: " + vehicle.getKmLastMaintenance() +
+                    ", KM of Next Checkup: " + vehicle.getKmNextMaintenance() +
+                    ", Maximum number of KM until next checkup: " + (vehicle.getKmNextMaintenance() - vehicle.getCurrentKM());
+            maintenanceList.add(vehicleInfo);
+        }
+        return maintenanceList;
+    }
 }

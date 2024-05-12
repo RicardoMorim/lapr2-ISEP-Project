@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.mdisc;
 
+
 public class Edge implements Comparable<Edge> {
     int src, dest, weight;
 
@@ -14,3 +15,4 @@ public class Edge implements Comparable<Edge> {
         return this.weight - other.weight;
     }
 }
+

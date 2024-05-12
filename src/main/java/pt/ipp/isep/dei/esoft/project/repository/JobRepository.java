@@ -14,12 +14,11 @@ public class JobRepository {
         this.jobs = new ArrayList<>();
     }
 
-    public Optional<Job> update(Job job, String name, String shortDescription, String description) {
+    public Optional<Job> update(Job job, String name, String shortDescription) {
         for (Job j : this.jobs) {
             if (j.equals(job)) {
                 j.setName(name);
                 j.setShortDescription(shortDescription);
-                j.setDescription(description);
                 return Optional.of(job);
             }
         }
