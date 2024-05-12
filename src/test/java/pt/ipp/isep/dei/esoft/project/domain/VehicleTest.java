@@ -12,7 +12,7 @@ class VehicleTest {
 
     @BeforeEach
     void setUp() {
-        vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date("1-1-2000"), new Date("1-1-2000") , 10000, 0);
+        vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date() , 10000, 0);
     }
 
     @Test
