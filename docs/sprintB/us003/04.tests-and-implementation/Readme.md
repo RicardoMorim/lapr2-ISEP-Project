@@ -1,4 +1,4 @@
-# US003 - Create a Task 
+# US003 - Register a collaborator and characteristics 
 
 ## 4. Tests 
 
