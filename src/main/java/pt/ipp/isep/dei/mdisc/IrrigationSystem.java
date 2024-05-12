@@ -46,7 +46,7 @@ public class IrrigationSystem {
             }
             int size = nodes.size();
             graph = new int[size][size];
-            this.totalEdges = totalEdges; // Store the total number of edges
+            this.totalEdges = totalEdges;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -221,7 +221,8 @@ public class IrrigationSystem {
         while (choice != 3) {
             System.out.println("Please choose an option:");
             System.out.println("1. Run for a single file");
-            System.out.println("2. Exit");
+            System.out.println("2. Run testExecutionTime function");
+            System.out.println("3. Exit");
 
             try {
                 choice = Integer.parseInt(scanner.nextLine());
@@ -248,6 +249,11 @@ public class IrrigationSystem {
                     }
                     break;
                 case 2:
+                    System.out.println("Please enter the folder path:");
+                    String folderPath = scanner.nextLine();
+                    irrigationSystem.testExecutionTime(folderPath);
+                    break;
+                case 3:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -258,4 +264,74 @@ public class IrrigationSystem {
 
         scanner.close();
     }
+
+
+    public void testExecutionTime(String folderPath) {
+        try {
+            // Create the output directory if it does not exist
+            String outputPath = folderPath.substring(0, folderPath.lastIndexOf("/")) + "/output/";
+            Files.createDirectories(Paths.get(outputPath));
+
+            try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
+                try (PrintWriter writer = new PrintWriter(outputPath + "execution_times.csv", StandardCharsets.UTF_8)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".csv"))
+                            .forEach(p -> {
+                                System.out.println("Working on file: " + p);
+                                String filename = p.toString();
+                                importCsv(filename);
+                                long startTime = System.nanoTime();
+                                planIrrigationSystem(filename, false);
+                                long endTime = System.nanoTime();
+
+                                long executionTimeNano = endTime - startTime;
+                                double executionTimeSec = (double) executionTimeNano / 1000000000.0; // Convert to seconds
+                                System.out.println("Execution time for " + filename + ": " + executionTimeSec + " seconds");
+
+                                writer.println(filename + "," + graph.length + "," + executionTimeSec); // Write to CSV
+                                generateExecutionTimeGraph();
+                                writer.flush(); // Flush the PrintWriter
+                            });
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void generateExecutionTimeGraph() {
+        XYSeries series = new XYSeries("Execution Time");
+
+        // Read the execution times from the CSV file
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/pt/ipp/isep/dei/mdisc/output/execution_times.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                int inputSize = Integer.parseInt(values[1]);
+                double executionTime = Double.parseDouble(values[2]);
+                series.add(inputSize, executionTime);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "Execution Time vs Input Size",
+                "Input Size",
+                "Execution Time (seconds)",
+                dataset
+        );
+
+        try {
+            ChartUtils.saveChartAsPNG(new File("src/main/java/pt/ipp/isep/dei/mdisc/output/execution_time_graph.png"), chart, 800, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+

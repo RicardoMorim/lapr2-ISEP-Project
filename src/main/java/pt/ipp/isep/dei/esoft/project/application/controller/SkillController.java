@@ -1,11 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
-
+import javax.swing.text.AttributeSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SkillController {
@@ -86,5 +88,12 @@ public class SkillController {
 
     public List<Skill> getSkillList() {
         return skillRepository.getSkills();
+    }
+
+
+    public List<Skill> getSkillThatTheCollaboratorDoesNotHave(List<Skill> collaboratorSkills) {
+        List<Skill> allSkills = new ArrayList<>(getSkillList());
+        allSkills.removeAll(collaboratorSkills);
+        return allSkills;
     }
 }

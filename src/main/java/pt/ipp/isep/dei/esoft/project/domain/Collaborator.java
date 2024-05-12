@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-public class Collaborator {
 
+public class Collaborator {
     private String email;
     private String name;
     private String address;
@@ -198,4 +198,48 @@ public class Collaborator {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Skill> addSkill(Skill skill) {
+        if (this.skills.contains(skill)) {
+            throw new IllegalArgumentException("Collaborator already contains the skill");
+        }
+        if (skill.getName() == null || skill.getShortDescription() == null) {
+            throw new IllegalArgumentException("The name and short description cannot be null");
+        }
+        this.skills.add(skill);
+
+        return this.skills;
+    }
+
+    public void removeSkill(Skill skill) {
+        if (!this.skills.contains(skill)) {
+            throw new IllegalArgumentException("Collaborator does not contain the skill");
+        }
+        this.skills.remove(skill);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder skillString = new StringBuilder();
+
+        for (Skill skill : skills) {
+            skillString.append("\n    skill='").append(skill.toString()).append("'\n");
+        }
+
+        return
+                "name='" + name + "',\n" +
+                        job.toString() + ",\n" +
+                        "Skills:" + (skillString.toString().isEmpty() ? " No skills\n" : skillString);
+    }
+
+    /**
+     * Clone method.
+     *
+     * @return A clone of the current instance.
+     */
+    public Collaborator clone() {
+        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate, this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
+    }
+
+
 }
