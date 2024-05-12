@@ -2,60 +2,118 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+package pt.ipp.isep.dei.esoft.project.domain;
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+import org.junit.jupiter.api.Test;
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+import java.util.Arrays;
+import java.util.List;
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+import static org.junit.jupiter.api.Assertions.*;
 
-_It is also recommended to organize this content by subsections._ 
+class SkillTest {
 
+    @Test
+    void getNameReturnsCorrectName() {
+        Skill skill = new Skill("Java", "Code");
+        assertEquals("Java", skill.getName());
+    }
+
+
+    @Test
+    void getShortDescriptionReturnsCorrectShortDescription() {
+        Skill skill = new Skill("Java", "Short Description");
+        assertEquals("Short Description", skill.getShortDescription());
+    }
+
+    @Test
+    void getSkillValuesReturnsCorrectValues() {
+        Skill skill = new Skill("Java", "Short Description");
+        List<String> expectedValues = Arrays.asList("Java", "Short Description");
+        assertEquals(expectedValues, skill.getSkillValues());
+    }
+
+    @Test
+    void setNameUpdatesName() {
+        Skill skill = new Skill("java", "Code");
+        skill.setName("Python");
+        assertEquals("Python", skill.getName());
+    }
+
+    @Test
+    void setShortDescriptionUpdatesShortDescription() {
+        Skill skill = new Skill("Java", "Short Description");
+        skill.setShortDescription("Updated Short Description");
+        assertEquals("Updated Short Description", skill.getShortDescription());
+    }
+
+
+    @Test
+    void equalsReturnsTrueForSameObject() {
+        Skill skill = new Skill("java", "Code");
+        assertTrue(skill.equals(skill));
+    }
+
+    @Test
+    void equalsReturnsFalseForNull() {
+        Skill skill = new Skill("java", "Code");
+        assertFalse(skill.equals(null));
+    }
+
+
+    @Test
+    void equalsReturnsTrueForSameValues() {
+        Skill skill1 = new Skill("Java", "Short Description");
+        Skill skill2 = new Skill("Java", "Short Description");
+        assertTrue(skill1.equals(skill2));
+    }
+
+    @Test
+    void hashCodeReturnsSameHashCodeForSameValues() {
+        Skill skill1 = new Skill("Java", "Short Description");
+        Skill skill2 = new Skill("Java", "Short Description");
+        assertEquals(skill1.hashCode(), skill2.hashCode());
+    }
+}
 
 ## 5. Construction (Implementation)
 
 ### Class CreateTaskController 
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
 
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
+public Optional<Skill> add(Skill skill) {
+    Optional<Skill> newSkill = Optional.empty();
+    if (skills.contains(skill)) {
+        throw new IllegalArgumentException("Skill already exists.");
+    }
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    newSkill = Optional.of(skill);
+    skills.add(newSkill.get());
 
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+    return newSkill;
 }
+
+
 ```
 
 ### Class Organization
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
 
-    addTask(task);
-        
-    return task;
+public Optional<Skill> add(Skill skill) {
+    Optional<Skill> newSkill = Optional.empty();
+    if (skills.contains(skill)) {
+        throw new IllegalArgumentException("Skill already exists.");
+    }
+
+    newSkill = Optional.of(skill);
+    skills.add(newSkill.get());
+
+    return newSkill;
 }
+
+
 ```
 
 
