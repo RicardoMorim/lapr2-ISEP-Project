@@ -17,6 +17,7 @@ public class Vehicle {
     private int checkupIntervalKM;
     private int kmLastMaintenance;
     private int kmNextMaintenance;
+    private List<String> maintenanceList;
 
 
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) throws IllegalArgumentException {
@@ -32,6 +33,7 @@ public class Vehicle {
         this.checkupIntervalKM = checkupIntervalKM;
         this.kmLastMaintenance = kmLastMaintenance;
         this.kmNextMaintenance = kmLastMaintenance + checkupIntervalKM;
+        this.maintenanceList = new ArrayList<>();
         this.validateVehicle();
     }
 
@@ -256,5 +258,63 @@ public class Vehicle {
             throw new IllegalArgumentException("Gross Weight must be a positive number.");
         }
     }
+
+    public void registerMaintenance(Date date, int km) {
+        this.kmLastMaintenance = km;
+        this.kmNextMaintenance = km + this.checkupIntervalKM;
+        this.maintenanceList.add(date.toString() + " - " + km);
+
+    }
+
+    public List<String> getMaintenanceList() {
+        return this.maintenanceList;
+    }
+
+    public void setMaintenanceList(List<String> maintenenceList) {
+        this.maintenanceList = maintenenceList;
+    }
+
+
+    public String toStringWithMaintenanceList() {
+        StringBuilder maintenanceListString = new StringBuilder("Maintenance List: ");
+        for (String maintenance : maintenanceList) {
+            maintenanceListString.append(maintenance).append("\n");
+        }
+        return "Vehicle{\n" +
+                "plate='" + plate + '\n' +
+                ", brand='" + brand + '\n' +
+                ", model='" + model + '\n' +
+                ", type='" + type + '\n' +
+                ", tareWeight=" + tareWeight + '\n' +
+                ", grossWeight=" + grossWeight + '\n' +
+                ", currentKM=" + currentKM + '\n' +
+                ", registerDate=" + registerDate + '\n' +
+                ", acquisitionDate=" + acquisitionDate + '\n' +
+                ", checkupIntervalKM=" + checkupIntervalKM + '\n' +
+                ", kmLastMaintenance=" + kmLastMaintenance + '\n' +
+                ", kmNextMaintenance=" + kmNextMaintenance + '\n' +
+                maintenanceListString +'\n' +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "plate='" + plate + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", type='" + type + '\'' +
+                ", tareWeight=" + tareWeight +
+                ", grossWeight=" + grossWeight +
+                ", currentKM=" + currentKM +
+                ", registerDate=" + registerDate +
+                ", acquisitionDate=" + acquisitionDate +
+                ", checkupIntervalKM=" + checkupIntervalKM +
+                ", kmLastMaintenance=" + kmLastMaintenance +
+                ", kmNextMaintenance=" + kmNextMaintenance +
+                '}';
+    }
 }
+
+
 
