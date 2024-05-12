@@ -67,7 +67,22 @@ public class VehicleController {
     public boolean checkIfVehicleExists(Vehicle old_vehicle, Vehicle new_vehicle) {
         return vehicleRepository.getVehicleList().contains(old_vehicle) && !vehicleRepository.getVehicleList().contains(new_vehicle);
     }
+    public void registerVehicleMaintenance(String plate, Date date, int km) {
+        Vehicle vehicle = getVehicleByPlate(plate);
+        vehicle.registerMaintenance(date, km);
+    }
 
+    public void getVehicleMaintenanceList(String plate) {
+        Vehicle vehicle = getVehicleByPlate(plate);
+        vehicle.getMaintenanceList();
+    }
+
+
+
+    public List<String> getMaintenanceList() {
+
+        return vehicleRepository.getMaintenanceList();
+    }
 
     public void addBrand(String brand) {
         if (brand.isEmpty()) {
