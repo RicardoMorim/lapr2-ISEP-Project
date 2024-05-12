@@ -9,6 +9,7 @@ public class VehicleRepository {
     private List<String> BrandList;
     private Map<String, List<String>> brandToModelsMap;
     private List<String> TypeList;
+    private final float percentageToNeedMaintenance = 0.85F;
 
 
     public VehicleRepository(List<Vehicle> vehicleList) {
@@ -147,5 +148,48 @@ public class VehicleRepository {
         this.vehicleList = vehicleList;
     }
 
+    public List<Vehicle> bubbleSortVehicles(List<Vehicle> vehicles) {
+        int n = vehicles.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Vehicle currentVehicle = vehicles.get(j);
+                Vehicle nextVehicle = vehicles.get(j + 1);
+                int currentVehicleRemainingKM = currentVehicle.getKmNextMaintenance() - currentVehicle.getCurrentKM();
+                int nextVehicleRemainingKM = nextVehicle.getKmNextMaintenance() - nextVehicle.getCurrentKM();
+                if (currentVehicleRemainingKM > nextVehicleRemainingKM ||
+                        (currentVehicleRemainingKM == nextVehicleRemainingKM &&
+                                currentVehicle.getKmLastMaintenance() > nextVehicle.getKmLastMaintenance())) {
+                    // swap vehicles[j+1] and vehicles[j]
+                    swapVehicles(vehicles, j, j + 1);
+                }
+            }
+        }
+        return vehicles;
+    }
+
+    private void swapVehicles(List<Vehicle> vehicles, int i, int j) {
+        Vehicle temp = vehicles.get(i);
+        vehicles.set(i, vehicles.get(j));
+        vehicles.set(j, temp);
+    }
+
+
+    public List<String> getMaintenanceList() {
+        List<String> maintenanceList = new ArrayList<>();
+        List<Vehicle> sortedVehicles = bubbleSortVehicles(getVehicleList());
+        sortedVehicles.removeIf((vehicle -> vehicle.getCurrentKM() - vehicle.getKmLastMaintenance() < vehicle.getCheckupIntervalKM() * percentageToNeedMaintenance));
+        for (Vehicle vehicle : sortedVehicles) {
+            String vehicleInfo = "Plate: " + vehicle.getPlate() +
+                    ", Brand: " + vehicle.getBrand() +
+                    ", Model: " + vehicle.getModel() +
+                    ", CurrentKM: " + vehicle.getCurrentKM() +
+                    ", Checkup Frequency: " + vehicle.getCheckupIntervalKM() +
+                    ", KM of Last Checkup: " + vehicle.getKmLastMaintenance() +
+                    ", KM of Next Checkup: " + vehicle.getKmNextMaintenance() +
+                    ", Maximum number of KM until next checkup: " + (vehicle.getKmNextMaintenance() - vehicle.getCurrentKM());
+            maintenanceList.add(vehicleInfo);
+        }
+        return maintenanceList;
+    }
 
 }
