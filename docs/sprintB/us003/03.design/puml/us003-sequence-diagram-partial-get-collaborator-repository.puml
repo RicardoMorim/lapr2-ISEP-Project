@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant ":CollaboratorController" as CTRL
+participant ":Repositories" as GlobRepo
+participant "repositories\n:Repositories" as PLAT
+
+
+autonumber 12
+-> CTRL : create collaborator
+autonumber 13
+activate CTRL
+
+    group Get collaborator repository
+
+            CTRL -> GlobRepo : getInstance()
+            activate GlobRepo
+
+            GlobRepo --> CTRL : repositories
+            deactivate GlobRepo
+
+            CTRL -> PLAT : getCollaboratorRepository()
+            activate PLAT
+
+            PLAT -->  CTRL: collaboratorRepository
+            deactivate PLAT
+
+    end
+
+@enduml

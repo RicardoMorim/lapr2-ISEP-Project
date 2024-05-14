@@ -1,0 +1,1 @@
+Graph Dimension = 6590 : Graph Order = 1650 : Minimum cost = 391160

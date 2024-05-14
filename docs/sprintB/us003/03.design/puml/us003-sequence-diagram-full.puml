@@ -7,7 +7,8 @@ autonumber
 
 actor "HRM" as HRM
 participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+participant ":JobController" as JC
+participant ":CollaboratorController" as CTRL
 participant ":Repositories" as GlobRepo
 participant "repositories\n:Repositories" as PLAT
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
@@ -20,42 +21,44 @@ activate HRM
         HRM -> UI : wants to register a new collaborator
         activate UI
 
-        UI -> CTRL** : create
-
-        UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, zipCode, \n city, documentType[], documentCode, admissionDate)
+        UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, \n city, documentType[], documentCode, admissionDate)
         deactivate UI
 
         HRM -> UI : types requested data
         activate UI
 
-        UI -> CTRL: get job List
-        deactivate UI
+        UI -> JC: get job list
 
-        activate CTRL
 
-            CTRL -> GlobRepo : getInstance()
+
+
+
+        activate JC
+
+            JC -> GlobRepo : getInstance()
             activate GlobRepo
 
-            GlobRepo --> CTRL : repositories
+            GlobRepo --> JC : repositories
             deactivate GlobRepo
 
-            CTRL -> PLAT : getJobRepository()
+            JC -> PLAT : getJobRepository()
             activate PLAT
 
-            PLAT -->  CTRL: jobRepository
+            PLAT -->  JC: jobRepository
             deactivate PLAT
 
-            CTRL -> jobRepository : getJobs()
+            JC -> jobRepository : getJobs()
             activate jobRepository
 
-            jobRepository --> CTRL : jobsList
-            deactivate collaboratorRepository
+            jobRepository -> JC : jobsList
+            deactivate jobRepository
 
 
-            CTRL --> UI : job List
-        deactivate CTRL
+            JC --> UI : job list
 
-        activate UI
+        deactivate JC
+
+
 
         UI --> HRM : shows the list of jobs and requests to select one
         deactivate UI
@@ -88,69 +91,29 @@ activate HRM
             PLAT -->  CTRL: collaboratorRepository
             deactivate PLAT
 
-            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
-        deactivate CTRL
+            CTRL --> CLBREP : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
 
-        activate CLBREP
-        CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
-        deactivate CLBREP
 
-        activate CLB
-        CLB -> CLB : verifyFilled(collaborator)
-        activate CLB
-        CLB -> CLB : verifyMobile(collaborator)
-        activate CLB
-        CLB -> CLB : verifyEmail(collaborator)
-        activate CLB
-        CLB -> CLB : verifyZipCode(collaborator)
-        activate CLB
-        CLB -> CLB : verifyBirth(collaborator)
-        activate CLB
-        CLB -> CLB : verifyTaxpayerNumber(collaborator)
-        activate CLB
+            activate CLBREP
+            CLBREP->CLB** : create(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
 
-        loop for all documentType objects
-            CLB -> CLB : verifyDocumentCode(collaborator)
+            deactivate CLBREP
+
+
             activate CLB
+                    CLB -> CLB : verifyCollaborator()
 
-            CLB --> CLB
-            deactivate CLB
-        end loop
+                    CLB -> CTRL : returnCollaborator()
+                deactivate CLB
 
-        CLB --> CLB
-        deactivate CLB
-        CLB --> CLB
-        deactivate CLB
-        CLB --> CLB
-        deactivate CLB
-        CLB --> CLB
-        deactivate CLB
-        CLB --> CLB
-        deactivate CLB
-        CLB --> CLB
-        deactivate CLB
+                CTRL -> CLBREP: addCollaborator(collaborator)
 
-        CLB -->CLBREP : collaborator
-        deactivate CLB
-        activate CLBREP
+                activate CLBREP
 
-        CLBREP -> CLBREP : check for duplicates (taxpayerNumber)
-        activate CLBREP
-        CLBREP --> CLBREP
-        deactivate CLBREP
+                   CLBREP --> CTRL : success
+                deactivate CLBREP
 
-        CLBREP -> CLBREP: addCollaborator(collaborator)
-        CLBREP --> CTRL : collaborator
-        deactivate CLBREP
-
-        CLBREP -> CLBREP: addCollaborator(collaborator)
-        CLBREP --> CTRL : collaborator
-        deactivate CLBREP
-        activate CTRL
-
-
-
-        CTRL --> UI : success
+                CTRL --> UI : success
         deactivate CTRL
 
         activate UI
@@ -159,23 +122,6 @@ activate HRM
 
 
 deactivate HRM
-
-
-@enduml
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @enduml

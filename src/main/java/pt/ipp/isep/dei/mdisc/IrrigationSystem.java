@@ -46,7 +46,7 @@ public class IrrigationSystem {
             }
             int size = nodes.size();
             graph = new int[size][size];
-            this.totalEdges = totalEdges; // Store the total number of edges
+            this.totalEdges = totalEdges;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,62 +68,45 @@ public class IrrigationSystem {
 
     public void planIrrigationSystem(String inputFilePath, boolean openGUI) {
         int vertices = graph.length;
-        int[] parent = new int[vertices]; // Store the parent of each vertex
-        int[] key = new int[vertices]; // Store the key values of the vertices
-        boolean[] inMST = new boolean[vertices]; // Store whether a vertex is included in the MST
-
-        // Initialize all keys as infinite and all vertices as not included in the MST
-        Arrays.fill(key, Integer.MAX_VALUE);
-        Arrays.fill(inMST, false);
-
-        // The key of the first vertex is 0 and it has no parent
-        key[0] = 0;
-        parent[0] = -1;
-
-        PriorityQueue<Edge> pq = new PriorityQueue<>();
-
-        // Add all vertices to the priority queue
+        List<Edge> edges = new ArrayList<>();
         for (int i = 0; i < vertices; i++) {
-            pq.add(new Edge(i, i, key[i]));
-        }
-
-        while (!pq.isEmpty()) {
-            // Get the vertex with the minimum key value that's not in the MST
-            int u = pq.poll().dest;
-
-            // Include the vertex in the MST
-            inMST[u] = true;
-
-            // Update the key values of the adjacent vertices of the chosen vertex
-            for (int v = 0; v < vertices; v++) {
-                if (graph[u][v] != 0 && !inMST[v] && graph[u][v] < key[v]) {
-                    // Update the key value and parent of the adjacent vertex
-                    key[v] = graph[u][v];
-                    parent[v] = u;
-
-                    // Update the key value in the priority queue
-                    pq.add(new Edge(v, v, key[v]));
+            for (int j = i + 1; j < vertices; j++) {
+                if (graph[i][j] != 0) {
+                    edges.add(new Edge(i, j, graph[i][j]));
                 }
             }
         }
-        printCSV(parent, key, inputFilePath);
-        printMST(key, inputFilePath);
+
+        // Sort the edges in ascending order of weight
+        edges.sort(Comparator.comparingInt(edge -> edge.weight));
+
+        DisjointSet ds = new DisjointSet(vertices);
+
+        int[][] mst = new int[vertices][vertices];
+        int totalCost = 0;
+
+        for (Edge edge : edges) {
+            int root1 = ds.find(edge.src);
+            int root2 = ds.find(edge.dest);
+            if (root1 != root2) {
+                mst[edge.src][edge.dest] = edge.weight;
+                mst[edge.dest][edge.src] = edge.weight;
+                totalCost += edge.weight;
+                ds.union(root1, root2);
+            }
+        }
+
+        printCSV(mst, totalCost, inputFilePath);
+        printMST(totalCost, inputFilePath);
+
         // Visualize the input graph
         visualizeGraph(graph, "Input Graph", openGUI, inputFilePath);
 
-        // Construct the MST
-        int[][] mst = new int[vertices][vertices];
-        for (int i = 1; i < vertices; i++) {
-            mst[parent[i]][i] = graph[parent[i]][i];
-            mst[i][parent[i]] = graph[i][parent[i]];
-        }
-
         // Visualize the MST
         visualizeGraph(mst, "Minimum Spanning Tree", openGUI, inputFilePath);
-
     }
 
-    private void printCSV(int[] parent, int[] key, String inputFilePath) {
+    private void printCSV(int[][] mst, int totalCost, String inputFilePath) {
         try {
             Path inputPath = Paths.get(inputFilePath);
             String inputFileName = inputPath.getFileName().toString();
@@ -133,10 +116,12 @@ public class IrrigationSystem {
 
             Files.createDirectories(Paths.get("src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/"));
             try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
-                int totalCost = 0;
-                for (int i = 1; i < graph.length; i++) {
-                    totalCost += key[i];
-                    writer.println(parent[i] + ";" + i + ";" + key[i]);
+                for (int i = 0; i < mst.length; i++) {
+                    for (int j = 0; j < mst[i].length; j++) {
+                        if (mst[i][j] != 0) {
+                            writer.println(i + ";" + j + ";" + mst[i][j]);
+                        }
+                    }
                 }
                 writer.println("Total cost: " + totalCost);
             } catch (IOException e) {
@@ -149,6 +134,26 @@ public class IrrigationSystem {
         }
     }
 
+    private void printMST(int totalCost, String inputFilePath) {
+        try {
+            Path inputPath = Paths.get(inputFilePath);
+            String inputFileName = inputPath.getFileName().toString();
+
+            String outputFileName = "solution_" + inputFileName.replace(".csv", ".txt");
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
+
+            Files.createDirectories(Paths.get(outputFilePath.replace(outputFileName, "")));
+            try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
+                writer.println("Graph Dimension = " + totalEdges + " : Graph Order = " + graph.length + " : Cost of a Minimum spanning tree = " + totalCost);
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing to the file.");
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the directories.");
+            e.printStackTrace();
+        }
+    }
 
     public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
         Graph g = new SingleGraph(title);
@@ -186,31 +191,6 @@ public class IrrigationSystem {
     }
 
 
-    private void printMST(int[] key, String inputFilePath) {
-        try {
-            Path inputPath = Paths.get(inputFilePath);
-            String inputFileName = inputPath.getFileName().toString();
-
-            String outputFileName = "solution_" + inputFileName.replace(".csv", ".txt");
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
-
-            Files.createDirectories(Paths.get(outputFilePath.replace(outputFileName, "")));
-            try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
-                int totalCost = 0;
-                for (int i = 1; i < graph.length; i++) {
-                    totalCost += key[i];
-                }
-                writer.println("Graph Dimension = " + totalEdges + " : Graph Order = " + graph.length + " : Minimum cost = " + totalCost);
-            } catch (IOException e) {
-                System.out.println("An error occurred while writing to the file.");
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred while creating the directories.");
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
         System.setProperty("org.graphstream.ui", "swing");
         IrrigationSystem irrigationSystem = new IrrigationSystem();
@@ -221,7 +201,8 @@ public class IrrigationSystem {
         while (choice != 3) {
             System.out.println("Please choose an option:");
             System.out.println("1. Run for a single file");
-            System.out.println("2. Exit");
+            System.out.println("2. Run testExecutionTime function");
+            System.out.println("3. Exit");
 
             try {
                 choice = Integer.parseInt(scanner.nextLine());
@@ -248,6 +229,11 @@ public class IrrigationSystem {
                     }
                     break;
                 case 2:
+                    System.out.println("Please enter the folder path:");
+                    String folderPath = scanner.nextLine();
+                    irrigationSystem.testExecutionTime(folderPath);
+                    break;
+                case 3:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -257,5 +243,77 @@ public class IrrigationSystem {
         }
 
         scanner.close();
+    }
+
+
+    public void testExecutionTime(String folderPath) {
+        try {
+            // Create the output directory if it does not exist
+            String outputPath;
+            if (!folderPath.isEmpty()) {
+                outputPath = folderPath.substring(0, folderPath.lastIndexOf("/")) + "/output/";
+            } else {
+                outputPath = "src/main/java/pt/ipp/isep/dei/mdisc/output/"; // Default path
+            }
+            Files.createDirectories(Paths.get(outputPath));
+
+            try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
+                try (PrintWriter writer = new PrintWriter(outputPath + "execution_times.csv", StandardCharsets.UTF_8)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".csv"))
+                            .forEach(p -> {
+                                System.out.println("Working on file: " + p);
+                                String filename = p.toString();
+                                importCsv(filename);
+                                long startTime = System.nanoTime();
+                                planIrrigationSystem(filename, false);
+                                long endTime = System.nanoTime();
+
+                                long executionTimeNano = endTime - startTime;
+                                double executionTimeSec = (double) executionTimeNano / 1000000000.0; // Convert to seconds
+                                System.out.println("Execution time for " + filename + ": " + executionTimeSec + " seconds");
+
+                                writer.println(filename + "," + graph.length + "," + executionTimeSec); // Write to CSV
+                                writer.flush(); // Flush the PrintWriter
+                            });
+                }
+            }
+            generateExecutionTimeGraph(outputPath); // Call the method here, outside of the try-with-resources block
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generateExecutionTimeGraph(String outputPath) {
+        XYSeries series = new XYSeries("Execution Time");
+
+        // Read the execution times from the CSV file
+        try (BufferedReader br = new BufferedReader(new FileReader(outputPath + "execution_times.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                int inputSize = Integer.parseInt(values[1]);
+                double executionTime = Double.parseDouble(values[2]);
+                series.add(inputSize, executionTime);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "Execution Time vs Input Size",
+                "Input Size",
+                "Execution Time (seconds)",
+                dataset
+        );
+
+        try {
+            ChartUtils.saveChartAsPNG(new File(outputPath + "execution_time_graph.png"), chart, 800, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

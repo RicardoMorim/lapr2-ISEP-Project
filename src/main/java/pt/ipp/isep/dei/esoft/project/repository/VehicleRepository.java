@@ -12,6 +12,7 @@ public class VehicleRepository {
     private final float percentageToNeedMaintenance = 0.85F;
 
 
+
     public VehicleRepository(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }
@@ -38,23 +39,31 @@ public class VehicleRepository {
     }
 
     public List<Vehicle> getVehicleList() {
-        return vehicleList;
+        return new ArrayList<>(vehicleList);
     }
 
     public void addVehicle(Vehicle vehicle) {
+        if (vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle already exists");
         vehicleList.add(vehicle);
     }
 
     public void addVehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) {
         Vehicle vehicle = new Vehicle(plate, brand, model, type, tareWeight, grossWeight, CurrentKM, registerDate, acquisitionDate, checkupIntervalKM, kmLastMaintenance);
+        if (vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle already exists");
         vehicleList.add(vehicle);
     }
 
     public void removeVehicle(Vehicle vehicle) {
+        if (!vehicleList.contains(vehicle))
+            throw new IllegalArgumentException("Vehicle does not exist");
         vehicleList.remove(vehicle);
     }
 
     public Vehicle updateVehicle(Vehicle old_vehicle, Vehicle new_vehicle) {
+        if (!vehicleList.contains(old_vehicle))
+            throw new IllegalArgumentException("Vehicle does not exist");
         vehicleList.remove(old_vehicle);
         vehicleList.add(new_vehicle);
         return new_vehicle;
@@ -173,12 +182,15 @@ public class VehicleRepository {
         vehicles.set(j, temp);
     }
 
-
-    public List<String> getMaintenanceList() {
-        List<String> maintenanceList = new ArrayList<>();
+    public List<Vehicle> getVehiclesNeedingMaintenance() {
         List<Vehicle> sortedVehicles = bubbleSortVehicles(getVehicleList());
         sortedVehicles.removeIf((vehicle -> vehicle.getCurrentKM() - vehicle.getKmLastMaintenance() < vehicle.getCheckupIntervalKM() * percentageToNeedMaintenance));
-        for (Vehicle vehicle : sortedVehicles) {
+        return sortedVehicles;
+    }
+
+    public List<String> getMaintenanceList(List<Vehicle> vehicles) {
+        List<String> maintenanceList = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
             String vehicleInfo = "Plate: " + vehicle.getPlate() +
                     ", Brand: " + vehicle.getBrand() +
                     ", Model: " + vehicle.getModel() +
@@ -191,5 +203,4 @@ public class VehicleRepository {
         }
         return maintenanceList;
     }
-
 }

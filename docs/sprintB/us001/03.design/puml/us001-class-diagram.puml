@@ -1,16 +1,42 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-skinparam monochrome true
+'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
 
-autonumber
+skinparam classAttributeIconSize 0
 
-actor "Human Resources Manager" as HRM
-participant ":RegisterSkillsUI" as RSUI
-participant ":RegisterSkillsController" as RSC
+'left to right direction
 
-HRM -> RSUI: asks to register a new skill that a collaborator may have
-RSUI -> RSC: create
 
+
+class RegisterSkillUI
+{
+}
+
+class SkillsController
+{
+    - List<String> skillList
+    - Collaborator collaborator
+
+    + getCollaborators()
+    +addSkills(collaborator,skillList)
+}
+
+class Repositories {
+    + getInstance()
+    + getCollaboratorRepository()
+}
+
+class CollaboratorRepository {
+    + getAllCollaborator()
+    + addSkills(collaborator,skillList)
+}
+
+RegisterSkillUI ..> SkillsController
+SkillsController ..> Repositories: repositories
+SkillsController ..> CollaboratorRepository: collaboratorRepository
+Repositories  --> "1..." CollaboratorRepository
+CollaboratorRepository --> CollaboratorRepository: instance
 @enduml

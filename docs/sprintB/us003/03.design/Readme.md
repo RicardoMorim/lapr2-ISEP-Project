@@ -1,4 +1,4 @@
-# US003 - Create a Task 
+# US003 - Register a collaborator and characteristics
 
 ## 3. Design - User Story Realization 
 
@@ -6,35 +6,45 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |
-|:-------------  |:--------------------- |:---------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 |	... interacting with the actor? | CreateTaskUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 |	... coordinating the US? | CreateTaskController | Controller                                                                                                    |
-| 			  		 |	... instantiating a new Task? | Organization         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		 | ... knowing the user using the system?  | UserSession          | IE: cf. A&A component documentation.                                                                          |
-| 			  		 |							 | Organization         | IE: knows/has its own Employees                                                                               |
-| 			  		 |							 | Employee             | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		 |							 |                      |                                                                                                               |
-| Step 3  		 |	...saving the inputted data? | Task                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 |	...knowing the task categories to show? | System               | IE: Task Categories are defined by the Administrators.                                                        |
-| Step 5  		 |	... saving the selected category? | Task                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		 |							 |                      |                                                                                                               |              
-| Step 7  		 |	... validating all data (local validation)? | Task                 | IE: owns its data.                                                                                            | 
-| 			  		 |	... validating all data (global validation)? | Organization         | IE: knows all its tasks.                                                                                      | 
-| 			  		 |	... saving the created task? | Organization         | IE: owns all its tasks.                                                                                       | 
-| Step 8  		 |	... informing operation success?| CreateTaskUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...           | Answer                 | Justification (with patterns)                                                                                 |
+|:--------------|:------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		    | 	... interacting with the actor?                      | RegisterCollaboratorUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  	        | 	... coordinating the US?                             | JobController          | Controller                                                                                                    |
+| Step 2  		    | 	... requesting data?                                 | RegisterCollaboratorUI | Pure Fabrication                                                                                              |
+| Step 3			     | ... receiving the data?                               | RegisterCollaboratorUI | Pure Fabrication                                                                                              |
+| 			  		       | ... get the job repository?							                    | Repositories           | Information Expert, High cohesion, Low coupling                                                               |
+| 			  		       | ... get all the jobs and return them as a list?						 | JobRepository          | Information Expert                                                                                            |
+| Step 4  		    | 	...showing the jobs to select?						                 | RegisterCollaboratorUI | Pure Fabrication                                                                                              |
+| Step 5  		    | ... handling the user selecting a job?                | RegisterCollaboratorUI | Pure Fabrication                                                                                              |
+| Step 6  		    | 	...show the confirmation info?                       | RegisterCollaboratorUI | Pure Fabrication                                                                                              |
+| Step 7  		    | 	... instantiating a new Collaborator?                | CollaboratorRepository | Creator, High cohesion, Low coupling                                                                          |
+| 		            | 	... validating all data (local validation)?          | Collaborator           | Information Expert                                                                                            | 
+| 			  		       | 	... validating all data (global validation)?         | CollaboratorRepository | Information Expert                                                                                     | 
+| 			  		       | 	... saving the Collaborator?                         | CollaboratorRepository | Information Expert                                                                                       | 
+|               | ... having all the repositories?                      | Repositories           |  Information Expert, High cohesion, Low coupling                                                                                                        |
+| Step 8  		    | 	... informing operation success?                     | CreateTaskUI           | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Organization
-* Task
+* Human Resources Manager
+
+* Collaborator
+
+* Job
+
+* Address
+
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
-* CreateTaskUI  
-* CreateTaskController
+* RegisterCollaboratorUI  
+* JobController
+* JobRepository
+* CollaboratorController
+* CollaboratorRepository
+* Repositories
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -45,7 +55,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us003-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -53,24 +63,21 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Get Collaborator Repository**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Collaborator Repository](svg/us003-sequence-diagram-partial-get-collaborator-repository.svg)
 
-**Get Task Category Object**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+**Get Job List Partial SD**
 
-**Get Employee**
+![Sequence Diagram - Partial - Get Job List](svg/us003-sequence-diagram-partial-get-job-list.svg)
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
+**Register Collaborator**
 
-**Create Task**
-
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Register Collaborator](svg/us003-sequence-diagram-partial-register-collab.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us006-class-diagram.svg)
+![Class Diagram](svg/us003-class-diagram.svg)

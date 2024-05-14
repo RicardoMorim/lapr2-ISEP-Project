@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":CollaboratorController" as CTRL
+participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
+participant ":Collaborator" as CLB
+
+autonumber 21
+-> CTRL : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+
+autonumber 22
+
+activate CTRL
+    group Register Collaborator
+        CTRL -> CLB** : createCLB(name, birthdate, contactMobile, email, address,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+
+        activate CLB
+            CLB -> CLB : verifyCollaborator()
+
+            CLB -> CTRL : returnCollaborator()
+        deactivate CLB
+
+        CTRL -> CLBREP: addCollaborator(collaborator)
+
+        activate CLBREP
+
+            CLBREP -> CTRL : sucess
+        deactivate CLBREP
+
+    end group
+
+    autonumber 27
+    <-- CTRL : sucess
+
+deactivate CTRL
+
+
+@enduml
