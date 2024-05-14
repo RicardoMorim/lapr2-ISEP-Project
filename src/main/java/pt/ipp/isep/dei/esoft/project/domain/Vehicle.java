@@ -1,8 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Vehicle {
     private String plate;
@@ -17,6 +15,7 @@ public class Vehicle {
     private int checkupIntervalKM;
     private int kmLastMaintenance;
     private int kmNextMaintenance;
+    private Map<Date, Integer> maintenanceList;
 
 
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) throws IllegalArgumentException {
@@ -32,8 +31,29 @@ public class Vehicle {
         this.checkupIntervalKM = checkupIntervalKM;
         this.kmLastMaintenance = kmLastMaintenance;
         this.kmNextMaintenance = kmLastMaintenance + checkupIntervalKM;
+        this.maintenanceList = new TreeMap<>();
         this.validateVehicle();
+        this.registerMaintenance(registerDate, 5);
     }
+
+    public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance, Map<Date, Integer> maintenanceList) throws IllegalArgumentException {
+        this.plate = plate;
+        this.brand = brand;
+        this.model = model;
+        this.type = type;
+        this.tareWeight = tareWeight;
+        this.grossWeight = grossWeight;
+        this.currentKM = CurrentKM;
+        this.registerDate = registerDate;
+        this.acquisitionDate = acquisitionDate;
+        this.checkupIntervalKM = checkupIntervalKM;
+        this.kmLastMaintenance = kmLastMaintenance;
+        this.kmNextMaintenance = kmLastMaintenance + checkupIntervalKM;
+        this.maintenanceList = maintenanceList;
+        this.validateVehicle();
+        this.registerMaintenance(registerDate, 5);
+    }
+
 
     public String getPlate() {
         return plate;
@@ -211,7 +231,7 @@ public class Vehicle {
         return kmNextMaintenance;
     }
 
-    public boolean validateVehicle() throws IllegalArgumentException{
+    public boolean validateVehicle() throws IllegalArgumentException {
         validateNotEmptyFields();
         validatePlateLength();
         validateCurrentKM();
@@ -256,5 +276,54 @@ public class Vehicle {
             throw new IllegalArgumentException("Gross Weight must be a positive number.");
         }
     }
-}
 
+    public void registerMaintenance(Date date, int km) {
+        if (this.maintenanceList.isEmpty() || date.after(((TreeMap<Date, Integer>) this.maintenanceList).lastKey())) {
+            this.kmLastMaintenance = km;
+            this.kmNextMaintenance = km + this.checkupIntervalKM;
+        }
+        this.maintenanceList.put(date, km);
+    }
+
+    public List<String> getMaintenanceList() {
+        List<String> maintenanceListString = new ArrayList<>();
+        for (Map.Entry<Date, Integer> entry : this.maintenanceList.entrySet()) {
+            maintenanceListString.add(entry.getKey().toString() + " - " + entry.getValue());
+        }
+        return maintenanceListString;
+    }
+
+    public void setMaintenanceList(Map<Date, Integer> maintenenceList) {
+        this.maintenanceList = maintenenceList;
+    }
+
+
+    public String toStringWithMaintenanceList() {
+
+        return "Vehicle{\n" +
+                "plate='" + plate + '\n' +
+                ", brand='" + brand + '\n' +
+                ", model='" + model + '\n' +
+                ", type='" + type + '\n' +
+                ", tareWeight=" + tareWeight + '\n' +
+                ", grossWeight=" + grossWeight + '\n' +
+                ", currentKM=" + currentKM + '\n' +
+                ", registerDate=" + registerDate + '\n' +
+                ", acquisitionDate=" + acquisitionDate + '\n' +
+                ", checkupIntervalKM=" + checkupIntervalKM + '\n' +
+                ", kmLastMaintenance=" + kmLastMaintenance + '\n' +
+                ", kmNextMaintenance=" + kmNextMaintenance + '\n' +
+                getMaintenanceList() + '\n' +
+                '}';
+    }
+
+    @Override
+    public Vehicle clone() {
+        return new Vehicle(this.plate, this.brand, this.model, this.type, this.tareWeight, this.grossWeight, this.currentKM, this.registerDate, this.acquisitionDate, this.checkupIntervalKM, this.kmLastMaintenance, this.maintenanceList);
+    }
+
+    @Override
+    public String toString() {
+        return this.brand + " " + this.model + " (" + this.plate + ")";
+    }
+}

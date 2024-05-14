@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VehicleController {
     private VehicleRepository vehicleRepository;
@@ -40,6 +41,7 @@ public class VehicleController {
 
     public void setVehicleRepository(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
+
     }
 
     public Vehicle getVehicleByPlate(String plate) {
@@ -68,6 +70,27 @@ public class VehicleController {
         return vehicleRepository.getVehicleList().contains(old_vehicle) && !vehicleRepository.getVehicleList().contains(new_vehicle);
     }
 
+    public void registerVehicleMaintenance(String plate, Date date, int km) {
+        Vehicle vehicle = getVehicleByPlate(plate);
+        Vehicle old = vehicle.clone();
+        vehicle.registerMaintenance(date, km);
+        vehicleRepository.updateVehicle(old, vehicle);
+    }
+
+    public void getVehicleMaintenanceList(String plate) {
+        Vehicle vehicle = getVehicleByPlate(plate);
+        vehicle.getMaintenanceList();
+    }
+
+
+    public List<String> getMaintenanceList(List<Vehicle> vehicleList) {
+
+        return vehicleRepository.getMaintenanceList(vehicleList);
+    }
+
+    public List<Vehicle> getVehiclesNeedingMaintenance() {
+        return vehicleRepository.getVehiclesNeedingMaintenance();
+    }
 
     public void addBrand(String brand) {
         if (brand.isEmpty()) {
@@ -142,6 +165,7 @@ public class VehicleController {
     }
 
     public List<Vehicle> getVehicleList() {
+
         return vehicleRepository.getVehicleList();
     }
 
