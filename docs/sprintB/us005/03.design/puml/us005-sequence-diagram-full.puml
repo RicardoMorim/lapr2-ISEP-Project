@@ -45,13 +45,10 @@ activate ADM
             activate Repos
                 Repos -> CollaboratorCTRL: returns CollaboratorRepository
             deactivate Repos
-            CollaboratorCTRL -> CollaboratorRepository: getCollaborators()
+            CollaboratorCTRL -> CollaboratorRepository: generateTeamProposals(minTeamSize, maxTeamSize, skillList)
             activate CollaboratorRepository
-                CollaboratorRepository -> CollaboratorCTRL: returns collaborators
-            deactivate CollaboratorRepository
-            CollaboratorCTRL -> CollaboratorCTRL: generateTeams()
-
                alt if at least one team is achieved
+                CollaboratorRepository -> CollaboratorCTRL: returns team proposals
                     CollaboratorCTRL -> UI: return the team list
                     UI -> ADM: display the team options, and allow the user to choose one
                     ADM -> UI:  the user chooses the team
@@ -59,6 +56,8 @@ activate ADM
                     CollaboratorCTRL -> UI: return success
                     UI -> ADM: displays success
                else if no team is achieved
+                    CollaboratorRepository -> CollaboratorCTRL: returns error
+            deactivate CollaboratorRepository
                     CollaboratorCTRL -> UI: return error that no team was possible
                     UI -> ADM: display the error
                 end
