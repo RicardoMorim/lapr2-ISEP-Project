@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram
+
+autonumber
+
+actor "Green Space\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to assign a team to an entry in the Agenda
+    activate System
+
+
+    System --> Employee : shows the available entries and asks to select one
+    deactivate System
+
+    Employee -> System : selects the entry
+    activate System
+
+    System --> Employee : generates the teams and asks to select one
+    deactivate System
+
+    Employee -> System : chooses the team
+    activate System
+
+    System --> Employee : displays success and notifies the team members
+    deactivate System
+
+@enduml
