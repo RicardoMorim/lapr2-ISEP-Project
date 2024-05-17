@@ -1,0 +1,27 @@
+@startuml
+
+hide methods
+hide circle
+
+title Domain Model
+
+class TeamProposal{
+    minNumberOfCollaborators
+    maxNumberOfCollaborators
+    technicalSkills
+
+}
+
+
+class TechnicalSkill {
+        name
+        shortDescription
+        fullDescription
+}
+
+
+
+TeamProposal "1" -- "0...*" TechnicalSkill : requires >
+
+
+@enduml

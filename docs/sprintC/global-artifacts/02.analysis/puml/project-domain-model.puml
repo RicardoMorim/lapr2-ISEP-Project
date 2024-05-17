@@ -1,0 +1,86 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+left to right direction
+
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+title Domain Model
+
+
+class VehicleCheckup {
+    IdVehicle
+    Date
+    CurrentKms
+}
+
+
+class TechnicalSkill{
+    shortDescription
+    fullDescription
+}
+class TeamProposal{
+     minNumberOfCollaborators
+     maxNumberOfCollaborators
+     jobs
+     technicalSkills
+
+ }
+
+class Task{
+    title
+    description
+    startDate
+    endDate
+    status
+    collaborators
+    technicalSkills
+}
+
+
+class Vehicle{
+    model
+    brand
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+    vehiclePlate
+}
+
+class Job{
+    title
+    description
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    contact
+    taxpayer number
+    identification document
+    identification number
+}
+
+Task "*" -- "*" Vehicle : requires >
+
+Task "1" -- "*" TeamProposal : requires >
+
+TeamProposal "*" -- "*" TechnicalSkill : requires >
+
+
+
+Vehicle "1" - "*" VehicleCheckup : has >
+TechnicalSkill "*" -- "1" Collaborator : is added to >
+Collaborator "*" - "1" Job : has >
+
+@enduml

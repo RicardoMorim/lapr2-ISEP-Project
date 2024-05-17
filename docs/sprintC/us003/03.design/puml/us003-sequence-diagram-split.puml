@@ -1,0 +1,89 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HRM" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":JobController" as JC
+participant ":CollaboratorController" as CTRL
+participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
+participant ":Collaborator" as CLB
+participant "jobRepository:\nJobRepository" as jobRepository
+
+
+activate HRM
+
+        HRM -> UI : wants to register a new collaborator
+        activate UI
+
+        UI --> HRM : asks for the info needed (name, birthdate, contactMobile, email, address, \n city, documentType[], documentCode, admissionDate)
+        deactivate UI
+
+        HRM -> UI : types requested data
+        activate UI
+
+        UI -> JC: get job list
+        deactivate UI
+
+
+        activate JC
+
+            ref over JC
+            Get Job List
+            end ref
+
+
+            JC --> UI : job list
+        deactivate JC
+
+
+
+        UI --> HRM : shows the list of jobs and requests to select one
+        deactivate UI
+
+
+        HRM -> UI : select the job
+        activate UI
+
+        UI --> HRM: shows all data and requests for confirmation
+        deactivate UI
+
+        HRM -> UI: confirms the data
+        activate UI
+
+        UI -> CTRL : create collaborator
+
+        deactivate UI
+
+        activate CTRL
+
+            ref over CTRL
+            Get Collaborator Repository
+            end ref
+
+            CTRL -> CLBREP : createCLB(name, birthdate, contactMobile, email, address, zipCode,\n city, documentType, identificationNumber, admissionDate, job, taxpayerNumber)
+            deactivate CTRL
+
+            activate CLBREP
+
+            ref over CLBREP
+            Register a Collaborator
+            end ref
+
+            CLBREP --> UI : success
+            deactivate CLBREP
+
+        deactivate CTRL
+
+        activate UI
+        UI --> HRM : shows success message (collaborator created successfully)
+        deactivate UI
+
+
+deactivate HRM
+
+
+@enduml

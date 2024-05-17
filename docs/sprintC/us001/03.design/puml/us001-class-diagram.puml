@@ -1,0 +1,42 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+
+class RegisterSkillUI
+{
+}
+
+class SkillsController
+{
+    - List<String> skillList
+    - Collaborator collaborator
+
+    + getCollaborators()
+    +addSkills(collaborator,skillList)
+}
+
+class Repositories {
+    + getInstance()
+    + getCollaboratorRepository()
+}
+
+class CollaboratorRepository {
+    + getAllCollaborator()
+    + addSkills(collaborator,skillList)
+}
+
+RegisterSkillUI ..> SkillsController
+SkillsController ..> Repositories: repositories
+SkillsController ..> CollaboratorRepository: collaboratorRepository
+Repositories  --> "1..." CollaboratorRepository
+CollaboratorRepository --> CollaboratorRepository: instance
+@enduml

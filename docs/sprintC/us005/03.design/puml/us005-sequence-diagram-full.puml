@@ -1,0 +1,68 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Organization Employee" as ADM
+participant ":GenerateTeamProposalUI" as UI
+participant ":SkillController" as SkillCTRL
+participant ":CollaboratorController" as CollaboratorCTRL
+participant "Repositories:\nRepositories" as Repos
+participant "SkillRepository:\nSkillRepository" as SkillRepository
+participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+
+activate ADM
+    ADM -> UI : asks to generate a team proposal
+    activate UI
+        UI -> ADM: minimum and maximum team size
+    deactivate UI
+    ADM -> UI : writes the required values
+
+    activate UI
+        UI -> SkillCTRL: getSkillList()
+        activate SkillCTRL
+            SkillCTRL -> Repos: getSkillRepository()
+            activate Repos
+                Repos -> SkillCTRL: returns SkillRepository
+            deactivate Repos
+            SkillCTRL -> SkillRepository: getSkills()
+            activate SkillRepository
+                SkillRepository -> SkillCTRL: returns skills
+            deactivate SkillRepository
+            SkillCTRL -> UI: returns skills
+        deactivate SkillCTRL
+
+        UI -> ADM: shows the possible skills for the team and asks the user to choose which one he wants and in which quantity
+    deactivate UI
+    ADM -> UI: chooses the skills that he wants to add
+
+    activate UI
+        UI -> CollaboratorCTRL: generateTeamProposal(minTeamSize, maxTeamSize, skillList)
+        activate CollaboratorCTRL
+            CollaboratorCTRL -> Repos: getCollaboratorRepository()
+            activate Repos
+                Repos -> CollaboratorCTRL: returns CollaboratorRepository
+            deactivate Repos
+            CollaboratorCTRL -> CollaboratorRepository: generateTeamProposals(minTeamSize, maxTeamSize, skillList)
+            activate CollaboratorRepository
+               alt if at least one team is achieved
+                CollaboratorRepository -> CollaboratorCTRL: returns team proposals
+                    CollaboratorCTRL -> UI: return the team list
+                    UI -> ADM: display the team options, and allow the user to choose one
+                    ADM -> UI:  the user chooses the team
+                    UI -> CollaboratorCTRL: startTask(collaboratorList)
+                    CollaboratorCTRL -> UI: return success
+                    UI -> ADM: displays success
+               else if no team is achieved
+                    CollaboratorRepository -> CollaboratorCTRL: returns error
+            deactivate CollaboratorRepository
+                    CollaboratorCTRL -> UI: return error that no team was possible
+                    UI -> ADM: display the error
+                end
+        deactivate CollaboratorCTRL
+    deactivate UI
+deactivate ADM
+
+@enduml

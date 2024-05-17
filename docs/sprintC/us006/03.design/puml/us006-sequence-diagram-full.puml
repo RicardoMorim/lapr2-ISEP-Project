@@ -1,0 +1,158 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Fleet Manager (FM)" as FM
+participant ":RegisterVehicleUI" as UI
+participant ":VehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories:\nRepositories" as PLAT
+participant "vehicleRepository\n:VehicleRepository" as vehicleRep
+participant "vehicle\n:Vehicle" as vehicle
+
+
+activate FM
+
+        FM -> UI : requests to register a new vehicleRep
+        activate UI
+
+        UI --> FM : asks for vehicle plate
+
+        deactivate UI
+        FM -> UI : types vehicle plate
+        activate UI
+        UI -> UI : validates vehicle plate
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            UI -> CTRL : getVehicleByPlate(plate)
+            activate CTRL
+            CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                                        CTRL -> PLAT : getVehicleRepository()
+                                        activate PLAT
+
+                                            PLAT -> CTRL : vehicleRepository
+                                        deactivate PLAT
+            CTRL -> vehicleRep : getVehicleByPlate(plate)
+            activate vehicleRep
+
+            vehicleRep --> CTRL : vehicle
+            deactivate vehicleRep
+            CTRL --> UI : vehicle
+            deactivate CTRL
+        alt vehicle != null
+        UI --> FM : informs that vehicle already exists
+        else vehicle == null
+        UI --> FM : asks for vehicle info (tare weight, gross weight, current Km, \nregister date, acquisition date, maintenance frequency)
+        deactivate UI
+        FM -> UI : types vehicle info
+        activate UI
+        UI -> UI : validates vehicle info
+        UI -> CTRL : getVehicleBrandsList()
+        activate CTRL
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleRepository()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleRepository
+                                    deactivate PLAT
+        CTRL -> vehicleRep : getVehicleBrandsList()
+        activate vehicleRep
+
+        vehicleRep --> CTRL : brandsList
+        deactivate vehicleRep
+        CTRL --> UI : brandsList
+        deactivate CTRL
+        UI --> FM : asks to select brand
+        deactivate UI
+        FM -> UI : selects brand
+        activate UI
+        UI -> CTRL : getVehicleModelsList(brand)
+        activate CTRL
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleRepository()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleRepository
+                                    deactivate PLAT
+        CTRL -> vehicleRep : getVehicleModelsList(brand)
+        activate vehicleRep
+        vehicleRep --> CTRL : modelsList
+        deactivate vehicleRep
+        CTRL --> UI : modelsList
+        deactivate CTRL
+        UI --> FM : asks to select model
+        deactivate UI
+        FM -> UI : selects model
+        activate UI
+        UI -> CTRL : getVehicleTypesList(model)
+        activate CTRL
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleRepository()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleRepository
+                                    deactivate PLAT
+        CTRL -> vehicleRep : getVehicleTypesList(model)
+        activate vehicleRep
+        vehicleRep --> CTRL : typesList
+        deactivate vehicleRep
+        CTRL --> UI : typesList
+        deactivate CTRL
+        UI --> FM : asks to select type
+        deactivate UI
+        FM -> UI : selects type
+        activate UI
+        UI --> FM : shows all data and requests confirmation
+        deactivate UI
+        FM -> UI : confirms data
+        activate UI
+        UI --> CTRL : saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+        activate CTRL
+        CTRL --> vehicle : createNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+        activate vehicle
+        vehicle --> CTRL : vehicle
+        deactivate vehicle
+        CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
+
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
+
+                                    CTRL -> PLAT : getVehicleRepository()
+                                    activate PLAT
+
+                                        PLAT -> CTRL : vehicleRepository
+                                    deactivate PLAT
+        CTRL --> vehicleRep : storeVehicle(vehicle)
+        activate vehicleRep
+        vehicleRep --> CTRL : success
+        deactivate vehicleRep
+        CTRL --> UI : success
+        deactivate CTRL
+        UI --> FM : informs that vehicle was registered
+        deactivate UI
+end
+@enduml

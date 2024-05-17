@@ -1,0 +1,74 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as Employee
+participant ":RegisterJobUI" as UI
+participant ":RegisterJobController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobRepository:\nJobRepository" as JobRepository
+participant "job:\nJob" as Job
+
+activate Employee
+
+    Employee -> UI : asks to register a job
+    activate UI
+
+
+
+        UI --> Employee : requests data
+    deactivate UI
+
+
+
+    Employee -> UI : types requested data
+    activate UI
+
+
+
+        UI --> Employee : shows all data and requests confirmation
+    deactivate UI
+
+    Employee -> UI : confirms data
+    activate UI
+    UI -> CTRL: registerJob(jobName)
+            activate CTRL
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+                    RepositorySingleton --> CTRL : repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getJobRepository()
+                activate PLAT
+                PLAT --> CTRL : jobRepository
+                deactivate PLAT
+
+                CTRL -> JobRepository : addJob(jobName)
+                activate JobRepository
+
+                JobRepository -> Job : Job(jobName)
+                activate Job
+                Job --> JobRepository : job
+                deactivate Job
+
+                JobRepository -> JobRepository : validate(job)
+
+                JobRepository -> JobRepository : add(job)
+
+
+                JobRepository --> CTRL : job
+                deactivate JobRepository
+                CTRL --> UI : jobs
+
+            deactivate CTRL
+
+        UI --> Employee : displays operation success
+    deactivate UI
+    deactivate Employee
+
+@enduml

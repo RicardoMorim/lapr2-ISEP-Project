@@ -1,0 +1,69 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class RegisterCollaboratorUI {
+}
+
+class CollaboratorController {
+    + createCLB(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType, identificationNumber, admissionDate : String, identificationNumber : String, job : Job)
+    + assignJob(job : Job) : void
+    + getInstance() : JobRepository
+    + getInstance() : CollaboratorRepository
+
+}
+
+
+class CollaboratorRepository {
+    + create(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
+    + checkForDuplicates() : void
+    + addCollaborator(collaborator) : void
+
+}
+
+class JobRepository {
+    +createJob(title : String) : Job
+    +checkForDuplicates() : void
+    +validateJob() : void
+}
+
+class Collaborator {
+    - name : String
+    - birthdate : String
+    - contactMobile : String
+    - email : String
+    - address : String
+    - city : String
+    - admissionDate : Date
+    - job : Job
+    - taxpayerNumber : int
+    + Collaborator(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, zipCode : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
+    + verifyCollaborator(collaborator) : void
+    - documentType : String
+    - identificationNumber : String
+}
+
+class Job {
+    - title : String
+    + Job(title : String)
+    +verifyJob(job : Job) : void
+}
+
+
+
+RegisterCollaboratorUI ..> CollaboratorController
+
+
+CollaboratorRepository --> "*" Collaborator : collaborators
+CollaboratorController ..> CollaboratorRepository : collaboratorRepository
+CollaboratorController ..> JobRepository : jobRepository
+JobRepository --> "*" Job : jobs
+
+
+@enduml

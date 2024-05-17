@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/maven,intellij+all,eclipse,git,netbeans,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,intellij+all,eclipse,git,netbeans,java
 
+src/main/java/pt/ipp/isep/dei/mdisc/output/*
 
 ### Eclipse ###
 .metadata

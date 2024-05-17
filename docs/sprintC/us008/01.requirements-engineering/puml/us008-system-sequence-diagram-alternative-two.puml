@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US008
+
+autonumber
+
+actor "FM" AS FM
+
+participant ":System" as System
+activate FM
+    FM -> System : requests to list vehicles needing check-up
+    activate System
+
+    System --> FM: shows list of vehicles needing check-up
+    deactivate System
+
+@enduml
