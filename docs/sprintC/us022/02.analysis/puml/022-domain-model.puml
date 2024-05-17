@@ -1,0 +1,25 @@
+@startuml
+
+'left to right direction
+
+title Domain Model
+
+hide methods
+hide circle
+
+class Entry {
+    requiredTask
+    urgency
+    expectedDuration
+}
+
+class ToDoList{
+    entries
+}
+
+
+
+ToDoList "1" -  "*" Entry: Contains  >
+
+
+@enduml
