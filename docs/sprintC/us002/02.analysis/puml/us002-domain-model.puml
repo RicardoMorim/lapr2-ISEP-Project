@@ -1,0 +1,17 @@
+@startuml
+
+hide circle
+hide methods
+
+title Domain Model
+
+
+
+class Job {
+    title
+    description
+}
+
+
+
+@enduml

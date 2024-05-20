@@ -1,27 +1,22 @@
 package pt.ipp.isep.dei.mdisc;
 
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.stream.Stream;
-
-import org.graphstream.graph.*;
-import org.graphstream.graph.implementations.*;
-import org.graphstream.ui.swing.util.SwingFileSinkImages;
-
-import java.io.*;
-
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
 
 
 public class IrrigationSystem {
@@ -66,6 +61,20 @@ public class IrrigationSystem {
         }
     }
 
+    public void sortEdges(List<Edge> edges) {
+        int n = edges.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (edges.get(j).weight > edges.get(j + 1).weight) {
+                    // Swap edges[j+1] and edges[i]
+                    Edge temp = edges.get(j);
+                    edges.set(j, edges.get(j + 1));
+                    edges.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
     public void planIrrigationSystem(String inputFilePath, boolean openGUI) {
         int vertices = graph.length;
         List<Edge> edges = new ArrayList<>();
@@ -78,7 +87,7 @@ public class IrrigationSystem {
         }
 
         // Sort the edges in ascending order of weight
-        edges.sort(Comparator.comparingInt(edge -> edge.weight));
+        sortEdges(edges);
 
         DisjointSet ds = new DisjointSet(vertices);
 
@@ -105,6 +114,64 @@ public class IrrigationSystem {
         // Visualize the MST
         visualizeGraph(mst, "Minimum Spanning Tree", openGUI, inputFilePath);
     }
+
+    public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
+        Graph g = new SingleGraph(title);
+
+        for (int i = 0; i < graph.length; i++) {
+            g.addNode(Integer.toString(i));
+        }
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = i + 1; j < graph.length; j++) {
+                if (graph[i][j] != 0) {
+                    g.addEdge(i + "-" + j, Integer.toString(i), Integer.toString(j));
+                }
+            }
+        }
+
+        if (!openGUI) {
+            return;
+        }
+
+        g.display();
+
+        try {
+            Path inputPath = Paths.get(inputFilePath);
+            String inputFileName = inputPath.getFileName().toString();
+
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/";
+
+            Files.createDirectories(Paths.get(outputFilePath));
+
+            try (PrintWriter writer = new PrintWriter(outputFilePath + title + ".dot", StandardCharsets.UTF_8)) {
+                writer.println("graph G {");
+                for (int i = 0; i < graph.length; i++) {
+                    for (int j = i + 1; j < graph.length; j++) {
+                        if (graph[i][j] != 0) {
+                            writer.println((i+1) + " -- " + (j + 1) + " [label=\"" + graph[i][j] + "\"];");
+                        }
+                    }
+                }
+                writer.println("}");
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing to the file.");
+                e.printStackTrace();
+            }
+
+
+            // New code to generate SVG from DOT
+            String dotFilePath = outputFilePath + title + ".dot";
+            String svgFilePath = outputFilePath + title + ".jpg";
+            ProcessBuilder pb = new ProcessBuilder("dot", "-Tjpg", dotFilePath, "-o", svgFilePath);
+            Process p = pb.start();
+            p.waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("An error occurred while creating the SVG file.");
+            e.printStackTrace();
+        }
+    }
+
 
     private void printCSV(int[][] mst, int totalCost, String inputFilePath) {
         try {
@@ -155,41 +222,6 @@ public class IrrigationSystem {
         }
     }
 
-    public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
-        Graph g = new SingleGraph(title);
-
-        for (int i = 0; i < graph.length; i++) {
-            g.addNode(Integer.toString(i));
-        }
-
-        for (int i = 0; i < graph.length; i++) {
-            for (int j = i + 1; j < graph.length; j++) {
-                if (graph[i][j] != 0) {
-                    g.addEdge(i + "-" + j, Integer.toString(i), Integer.toString(j));
-                }
-            }
-        }
-
-        if (openGUI) {
-            g.display();
-        }
-        SwingFileSinkImages pic = new SwingFileSinkImages();
-        pic.setLayoutPolicy(SwingFileSinkImages.LayoutPolicy.COMPUTED_FULLY_AT_NEW_IMAGE);
-        pic.setResolution(1280, 720);
-        try {
-            Path inputPath = Paths.get(inputFilePath);
-            String inputFileName = inputPath.getFileName().toString();
-
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/";
-
-            Files.createDirectories(Paths.get(outputFilePath));
-            pic.writeAll(g, outputFilePath + title + ".png");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
 
     public static void main(String[] args) {
         System.setProperty("org.graphstream.ui", "swing");
@@ -231,10 +263,14 @@ public class IrrigationSystem {
                 case 2:
                     System.out.println("Please enter the folder path:");
                     String folderPath = scanner.nextLine();
+                    if (folderPath.isEmpty()) {
+                        folderPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/";
+                    }
                     irrigationSystem.testExecutionTime(folderPath);
                     break;
                 case 3:
                     System.out.println("Exiting...");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid choice. Please choose a number between 1 and 3.");
@@ -251,7 +287,9 @@ public class IrrigationSystem {
             // Create the output directory if it does not exist
             String outputPath;
             if (!folderPath.isEmpty()) {
-                outputPath = folderPath.substring(0, folderPath.lastIndexOf("/")) + "/output/";
+                int lastSlashIndex = folderPath.lastIndexOf("/");
+                int secondLastSlashIndex = folderPath.lastIndexOf("/", lastSlashIndex - 1);
+                outputPath = folderPath.substring(0, secondLastSlashIndex) + "/output/";
             } else {
                 outputPath = "src/main/java/pt/ipp/isep/dei/mdisc/output/"; // Default path
             }
@@ -261,6 +299,8 @@ public class IrrigationSystem {
                 try (PrintWriter writer = new PrintWriter(outputPath + "execution_times.csv", StandardCharsets.UTF_8)) {
                     paths.filter(Files::isRegularFile)
                             .filter(p -> p.toString().endsWith(".csv"))
+                            .filter(p -> !p.toString().endsWith("execution_times.csv"))
+                            .filter(p -> !p.toString().contains("solution"))
                             .forEach(p -> {
                                 System.out.println("Working on file: " + p);
                                 String filename = p.toString();
@@ -270,15 +310,15 @@ public class IrrigationSystem {
                                 long endTime = System.nanoTime();
 
                                 long executionTimeNano = endTime - startTime;
-                                double executionTimeSec = (double) executionTimeNano / 1000000000.0; // Convert to seconds
-                                System.out.println("Execution time for " + filename + ": " + executionTimeSec + " seconds");
+                                double executionTimeSec = (double) executionTimeNano / 1000000.0; // Convert to milliseconds
+                                System.out.println("Execution time for " + filename + ": " + executionTimeSec + " milliseconds");
 
                                 writer.println(filename + "," + graph.length + "," + executionTimeSec); // Write to CSV
+                                generateExecutionTimeGraph(outputPath);
                                 writer.flush(); // Flush the PrintWriter
                             });
                 }
             }
-            generateExecutionTimeGraph(outputPath); // Call the method here, outside of the try-with-resources block
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -306,12 +346,12 @@ public class IrrigationSystem {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Execution Time vs Input Size",
                 "Input Size",
-                "Execution Time (seconds)",
+                "Execution Time (milliseconds)",
                 dataset
         );
 
         try {
-            ChartUtils.saveChartAsPNG(new File(outputPath + "execution_time_graph.png"), chart, 800, 600);
+            ChartUtils.saveChartAsPNG(new File(outputPath + "execution_time_graph.png"), chart, 720, 480);
         } catch (IOException e) {
             e.printStackTrace();
         }

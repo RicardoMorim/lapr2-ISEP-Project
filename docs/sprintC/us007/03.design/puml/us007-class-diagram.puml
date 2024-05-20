@@ -1,0 +1,52 @@
+@startuml
+
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+'class FleetManager{
+'}
+
+class RegisterVehicleCheckupUI{
+}
+
+class VehicleController{
+__
++getVehicleRepository()
++RegisterVehicleMaintenance()
++UpdateVehicle()
+}
+
+class Repositories{
+__
+-Repositories()
++getInstance(): Repositories
++getVehicleRepository()
+}
+
+
+
+class VehicleRepository{
+- List Vehicles
+}
+
+RegisterVehicleCheckupUI .d.> VehicleController
+
+VehicleController .d.> Repositories
+
+VehicleController .d.> VehicleRepository
+
+VehicleController .d.> Vehicle: Updates Vehicle\nWith new\nMaintenance
+
+Repositories --> Repositories : instance
+
+Repositories -->"1" VehicleRepository
+
+VehicleRepository "1" -> "*" Vehicle: stores
+
+@enduml

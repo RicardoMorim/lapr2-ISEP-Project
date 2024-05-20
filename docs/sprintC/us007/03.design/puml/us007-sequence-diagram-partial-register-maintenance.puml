@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 19
+
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+
+-> VehicleRepository :  register maintenance
+               group Register maintenance
+
+
+
+            activate VehicleRepository
+
+                VehicleRepository -> VehicleRepository : verifyFilled(maintenance)
+                VehicleRepository -> VehicleRepository : verifySpecialCharacters(maintenance)
+
+               end
+
+                <-- VehicleRepository : maintenance
+            deactivate
+@enduml
