@@ -33,4 +33,7 @@ public class GreenSpaceController {
         greenSpaceRepository.updateGreenSpace(oldGreenSpace, newGreenSpace);
     }
 
+    public GreenSpace getGreenSpaceByDesignation(String designation) {
+        return greenSpaceRepository.getGreenSpaceByDesignation(designation);
+    }
 }

@@ -1,14 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Entry;
-
 public class Repositories {
 
     private static Repositories instance;
 
-    private final ToDoListRepository toDoListRepository;
+    private final ToDoList toDoList;
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
@@ -17,7 +13,7 @@ public class Repositories {
     private final VehicleRepository vehicleRepository;
     private final SkillRepository skillRepository;
     private final GreenSpaceRepository greenSpaceRepository;
-    private  final EntryRepository entryRepository;
+    private final EntryRepository entryRepository;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
@@ -28,7 +24,7 @@ public class Repositories {
         vehicleRepository = new VehicleRepository();
         skillRepository = new SkillRepository();
         greenSpaceRepository = new GreenSpaceRepository();
-        toDoListRepository = new ToDoListRepository();
+        toDoList = new ToDoList();
         entryRepository = new EntryRepository();
     }
 
@@ -41,12 +37,12 @@ public class Repositories {
         return instance;
     }
 
-    public EntryRepository getEntryRepository(){
+    public EntryRepository getEntryRepository() {
         return entryRepository;
     }
 
-    public ToDoListRepository getToDoListRepository() {
-        return toDoListRepository;
+    public ToDoList getToDoList() {
+        return toDoList;
     }
 
     public JobRepository getJobRepository() {

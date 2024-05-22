@@ -62,8 +62,6 @@ public class VehicleRepository {
     }
 
     public Vehicle updateVehicle(Vehicle old_vehicle, Vehicle new_vehicle) {
-        if (!vehicleList.contains(old_vehicle))
-            throw new IllegalArgumentException("Vehicle does not exist");
         vehicleList.remove(old_vehicle);
         vehicleList.add(new_vehicle);
         return new_vehicle;

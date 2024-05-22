@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
-import pt.ipp.isep.dei.esoft.project.application.controller.VehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
@@ -27,7 +26,7 @@ public class Bootstrap implements Runnable {
     public void addVehicleMaintenances(){
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
-            vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - Math.abs(new Random().nextInt(10000)));
+            vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - 10000);
         }
     }
 

@@ -1,4 +1,6 @@
-package pt.ipp.isep.dei.esoft.project.domain;
+package pt.ipp.isep.dei.esoft.project.repository;
+
+import pt.ipp.isep.dei.esoft.project.domain.Entry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +35,7 @@ public class ToDoList {
         addEntry(entry);
     }
 
-
+    public List<Entry> getEntries(){
+        return List.copyOf(list);
+    }
 }

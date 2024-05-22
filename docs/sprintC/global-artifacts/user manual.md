@@ -11,7 +11,7 @@ The user manual contains information on how to use and operate the application d
 
 To support the activity of MusgoSublime, our application pretends to help in the planning, construction and maintenance of green spaces for collective use.
 
-
+<!-- TODO Completar o purpose and scope para demonstrar um pouco mais de como a aplicação vai funcionar -->
 ## System Overview
 
 ### Objectives
@@ -53,7 +53,7 @@ The application is structured into distinct modules, each tailored to fulfill sp
 
 
 ## Features/Functions
-
+<!-- TODO Colocar prints das US quando tivermos javaFx -->
 ###  1. Register a skill | Human Resources Manager
 
 This feature allows the Human Resources Manager (HRM) to register a skill to the system.
