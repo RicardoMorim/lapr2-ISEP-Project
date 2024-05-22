@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.*;
 
@@ -21,6 +22,27 @@ public class Bootstrap implements Runnable {
         addVehicles();
         addCollaborators();
         addVehicleMaintenances();
+        addEntries();
+    }
+
+    public void addEntries() {
+        // Get the necessary repositories
+        EntryRepository entryRepository = Repositories.getInstance().getEntryRepository();
+        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+
+        // Create some GreenSpaces
+        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, new Email("admin2@this.app"));
+        greenSpaceRepository.addGreenSpace(greenSpace1);
+        greenSpaceRepository.addGreenSpace(greenSpace2);
+
+        // Create some Entries
+        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", "High", 2.0f);
+        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", "Medium", 3.0f);
+
+        // Add the Entries to the repository
+        entryRepository.addEntry(entry1);
+        entryRepository.addEntry(entry2);
     }
 
     public void addVehicleMaintenances(){

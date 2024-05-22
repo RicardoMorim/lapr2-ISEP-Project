@@ -127,4 +127,15 @@ public class AgendaEntry {
     public void setDuration(String duration) {
         this.duration = duration;
     }
+
+    @Override
+    public String toString() {
+        return "team = " + ((team != null) ? team.toString() : "Team not added yet") +
+                ",\nvehiclesEquipment = " + ((vehiclesEquipment != null) ? vehiclesEquipment.toString() : "Vehicles not added yet") +
+                ",\nduration = '" + duration + '\'' +
+                ",\nstatus = " + status +
+                ",\nentry name = " + entry.getTitle() +
+                ",\nentry description = " + entry.getDescription() +
+                '}';
+    }
 }

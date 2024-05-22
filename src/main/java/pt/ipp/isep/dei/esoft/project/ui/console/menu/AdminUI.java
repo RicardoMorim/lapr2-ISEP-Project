@@ -20,10 +20,6 @@ public class AdminUI implements Runnable {
 
     public AdminUI() {
         System.out.println("AdminUI");
-        this.collaboratorController = new CollaboratorController();
-        this.jobController = new JobController();
-        this.skillController = new SkillController();
-        this.vehicleController = new VehicleController();
     }
 
     public void run() {
@@ -37,6 +33,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Register Vehicle maintenance", new RegisterVehicleMaintenanceUI()));
         options.add(new MenuItem("Get a list of vehicles needing maintenance", new ListVehiclesNeedingMaintenanceUI()));
         options.add(new MenuItem("Get best water pipe routes.", new GetBestPipeRoutesUI()));
+        options.add(new MenuItem("Add an entry to the Agenda", new AddEntryToAgendaUI()));
 
         int option = 0;
         do {

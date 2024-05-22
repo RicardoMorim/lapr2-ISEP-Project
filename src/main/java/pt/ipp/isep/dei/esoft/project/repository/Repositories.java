@@ -14,6 +14,7 @@ public class Repositories {
     private final SkillRepository skillRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final EntryRepository entryRepository;
+    private final Agenda agenda;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
@@ -26,6 +27,7 @@ public class Repositories {
         greenSpaceRepository = new GreenSpaceRepository();
         toDoList = new ToDoList();
         entryRepository = new EntryRepository();
+        agenda = new Agenda();
     }
 
     public static Repositories getInstance() {
@@ -35,6 +37,10 @@ public class Repositories {
             }
         }
         return instance;
+    }
+
+    public Agenda getAgenda() {
+        return agenda;
     }
 
     public EntryRepository getEntryRepository() {
