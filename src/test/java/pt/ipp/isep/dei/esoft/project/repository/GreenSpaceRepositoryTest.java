@@ -3,7 +3,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ class GreenSpaceRepositoryTest {
     @BeforeEach
     void setUp() {
         repository = new GreenSpaceRepository();
-        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f);
+        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, new Email("admin@this.app"));
     }
 
     @Test
@@ -46,14 +46,14 @@ class GreenSpaceRepositoryTest {
     @Test
     void updateGreenSpace_success() {
         repository.addGreenSpace(greenSpace);
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f);
+        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, new Email("admin@this.app"));
         GreenSpace updatedGreenSpace = repository.updateGreenSpace(greenSpace, newGreenSpace);
         assertEquals(newGreenSpace, updatedGreenSpace);
     }
 
     @Test
     void updateGreenSpace_doesNotExist() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f);
+        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, new Email("admin@this.app"));
         assertThrows(IllegalArgumentException.class, () -> repository.updateGreenSpace(greenSpace, newGreenSpace));
     }
 
