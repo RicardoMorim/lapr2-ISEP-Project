@@ -120,50 +120,7 @@ public class CollaboratorRepository {
         return true;
     }
 
-    public List<List<Collaborator>> GenerateTeamProposals(int minTeamSize, int maxTeamSize, List<Skill> requiredSkillList) {
-        List<List<Collaborator>> allTeams = new ArrayList<>();
-        List<Collaborator> collaboratorList = new ArrayList<>(collaborators);
-        collaboratorList.removeIf(collaborator -> !collaborator.isFree()); // only use the collaborators free to new work
 
-        generateTeams(new ArrayList<>(), collaboratorList, requiredSkillList, minTeamSize, maxTeamSize, allTeams);
-        if (allTeams.isEmpty()) {
-            throw new IllegalArgumentException("No team proposal could be generated with the given parameters.");
-        }
-        return allTeams;
-    }
-
-    private void generateTeams(List<Collaborator> currentTeam, List<Collaborator> remainingCollaborators, List<Skill> requiredSkills, int minTeamSize, int maxTeamSize, List<List<Collaborator>> allTeams) {
-        if (currentTeam.size() > maxTeamSize) {
-            return;
-        }
-
-        if (currentTeam.size() >= minTeamSize && currentTeam.size() <= maxTeamSize && hasRequiredSkills(currentTeam, requiredSkills)) {
-            allTeams.add(new ArrayList<>(currentTeam));
-        }
-
-        List<Collaborator> remainingCollaboratorsCopy = new ArrayList<>(remainingCollaborators);
-        for (Collaborator collaborator : remainingCollaborators) {
-            currentTeam.add(collaborator);
-            remainingCollaboratorsCopy.remove(collaborator);
-            generateTeams(currentTeam, remainingCollaboratorsCopy, requiredSkills, minTeamSize, maxTeamSize, allTeams);
-            currentTeam.remove(collaborator);
-        }
-    }
-
-    public boolean hasRequiredSkills(List<Collaborator> team, List<Skill> requiredSkills) {
-        List<Skill> teamSkills = new ArrayList<>();
-        for (Collaborator collaborator : team) {
-            teamSkills.addAll(collaborator.getSkills());
-        }
-
-        for (Skill requiredSkill : requiredSkills) {
-            if (Collections.frequency(teamSkills, requiredSkill) < Collections.frequency(requiredSkills, requiredSkill)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
 
 }

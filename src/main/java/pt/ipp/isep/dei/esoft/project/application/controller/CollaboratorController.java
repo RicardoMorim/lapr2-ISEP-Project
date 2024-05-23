@@ -3,12 +3,10 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
-
+import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +76,12 @@ public class CollaboratorController {
         }
     }
 
+    public void startTask(Team team){
+        for (Collaborator collaborator: team.getCollaborators()) {
+            collaborator.setFree(false);
+        }
+    }
+
     public void addSkillToACollaborator(List<Skill> skillList, Collaborator collaborator) {
         try {
             for (Skill skill : skillList) {
@@ -106,8 +110,5 @@ public class CollaboratorController {
         collaboratorRepository.update(old, collaborator);
     }
 
-    public List<List<Collaborator>> GenerateTeamProposals(int minTeamSize, int maxTeamSize, List<Skill> requiredSkillList) {
-        return collaboratorRepository.GenerateTeamProposals(minTeamSize, maxTeamSize, requiredSkillList);
-    }
 
 }

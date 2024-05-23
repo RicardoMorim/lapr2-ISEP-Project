@@ -2,23 +2,25 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class GenerateTeamProposalUI implements Runnable {
 
     private final CollaboratorController collaboratorController;
     private final SkillController skillController;
+    private final TeamController teamController;
 
     public GenerateTeamProposalUI() {
         this.collaboratorController = new CollaboratorController();
         this.skillController = new SkillController();
+        this.teamController = new TeamController();
     }
 
     @Override
@@ -94,16 +96,15 @@ public class GenerateTeamProposalUI implements Runnable {
 
         if (Utils.confirm("Do you want to generate the team proposals? (S/N)")) {
             try {
-                List<List<Collaborator>> teamProposals = collaboratorController.GenerateTeamProposals(minTeamSize, maxTeamSize, requiredSkills);
+                List<Team> teamProposals = teamController.generateTeamProposals(minTeamSize, maxTeamSize, requiredSkills, collaboratorController.getCollaboratorList());
                 System.out.println("Team proposals generated successfully.\n Number of possible teams: " + teamProposals.size());
                 for (int i = 0; i < teamProposals.size(); i++) {
                     System.out.println("\nTeam Proposal " + (i + 1) + ":");
-                    for (Collaborator collaborator : teamProposals.get(i)) {
-                        System.out.println(collaborator.toString());
-                    }
+                    System.out.println(teamProposals.get(i).toString());
                     if (Utils.confirm("Do you accept this team? (S/N)")) {
                         System.out.println("The team proposal was successfully accepted.");
                         collaboratorController.startTask(teamProposals.get(i));
+                        teamController.addTeam(teamProposals.get(i));
                         return;
                     }
                 }
