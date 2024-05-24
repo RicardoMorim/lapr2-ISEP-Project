@@ -1,77 +1,88 @@
-# US004 - Add a skill to a collaborator
+# US020 - Register a green space
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a HRM, I want to add a skill to a collaborator.
+As a GSM, I want to register a green space, which has a name, an area, a type and an address.
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
-> Skills are what enables a collaborator to do a certain task
+> Parks can be of three types: garden, medium-sized park, or large-sized park
 
 **From the client clarifications:**
 
-> **Question:** Can any skill be registered to any collaborator/job? Or should they be associated in categories in
-> association with a specific job?
->
-> **Answer:** There is no association, it totally depends on the CV of the collaborator.
+> **Question:** In which unit should the area be measured in?
+> 
+> **Answer:**  Usually, areas are measured in hectares.
 
-> **Question:** Should it be possible to add the same skill to a collaborator multiple times?
+> **Question:** We understand that type (garden, medium-size, large-size), area, name, and address are required inputs for a Green Space (and if we are wrong in this, please correct us), but are there any other inputs that we are unaware of?
 >
-> **Answer:** That does not make sense.
+> **Answer:** Seems enough.
 
-> **Question:** Is there any certification/proof needed to register a skill to a collaborator?
->
-> **Answer:** no.
+> **Question:** To register a green space, what is the criteria needed to classify it as a medium-sized park or a large-sized park?
+> 
+> **Answer:** It's a GSM responsibility to decide the classification.
 
-> **Question:** Is there any limit of skills or a minimum number of skills?
+> **Question:** Can two green spaces have the same name?
 >
 > **Answer:** No.
 
-> **Question:** Is there any special characteristic to be able to add a skill to a collaborator?
+> **Question:** IShould the Green Space have any field in which it would store the GSM who created it, meaning that green space is managed by that GSM?
 >
-> **Answer:** No.
+> **Answer:** I have no knowledge about data models.
 
-> **Question:** Can a collaborator have no skills assigned?
+> **Question:** Good afternoon, I would like to know between what ranges of hectares a green space is classified as garden, medium or large, or if it is possible to register 2 green spaces with the same area but in different typology, depending on the GSM it registers.
 >
-> **Answer:** Yes.
+> **Answer:** The classification is not automatic, it's up to GSM decide about it.
+
+>Can two different green spaces have the same address?
+>
+> No
 
 
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The collaborator must exist in the system.
-* **AC3** The collaborator must not have the skill already.
-* **AC4:** The skill must exist in the system.
+* **AC2** The green space must not already exist in the system.
+* **AC3:** The area must be greater than zero.
 
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
-  characteristics." - there has to be at least one collaborator to be assigned a skill
-* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be at least one skill to be assigned to a collaborator
+* None 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
+  
 * Typed data:
-    * The collaborator
-    * The skill
+    * The area
+    * The name
+    * The address
+
+
+* Selected data:
+    * The type of the green space
 
 **Output Data:**
 
 * (In)Success of the operation
-* The updated skills of the collaborator
+* The information of the green space
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us020-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The user can always choose a different person to add the skill in case he makes a mistake
+* The GSM is responsible for classifying the green space as a garden, medium-sized park, or large-sized park.
+* The area is measured in hectares.
+* The green space must not already exist in the system.
+* Two green spaces cannot have the same name.
+* The GSM can also delete a registered green space or update it.
+* One green space cant have the same address as another green space.
+* 

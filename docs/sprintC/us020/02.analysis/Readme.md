@@ -1,10 +1,10 @@
-# US004 - Add a skill to a collaborator
+# US020 - Register a green space
 
 ## 2. Analysis
 
 ### 2.1. Relevant Domain Model Excerpt
 
-![Domain Model](svg/us004-domain-model.svg)
+![Domain Model](svg/020-domain-model-Domain_Model.png)
 
 ### 2.2. Other Remarks
 
