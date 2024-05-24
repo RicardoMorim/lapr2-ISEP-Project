@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.isep.lei.esoft.auth.domain.model.Email;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,12 +10,13 @@ public class GreenSpace {
     private String type;
     private String name;
     private float area;
+    private Email user;
 
-
-    public GreenSpace(String name, String type, float area) {
+    public GreenSpace(String name, String type, float area, Email user) {
         this.name = name;
         this.type = type;
         this.area = area;
+        this.user = user;
         validatePark();
     }
 

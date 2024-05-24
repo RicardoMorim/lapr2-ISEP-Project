@@ -1,0 +1,76 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Organization Employee" as ADM
+participant ":AddEntryToDoListUI" as UI
+participant ":ToDoController" as ToDoCTRL
+participant "ToDoList:\TodoList" as ToDoList
+participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant ":EntryController" as EntryCTRL
+participant "EntryRepository:\nEntryRepository" as EntryRepository
+
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+activate ADM
+    ADM -> UI : asks to add an entry to the ToDoList
+    activate UI
+    UI -> EntryCTRL ** : create
+       UI -> EntryCTRL: getEntries()
+       activate EntryCTRL
+                       EntryCTRL -> RepositorySingleton : getInstance()
+                       activate RepositorySingleton
+
+                           RepositorySingleton --> EntryCTRL: repositories
+                       deactivate RepositorySingleton
+
+                       EntryCTRL -> PLAT : getEntryRepository()
+                       activate PLAT
+
+                           PLAT --> EntryCTRL: EntryRepository
+                       deactivate PLAT
+
+
+
+                       EntryCTRL -> EntryRepository : getEntries()
+                       activate EntryRepository
+
+                    EntryRepository -> EntryCTRL: returns entry list
+                deactivate EntryRepository
+           EntryCTRL -> UI: returns entry list
+       deactivate EntryCTRL
+       UI -> ADM: shows the entry list and asks to choose one
+    deactivate UI
+    ADM -> UI : chooses the entry
+
+    activate UI
+        UI -> ToDoCTRL** : create
+        UI -> ToDoCTRL : addEntry(entry)
+        activate ToDoCTRL
+        ToDoCTRL -> RepositorySingleton : getInstance()
+             activate RepositorySingleton
+
+                  RepositorySingleton --> ToDoCTRL: repositories
+             deactivate RepositorySingleton
+            ToDoCTRL -> PLAT : getSkillRepository()
+            activate PLAT
+            PLAT --> ToDoCTRL: ToDoList
+            deactivate PLAT
+            ToDoCTRL -> ToDoList: AddEntry(entry)
+            activate ToDoList
+                ToDoList -> ToDoCTRL: return updated entries
+            deactivate ToDoList
+
+            ToDoCTRL -> UI: return updated entries
+            deactivate ToDoCTRL
+
+        UI -> ADM: display operation success\nalong withupdated entry list
+    deactivate UI
+deactivate ADM
+
+@enduml

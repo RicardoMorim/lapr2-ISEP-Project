@@ -1,9 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class GreenSpaceRepository {
     private List<GreenSpace> greenSpaces;
@@ -16,7 +17,6 @@ public class GreenSpaceRepository {
     public GreenSpaceRepository() {
         this.greenSpaces = new ArrayList<>();
     }
-
 
 
     public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, String type, float area) {
@@ -56,5 +56,15 @@ public class GreenSpaceRepository {
     public List<GreenSpace> getGreenSpaces() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(greenSpaces);
+    }
+
+
+    public GreenSpace getGreenSpaceByDesignation(String name) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(name)) {
+                return greenSpace;
+            }
+        }
+        throw new IllegalArgumentException("Green Space not found.");
     }
 }

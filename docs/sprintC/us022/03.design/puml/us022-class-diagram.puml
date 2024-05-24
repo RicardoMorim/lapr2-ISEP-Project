@@ -1,0 +1,55 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class addEntryTodoListUI {
+}
+
+
+
+class Repositories {
+    + getInstance()
+    + getSkillRepository()
+    + getCollaboratorRepository()
+}
+
+class ToDoController{
+    + getToDoListRepository()
+    + AddEntry(entry)
+}
+
+class EntryController{
+    + getAgenda()
+    + getEntries()
+}
+
+class Agenda{
+    getEntries()
+}
+
+class ToDoList{
+    + getToDoList()
+    + AddEntry(entry)
+}
+
+class Entry{
+
+}
+
+
+addEntryTodoListUI --> ToDoController
+ToDoController --> Repositories
+Repositories --> ToDoList
+addEntryTodoListUI --> EntryController
+EntryController --> Repositories
+Repositories --> Agenda
+Agenda --> Entry: contains
+ToDoList --> Entry: contains
+@enduml

@@ -70,7 +70,7 @@ As a HRM, I want to add a skill to a collaborator.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us023-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 
