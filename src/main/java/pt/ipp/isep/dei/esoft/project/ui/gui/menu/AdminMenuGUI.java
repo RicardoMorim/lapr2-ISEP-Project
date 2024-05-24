@@ -7,12 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
 
 public class AdminMenuGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Admin Menu");
+        primaryStage.setTitle("Musgo Sublime - Admin Menu");
 
         Button btnRegisterSkill = new Button("Register a skill that a collaborator may have.");
         //btnRegisterSkill.setOnAction(e -> new RegisterSkillUI().start(new Stage()));
@@ -27,7 +28,7 @@ public class AdminMenuGUI extends Application {
         btnAddSkillToCollaborator.setOnAction(e -> new AddSkillToCollaboratorGUI().start(new Stage()));
 
         Button btnGenerateTeamProposal = new Button("Generate a team proposal automatically");
-        //btnGenerateTeamProposal.setOnAction(e -> new GenerateTeamProposalUI().start(new Stage()));
+        btnGenerateTeamProposal.setOnAction(e -> new GenerateTeamProposalGUI().start(new Stage()));
 
         Button btnRegisterVehicle = new Button("Register Vehicle");
         //btnRegisterVehicle.setOnAction(e -> new RegisterVehicleUI().start(new Stage()));
