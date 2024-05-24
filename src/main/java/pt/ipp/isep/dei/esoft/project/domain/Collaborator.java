@@ -148,7 +148,7 @@ public class Collaborator {
             return false;
         }
         Collaborator collaborator = (Collaborator) o;
-        return email.equals(collaborator.email ) || phone.equals(collaborator.phone) || taxpayerNumber == collaborator.taxpayerNumber || citizenNumber == collaborator.citizenNumber;
+        return email.equals(collaborator.email) || phone.equals(collaborator.phone) || taxpayerNumber == collaborator.taxpayerNumber || citizenNumber == collaborator.citizenNumber;
     }
 
 
@@ -227,9 +227,7 @@ public class Collaborator {
         }
 
         return
-                "name='" + name + "',\n" +
-                        job.toString() + ",\n" +
-                        "Skills:" + (skillString.toString().isEmpty() ? " No skills\n" : skillString);
+                "Name: '" + name + "',\n" + "Email: '" + email + "'\n";
     }
 
     /**

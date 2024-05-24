@@ -6,7 +6,7 @@ import java.util.List;
  * The type Agenda entry.
  */
 public class AgendaEntry {
-    private List<Collaborator> team;
+    private Team team;
     private List<Vehicle> vehiclesEquipment;
     private String duration;
     private Status status;
@@ -21,7 +21,7 @@ public class AgendaEntry {
      * @param duration          the duration
      * @param status            the status
      */
-    public AgendaEntry(Entry entry, List<Collaborator> team, List<Vehicle> vehiclesEquipment, String duration, Status status) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehiclesEquipment, String duration, Status status) {
         this.entry = entry;
         this.team = team;
         this.vehiclesEquipment = vehiclesEquipment;
@@ -43,7 +43,7 @@ public class AgendaEntry {
      *
      * @return the team
      */
-    public List<Collaborator> getTeam() {
+    public Team getTeam() {
         return team;
     }
 
@@ -70,7 +70,7 @@ public class AgendaEntry {
      *
      * @param team the team
      */
-    public void setTeam(List<Collaborator> team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 
