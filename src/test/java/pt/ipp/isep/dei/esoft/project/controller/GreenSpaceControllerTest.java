@@ -50,7 +50,7 @@ class GreenSpaceControllerTest {
 
     @Test
     void updateGreenSpace_success() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, new Email("admin@this.app"));
+        GreenSpace newGreenSpace = new GreenSpace("Garden", 300.0f, "Rua almeida valente", "garden", new Email("admin@this.app") );
         repository.addGreenSpace(greenSpace);
         controller.updateGreenSpace(greenSpace, newGreenSpace);
         assertEquals(newGreenSpace, repository.getGreenSpaces().get(0));

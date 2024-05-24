@@ -19,12 +19,13 @@ public class GreenSpaceRepository {
     }
 
 
-    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, String type, float area) {
+    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, String type, float area, String address) {
         for (GreenSpace gs : this.greenSpaces) {
             if (gs.equals(g)) {
                 gs.setName(name);
                 gs.setType(type);
                 gs.setArea(area);
+                gs.setAddress(address);
                 return Optional.of(g);
 
             }
