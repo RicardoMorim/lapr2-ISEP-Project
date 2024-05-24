@@ -1,0 +1,47 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class RegisterGreenSpaceUI {
+}
+
+class GreenSpaceController {
+    + getGreenSpaceRepository()
+    + registerSkill(skill)
+    + updateSkill(skill, name, shortDescription, Description)
+    + removeSkill(skill)
+}
+
+
+
+class GreenSpaceRepository {
+    + getGreenSpace(name, address)
+    + getGreenSpaceType()
+    + storeGreenSpace(greenSpace)
+}
+class GreenSpace {
+    - String name
+    - String address
+    - String type
+    - Float area
+
+    + createGreenSpace(name, address, type, area)
+}
+class Repositories {
+    + getInstance()
+    + getGreenSpaceRepository()
+}
+RegisterGreenSpaceUI ..> GreenSpaceController
+GreenSpaceController ..> GreenSpaceRepository
+GreenSpaceController .> Repositories
+Repositories .> GreenSpaceRepository
+GreenSpaceRepository --> "*"GreenSpace
+
+@enduml
