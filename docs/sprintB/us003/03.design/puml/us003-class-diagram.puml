@@ -19,6 +19,12 @@ class CollaboratorController {
 
 }
 
+class Repositories {
+    +getJobRepository() : JobRepository
+    +getCollaboratorRepository() : CollaboratorRepository
+}
+
+
 
 class CollaboratorRepository {
     + create(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
@@ -59,7 +65,10 @@ class Job {
 
 RegisterCollaboratorUI ..> CollaboratorController
 
-
+CollaboratorController ..> Repositories : repositories
+Repositories --> Repositories : instance
+Repositories --> JobRepository : jobRepository
+Repositories --> "1"CollaboratorRepository : collaboratorRepository
 CollaboratorRepository --> "*" Collaborator : collaborators
 CollaboratorController ..> CollaboratorRepository : collaboratorRepository
 CollaboratorController ..> JobRepository : jobRepository

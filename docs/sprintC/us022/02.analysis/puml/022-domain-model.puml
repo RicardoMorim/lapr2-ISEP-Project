@@ -17,9 +17,13 @@ class ToDoList{
     entries
 }
 
+class Agenda{
+    entries
+}
+
 
 
 ToDoList "1" -  "*" Entry: Contains  >
-
+Entry "*" - "1" Agenda: gets added to >
 
 @enduml
