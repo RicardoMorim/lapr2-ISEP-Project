@@ -3,7 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 public class Entry {
 
 
-    private String state;
+    private String state; // TODO - Utilizar uma class enum para o state
 
     private GreenSpace greenSpace;
 
@@ -11,7 +11,7 @@ public class Entry {
 
     private String description;
 
-    private String urgency;
+    private String urgency; // TODO - Utilziar uma class enum para a urgencia
 
     private float expectedDuration;
 

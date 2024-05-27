@@ -18,7 +18,7 @@ class AgendaEntryTest {
 
     @BeforeEach
     void setUp() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Type", 1000, new Email("admin@this.app"));
+        GreenSpace greenSpace = new GreenSpace("Park", "Type", 1000, Type.GARDEN, new Email("admin@this.app"));
         entry = new Entry("State", greenSpace, "Title", "Description", "High", 2.0f);
         collaborator = new Collaborator("email@example.com", "John Doe", "Address", "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -53,7 +53,7 @@ class AgendaEntryTest {
 
     @Test
     void setEntryShouldChangeEntry() {
-        Entry newEntry = new Entry("New State", new GreenSpace("New Park", "type", 2000, new Email("admin@this.app")), "New Title", "New Description", "Low", 3.0f);
+        Entry newEntry = new Entry("New State", new GreenSpace("New Park", "type", 2000, Type.GARDEN, new Email("admin@this.app")), "New Title", "New Description", "Low", 3.0f);
         agendaEntry.setEntry(newEntry);
         assertEquals(newEntry, agendaEntry.getEntry());
     }

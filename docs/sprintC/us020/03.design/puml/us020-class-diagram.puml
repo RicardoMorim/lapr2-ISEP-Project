@@ -29,7 +29,7 @@ class GreenSpaceRepository {
 class GreenSpace {
     - String name
     - String address
-    - String type
+    - Type type
     - Float area
 
     + createGreenSpace(name, address, type, area)

@@ -1,22 +1,24 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.isep.lei.esoft.auth.domain.model.Email;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class GreenSpace {
-    private String type;
+    private Type type;
     private String name;
     private float area;
     private String address;
     private Email user;
 
 
-    public GreenSpace(String name, float area, String address, String type, Email user) {
+    public GreenSpace(String name, String address, float area, Type type, Email user) {
         this.name = name;
+        this.address = address;
         this.type = type;
         this.area = area;
-        this.address = address;
         this.user = user;
         validatePark();
     }
@@ -26,23 +28,23 @@ public class GreenSpace {
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException {
         this.name = name;
         validatePark();
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
-        String old = this.type;
+    public void setType(Type type) {
+        Type old = this.type;
         this.type = type;
 
         try {
             validatePark();
         } catch (IllegalArgumentException e) {
-            this.name = old;
+            this.type = old;
             throw e;
         }
     }
@@ -84,7 +86,7 @@ public class GreenSpace {
         values.add(this.name);
         values.add(Float.toString(this.area));
         values.add(this.address);
-        values.add(this.type);
+        values.add(this.type.toString());
         return values;
     }
 
@@ -92,15 +94,7 @@ public class GreenSpace {
     @Override
     public String toString() {
         return
-                "Park Name = '" + name + "' - Type = '" + type + "'" + " - Area = '" + area + "'" + " - Address = '" + address + "'";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GreenSpace greenSpace = (GreenSpace) o;
-        return Objects.equals(type, greenSpace.type) && Objects.equals(name, greenSpace.name) && Objects.equals(area, greenSpace.area) && Objects.equals(address, greenSpace.address);
+                "Park Name = '" + name + " - Address = '" + address + "'" + " - Area = '" + area + "'" + "' - Type = '" + type + "'";
     }
 
     @Override
@@ -115,7 +109,7 @@ public class GreenSpace {
     }
 
     private void validateNotEmptyFields() {
-        if (this.name.isEmpty() || this.type.isEmpty() || this.area == 0 || this.address.isEmpty()) {
+        if (this.name.isEmpty() || this.area == 0 || this.address.isEmpty()) {
             throw new IllegalArgumentException("All fields must be filled.");
         }
     }
@@ -124,5 +118,14 @@ public class GreenSpace {
         if (this.area < 0) {
             throw new IllegalArgumentException("Area must be a positive number.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GreenSpace that = (GreenSpace) o;
+        return name.equals(that.name) ||
+                address.equals(that.address);
     }
 }
