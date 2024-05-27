@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US021 - Add a new toDoEntry to the To-Do List
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

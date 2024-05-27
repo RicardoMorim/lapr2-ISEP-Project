@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US021 - Add a new toDoEntry to the To-Do List
 
 ## 2. Analysis
 
