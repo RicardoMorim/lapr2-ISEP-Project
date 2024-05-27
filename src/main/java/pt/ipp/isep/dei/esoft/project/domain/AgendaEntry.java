@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ public class AgendaEntry {
     private String duration;
     private Status status;
     private Entry entry;
+
+    private Date date;
 
     /**
      * Instantiates a new Agenda entry.
@@ -27,6 +30,15 @@ public class AgendaEntry {
         this.vehiclesEquipment = vehiclesEquipment;
         this.duration = duration;
         this.status = status;
+    }
+
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehiclesEquipment, String duration, Status status, Date date) {
+        this.entry = entry;
+        this.team = team;
+        this.vehiclesEquipment = vehiclesEquipment;
+        this.duration = duration;
+        this.status = status;
+        this.date = date;
     }
 
     public AgendaEntry(Entry entry, List<Vehicle> vehiclesEquipment, String duration, Status status) {
@@ -128,6 +140,18 @@ public class AgendaEntry {
         this.duration = duration;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean isAfter(Date date){
+        return date.after(this.date);
+    }
+
     @Override
     public String toString() {
         return "team = " + ((team != null) ? team.toString() : "Team not added yet") +
@@ -136,6 +160,7 @@ public class AgendaEntry {
                 ",\nstatus = " + status +
                 ",\nentry name = " + entry.getTitle() +
                 ",\nentry description = " + entry.getDescription() +
+                ",\ndate = " + this.date+
                 '}';
     }
 }
