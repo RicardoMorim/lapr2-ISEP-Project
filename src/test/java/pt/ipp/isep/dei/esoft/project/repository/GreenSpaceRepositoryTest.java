@@ -3,8 +3,11 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,14 +18,15 @@ class GreenSpaceRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        repository = new GreenSpaceRepository();
-        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, new Email("admin@this.app"));
+        repository = new GreenSpaceRepository(new ArrayList<>());
+        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
     }
 
     @Test
     void addGreenSpace_success() {
         repository.addGreenSpace(greenSpace);
-        assertEquals(1, repository.getGreenSpaces().size());
+        List<GreenSpace> result = repository.getGreenSpaces();
+        assertTrue(result.contains(greenSpace));
     }
 
     @Test
@@ -35,7 +39,8 @@ class GreenSpaceRepositoryTest {
     void removeGreenSpace_success() {
         repository.addGreenSpace(greenSpace);
         repository.removeGreenSpace(greenSpace);
-        assertEquals(0, repository.getGreenSpaces().size());
+        List<GreenSpace> result = repository.getGreenSpaces();
+        assertFalse(result.contains(greenSpace));
     }
 
     @Test
@@ -46,29 +51,28 @@ class GreenSpaceRepositoryTest {
     @Test
     void updateGreenSpace_success() {
         repository.addGreenSpace(greenSpace);
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, new Email("admin@this.app"));
-        GreenSpace updatedGreenSpace = repository.updateGreenSpace(greenSpace, newGreenSpace);
-        assertEquals(newGreenSpace, updatedGreenSpace);
+        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, Type.GARDEN, new Email("admin@this.app"));
+        repository.updateGreenSpace(greenSpace, newGreenSpace);
+        List<GreenSpace> result = repository.getGreenSpaces();
+        assertTrue(result.contains(newGreenSpace));
+        assertFalse(result.contains(greenSpace));
     }
 
     @Test
     void updateGreenSpace_doesNotExist() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, new Email("admin@this.app"));
+        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, Type.GARDEN, new Email("admin@this.app"));
         assertThrows(IllegalArgumentException.class, () -> repository.updateGreenSpace(greenSpace, newGreenSpace));
     }
 
     @Test
-    void updateGreenSpaceWithDetails_success() {
+    void getGreenSpaceByDesignation_success() {
         repository.addGreenSpace(greenSpace);
-        Optional<GreenSpace> updatedGreenSpace = repository.updateGreenSpace(greenSpace, "Garden", "medium-sized park", 300.0f);
-        assertTrue(updatedGreenSpace.isPresent());
-        assertEquals("Garden", updatedGreenSpace.get().getName());
-        assertEquals("medium-sized park", updatedGreenSpace.get().getType());
-        assertEquals(300.0f, updatedGreenSpace.get().getArea());
+        GreenSpace result = repository.getGreenSpaceByDesignation("Park");
+        assertEquals(greenSpace, result);
     }
 
     @Test
-    void updateGreenSpaceWithDetails_doesNotExist() {
-        assertThrows(IllegalArgumentException.class, () -> repository.updateGreenSpace(greenSpace, "Garden", "medium-sized park", 300.0f));
+    void getGreenSpaceByDesignation_notFound() {
+        assertThrows(IllegalArgumentException.class, () -> repository.getGreenSpaceByDesignation("Park"));
     }
 }

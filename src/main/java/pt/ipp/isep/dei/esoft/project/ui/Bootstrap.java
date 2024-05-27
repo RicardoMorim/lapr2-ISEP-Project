@@ -31,8 +31,8 @@ public class Bootstrap implements Runnable {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
         // Create some GreenSpaces
-        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, new Email("admin1@this.app"));
-        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, new Email("admin2@this.app"));
+        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
         greenSpaceRepository.addGreenSpace(greenSpace1);
         greenSpaceRepository.addGreenSpace(greenSpace2);
 

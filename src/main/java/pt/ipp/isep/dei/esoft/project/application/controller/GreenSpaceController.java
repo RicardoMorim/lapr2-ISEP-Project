@@ -36,4 +36,9 @@ public class GreenSpaceController {
     public GreenSpace getGreenSpaceByDesignation(String designation) {
         return greenSpaceRepository.getGreenSpaceByDesignation(designation);
     }
+
+    public boolean checkIfGreenSpaceNameExists(String name) {
+        return greenSpaceRepository.checkIfGreenSpaceNameExists(name);
+    }
+
 }

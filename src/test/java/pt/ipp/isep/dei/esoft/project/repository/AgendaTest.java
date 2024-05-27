@@ -19,7 +19,7 @@ class AgendaTest {
     void setUp() {
         agenda = new Agenda();
 
-        GreenSpace greenSpace = new GreenSpace("Park", "type", 1000, new Email("admin@this.app"));
+        GreenSpace greenSpace = new GreenSpace("Park", "type", 1000, Type.GARDEN, new Email("admin@this.app"));
         Entry entry = new Entry("State", greenSpace, "Title", "Description", "High", 2.0f);
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", "Address", "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);

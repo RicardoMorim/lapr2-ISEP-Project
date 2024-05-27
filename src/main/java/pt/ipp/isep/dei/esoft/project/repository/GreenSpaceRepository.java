@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class GreenSpaceRepository {
     }
 
 
-    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, String type, float area, String address) {
+    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, Type type, float area, String address) {
         for (GreenSpace gs : this.greenSpaces) {
             if (gs.equals(g)) {
                 gs.setName(name);
@@ -27,7 +28,6 @@ public class GreenSpaceRepository {
                 gs.setArea(area);
                 gs.setAddress(address);
                 return Optional.of(g);
-
             }
         }
 
@@ -48,7 +48,7 @@ public class GreenSpaceRepository {
 
     public GreenSpace updateGreenSpace(GreenSpace old_greenSpace, GreenSpace new_greenSpace) {
         if (!greenSpaces.contains(old_greenSpace))
-            throw new IllegalArgumentException("Vehicle does not exist");
+            throw new IllegalArgumentException("Green space does not exist");
         greenSpaces.remove(old_greenSpace);
         greenSpaces.add(new_greenSpace);
         return new_greenSpace;
@@ -67,5 +67,14 @@ public class GreenSpaceRepository {
             }
         }
         throw new IllegalArgumentException("Green Space not found.");
+    }
+
+    public boolean checkIfGreenSpaceNameExists(String name) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
