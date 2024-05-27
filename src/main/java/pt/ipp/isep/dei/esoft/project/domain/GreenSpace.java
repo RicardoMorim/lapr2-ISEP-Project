@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GreenSpace {
-    private String type;
+    private String type; // TODO - utilizar uma class enum para o type
     private String name;
     private float area;
     private Email user;
