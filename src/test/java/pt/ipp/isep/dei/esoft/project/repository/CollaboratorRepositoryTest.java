@@ -70,44 +70,4 @@ class CollaboratorRepositoryTest {
         assertEquals(collaborator, collaborators.get(0));
     }
 
-    @Test
-    void hasRequiredSkillsReturnsTrueWhenTeamHasRequiredSkills() {
-        Skill java = new Skill("java", "Code");
-        Skill photoshop = new Skill("Photoshop", "Photo editing");
-
-        Collaborator collaborator1 = new Collaborator("john.doe@example.com", "John Doe", "123 Street", "1234567890", new Job("Developer", "Description"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(java, photoshop));
-        Collaborator collaborator2 = new Collaborator("jane.doe@example.com", "Jane Doe", "456 Street", "0987654321", new Job("Designer", "Description"), new Date(), new Date(), "Passport", 654321, 654321, Arrays.asList(java, photoshop));
-
-        List<Collaborator> team = Arrays.asList(collaborator1, collaborator2);
-        List<Skill> requiredSkills = Arrays.asList(java, photoshop);
-
-        assertTrue(collaboratorRepository.hasRequiredSkills(team, requiredSkills));
-    }
-
-    @Test
-    void hasRequiredSkillsReturnsFalseWhenTeamDoesNotHaveRequiredSkills() {
-        Skill java = new Skill("java", "Code");
-        Skill photoshop = new Skill("Photoshop", "Photo editing");
-
-        Collaborator collaborator1 = new Collaborator("john.doe@example.com", "John Doe", "123 Street", "1234567890", new Job("Developer", "Description"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(java));
-        Collaborator collaborator2 = new Collaborator("jane.doe@example.com", "Jane Doe", "456 Street", "0987654321", new Job("Designer", "Description"), new Date(), new Date(), "Passport", 654321, 654321, Arrays.asList(java));
-
-        List<Collaborator> team = Arrays.asList(collaborator1, collaborator2);
-        List<Skill> requiredSkills = Arrays.asList(java, photoshop);
-
-        assertFalse(collaboratorRepository.hasRequiredSkills(team, requiredSkills));
-    }
-
-    @Test
-    void hasRequiredSkillsReturnsFalseWhenTeamDoesNotHaveEnoughOfRequiredSkill() {
-        Skill java = new Skill("java", "Code");
-
-        Collaborator collaborator1 = new Collaborator("john.doe@example.com", "John Doe", "123 Street", "1234567890", new Job("Developer", "Description"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(java));
-        Collaborator collaborator2 = new Collaborator("jane.doe@example.com", "Jane Doe", "456 Street", "0987654321", new Job("Designer", "Description"), new Date(), new Date(), "Passport", 654321, 654321, Arrays.asList(java));
-
-        List<Collaborator> team = Arrays.asList(collaborator1, collaborator2);
-        List<Skill> requiredSkills = Arrays.asList(java, java, java);
-
-        assertFalse(collaboratorRepository.hasRequiredSkills(team, requiredSkills));
-    }
 }

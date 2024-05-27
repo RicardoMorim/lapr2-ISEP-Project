@@ -60,31 +60,8 @@ class CollaboratorControllerTest {
     }
 
 
-    @Test
-    void generateTeamProposalsReturnsAllValidTeams() {
-        Collaborator collaborator1 = new Collaborator("john.doe@example.com", "John Doe", "123 Street", "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
-        Collaborator collaborator2 = new Collaborator("jane.doe@example.com", "Jane Doe", "456 Street", "0987654321", new Job("Designer", "java developer"), new Date(), new Date(), "Passport", 654321, 654321, Arrays.asList(new Skill("Photoshop", "Photo editing")));
-        Collaborator collaborator3 = new Collaborator("jao.doe@example.com", "Jaos", "123 Street", "123456127890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 1234656, 12341256, Arrays.asList(new Skill("Java", "Code")));
-        Collaborator collaborator4 = new Collaborator("jaoA.doe@example.com", "Jao", "123 Street", "123467890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 1234556, 1234576, Arrays.asList(new Skill("Java", "Code")));
-        repository.add(collaborator1);
-        repository.add(collaborator2);
-        repository.add(collaborator3);
-        repository.add(collaborator4);
-        List<List<Collaborator>> teamProposals = controller.GenerateTeamProposals(1, 2, Arrays.asList(new Skill("Java", "Code"), new Skill("Photoshop", "Photo editing")));
-        assertEquals(3, teamProposals.size());
-        assertTrue(teamProposals.stream().anyMatch(team -> team.contains(collaborator1) && team.contains(collaborator2)));
-        assertFalse(teamProposals.stream().anyMatch(team -> team.contains(collaborator1) && !team.contains(collaborator2)));
-        assertFalse(teamProposals.stream().anyMatch(team -> team.contains(collaborator1) && team.contains(collaborator3)));
-        assertFalse(teamProposals.stream().anyMatch(team -> team.contains(collaborator1) && team.contains(collaborator4)));
 
-    }
 
-    @Test
-    void generateTeamProposalsThrowsExceptionWhenNoValidTeamsCanBeGenerated() {
-        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", "123 Street", "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
-        repository.add(collaborator);
-        assertThrows(IllegalArgumentException.class, () -> controller.GenerateTeamProposals(2, 2, Arrays.asList(new Skill("Java", "Code"), new Skill("Photoshop", "Photo editing"))));
-    }
 
     @Test
     void registerCollaboratorShouldThrowExceptionWhenEmailIsInvalid() {

@@ -1,70 +1,84 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.isep.lei.esoft.auth.domain.model.Email;
+import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class GreenSpaceTest {
+class GreenSpaceTest {
+    private GreenSpace greenSpace;
 
-    @Test
-    public void shouldReturnCorrectName() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        assertEquals("Park", greenSpace.getName());
+    @BeforeEach
+    void setUp() {
+        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
     }
 
     @Test
-    public void shouldReturnCorrectType() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        assertEquals("Public", greenSpace.getType());
+    void setName_success() {
+        greenSpace.setName("Garden");
+        assertEquals("Garden", greenSpace.getName());
     }
 
     @Test
-    public void shouldReturnCorrectArea() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        assertEquals(100.0f, greenSpace.getArea());
+    void setName_emptyName() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setName(""));
     }
 
     @Test
-    public void shouldUpdateName() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        greenSpace.setName("New Park");
-        assertEquals("New Park", greenSpace.getName());
+    void setType_success() {
+        greenSpace.setType(Type.GARDEN);
+        assertEquals(Type.GARDEN, greenSpace.getType());
     }
 
     @Test
-    public void shouldUpdateType() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        greenSpace.setType("Private");
-        assertEquals("Private", greenSpace.getType());
+    void setAddress_success() {
+        greenSpace.setAddress("New Address");
+        assertEquals("New Address", greenSpace.getAddress());
     }
 
     @Test
-    public void shouldUpdateArea() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        greenSpace.setArea(200.0f);
-        assertEquals(200.0f, greenSpace.getArea());
+    void setAddress_emptyAddress() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setAddress(""));
     }
 
     @Test
-    public void shouldThrowExceptionWhenAreaIsNegative() {
-        GreenSpace greenSpace = new GreenSpace("Park", "Public", 100.0f, new Email("admin@this.app"));
-        assertThrows(IllegalArgumentException.class, () -> greenSpace.setArea(-10.0f));
+    void setArea_success() {
+        greenSpace.setArea(600.0f);
+        assertEquals(600.0f, greenSpace.getArea());
     }
 
     @Test
-    public void shouldThrowExceptionWhenNameIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> new GreenSpace("", "Public", 100.0f, new Email("admin@this.app")));
+    void setArea_negativeArea() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setArea(-1.0f));
     }
 
     @Test
-    public void shouldThrowExceptionWhenTypeIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> new GreenSpace("Park", "", 100.0f, new Email("admin@this.app")));
+    void validatePark_success() {
+        assertTrue(greenSpace.validatePark());
     }
 
     @Test
-    public void shouldThrowExceptionWhenAreaIsZero() {
-        assertThrows(IllegalArgumentException.class, () -> new GreenSpace("Park", "Public", 0.0f, new Email("admin@this.app")));
+    void validatePark_emptyFields() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setName(""));
+    }
+
+    @Test
+    void validatePark_negativeArea() {
+
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setArea(-1.0f));
+    }
+
+    @Test
+    void equals_sameObject() {
+        assertTrue(greenSpace.equals(greenSpace));
+    }
+
+    @Test
+    void equals_differentObject() {
+        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, Type.GARDEN, new Email("admin@this.app"));
+        assertFalse(greenSpace.equals(newGreenSpace));
     }
 }

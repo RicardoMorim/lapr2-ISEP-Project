@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
@@ -21,7 +22,7 @@ class GreenSpaceControllerTest {
     void setUp() {
         repository = new GreenSpaceRepository();
         controller = new GreenSpaceController(repository);
-        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, new Email("admin@this.app"));
+        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, Type.GARDEN, new Email("admin@this.app"));
     }
 
     @Test
@@ -50,7 +51,7 @@ class GreenSpaceControllerTest {
 
     @Test
     void updateGreenSpace_success() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden", 300.0f, "Rua almeida valente", "garden", new Email("admin@this.app") );
+        GreenSpace newGreenSpace = new GreenSpace("Garden",  "Rua almeida valente",300.0f, Type.GARDEN, new Email("admin@this.app") );
         repository.addGreenSpace(greenSpace);
         controller.updateGreenSpace(greenSpace, newGreenSpace);
         assertEquals(newGreenSpace, repository.getGreenSpaces().get(0));
