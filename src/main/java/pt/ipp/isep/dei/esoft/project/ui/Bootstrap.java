@@ -23,6 +23,7 @@ public class Bootstrap implements Runnable {
         addCollaborators();
         addVehicleMaintenances();
         addEntries();
+        addAgendaEntries();
     }
 
     public void addEntries() {
@@ -43,6 +44,21 @@ public class Bootstrap implements Runnable {
         // Add the Entries to the repository
         entryRepository.addEntry(entry1);
         entryRepository.addEntry(entry2);
+    }
+
+    public void addAgendaEntries(){
+        Agenda agenda = Repositories.getInstance().getAgenda();
+
+        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
+
+
+        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", "High", 2.0f);
+        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", "Medium", 3.0f);
+
+
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1,null,null,"1 hour",Status.PLANNED,new Date());
+        agenda.addEntry(agendaEntry1);
     }
 
     public void addVehicleMaintenances(){
