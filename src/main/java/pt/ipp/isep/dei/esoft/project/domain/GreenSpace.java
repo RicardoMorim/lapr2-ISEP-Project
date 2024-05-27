@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.isep.lei.esoft.auth.domain.model.Email;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
