@@ -6,7 +6,6 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,12 +22,12 @@ class AgendaEntryTest {
         collaborator = new Collaborator("email@example.com", "John Doe", "Address", "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
 
-        agendaEntry = new AgendaEntry(entry, Collections.singletonList(collaborator), Collections.singletonList(vehicle), "1 hour", Status.PLANNED);
+        agendaEntry = new AgendaEntry(entry, new Team(Collections.singletonList(collaborator)), Collections.singletonList(vehicle), "1 hour", Status.PLANNED);
     }
 
     @Test
     void getTeamShouldReturnCorrectTeam() {
-        assertEquals(Collections.singletonList(collaborator), agendaEntry.getTeam());
+        assertEquals(Collections.singletonList(collaborator), agendaEntry.getTeam().getCollaborators());
     }
 
     @Test
@@ -61,8 +60,8 @@ class AgendaEntryTest {
     @Test
     void setTeamShouldChangeTeam() {
         Collaborator newCollaborator = new Collaborator("newemail@example.com", "Jane Doe", "New Address", "987654321", new Job("New Job Title", "New Job Description"), new Date(), new Date(), "New ID Type", 456, 789);
-        agendaEntry.setTeam(Collections.singletonList(newCollaborator));
-        assertEquals(Collections.singletonList(newCollaborator), agendaEntry.getTeam());
+        agendaEntry.setTeam(new Team((Collections.singletonList(newCollaborator))));
+        assertEquals(Collections.singletonList(newCollaborator), agendaEntry.getTeam().getCollaborators());
     }
 
     @Test

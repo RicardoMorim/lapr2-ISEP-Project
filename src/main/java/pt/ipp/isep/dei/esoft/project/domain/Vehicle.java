@@ -17,6 +17,22 @@ public class Vehicle {
     private int kmNextMaintenance;
     private Map<Date, Integer> maintenanceList;
 
+    public Vehicle(Vehicle vehicle) {
+        this.plate = vehicle.getPlate();
+        this.brand = vehicle.getBrand();
+        this.model = vehicle.getModel();
+        this.type = vehicle.getType();
+        this.tareWeight = vehicle.getTareWeight();
+        this.grossWeight = vehicle.getGrossWeight();
+        this.currentKM = vehicle.getCurrentKM();
+        this.registerDate = new Date(vehicle.getRegisterDate().getTime());
+        this.acquisitionDate = new Date(vehicle.getAcquisitionDate().getTime());
+        this.checkupIntervalKM = vehicle.getCheckupIntervalKM();
+        this.kmLastMaintenance = vehicle.getKmLastMaintenance();
+        this.kmNextMaintenance = vehicle.getKmNextMaintenance();
+        this.maintenanceList = vehicle.getMaintenance();
+    }
+
 
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) throws IllegalArgumentException {
         this.plate = plate;
@@ -52,6 +68,10 @@ public class Vehicle {
         this.maintenanceList = maintenanceList;
         this.validateVehicle();
         this.registerMaintenance(registerDate, 5);
+    }
+
+    public Map<Date, Integer> getMaintenance() {
+        return maintenanceList;
     }
 
 
@@ -325,5 +345,29 @@ public class Vehicle {
     @Override
     public String toString() {
         return this.brand + " " + this.model + " (" + this.plate + ")";
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return plate.equals(vehicle.plate) &&
+                brand.equals(vehicle.brand) &&
+                model.equals(vehicle.model) &&
+                type.equals(vehicle.type) &&
+                tareWeight == vehicle.tareWeight &&
+                grossWeight == vehicle.grossWeight &&
+                currentKM == vehicle.currentKM &&
+                registerDate.equals(vehicle.registerDate) &&
+                acquisitionDate.equals(vehicle.acquisitionDate) &&
+                checkupIntervalKM == vehicle.checkupIntervalKM &&
+                kmLastMaintenance == vehicle.kmLastMaintenance;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(plate, brand, model, type, tareWeight, grossWeight, currentKM, registerDate, acquisitionDate, checkupIntervalKM, kmLastMaintenance);
     }
 }

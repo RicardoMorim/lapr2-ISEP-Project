@@ -24,8 +24,8 @@ class AgendaTest {
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", "Address", "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
 
-        entry1 = new AgendaEntry(entry, Collections.singletonList(collaborator), Collections.singletonList(vehicle), "1 hour", Status.PLANNED);
-        entry2 = new AgendaEntry(entry, Collections.singletonList(collaborator), Collections.singletonList(vehicle), "2 hours", Status.POSTPONED);
+        entry1 = new AgendaEntry(entry, new Team(Collections.singletonList(collaborator)), Collections.singletonList(vehicle), "1 hour", Status.PLANNED);
+        entry2 = new AgendaEntry(entry, new Team(Collections.singletonList(collaborator)), Collections.singletonList(vehicle), "2 hours", Status.POSTPONED);
     }
 
     @Test
