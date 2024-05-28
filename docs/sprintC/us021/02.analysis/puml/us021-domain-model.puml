@@ -1,0 +1,25 @@
+@startuml
+
+'left to right direction
+
+title Domain Model
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class Entry {
+    Description
+    Degree of urgency
+    Approximate expected duration
+}
+
+class ToDoList {
+    Tasks
+}
+
+Entry "1..*" - "1" ToDoList: is in >
+
+@enduml
