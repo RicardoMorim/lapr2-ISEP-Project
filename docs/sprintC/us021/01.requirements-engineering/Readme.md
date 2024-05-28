@@ -104,7 +104,7 @@ Similarly, when a new entry is added to the Agenda, the status of that task will
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US020 - Register a Green Space and its area" - there has to be at least one collaborator to be assigned a skill
+* There is a dependency on "US020 - Register a Green Space and its area" - there has to be ...
 
 ### 1.5 Input and Output Data
 
