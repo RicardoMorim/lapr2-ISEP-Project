@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,13 +78,23 @@ class VehicleTest {
 
     @Test
     void registerMaintenanceUpdatesKmLastMaintenance() {
-        vehicle.registerMaintenance(new Date(), 5000);
+        // Create a future date for the maintenance
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1); // Adds one day to the current date
+        Date futureDate = calendar.getTime();
+
+        vehicle.registerMaintenance(futureDate, 5000);
         assertEquals(5000, vehicle.getKmLastMaintenance());
     }
 
     @Test
     void registerMaintenanceUpdatesKmNextMaintenance() {
-        vehicle.registerMaintenance(new Date(), 5000);
+        // Create a future date for the maintenance
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1); // Adds one day to the current date
+        Date futureDate = calendar.getTime();
+
+        vehicle.registerMaintenance(futureDate, 5000);
         assertEquals(15000, vehicle.getKmNextMaintenance());
     }
 }

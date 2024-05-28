@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Collaborator {
     private String email;
     private String name;
-    private String address;
+    private Address address;
     private String phone;
     private Job job;
     private List<Skill> skills;
@@ -19,7 +19,7 @@ public class Collaborator {
     private int citizenNumber;
     boolean isFree = true;
 
-    public Collaborator(String email, String name, String address, String phone, Job job, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
+    public Collaborator(String email, String name, Address address, String phone, Job job, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
 
         this.email = email;
         this.name = name;
@@ -35,7 +35,7 @@ public class Collaborator {
         isValid();
     }
 
-    public Collaborator(String email, String name, String address, String phone, Job job, Date birthDate, Date admissiondate, String IDtype, int taxpayerNumber, int citizenNumber, List<Skill> skills) throws IllegalArgumentException {
+    public Collaborator(String email, String name, Address address, String phone, Job job, Date birthDate, Date admissiondate, String IDtype, int taxpayerNumber, int citizenNumber, List<Skill> skills) throws IllegalArgumentException {
 
         this.email = email;
         this.name = name;
@@ -67,11 +67,11 @@ public class Collaborator {
         this.birthDate = birthDate;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -157,7 +157,7 @@ public class Collaborator {
             throw new IllegalArgumentException("No parameter of the collaborator can be null");
         }
 
-        if (email.isEmpty() || name.isEmpty() || address.isEmpty() || phone.isEmpty() || IDtype.isEmpty() || taxpayerNumber == 0 || citizenNumber == 0) {
+        if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || IDtype.isEmpty() || taxpayerNumber == 0 || citizenNumber == 0) {
             throw new IllegalArgumentException("No parameter of the collaborator can be null or empty");
         }
         if (taxpayerNumber < 0 || citizenNumber < 0) {
