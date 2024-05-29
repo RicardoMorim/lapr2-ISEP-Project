@@ -8,12 +8,12 @@ title System Sequence Diagram (SSD)
 autonumber
 
 actor "GSM" as Employee
-participant ":PostponeAgendaEntryUI" as UI
-participant ":PostponeAgendaEntryController" as CTRL
+participant ":PostponeEntryUI" as UI
+participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
-participant "AgendaEntryRepository\n:agendaEntryRepository" as AgendaRepo
-participant "AgendaEntryMapper"
-participant "AgendaEntryDTO"
+participant "EntryRepository\n:entryRepository" as AgendaRepo
+participant "EntryMapper"
+participant "EntryDTO"
 activate Employee
 
     Employee -> UI : asks to postpone an entry in the Agenda
@@ -34,20 +34,20 @@ activate Employee
                 AgendaRepo --> CTRL : agendaEntryList
             deactivate AgendaRepo
 
-            CTRL -> "AgendaEntryMapper" : getAgendaEntriesDTOs()
-            activate "AgendaEntryMapper"
+            CTRL -> "EntryMapper" : getAgendaEntriesDTOs()
+            activate "EntryMapper"
 
             loop for each agendaEntry in agendaEntryList
-                "AgendaEntryMapper" -> "AgendaEntryDTO" : agendaEntryDTO = toDTO(agendaEntry)
-                activate "AgendaEntryDTO"
+                "EntryMapper" -> "EntryDTO" : EntryDTO = toDTO(agendaEntry)
+                activate "EntryDTO"
 
-                deactivate "AgendaEntryDTO"
+                deactivate "EntryDTO"
             end
 
-            "AgendaEntryMapper" --> CTRL : agendaEntryDTOList
-            deactivate "AgendaEntryMapper"
+            "EntryMapper" --> CTRL : EntryDTOList
+            deactivate "EntryMapper"
 
-            CTRL --> UI : agendaEntryDTOList
+            CTRL --> UI : EntryDTOList
         deactivate CTRL
 
         UI --> Employee : shows the list of entries in the Agenda\nand planned dates and asks to select one
@@ -62,21 +62,21 @@ activate Employee
     Employee -> UI : selects new date for the entry
     activate UI
 
-        UI -> "AgendaEntryDTO" : agendaEntryDTO.date = newDate
-        activate "AgendaEntryDTO"
-        deactivate "AgendaEntryDTO"
+        UI -> "EntryDTO" : EntryDTO.date = newDate
+        activate "EntryDTO"
+        deactivate "EntryDTO"
 
-        UI -> CTRL : updateAgendaEntryDate(agendaEntryDTO)
+        UI -> CTRL : updateAgendaEntryDate(EntryDTO)
         activate CTRL
 
-            CTRL -> "AgendaEntryMapper" : updateAgendaEntry(agendaEntryDTO)
-            activate "AgendaEntryMapper"
+            CTRL -> "EntryMapper" : updateAgendaEntry(EntryDTO)
+            activate "EntryMapper"
 
-                "AgendaEntryMapper" -> "AgendaEntryMapper" : agendaEntry = toEntity(agendaEntryDTO)
-                activate "AgendaEntryMapper"
+                "EntryMapper" -> "EntryMapper" : agendaEntry = toEntity(EntryDTO)
+                activate "EntryMapper"
                 deactivate
-            "AgendaEntryMapper" --> CTRL : agendaEntry
-            deactivate "AgendaEntryMapper"
+            "EntryMapper" --> CTRL : agendaEntry
+            deactivate "EntryMapper"
 
             CTRL -> AgendaRepo : updateEntryDate(agendaEntry)
             activate AgendaRepo
