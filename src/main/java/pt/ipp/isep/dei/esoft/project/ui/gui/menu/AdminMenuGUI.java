@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.AddVehicleToAgendaEntryGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
 
 public class AdminMenuGUI extends Application {
@@ -49,9 +50,12 @@ public class AdminMenuGUI extends Application {
         Button btnAddGreenSpace = new Button("Add a Green Space");
         btnAddGreenSpace.setOnAction(e -> new AddGreenSpaceGUI().start(new Stage()));
 
+        Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
+        btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(new Stage()));
+
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
-                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace);
+                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAddVehicleToAgendaEntry);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
 

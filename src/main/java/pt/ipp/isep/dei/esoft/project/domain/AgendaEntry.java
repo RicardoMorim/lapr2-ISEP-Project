@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,14 @@ public class AgendaEntry {
         this.entry = entry;
         this.team = null;
         this.vehiclesEquipment = vehiclesEquipment;
+        this.duration = duration;
+        this.status = status;
+    }
+
+    public AgendaEntry(Entry entry, Team team, String duration, Status status) {
+        this.entry = entry;
+        this.team = team;
+        this.vehiclesEquipment = new ArrayList<>();
         this.duration = duration;
         this.status = status;
     }
@@ -130,12 +139,34 @@ public class AgendaEntry {
 
     @Override
     public String toString() {
-        return "team = " + ((team != null) ? team.toString() : "Team not added yet") +
-                ",\nvehiclesEquipment = " + ((vehiclesEquipment != null) ? vehiclesEquipment.toString() : "Vehicles not added yet") +
-                ",\nduration = '" + duration + '\'' +
-                ",\nstatus = " + status +
-                ",\nentry name = " + entry.getTitle() +
-                ",\nentry description = " + entry.getDescription() +
-                '}';
+        return "Entry name = " + entry.getTitle();
     }
+
+    /**
+     * Adds a vehicle to this agenda entry.
+     *
+     * @param vehicle the vehicle to add
+     * @throws IllegalArgumentException if the vehicle is already in the list
+     */
+    public void addVehicle(Vehicle vehicle) {
+        if (this.vehiclesEquipment.contains(vehicle)) {
+            throw new IllegalArgumentException("Vehicle already exists in the list");
+
+        }
+        this.vehiclesEquipment.add(vehicle);
+    }
+
+    /**
+     * Removes a vehicle from this agenda entry.
+     *
+     * @param vehicle the vehicle to remove
+     * @throws IllegalArgumentException if the vehicle is not in the list
+     */
+    public void removeVehicle(Vehicle vehicle) {
+        if (!this.vehiclesEquipment.contains(vehicle)) {
+            throw new IllegalArgumentException("Vehicle does not exist in the list");
+        }
+        this.vehiclesEquipment.remove(vehicle);
+    }
+
 }

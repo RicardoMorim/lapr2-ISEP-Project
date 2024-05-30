@@ -7,7 +7,7 @@ title System Sequence Diagram - US020
 
 autonumber
 
-actor "Green Space Manager \n(GRM)" as GRM
+actor "Green Space Manager \n(GSM)" as GRM
 participant ":System" as System
 
 activate GRM

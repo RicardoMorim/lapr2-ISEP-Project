@@ -23,7 +23,42 @@ public class Bootstrap implements Runnable {
         addCollaborators();
         addVehicleMaintenances();
         addEntries();
+        addAgendaEntry();
     }
+
+    public void addAgendaEntry() {
+        // Get the necessary repositories
+        EntryRepository entryRepository = Repositories.getInstance().getEntryRepository();
+        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
+        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
+        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+        List<Collaborator> collaborators = collaboratorRepository.getCollaborators();
+        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+        Agenda agenda = Repositories.getInstance().getAgenda();
+
+        // Create a team
+        List<Collaborator> teamCollaborators = new ArrayList<>();
+        teamCollaborators.add(collaborators.get(0));
+        teamCollaborators.add(collaborators.get(1));
+        Team team1 = new Team(teamCollaborators);
+        teamRepository.add(team1);
+
+        //Create some vehicles
+        vehicleRepository.addVehicle("AA-12-DB", "Toyota", "Corolla", "SUV", 400, 1500, 22000, new Date(), new Date(), 1000, 21500);
+
+        //Create a green space
+        GreenSpace greenSpace1 = new GreenSpace("Parque de Monção", "address2", 1200, Type.GARDEN, new Email("mario@this.app"));
+        greenSpaceRepository.addGreenSpace(greenSpace1);
+
+        //Create an entry
+        Entry entry1 = new Entry("Viana", greenSpace1, "Titulo", "Descrição1", "Low", 4.0f);
+        entryRepository.addEntry(entry1);
+
+        //Create an agenda entry
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, team1, "12", Status.PLANNED);
+        agenda.addEntry(agendaEntry1);
+    }
+
 
     public void addEntries() {
         // Get the necessary repositories
@@ -45,7 +80,7 @@ public class Bootstrap implements Runnable {
         entryRepository.addEntry(entry2);
     }
 
-    public void addVehicleMaintenances(){
+    public void addVehicleMaintenances() {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
             vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - 10000);

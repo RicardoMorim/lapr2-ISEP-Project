@@ -271,7 +271,8 @@ public class Vehicle {
         }
     }
 
-    private void validateGrossWeight() {
+    private void
+    validateGrossWeight() {
         if (this.grossWeight <= 0) {
             throw new IllegalArgumentException("Gross Weight must be a positive number.");
         }
