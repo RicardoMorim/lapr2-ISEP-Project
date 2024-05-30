@@ -30,6 +30,13 @@ public class TeamController {
         return team;
     }
 
+    public List<Team> getTeams(){
+        return teamRepository.getTeams();
+    }
+    public List<Team> getUnassignedTeams(){
+        return teamRepository.getUnassignedTeams();
+    }
+
     public List<Team> generateTeamProposals(int minTeamSize, int maxTeamSize, List<Skill> requiredSkillList, List<Collaborator> collaborators){
         List<List<Collaborator>> allTeams = teamRepository.GenerateTeamProposals(minTeamSize, maxTeamSize, requiredSkillList, collaborators);
         List<Team> teamProposals = new ArrayList<>();

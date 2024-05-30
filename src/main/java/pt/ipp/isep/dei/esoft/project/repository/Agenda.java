@@ -52,5 +52,14 @@ public class Agenda {
         return List.copyOf(entries);
     }
 
+    public List<AgendaEntry> getEntriesWithNoTeam() {
+        List<AgendaEntry> entriesWithNoTeam = new ArrayList<>();
+        for (AgendaEntry entry : entries) {
+            if (entry.getTeam() == null) {
+                entriesWithNoTeam.add(entry);
+            }
+        }
+        return entriesWithNoTeam;
+    }
 
 }

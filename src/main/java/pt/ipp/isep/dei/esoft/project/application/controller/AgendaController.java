@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.repository.Agenda;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 /**
  * The type Agenda controller.
@@ -17,6 +18,10 @@ public class AgendaController {
      */
     public AgendaController(Agenda agenda) {
         this.agenda = agenda;
+    }
+
+    public AgendaController() {
+        this.agenda = Repositories.getInstance().getAgenda();
     }
 
     /**
@@ -45,6 +50,8 @@ public class AgendaController {
     public Agenda getAgenda() {
         return agenda;
     }
+
+
 
     public void assignTeamToEntry(Team team, AgendaEntry entry) {
         entry.setTeam(team);
