@@ -1,10 +1,10 @@
-# US004 - Add a skill to a collaborator
+# US024 - Postpone an entry in the Agenda
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a HRM, I want to add a skill to a collaborator.
+As a GSM, I want to Postpone an entry in the Agenda to a specific future date.
 
 ### 1.2. Customer Specifications and Clarifications
 
@@ -14,64 +14,37 @@ As a HRM, I want to add a skill to a collaborator.
 
 **From the client clarifications:**
 
-> **Question:** Can any skill be registered to any collaborator/job? Or should they be associated in categories in
-> association with a specific job?
+> **Question:** The selected task(s) will be postponed by one interval defined by the user or for the next day??
 >
-> **Answer:** There is no association, it totally depends on the CV of the collaborator.
+> **Answer:** When postponing a task, the new predicated date for execution should be inserted.
 
-> **Question:** Should it be possible to add the same skill to a collaborator multiple times?
+> **Question:** The date you want to postpone in this US24 is the date referring to the "approximate expected duration" field when we registered the task?
 >
-> **Answer:** That does not make sense.
-
-> **Question:** Is there any certification/proof needed to register a skill to a collaborator?
->
-> **Answer:** no.
-
-> **Question:** Is there any limit of skills or a minimum number of skills?
->
-> **Answer:** No.
-
-> **Question:** Is there any special characteristic to be able to add a skill to a collaborator?
->
-> **Answer:** No.
-
-> **Question:** Can a collaborator have no skills assigned?
->
-> **Answer:** Yes.
-
-
+> **Answer:** No; sometimes, for various reasons (e.g. insufficient staff, faulty equipment or adverse weather conditions) a task has to be postponed to a new date; task duration is not directly related to this.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The collaborator must exist in the system.
-* **AC3** The collaborator must not have the skill already.
-* **AC4:** The skill must exist in the system.
-
+* **AC1:**
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
-  characteristics." - there has to be at least one collaborator to be assigned a skill
-* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be at least one skill to be assigned to a collaborator
+* There is a dependency on 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * The collaborator
-    * The skill
+    * The 
 
 **Output Data:**
 
 * (In)Success of the operation
-* The updated skills of the collaborator
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us024-alternative-one-System_Sequence_Diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The user can always choose a different person to add the skill in case he makes a mistake
+* 

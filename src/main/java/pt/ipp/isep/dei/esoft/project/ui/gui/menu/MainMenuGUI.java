@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginUI;
 
-public class MainMenuUI extends Application {
+public class MainMenuGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {

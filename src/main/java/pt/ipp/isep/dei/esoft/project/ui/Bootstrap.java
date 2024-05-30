@@ -23,42 +23,8 @@ public class Bootstrap implements Runnable {
         addCollaborators();
         addVehicleMaintenances();
         addEntries();
-        addAgendaEntry();
+        addAgendaEntries();
     }
-
-    public void addAgendaEntry() {
-        // Get the necessary repositories
-        EntryRepository entryRepository = Repositories.getInstance().getEntryRepository();
-        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
-        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
-        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
-        List<Collaborator> collaborators = collaboratorRepository.getCollaborators();
-        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-        Agenda agenda = Repositories.getInstance().getAgenda();
-
-        // Create a team
-        List<Collaborator> teamCollaborators = new ArrayList<>();
-        teamCollaborators.add(collaborators.get(0));
-        teamCollaborators.add(collaborators.get(1));
-        Team team1 = new Team(teamCollaborators);
-        teamRepository.add(team1);
-
-        //Create some vehicles
-        vehicleRepository.addVehicle("AA-12-DB", "Toyota", "Corolla", "SUV", 400, 1500, 22000, new Date(), new Date(), 1000, 21500);
-
-        //Create a green space
-        GreenSpace greenSpace1 = new GreenSpace("Parque de Monção", "address2", 1200, Type.GARDEN, new Email("mario@this.app"));
-        greenSpaceRepository.addGreenSpace(greenSpace1);
-
-        //Create an entry
-        Entry entry1 = new Entry("Viana", greenSpace1, "Titulo", "Descrição1", "Low", 4.0f);
-        entryRepository.addEntry(entry1);
-
-        //Create an agenda entry
-        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, team1, "12", Status.PLANNED);
-        agenda.addEntry(agendaEntry1);
-    }
-
 
     public void addEntries() {
         // Get the necessary repositories
@@ -80,7 +46,22 @@ public class Bootstrap implements Runnable {
         entryRepository.addEntry(entry2);
     }
 
-    public void addVehicleMaintenances() {
+    public void addAgendaEntries(){
+        Agenda agenda = Repositories.getInstance().getAgenda();
+
+        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
+
+
+        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", "High", 2.0f);
+        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", "Medium", 3.0f);
+
+
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1,null,null,"1 hour",Status.PLANNED,new Date());
+        agenda.addEntry(agendaEntry1);
+    }
+
+    public void addVehicleMaintenances(){
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
             vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - 10000);
@@ -128,11 +109,11 @@ public class Bootstrap implements Runnable {
         List<Skill> list3 = new ArrayList<>();
         list3.add(skill1);
         list3.add(skill2);
-        collaboratorRepository.add(new Collaborator("ricardo@gmail.com", "ricardo", "Rua do Ricardo", "913456789", jobs.get(0), new Date(), new Date(), "CC", 13456789, 12345678, new ArrayList<>(list3)));
-        collaboratorRepository.add(new Collaborator("goncalo@gmail.com", "goncalo", "Rua do Goncalo", "961456789", jobs.get(1), new Date(), new Date(), "CC", 12456789, 12345679, new ArrayList<>(list2)));
-        collaboratorRepository.add(new Collaborator("marisa@gmail.com", "marisa", "Rua do Marisa", "931345689", jobs.get(2), new Date(), new Date(), "CC", 12346789, 12345689, new ArrayList<>(list1)));
-        collaboratorRepository.add(new Collaborator("filipa@gmail.com", "filipa", "Rua do Filipa", "962345679", jobs.get(3), new Date(), new Date(), "CC", 12356789, 12345789, new ArrayList<>(list1)));
-        collaboratorRepository.add(new Collaborator("coll@gmail.com", "collaborator", "Rua do collaborator", "123456789", jobs.get(4), new Date(), new Date(), "CC", 12345678, 13456789, new ArrayList<>(list3)));
+        collaboratorRepository.add(new Collaborator("ricardo@gmail.com", "ricardo", new Address("Rua do Ricardo", "Porto", "123-456"), "913456789", jobs.get(0), new Date(), new Date(), "CC", 13456789, 12345678, new ArrayList<>(list3)));
+        collaboratorRepository.add(new Collaborator("goncalo@gmail.com", "goncalo", new Address("Rua do Gonaçalo", "Porto", "123-456"), "961456789", jobs.get(1), new Date(), new Date(), "CC", 12456789, 12345679, new ArrayList<>(list2)));
+        collaboratorRepository.add(new Collaborator("marisa@gmail.com", "marisa", new Address("Rua da Marisa", "Porto", "123-456"), "931345689", jobs.get(2), new Date(), new Date(), "CC", 12346789, 12345689, new ArrayList<>(list1)));
+        collaboratorRepository.add(new Collaborator("filipa@gmail.com", "filipa", new Address("Rua da Filipa", "Porto", "123-456"), "962345679", jobs.get(3), new Date(), new Date(), "CC", 12356789, 12345789, new ArrayList<>(list1)));
+        collaboratorRepository.add(new Collaborator("coll@gmail.com", "collaborator", new Address("123 Street", "Porto", "123-456"), "123456789", jobs.get(4), new Date(), new Date(), "CC", 12345678, 13456789, new ArrayList<>(list3)));
 
     }
 

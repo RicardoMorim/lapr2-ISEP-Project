@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Green Space Manager" as GSM
+participant ":CancelEntryUI" as UI
+participant ":AgendaController" as AgendaCTRL
+participant "AgendaRepository:\nAgendaRepository" as AgendaRepository
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+activate GSM
+    GSM -> UI : requests to cancel an agenda entry
+    activate UI
+    UI -> AgendaCTRL** : create
+    UI -> AgendaCTRL : getAgendaEntryList()
+    activate AgendaCTRL
+        AgendaCTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
+            RepositorySingleton --> AgendaCTRL : repositories
+        deactivate RepositorySingleton
+
+        AgendaCTRL -> PLAT : getAgendaRepository()
+        activate PLAT
+            PLAT --> AgendaCTRL : AgendaRepository
+        deactivate PLAT
+
+        AgendaCTRL -> AgendaRepository : getAgendaEntryList()
+        activate AgendaRepository
+            AgendaRepository -> AgendaCTRL : returns agendaEntryList
+        deactivate AgendaRepository
+        AgendaCTRL -> UI : returns agendaEntryList
+    deactivate AgendaCTRL
+    UI -> GSM : shows the agenda entry list and asks to choose one
+    deactivate UI
+    GSM -> UI : chooses the agenda entry to cancel
+
+    activate UI
+        UI -> AgendaCTRL : cancelAgendaEntry(entry)
+        activate AgendaCTRL
+            AgendaCTRL -> AgendaRepository : updateEntryStatus(entry, "Canceled")
+            activate AgendaRepository
+                AgendaRepository -> AgendaCTRL : confirmation
+            deactivate AgendaRepository
+            AgendaCTRL -> UI : returns success
+        deactivate AgendaCTRL
+    deactivate UI
+    UI -> GSM : shows the updated entry information
+deactivate GSM
+
+@enduml

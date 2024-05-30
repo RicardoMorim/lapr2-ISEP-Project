@@ -139,7 +139,6 @@ public class GenerateTeamProposalGUI extends Application {
         grid.add(lblSkillCount, 0, 3);
 
         grid.widthProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue.doubleValue() / 4);
             txtSkillCount.setMaxWidth(newValue.doubleValue() / 4);
         });
 
