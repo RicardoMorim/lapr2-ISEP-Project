@@ -3,4 +3,57 @@
 
 autonumber
 
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype ortho
+skinparam classAttributeIconSize 0
+
+CancelEntryController --> AgendaEntry
+CancelEntryController ..> Repositories : repositories
+CancelEntryController --> AgendaRepository
+CancelEntryUI ..> CancelEntryController
+Repositories --> "1" AgendaRepository
+Repositories <-- Repositories : instance
+
+class CancelEntryController {
+    -AgendaRepository agendaRepository
+    +CancelEntryController()
+    +List<AgendaEntry> getAgendaEntries()
+    +boolean cancelAgendaEntry(AgendaEntry entry)
+}
+
+class AgendaEntry {
+    -String entryTitle
+    -Calendar date
+    +void setNewEntryState()
+    +String getEntryTitle()
+    +Calendar getDate()
+}
+
+class AgendaRepository {
+    +List<AgendaEntry> getEntryList()
+    +boolean cancelEntry(AgendaEntry entry)
+}
+
+class CancelEntryUI {
+    -CancelEntryController controller
+    +CancelEntryUI()
+    +void run()
+    +List<AgendaEntry> getAgendaEntries()
+    +void displayEntries(List<AgendaEntry> entries)
+    +AgendaEntry selectEntry()
+    +boolean confirmCancellation(AgendaEntry entry)
+    +void showResult(boolean success)
+}
+
+class Repositories {
+    +getInstance()
+    +getAgendaRepository(): AgendaRepository
+}
+
+@enduml
+
 @enduml
