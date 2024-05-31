@@ -11,9 +11,8 @@ actor "GSM" as Employee
 participant ":PostponeEntryUI" as UI
 participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
-participant "EntryRepository\n:entryRepository" as AgendaRepo
-participant "EntryMapper"
-participant "EntryDTO"
+participant "repositories\n:Repositories" as AgendaRepo
+
 activate Employee
 
     Employee -> UI : asks to postpone an entry in the Agenda
@@ -34,20 +33,7 @@ activate Employee
                 AgendaRepo --> CTRL : agendaEntryList
             deactivate AgendaRepo
 
-            CTRL -> "EntryMapper" : getAgendaEntriesDTOs()
-            activate "EntryMapper"
-
-            loop for each agendaEntry in agendaEntryList
-                "EntryMapper" -> "EntryDTO" : EntryDTO = toDTO(agendaEntry)
-                activate "EntryDTO"
-
-                deactivate "EntryDTO"
-            end
-
-            "EntryMapper" --> CTRL : EntryDTOList
-            deactivate "EntryMapper"
-
-            CTRL --> UI : EntryDTOList
+            CTRL --> UI : uiFormatedEntryList
         deactivate CTRL
 
         UI --> Employee : shows the list of entries in the Agenda\nand planned dates and asks to select one
@@ -62,23 +48,19 @@ activate Employee
     Employee -> UI : selects new date for the entry
     activate UI
 
-        UI -> "EntryDTO" : EntryDTO.date = newDate
-        activate "EntryDTO"
-        deactivate "EntryDTO"
-
-        UI -> CTRL : updateAgendaEntryDate(EntryDTO)
+        UI -> CTRL : updateAgendaEntryDate(selectedEntry, newDate)
         activate CTRL
 
-            CTRL -> "EntryMapper" : updateAgendaEntry(EntryDTO)
+            CTRL -> "EntryMapper" : updateEntryDate(selectedEntry, newDate)
             activate "EntryMapper"
 
-                "EntryMapper" -> "EntryMapper" : agendaEntry = toEntity(EntryDTO)
-                activate "EntryMapper"
-                deactivate
-            "EntryMapper" --> CTRL : agendaEntry
+                "EntryMapper" -> "EntryMapper" : updatedEntry = updateEntity(selectedEntry, newDate)
+
+
+            "EntryMapper" --> CTRL : updatedEntry
             deactivate "EntryMapper"
 
-            CTRL -> AgendaRepo : updateEntryDate(agendaEntry)
+            CTRL -> AgendaRepo : updateEntryDate(updatedEntry)
             activate AgendaRepo
 
                 AgendaRepo --> CTRL : success/failure
