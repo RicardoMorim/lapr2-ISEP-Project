@@ -5,50 +5,68 @@ skinparam shadowing false
 
 autonumber
 
-actor "Green Space Manager" as GSM
-participant ":CancelEntryUI" as UI
-participant ":AgendaController" as AgendaCTRL
-participant "AgendaRepository:\nAgendaRepository" as AgendaRepository
-participant ":Repositories" as RepositorySingleton
+'hide footbox
+actor "Green Spaces\nManager" as Employee
+participant "CancelUI" as UI
+participant "CancelEntryController" as CTRL
+participant ":Repositories" as REP
 participant "repositories\n:Repositories" as PLAT
+participant "agendaRepository\n:AgendaRepository" as AGR
+participant "AgendaEntry" as AG
 
-activate GSM
-    GSM -> UI : requests to cancel an agenda entry
+activate Employee
+group Repeat Register (while user wants to)
+    Employee -> UI : asks to cancel an entry in the agenda
     activate UI
-    UI -> AgendaCTRL** : create
-    UI -> AgendaCTRL : getAgendaEntryList()
-    activate AgendaCTRL
-        AgendaCTRL -> RepositorySingleton : getInstance()
-        activate RepositorySingleton
-            RepositorySingleton --> AgendaCTRL : repositories
-        deactivate RepositorySingleton
+    UI -> CTRL : getAgendaEntries()
+    activate CTRL
 
-        AgendaCTRL -> PLAT : getAgendaRepository()
-        activate PLAT
-            PLAT --> AgendaCTRL : AgendaRepository
-        deactivate PLAT
+    CTRL -> REP : getInstance()
+    activate REP
+    REP --> CTRL : repositories
+    deactivate REP
+    CTRL -> PLAT : getAgendaRepository()
+    activate PLAT
+    PLAT --> CTRL : agendaRepository
+    deactivate PLAT
+    CTRL -> AGR : getEntryList(agendaEntry)
+    activate AGR
 
-        AgendaCTRL -> AgendaRepository : getAgendaEntryList()
-        activate AgendaRepository
-            AgendaRepository -> AgendaCTRL : returns agendaEntryList
-        deactivate AgendaRepository
-        AgendaCTRL -> UI : returns agendaEntryList
-    deactivate AgendaCTRL
-    UI -> GSM : shows the agenda entry list and asks to choose one
+    AGR --> CTRL : entryList
+    deactivate AGR
+
+    CTRL --> UI : entrylist
+    deactivate CTRL
+
+    UI --> Employee : shows data and requests selected data (agendaEntry)
     deactivate UI
-    GSM -> UI : chooses the agenda entry to cancel
 
+    Employee -> UI : selects requested data (agendaEntry)
     activate UI
-        UI -> AgendaCTRL : cancelAgendaEntry(entry)
-        activate AgendaCTRL
-            AgendaCTRL -> AgendaRepository : updateEntryStatus(entry, "Canceled")
-            activate AgendaRepository
-                AgendaRepository -> AgendaCTRL : confirmation
-            deactivate AgendaRepository
-            AgendaCTRL -> UI : returns success
-        deactivate AgendaCTRL
-    deactivate UI
-    UI -> GSM : shows the updated entry information
-deactivate GSM
 
+    UI --> Employee : requests confirmation
+    deactivate UI
+
+    Employee -> UI : confirms data
+    activate UI
+    UI -> CTRL : cancelAgendaEntry(agendaEntry)
+    activate CTRL
+        CTRL -> AGR : cancelEntry(agendaEntry)
+        activate AGR
+
+        AGR -> AG : setNewEntryState()
+        activate AG
+
+        AG --> AGR : true/false
+        deactivate AG
+
+        AGR --> CTRL : true/false
+        deactivate AGR
+        CTRL --> UI : true/false
+        deactivate CTRL
+
+        UI --> Employee : displays operation success
+        deactivate UI
+
+end
 @enduml
