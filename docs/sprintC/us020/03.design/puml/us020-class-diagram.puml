@@ -38,10 +38,18 @@ class Repositories {
     + getInstance()
     + getGreenSpaceRepository()
 }
+class Address {
+    - String street
+    - String city
+    - String zipCode
+
+    + createAddress(street, city, zipCode)
+    }
 RegisterGreenSpaceUI ..> GreenSpaceController
 GreenSpaceController ..> GreenSpaceRepository
 GreenSpaceController .> Repositories
 Repositories .> GreenSpaceRepository
 GreenSpaceRepository --> "*"GreenSpace
+GreenSpace --> "*"Address
 
 @enduml

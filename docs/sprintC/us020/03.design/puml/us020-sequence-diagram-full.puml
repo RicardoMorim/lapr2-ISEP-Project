@@ -14,18 +14,27 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories:\nRepositories" as PLAT
 participant "greenSpaceRepository\n:GreenSpaceRepository" as Repository
 participant "greenSpace\n:GreenSpace" as GS
+participant "address\n:Address" as Address
 activate GRM
 
 GRM -> UI : requests to register a new green space
 activate UI
 loop while data is not valid
-UI --> GRM : requests green space name and address
+UI --> GRM : requests green space name, city, street address and zip code
 deactivate UI
-GRM -> UI : types green space name and address
+GRM -> UI : types green space name, city, street address and zip code
 activate UI
 UI -> UI: validates data
 end
-UI -> Controller : getGreenSpace(name, address)
+UI -> Controller : createAddress(city, street address, zip code)
+activate Controller
+Controller -> Address : createAddress(city, street address, zip code)
+activate Address
+Address --> Controller : address
+deactivate Address
+Controller --> UI : address
+deactivate Controller
+UI -> Controller: getGreenSpace(name, address)
 activate Controller
 Controller -> RepositorySingleton : getInstance()
                                         activate RepositorySingleton

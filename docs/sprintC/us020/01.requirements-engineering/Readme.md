@@ -38,9 +38,9 @@ As a GSM, I want to register a green space, which has a name, an area, a type an
 >
 > **Answer:** The classification is not automatic, it's up to GSM decide about it.
 
->Can two different green spaces have the same address?
+> **Question:** Can two different green spaces have the same address?
 >
-> No
+> **Answer:** No
 
 
 
@@ -62,7 +62,9 @@ As a GSM, I want to register a green space, which has a name, an area, a type an
 * Typed data:
     * The area
     * The name
-    * The address
+    * The city
+    * The zip code
+    * The street address
 
 
 * Selected data:

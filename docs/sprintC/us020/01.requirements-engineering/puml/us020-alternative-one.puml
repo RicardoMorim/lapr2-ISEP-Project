@@ -15,9 +15,9 @@ activate GRM
 GRM -> System : requests to register a new green space
 activate System
 loop while data is not valid
-System --> GRM : requests green space name and address
+System --> GRM : requests green space name, city, street address and zip code
 deactivate System
-GRM -> System : types green space name and address
+GRM -> System : types green space name, city, street address and zip code
 activate System
 end
 alt green space != null

@@ -26,6 +26,6 @@ class TechnicalSkill {
         fullDescription
 }
 
-TechnicalSkill "0...*" - "*" Collaborator : is assigned to >
+TechnicalSkill "*" - "*" Collaborator : is assigned to >
 
 @enduml
