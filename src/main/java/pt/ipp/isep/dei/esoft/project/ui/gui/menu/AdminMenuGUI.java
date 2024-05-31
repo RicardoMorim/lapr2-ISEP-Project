@@ -13,6 +13,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.AddVehicleToAgendaEntryGUI;
 
 public class AdminMenuGUI extends Application {
 
@@ -55,6 +56,10 @@ public class AdminMenuGUI extends Application {
 
         Button btnAssignTeamToAgendaEntry = new Button("Assign a Team to an Agenda Entry");
         btnAssignTeamToAgendaEntry.setOnAction(e -> new AssignTeamToAgendaEntryGUI().start(new Stage()));
+
+        Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
+        btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(new Stage()));
+
 
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
