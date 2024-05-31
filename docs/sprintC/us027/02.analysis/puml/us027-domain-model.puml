@@ -1,0 +1,20 @@
+@startuml
+
+'left to right direction
+
+title Domain Model
+
+hide methods
+hide circle
+
+title Domain Model - US003
+
+
+class GreenSpace {
+name
+size
+manager
+}
+
+
+@enduml
