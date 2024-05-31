@@ -1,10 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
-import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
-import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
-import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +13,7 @@ class CollaboratorTest {
     @Test
     void addSkill() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         List<Skill> newSkills = col.addSkill(skill);
         Skill addedSkill = newSkills.get(0);
@@ -32,7 +28,7 @@ class CollaboratorTest {
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
         assertEquals(skill, col.getSkills().get(0));
         col.removeSkill(skill);
         assertTrue(col.getSkills().isEmpty());
@@ -41,7 +37,7 @@ class CollaboratorTest {
     @Test
     void removeSkillWithSkillsAddedLater() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         col.addSkill(skill);
         assertEquals(skill, col.getSkills().get(0));
@@ -53,7 +49,7 @@ class CollaboratorTest {
     @Test
     void addNullSkill() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         assertThrows(IllegalArgumentException.class, () -> {
             Skill AllNull = new Skill(null, null);
             col.addSkill(AllNull);
@@ -73,7 +69,7 @@ class CollaboratorTest {
     @Test
     void removeUnexistingSkill() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         assertThrows(IllegalArgumentException.class, () -> {
             col.removeSkill(skill);
@@ -83,8 +79,9 @@ class CollaboratorTest {
     @Test
     void testEqualsAndHashCode() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col1 = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Collaborator col2 = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Address add = new Address("456 Street", "Porto", "123-456");
+        Collaborator col1 = new Collaborator("123@gmail.com", "Ricardo", add, "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col2 = new Collaborator("123@gmail.com", "Ricardo", add, "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         assertTrue(col1.equals(col2) && col2.equals(col1));
         assertEquals(col1.hashCode(), col2.hashCode());
     }
@@ -92,7 +89,7 @@ class CollaboratorTest {
     @Test
     void testClone() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col1 = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col1 = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Collaborator col2 = col1.clone();
         assertNotSame(col1, col2);
         assertEquals(col1, col2);
@@ -102,7 +99,7 @@ class CollaboratorTest {
     @Test
     void addExistingSkill() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         col.addSkill(skill);
         assertThrows(IllegalArgumentException.class, () -> {
@@ -113,7 +110,7 @@ class CollaboratorTest {
     @Test
     void getSkills() {
         Job job = new Job("jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
+        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
         Skill skill = new Skill("Carta A", "pode conduzir motas");
         col.addSkill(skill);
         Skill skill2 = new Skill("Carta B", "pode conduzir carros");

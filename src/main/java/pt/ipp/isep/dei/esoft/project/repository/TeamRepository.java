@@ -26,6 +26,16 @@ public class TeamRepository {
     }
 
 
+    public List<Team> getUnassignedTeams() {
+        List<Team> unassignedTeams = new ArrayList<>();
+        for (Team team : teams) {
+            if (!team.isAssigned()) {
+                unassignedTeams.add(team);
+            }
+        }
+        return unassignedTeams;
+    }
+
     public List<Team> getTeams() {
         return teams;
     }

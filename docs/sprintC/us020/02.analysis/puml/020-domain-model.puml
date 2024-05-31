@@ -13,5 +13,12 @@ class GreenSpace {
         area
         address
 }
+class Address {
+        city
+        street address
+        zip code
+}
+
+GreenSpace -> "*"Address : has an
 
 @enduml
