@@ -26,13 +26,10 @@ GRM -> UI : types green space name, city, street address and zip code
 activate UI
 UI -> UI: validates data
 end
-UI -> Controller : createAddress(city, street address, zip code)
-activate Controller
-Controller -> Address : createAddress(city, street address, zip code)
+UI -> Address : createAddress(city, street address, zip code)
 activate Address
-Address --> Controller : address
+Address --> UI : address
 deactivate Address
-Controller --> UI : address
 deactivate Controller
 UI -> Controller: getGreenSpace(name, address)
 activate Controller

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.VehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
@@ -11,9 +12,11 @@ import java.util.List;
 public class RegisterVehicleMaintenanceUI implements Runnable {
 
     private VehicleController vehicleController;
+    private AgendaController agendaController;
 
     public RegisterVehicleMaintenanceUI() {
         this.vehicleController = new VehicleController();
+        this.agendaController = new AgendaController();
     }
 
     @Override
@@ -52,6 +55,7 @@ public class RegisterVehicleMaintenanceUI implements Runnable {
             try {
                 Vehicle selectedVehicle = vehicles.get(vehicleIndex);
                 vehicleController.registerVehicleMaintenance(selectedVehicle.getPlate(), date, km);
+                agendaController.updateVehicle(vehicles.get(vehicleIndex), date, km);
                 System.out.println("The vehicle's maintenance was successfully registered.");
             } catch (IllegalArgumentException e) {
                 System.out.println("The maintenance was not registered.\nThere was an error registering it.\n");

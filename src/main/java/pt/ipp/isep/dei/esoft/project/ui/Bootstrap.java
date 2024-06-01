@@ -38,8 +38,8 @@ public class Bootstrap implements Runnable {
         greenSpaceRepository.addGreenSpace(greenSpace2);
 
         // Create some Entries
-        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", "High", 2.0f);
-        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", "Medium", 3.0f);
+        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
+        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", Urgency.MEDIUM, 3.0f);
 
         // Add the Entries to the repository
         entryRepository.addEntry(entry1);
@@ -53,12 +53,20 @@ public class Bootstrap implements Runnable {
         GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
 
 
-        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", "High", 2.0f);
-        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", "Medium", 3.0f);
+        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
+        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", Urgency.MEDIUM, 3.0f);
 
+        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
+        Vehicle vehicle1 = vehicleRepository.getVehicleList().get(0);
+        Vehicle vehicle2 = vehicleRepository.getVehicleList().get(1);
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(vehicle1);
+        vehicles.add(vehicle2);
 
-        AgendaEntry agendaEntry1 = new AgendaEntry(entry1,null,null,"1 hour",Status.PLANNED,new Date());
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1,"1 hour",Status.PLANNED,new Date());
+        AgendaEntry agendaEntry2 = new AgendaEntry(entry2,vehicles,"2 hours",Status.PLANNED,new Date());
         agenda.addEntry(agendaEntry1);
+        agenda.addEntry(agendaEntry2);
     }
 
     public void addVehicleMaintenances(){

@@ -71,11 +71,31 @@ public class Agenda {
      */
     public boolean isVehicleAssigned(Vehicle vehicle) {
         for (AgendaEntry agendaEntry : this.entries) {
-            if (agendaEntry.getVehiclesEquipment().contains(vehicle)) {
+            if (agendaEntry.getVehicles().contains(vehicle)) {
                 return true;
             }
         }
         return false;
     }
 
+    public List<Vehicle> getVehiclesNotAssignedToAnyAgendaEntry(List<Vehicle> vehicles) {
+        List<Vehicle> vehiclesNotAssigned = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (!isVehicleAssigned(vehicle)) {
+                vehiclesNotAssigned.add(vehicle);
+            }
+        }
+        return vehiclesNotAssigned;
+    }
+
+    public Vehicle getVehicleByPlate(String plate) {
+        for (AgendaEntry agendaEntry : this.entries) {
+            for (Vehicle vehicle : agendaEntry.getVehicles()) {
+                if (vehicle.getPlate().equals(plate)) {
+                    return vehicle;
+                }
+            }
+        }
+        return null;
+    }
 }

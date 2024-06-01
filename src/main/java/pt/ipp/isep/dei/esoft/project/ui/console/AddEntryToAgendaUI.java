@@ -4,10 +4,13 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
+import pt.ipp.isep.dei.esoft.project.domain.Urgency;
 import pt.ipp.isep.dei.esoft.project.repository.Agenda;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class AddEntryToAgendaUI implements Runnable {
@@ -26,7 +29,10 @@ public class AddEntryToAgendaUI implements Runnable {
         String state = Utils.readLineFromConsole("Enter the state: ");
         String title = Utils.readLineFromConsole("Enter the title: ");
         String description = Utils.readLineFromConsole("Enter the description: ");
-        String urgency = Utils.readLineFromConsole("Enter the urgency: ");
+        Urgency[] urgencyValues = Urgency.values();
+        List<Urgency> urgencyList = new ArrayList<>(Arrays.asList(urgencyValues));
+        int urgency = Utils.showAndSelectIndex( urgencyList,"Enter the urgency: ");
+        Urgency urgencyValue = urgencyList.get(urgency);
         float expectedDuration = (float) Utils.readDoubleFromConsole("Enter the expected duration: ");
         String duration = Utils.readLineFromConsole("Enter the duration: ");
         Status[] statusValues = Status.values();
@@ -38,12 +44,16 @@ public class AddEntryToAgendaUI implements Runnable {
             System.out.println("cancelling operation");
             return;
         }
+        if (urgency < 0){
+            System.out.println("cancelling operation");
+            return;
+        }
 
         // Create the new Entry
-        Entry entry = new Entry(state, null, title, description, urgency, expectedDuration);
+        Entry entry = new Entry(state, null, title, description, urgencyValue, expectedDuration);
 
         // Create the new AgendaEntry
-        AgendaEntry agendaEntry = new AgendaEntry(entry, null, null, duration, status);
+        AgendaEntry agendaEntry = new AgendaEntry(entry, duration, status, new Date());
 
         // Add the entry to the agenda
         agendaController.addEntry(agendaEntry);

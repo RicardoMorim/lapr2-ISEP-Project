@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class AgendaEntry {
     private Team team;
-    private List<Vehicle> vehiclesEquipment;
+    private List<Vehicle> vehicles;
     private String duration;
     private Status status;
     private Entry entry;
@@ -21,41 +21,44 @@ public class AgendaEntry {
      *
      * @param entry             the entry
      * @param team              the team
-     * @param vehiclesEquipment the vehicles equipment
+     * @param vehicles the vehicles equipment
      * @param duration          the duration
      * @param status            the status
      */
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehiclesEquipment, String duration, Status status) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = team;
-        this.vehiclesEquipment = vehiclesEquipment;
-        this.duration = duration;
-        this.status = status;
-    }
-
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehiclesEquipment, String duration, Status status, Date date) {
-        this.entry = entry;
-        this.team = team;
-        this.vehiclesEquipment = vehiclesEquipment;
+        this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
         this.date = date;
     }
 
-    public AgendaEntry(Entry entry, List<Vehicle> vehiclesEquipment, String duration, Status status) {
+    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date date  ) {
         this.entry = entry;
         this.team = null;
-        this.vehiclesEquipment = vehiclesEquipment;
+        this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
+        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, Team team, String duration, Status status) {
+    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = team;
-        this.vehiclesEquipment = new ArrayList<>();
+        this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
+        this.date = date;
+    }
+
+    public AgendaEntry(Entry entry, String duration, Status status, Date date) {
+        this.entry = entry;
+        this.team = null;
+        this.vehicles = new ArrayList<>();
+        this.duration = duration;
+        this.status = status;
+        this.date= date;
     }
 
 
@@ -100,17 +103,17 @@ public class AgendaEntry {
      *
      * @return the vehicles equipment
      */
-    public List<Vehicle> getVehiclesEquipment() {
-        return vehiclesEquipment;
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
     /**
      * Sets vehicles equipment.
      *
-     * @param vehiclesEquipment the vehicles equipment
+     * @param vehicles the vehicles equipment
      */
-    public void setVehiclesEquipment(List<Vehicle> vehiclesEquipment) {
-        this.vehiclesEquipment = vehiclesEquipment;
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     /**
@@ -163,14 +166,7 @@ public class AgendaEntry {
 
     @Override
     public String toString() {
-        return "team = " + ((team != null) ? team.toString() : "Team not added yet") +
-                ",\nvehiclesEquipment = " + ((vehiclesEquipment != null) ? vehiclesEquipment.toString() : "Vehicles not added yet") +
-                ",\nduration = '" + duration + '\'' +
-                ",\nstatus = " + status +
-                ",\nentry name = " + entry.getTitle() +
-                ",\nentry description = " + entry.getDescription() +
-                ",\ndate = " + this.date+
-                '}';
+        return "Entry name = " + entry.getTitle();
     }
 
     /**
@@ -180,10 +176,10 @@ public class AgendaEntry {
      * @throws IllegalArgumentException if the vehicle is already in the list
      */
     public void addVehicle(Vehicle vehicle) {
-        if (this.vehiclesEquipment.contains(vehicle)) {
-            throw new IllegalArgumentException("Vehicle already exists in the list");
+        if (this.vehicles.contains(vehicle)) {
+            throw new IllegalArgumentException("Vehicle already exists in the entry");
         }
-        this.vehiclesEquipment.add(vehicle);
+        this.vehicles.add(vehicle);
     }
     /**
      * Removes a vehicle from this agenda entry.
@@ -192,9 +188,9 @@ public class AgendaEntry {
      * @throws IllegalArgumentException if the vehicle is not in the list
      */
     public void removeVehicle(Vehicle vehicle) {
-        if (!this.vehiclesEquipment.contains(vehicle)) {
-            throw new IllegalArgumentException("Vehicle does not exist in the list");
+        if (!this.vehicles.contains(vehicle)) {
+            throw new IllegalArgumentException("Vehicle does not exist in the entry");
         }
-        this.vehiclesEquipment.remove(vehicle);
+        this.vehicles.remove(vehicle);
     }
 }

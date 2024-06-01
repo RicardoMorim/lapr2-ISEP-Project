@@ -11,11 +11,11 @@ public class Entry {
 
     private String description;
 
-    private String urgency; // TODO - Utilziar uma class enum para a urgencia
+    private Urgency urgency;
 
     private float expectedDuration;
 
-    public Entry(String state, GreenSpace greenSpace, String title, String description, String urgency, float expectedDuration) {
+    public Entry(String state, GreenSpace greenSpace, String title, String description, Urgency urgency, float expectedDuration) {
         this.state = state;
         this.greenSpace = greenSpace;
         this.title = title;
@@ -56,11 +56,11 @@ public class Entry {
         this.description = description;
     }
 
-    public String getUrgency() {
+    public Urgency getUrgency() {
         return urgency;
     }
 
-    public void setUrgency(String urgency) {
+    public void setUrgency(Urgency urgency) {
         this.urgency = urgency;
     }
 
