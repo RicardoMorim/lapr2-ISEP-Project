@@ -6,28 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoList {
-    private List<Entry> list;
+    private List<Entry> entryList;
 
     public ToDoList() {
-        list = new ArrayList<>();
+        entryList = new ArrayList<>();
     }
 
     public ToDoList(List<Entry> list) {
-        this.list = list;
+        this.entryList = list;
     }
 
     public void addEntry(Entry entry){
-        if (list.contains(entry)){
+        if (entryList.contains(entry)){
             throw new IllegalArgumentException("Entry already in ToDo List");
         }
-        list.add(entry);
+        entryList.add(entry);
+    }
+
+    public void setEntries(List<Entry> list) {
+        this.entryList = list;
     }
 
     public void removeEntry(Entry entry){
-        if (!list.contains(entry)){
+        if (!entryList.contains(entry)){
             throw new IllegalArgumentException("Entry not in ToDo List");
         }
-        list.remove(entry);
+        entryList.remove(entry);
     }
 
     public void updateEntry(Entry old, Entry entry){
@@ -36,6 +40,6 @@ public class ToDoList {
     }
 
     public List<Entry> getEntries(){
-        return List.copyOf(list);
+        return List.copyOf(entryList);
     }
 }

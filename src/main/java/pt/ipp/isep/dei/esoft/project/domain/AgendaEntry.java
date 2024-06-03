@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * The type Agenda entry.
  */
-public class AgendaEntry {
+public class AgendaEntry implements Serializable {
     private Team team;
     private List<Vehicle> vehicles;
     private String duration;

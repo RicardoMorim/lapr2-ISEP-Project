@@ -2,16 +2,17 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GreenSpace {
+public class GreenSpace implements Serializable {
     private Type type;
     private String name;
     private float area;
     private String address;
-    private Email user;
+    private EmailWrapper user;
 
 
     public GreenSpace(String name, String address, float area, Type type, Email user) {
@@ -19,7 +20,7 @@ public class GreenSpace {
         this.address = address;
         this.type = type;
         this.area = area;
-        this.user = user;
+        this.user = new EmailWrapper(user);
         validatePark();
     }
 

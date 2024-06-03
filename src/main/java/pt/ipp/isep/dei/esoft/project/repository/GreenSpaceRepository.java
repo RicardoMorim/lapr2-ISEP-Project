@@ -3,11 +3,12 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GreenSpaceRepository {
+public class GreenSpaceRepository implements Serializable {
     private List<GreenSpace> greenSpaces;
     private final List<String> typeList = List.of("garden", "medium-sized park", "large-sized park");
 
@@ -76,5 +77,9 @@ public class GreenSpaceRepository {
             }
         }
         return false;
+    }
+
+    public void setGreenSpaces(List<GreenSpace> greenSpaces) {
+        this.greenSpaces = greenSpaces;
     }
 }

@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle {
+public class Vehicle implements Serializable {
     private String plate;
     private String brand;
     private String model;

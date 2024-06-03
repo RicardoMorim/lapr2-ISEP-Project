@@ -5,25 +5,83 @@ import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.io.*;
 import java.util.*;
 
 public class Bootstrap implements Runnable {
 
-    //Add some task categories to the repository as bootstrap
+    private static final String DATA_FILE = "appData.ser";
+
     public void run() {
-        addTaskCategories();
-        addJobs();
-        addOrganization();
-        addSkills();
-        addUsers();
-        addBrands();
-        addTypes();
-        addModels();
-        addVehicles();
-        addCollaborators();
-        addVehicleMaintenances();
-        addEntries();
-        addAgendaEntries();
+        loadData();
+    }
+
+    public void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("TaskCategoryRepository", Repositories.getInstance().getTaskCategoryRepository().getTaskCategories());
+            data.put("JobRepository", Repositories.getInstance().getJobRepository().getJobs());
+            data.put("SkillRepository", Repositories.getInstance().getSkillRepository().getSkills());
+            data.put("CollaboratorRepository", Repositories.getInstance().getCollaboratorRepository().getCollaborators());
+            data.put("VehicleRepository", Repositories.getInstance().getVehicleRepository().getVehicleList());
+            data.put("Agenda", Repositories.getInstance().getAgenda().getEntries());
+            data.put("GreenSpaceRepository", Repositories.getInstance().getGreenSpaceRepository().getGreenSpaces());
+            data.put("ToDoList", Repositories.getInstance().getToDoList().getEntries());
+            data.put("Brands", Repositories.getInstance().getVehicleRepository().getBrandList());
+            data.put("Types", Repositories.getInstance().getVehicleRepository().getTypeList());
+            data.put("Models", Repositories.getInstance().getVehicleRepository().getBrandToModelsMap());
+            data.put("TeamRepository", Repositories.getInstance().getTeamRepository().getTeams());
+            oos.writeObject(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadData() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+            addOrganization();
+            addUsers();
+            Map<String, Object> data = (Map<String, Object>) ois.readObject();
+            Repositories.getInstance().getTaskCategoryRepository().setTaskCategories((List<TaskCategory>) data.get("TaskCategoryRepository"));
+            Repositories.getInstance().getJobRepository().setJobs((List<Job>) data.get("JobRepository"));
+            Repositories.getInstance().getSkillRepository().setSkills((List<Skill>) data.get("SkillRepository"));
+            Repositories.getInstance().getCollaboratorRepository().setCollaborators((List<Collaborator>) data.get("CollaboratorRepository"));
+            Repositories.getInstance().getVehicleRepository().setVehicleList((List<Vehicle>) data.get("VehicleRepository"));
+            Repositories.getInstance().getAgenda().setEntries((List<AgendaEntry>) data.get("Agenda"));
+            Repositories.getInstance().getGreenSpaceRepository().setGreenSpaces((List<GreenSpace>) data.get("GreenSpaceRepository"));
+            Repositories.getInstance().getToDoList().setEntries((List<Entry>) data.get("ToDoList"));
+            Repositories.getInstance().getVehicleRepository().setBrandList((List<String>) data.get("Brands"));
+            Repositories.getInstance().getVehicleRepository().setTypeList((List<String>) data.get("Types"));
+            Repositories.getInstance().getVehicleRepository().setBrandToModelsMap((Map<String, List<String>>) data.get("Models"));
+            Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
+
+        } catch (IOException | ClassNotFoundException e) {
+            addTaskCategories();
+            addJobs();
+            addOrganization();
+            addSkills();
+            addUsers();
+            addBrands();
+            addTypes();
+            addModels();
+            addVehicles();
+            addCollaborators();
+            addVehicleMaintenances();
+            addEntries();
+            addAgendaEntries();
+            addTeam();
+        }
+    }
+
+    public void addTeam() {
+        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+        TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
+
+        List<Collaborator> collaborators = collaboratorRepository.getCollaborators();
+        List<Collaborator> teamCollaborators = new ArrayList<>();
+        teamCollaborators.add(collaborators.get(0));
+        teamCollaborators.add(collaborators.get(1));
+        Team team = new Team(teamCollaborators);
     }
 
     public void addEntries() {
@@ -46,7 +104,7 @@ public class Bootstrap implements Runnable {
         entryRepository.addEntry(entry2);
     }
 
-    public void addAgendaEntries(){
+    public void addAgendaEntries() {
         Agenda agenda = Repositories.getInstance().getAgenda();
 
         GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
@@ -63,13 +121,13 @@ public class Bootstrap implements Runnable {
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
 
-        AgendaEntry agendaEntry1 = new AgendaEntry(entry1,"1 hour",Status.PLANNED,new Date());
-        AgendaEntry agendaEntry2 = new AgendaEntry(entry2,vehicles,"2 hours",Status.PLANNED,new Date());
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, "1 hour", Status.PLANNED, new Date());
+        AgendaEntry agendaEntry2 = new AgendaEntry(entry2, vehicles, "2 hours", Status.PLANNED, new Date());
         agenda.addEntry(agendaEntry1);
         agenda.addEntry(agendaEntry2);
     }
 
-    public void addVehicleMaintenances(){
+    public void addVehicleMaintenances() {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
             vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - 10000);

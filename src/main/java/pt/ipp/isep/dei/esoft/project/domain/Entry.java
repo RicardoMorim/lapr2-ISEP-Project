@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-public class Entry {
+import java.io.Serializable;
+
+public class Entry implements Serializable {
 
 
     private String state; // TODO - Utilizar uma class enum para o state
