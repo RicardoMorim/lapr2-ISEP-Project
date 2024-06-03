@@ -26,40 +26,36 @@ public class AgendaEntry implements Serializable {
      * @param duration          the duration
      * @param status            the status
      */
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status) {
         this.entry = entry;
         this.team = team;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
-        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date date  ) {
+    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status) {
         this.entry = entry;
         this.team = null;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
-        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, Team team, String duration, Status status) {
         this.entry = entry;
         this.team = team;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
-        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, String duration, Status status) {
         this.entry = entry;
         this.team = null;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
-        this.date= date;
     }
 
 
@@ -152,28 +148,6 @@ public class AgendaEntry implements Serializable {
      */
     public void setDuration(String duration) {
         this.duration = duration;
-    }
-
-    /**
-     * Gets date.
-     *
-     * @return the date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * Sets date.
-     *
-     * @param date the date
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public boolean isAfter(Date date){
-        return date.after(this.date);
     }
 
     @Override

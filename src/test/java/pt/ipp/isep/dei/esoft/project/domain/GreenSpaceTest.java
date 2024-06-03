@@ -13,7 +13,7 @@ class GreenSpaceTest {
 
     @BeforeEach
     void setUp() {
-        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
+        greenSpace = new GreenSpace("Park", new Address("maia", "porto", "1234-123"), 500.0f, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
     }
 
     @Test
@@ -35,13 +35,13 @@ class GreenSpaceTest {
 
     @Test
     void setAddress_success() {
-        greenSpace.setAddress("New Address");
+        greenSpace.setAddress(new Address("New Address", "New City", "1234-123"));
         assertEquals("New Address", greenSpace.getAddress());
     }
 
     @Test
     void setAddress_emptyAddress() {
-        assertThrows(IllegalArgumentException.class, () -> greenSpace.setAddress(""));
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setAddress(new Address("", "", "")));
     }
 
     @Test
@@ -78,7 +78,7 @@ class GreenSpaceTest {
 
     @Test
     void equals_differentObject() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden", "medium-sized park", 300.0f, Type.GARDEN, new Email("admin@this.app"));
+        GreenSpace newGreenSpace = new GreenSpace("Garden", new Address("manga", "papai", "3456-789"), 300.0f, Type.GARDEN, new Email("admin@this.app"));
         assertFalse(greenSpace.equals(newGreenSpace));
     }
 }
