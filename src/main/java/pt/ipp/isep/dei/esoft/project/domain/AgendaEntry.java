@@ -59,6 +59,7 @@ public class AgendaEntry {
     }
 
 
+
     /**
      * Gets team.
      *

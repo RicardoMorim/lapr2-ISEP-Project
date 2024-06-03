@@ -88,4 +88,8 @@ public class Repositories {
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
+
+    public Agenda getAgendaRepository() {
+        return agenda;
+    }
 }

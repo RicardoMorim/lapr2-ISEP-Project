@@ -43,6 +43,11 @@ public class Agenda {
         this.entries.remove(entry);
     }
 
+    public void updateEntry(AgendaEntry old, AgendaEntry newEntry){
+        removeEntry(old);
+        addEntry(newEntry);
+    }
+
     /**
      * Gets entries.
      *

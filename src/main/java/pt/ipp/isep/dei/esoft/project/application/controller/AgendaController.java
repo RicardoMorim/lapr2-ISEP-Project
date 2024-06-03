@@ -1,12 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
+import pt.ipp.isep.dei.esoft.project.domain.Status;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Agenda;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +28,12 @@ public class AgendaController {
 
     public AgendaController() {
         this.agenda = Repositories.getInstance().getAgenda();
+    }
+
+    public AgendaEntry postponeEntry(AgendaEntry entry, Date date){
+        entry.setDate(date);
+        entry.setStatus(Status.POSTPONED);
+        return entry;
     }
 
     /**
@@ -94,6 +102,13 @@ public class AgendaController {
             }
         }
     }
+
+
+    public void cancelAgendaEntry(AgendaEntry entry){
+        entry.setStatus(Status.CANCELED);
+    }
+
+
     /**
      * Gets all vehicles that are not assigned to any agenda entry.
      *
