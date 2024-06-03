@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 
@@ -21,7 +22,7 @@ public class GreenSpaceRepository implements Serializable {
     }
 
 
-    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, Type type, float area, String address) {
+    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, Type type, double area, Address address) {
         for (GreenSpace gs : this.greenSpaces) {
             if (gs.equals(g)) {
                 gs.setName(name);
@@ -77,6 +78,22 @@ public class GreenSpaceRepository implements Serializable {
             }
         }
         return false;
+    }
+    public boolean checkIfGreenSpaceAddressExists(Address address) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getAddress().equals(address)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validateZipCode(String zipCode) {
+        if (zipCode.isEmpty()) {
+            return false;
+        }
+        String zipPattern = "^[0-9]{4}-[0-9]{3}$";
+        return zipCode.matches(zipPattern);
     }
 
     public void setGreenSpaces(List<GreenSpace> greenSpaces) {

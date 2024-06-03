@@ -1,8 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.io.Serializable;
-
+import java.util.Objects;
 public class Address implements Serializable {
+
+
     private String streetName;
     private String city;
     private String zipCode;
@@ -49,10 +51,32 @@ public class Address implements Serializable {
         this.zipCode = zipCode;
     }
 
+    public boolean validateZipCode(String zipCode) {
+        if (zipCode.isEmpty()) {
+            return false;
+        }
+        String zipPattern = "^[0-9]{4}-[0-9]{3}$";
+        return zipCode.matches(zipPattern);
+    }
+
     @Override
     public String toString() {
         return
-                "Address: " + streetName +
-                        ", " + city + "\n";
+                streetName + " " + zipCode + " " + city;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(streetName, city, zipCode);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return streetName.equalsIgnoreCase(address.streetName) &&
+                city.equalsIgnoreCase(address.city) &&
+                zipCode.equalsIgnoreCase(address.zipCode);
     }
 }

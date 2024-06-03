@@ -10,17 +10,25 @@ import java.util.Objects;
 public class GreenSpace implements Serializable {
     private Type type;
     private String name;
-    private float area;
-    private String address;
+    private double area;
+    private Address address;
     private EmailWrapper user;
 
 
-    public GreenSpace(String name, String address, float area, Type type, Email user) {
+    public GreenSpace(String name, Address address, double area, Type type, Email user) {
         this.name = name;
         this.address = address;
         this.type = type;
         this.area = area;
         this.user = new EmailWrapper(user);
+        validatePark();
+    }
+
+    public GreenSpace(String name, Address address, double area, Type type) {
+        this.name = name;
+        this.address = address;
+        this.type = type;
+        this.area = area;
         validatePark();
     }
 
@@ -50,12 +58,12 @@ public class GreenSpace implements Serializable {
         }
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        String old = this.address;
+    public void setAddress(Address address) {
+        Address old = this.address;
         this.address = address;
 
         try {
@@ -66,12 +74,12 @@ public class GreenSpace implements Serializable {
         }
     }
 
-    public float getArea() {
+    public double getArea() {
         return area;
     }
 
-    public void setArea(float area) {
-        float old = this.area;
+    public void setArea(double area) {
+        double old = this.area;
         this.area = area;
 
         try {
@@ -85,8 +93,8 @@ public class GreenSpace implements Serializable {
     public List<String> getParkValues() {
         List<String> values = new ArrayList<String>();
         values.add(this.name);
-        values.add(Float.toString(this.area));
-        values.add(this.address);
+        values.add(Double.toString(this.area));
+        values.add(this.address.toString());
         values.add(this.type.toString());
         return values;
     }
@@ -95,7 +103,7 @@ public class GreenSpace implements Serializable {
     @Override
     public String toString() {
         return
-                "Park Name = '" + name + " - Address = '" + address + "'" + " - Area = '" + area + "'" + "' - Type = '" + type + "'";
+                "Park Name = " + name + " - Address = " + address  + " - Area = " + area + " - Type = " + type;
     }
 
     @Override
@@ -110,7 +118,7 @@ public class GreenSpace implements Serializable {
     }
 
     private void validateNotEmptyFields() {
-        if (this.name.isEmpty() || this.area == 0 || this.address.isEmpty()) {
+        if (this.name.isEmpty() || this.area == 0 || this.address == null) {
             throw new IllegalArgumentException("All fields must be filled.");
         }
     }

@@ -89,9 +89,13 @@ public class Bootstrap implements Runnable {
         EntryRepository entryRepository = Repositories.getInstance().getEntryRepository();
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
+        // Create some addresses
+        Address address1 = new Address("Rua do Ricardo", "Porto", "123-456");
+        Address address2 = new Address("Rua do Gonçalo", "Porto", "123-456");
+
         // Create some GreenSpaces
-        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
-        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
+        GreenSpace greenSpace1 = new GreenSpace("Park1", address1, 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", address2, 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
         greenSpaceRepository.addGreenSpace(greenSpace1);
         greenSpaceRepository.addGreenSpace(greenSpace2);
 
@@ -107,8 +111,13 @@ public class Bootstrap implements Runnable {
     public void addAgendaEntries() {
         Agenda agenda = Repositories.getInstance().getAgenda();
 
-        GreenSpace greenSpace1 = new GreenSpace("Park1", "Type1", 1000, Type.GARDEN, new Email("admin1@this.app"));
-        GreenSpace greenSpace2 = new GreenSpace("Park2", "Type2", 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
+        // Create some addresses
+        Address address1 = new Address("Rua do Ricardo", "Porto", "123-456");
+        Address address2 = new Address("Rua do Gonçalo", "Porto", "123-456");
+
+
+        GreenSpace greenSpace1 = new GreenSpace("Park1", address1 , 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", address2, 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
 
 
         Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
