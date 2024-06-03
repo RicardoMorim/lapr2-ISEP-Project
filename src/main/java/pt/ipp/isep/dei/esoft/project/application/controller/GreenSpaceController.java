@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
@@ -18,6 +20,11 @@ public class GreenSpaceController {
     }
 
     public void addGreenSpace(GreenSpace greenSpace) {
+        greenSpaceRepository.addGreenSpace(greenSpace);
+    }
+
+    public void addGreenSpace(String name, Address address, double area, Type type) {
+        GreenSpace greenSpace = new GreenSpace(name, address, area, type);
         greenSpaceRepository.addGreenSpace(greenSpace);
     }
 
@@ -41,4 +48,11 @@ public class GreenSpaceController {
         return greenSpaceRepository.checkIfGreenSpaceNameExists(name);
     }
 
+    public boolean checkIfGreenSpaceAddressExists(Address address){
+        return greenSpaceRepository.checkIfGreenSpaceAddressExists(address);
+    }
+
+    public boolean validateZipCode(String zipCode) {
+        return greenSpaceRepository.validateZipCode(zipCode);
+    }
 }

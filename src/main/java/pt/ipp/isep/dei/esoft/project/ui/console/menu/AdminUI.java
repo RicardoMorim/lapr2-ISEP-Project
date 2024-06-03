@@ -25,7 +25,7 @@ public class AdminUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Register a skill that a collaborator may have.", new RegisterSkillUI()));
-        options.add(new MenuItem("Resgister a job that a collaborator may have.", new RegisterJobUI()));
+        options.add(new MenuItem("Register a job that a collaborator may have.", new RegisterJobUI()));
         options.add(new MenuItem("Register a collaborator", new RegisterCollaboratorUI()));
         options.add(new MenuItem("Add a skill to a collaborator", new AddSkillToCollaboratorUI()));
         options.add(new MenuItem("Generate a team proposal automatically", new GenerateTeamProposalUI()));
@@ -36,6 +36,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Add an entry to the Agenda", new AddEntryToAgendaUI()));
         options.add(new MenuItem("Postpone entry in the Agenda", new PostponeEntryUI()));
         options.add(new MenuItem("Add a vehicle to an Agenda Entry", new AddVehicleToAgendaEntryUI()));
+        options.add(new MenuItem("Register a green space", new AddGreenSpaceUI()));
 
         int option = 0;
         do {
