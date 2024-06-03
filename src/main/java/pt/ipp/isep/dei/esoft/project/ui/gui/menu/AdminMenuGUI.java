@@ -56,12 +56,15 @@ public class AdminMenuGUI extends Application {
         Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
         btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(new Stage()));
 
-        Button btnPostponeEntry = new Button("Postpone an Entry");
+        Button btnPostponeEntry = new Button("Postpone an Entry to the Agenda");
         btnPostponeEntry.setOnAction(e -> new PostponeEntryGUI().start(new Stage()));
+
+        Button btnCancel = new Button("Cancel an entry in the Agenda");
+        btnCancel.setOnAction(e -> new CancelGUI().start(new Stage()));
 
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
-                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry, btnPostponeEntry);
+                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry, btnPostponeEntry, btnCancel);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         BorderPane borderPane = new BorderPane();
