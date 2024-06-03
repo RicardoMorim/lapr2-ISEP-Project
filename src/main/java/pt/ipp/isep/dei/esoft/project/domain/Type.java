@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-public enum Type {
+import java.io.Serializable;
+
+public enum Type implements Serializable {
     GARDEN("garden"),
     MEDIUM_SIZED_PARK("medium-sized park"),
     LARGE_SIZED_PARK("large-sized park");

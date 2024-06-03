@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String streetName;
     private String city;
     private String zipCode;

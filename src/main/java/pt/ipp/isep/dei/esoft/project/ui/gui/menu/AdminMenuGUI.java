@@ -63,7 +63,7 @@ public class AdminMenuGUI extends Application {
 
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
-                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry);
+                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry, btnAddVehicleToAgendaEntry);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         BorderPane borderPane = new BorderPane();

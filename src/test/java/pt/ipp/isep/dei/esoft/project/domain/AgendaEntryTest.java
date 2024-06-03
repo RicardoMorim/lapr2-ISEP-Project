@@ -37,7 +37,7 @@ class AgendaEntryTest {
 
     @Test
     void getVehiclesEquipmentShouldReturnCorrectVehiclesEquipment() {
-        assertEquals(Collections.singletonList(vehicle), agendaEntry.getVehiclesEquipment());
+        assertEquals(Collections.singletonList(vehicle), agendaEntry.getVehicles());
     }
 
     @Test
@@ -67,8 +67,8 @@ class AgendaEntryTest {
     @Test
     void setVehiclesEquipmentShouldChangeVehiclesEquipment() {
         Vehicle newVehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
-        agendaEntry.setVehiclesEquipment(Collections.singletonList(newVehicle));
-        assertEquals(Collections.singletonList(newVehicle), agendaEntry.getVehiclesEquipment());
+        agendaEntry.setVehicles(Collections.singletonList(newVehicle));
+        assertEquals(Collections.singletonList(newVehicle), agendaEntry.getVehicles());
     }
 
     @Test

@@ -19,6 +19,6 @@ class Address {
         zip code
 }
 
-GreenSpace -> "*"Address : has an
+GreenSpace"1" -> "1"Address : has an
 
 @enduml

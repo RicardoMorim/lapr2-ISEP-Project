@@ -5,15 +5,20 @@ import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class CollaboratorRepository {
+public class CollaboratorRepository implements Serializable {
 
-    private final List<Collaborator> collaborators;
+    private List<Collaborator> collaborators;
 
     public CollaboratorRepository() {
         this.collaborators = new ArrayList<>();
+    }
+
+    public void setCollaborators(List<Collaborator> collaborators) {
+        this.collaborators = collaborators;
     }
 
     public Collaborator getCollaboratorByEmail(String email) throws IllegalArgumentException {
@@ -24,6 +29,7 @@ public class CollaboratorRepository {
         }
         throw new IllegalArgumentException("Collaborator not found.");
     }
+
 
     public Optional<Collaborator> add(Collaborator collaborator) {
         Optional<Collaborator> newCollaborator = Optional.empty();
@@ -120,8 +126,6 @@ public class CollaboratorRepository {
 
         return true;
     }
-
-
 
 
 }

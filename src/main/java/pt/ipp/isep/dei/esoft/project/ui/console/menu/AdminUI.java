@@ -35,6 +35,7 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Get best water pipe routes.", new GetBestPipeRoutesUI()));
         options.add(new MenuItem("Add an entry to the Agenda", new AddEntryToAgendaUI()));
         options.add(new MenuItem("Postpone entry in the Agenda", new PostponeEntryUI()));
+        options.add(new MenuItem("Add a vehicle to an Agenda Entry", new AddVehicleToAgendaEntryUI()));
         options.add(new MenuItem("Cancel an entry in the Agenda", new CancelUI()));
 
         int option = 0;

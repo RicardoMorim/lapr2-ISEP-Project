@@ -11,38 +11,44 @@ hide methods
 
 title Domain Model
 
+class Team{
+}
+
+class Skill{
+    name
+    description
+}
+
+class Job{
+    name
+    description
+}
+
+class Collaborator{
+    name
+    email
+    phoneNumber
+    birthDate
+    admissionDate
+    IDType
+    taxpayerNumber
+    citizenNumber
+
+}
+
+class Address{
+    streetAddress
+    city
+    zipCode
+}
 
 class VehicleCheckup {
-    IdVehicle
-    Date
-    CurrentKms
+    vehicleID
+    date
+    currentKm
 }
 
-
-class TechnicalSkill{
-    shortDescription
-    fullDescription
-}
-class TeamProposal{
-     minNumberOfCollaborators
-     maxNumberOfCollaborators
-     jobs
-     technicalSkills
-
- }
-
-class Task{
-    title
-    description
-    startDate
-    endDate
-    status
-    collaborators
-    technicalSkills
-}
-
-
-class Vehicle{
+class Vehicle {
     model
     brand
     type
@@ -55,32 +61,35 @@ class Vehicle{
     vehiclePlate
 }
 
-class Job{
+class GreenSpace {
+    name
+    area
+    GRMEmail
+}
+
+class AgendaEntry{
+    duration
+
+}
+
+class Entry{
     title
     description
+    expectedDuration
 }
 
-class Collaborator {
-    name
-    birthdate
-    admission date
-    address
-    contact
-    taxpayer number
-    identification document
-    identification number
-}
-
-Task "*" -- "*" Vehicle : requires >
-
-Task "1" -- "*" TeamProposal : requires >
-
-TeamProposal "*" -- "*" TechnicalSkill : requires >
-
-
-
-Vehicle "1" - "*" VehicleCheckup : has >
-TechnicalSkill "*" -- "1" Collaborator : is added to >
-Collaborator "*" - "1" Job : has >
-
+Team "0,1" -- "*"Collaborator : has >
+Collaborator "1" -- "1"Address : has >
+Collaborator "*" -- "1"Job : has >
+Collaborator "*" -- "*"Skill : has >
+Vehicle "1" - "*" VehicleCheckup: has >
+GreenSpace "1"--"1" Address : has >
+GreenSpace "*" - "1" Type : has >
+Entry "*"--"1" GreenSpace : has >
+Entry "*"--"1" Urgency : has >
+AgendaEntry "0,1" -- "0,1" Team : has >
+AgendaEntry "0,1" -- "*" Vehicle : has >
+AgendaEntry "*" - "1" Status : has >
+AgendaEntry "0,1" --- "1" Entry : has >
 @enduml
+

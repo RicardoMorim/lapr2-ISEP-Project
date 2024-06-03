@@ -4,11 +4,12 @@ import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TeamRepository {
+public class TeamRepository implements Serializable {
     private List<Team> teams;
 
     public TeamRepository() {
@@ -25,6 +26,9 @@ public class TeamRepository {
         teams.remove(team);
     }
 
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
 
     public List<Team> getUnassignedTeams() {
         List<Team> unassignedTeams = new ArrayList<>();

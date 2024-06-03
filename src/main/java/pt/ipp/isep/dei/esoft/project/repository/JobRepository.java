@@ -2,13 +2,15 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JobRepository {
+public class JobRepository implements Serializable {
 
-    private final List<Job> jobs;
+    private List<Job> jobs;
+
 
     public JobRepository() {
         this.jobs = new ArrayList<>();
@@ -25,6 +27,11 @@ public class JobRepository {
 
         throw new IllegalArgumentException("Job not found.");
     }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
 
     public Optional<Job> update(Job oldJob, Job newJob) {
         if (this.jobs.contains(oldJob)) {

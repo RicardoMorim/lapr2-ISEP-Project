@@ -1,10 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Skill {
+public class Skill implements Serializable {
     private String shortDescription;
     private String name;
 
@@ -12,7 +13,6 @@ public class Skill {
     public Skill(String name, String shortDescription) {
         this.name = name;
         this.shortDescription = shortDescription;
-
     }
 
 

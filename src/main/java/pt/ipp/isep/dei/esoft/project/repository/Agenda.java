@@ -3,13 +3,14 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The type Agenda.
  */
-public class Agenda {
+public class Agenda implements Serializable {
     private List<AgendaEntry> entries;
 
     /**
@@ -17,6 +18,10 @@ public class Agenda {
      */
     public Agenda() {
         this.entries = new ArrayList<>();
+    }
+
+    public void setEntries(List<AgendaEntry> entries) {
+        this.entries = entries;
     }
 
     /**
@@ -76,11 +81,31 @@ public class Agenda {
      */
     public boolean isVehicleAssigned(Vehicle vehicle) {
         for (AgendaEntry agendaEntry : this.entries) {
-            if (agendaEntry.getVehiclesEquipment().contains(vehicle)) {
+            if (agendaEntry.getVehicles().contains(vehicle)) {
                 return true;
             }
         }
         return false;
     }
 
+    public List<Vehicle> getVehiclesNotAssignedToAnyAgendaEntry(List<Vehicle> vehicles) {
+        List<Vehicle> vehiclesNotAssigned = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (!isVehicleAssigned(vehicle)) {
+                vehiclesNotAssigned.add(vehicle);
+            }
+        }
+        return vehiclesNotAssigned;
+    }
+
+    public Vehicle getVehicleByPlate(String plate) {
+        for (AgendaEntry agendaEntry : this.entries) {
+            for (Vehicle vehicle : agendaEntry.getVehicles()) {
+                if (vehicle.getPlate().equals(plate)) {
+                    return vehicle;
+                }
+            }
+        }
+        return null;
+    }
 }
