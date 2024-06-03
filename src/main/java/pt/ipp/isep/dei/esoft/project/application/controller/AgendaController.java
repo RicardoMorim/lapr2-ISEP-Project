@@ -30,7 +30,7 @@ public class AgendaController {
         this.agenda = Repositories.getInstance().getAgenda();
     }
 
-    public AgendaEntry postponeEntry(AgendaEntry entry, Date date){
+    public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
         entry.setDate(date);
         entry.setStatus(Status.POSTPONED);
         return entry;
@@ -64,7 +64,6 @@ public class AgendaController {
     }
 
 
-
     public void assignTeamToEntry(Team team, AgendaEntry entry) {
         entry.setTeam(team);
         team.setAssigned(true);
@@ -72,7 +71,7 @@ public class AgendaController {
 
 
     public void addVehiclesToAgendaEntry(AgendaEntry agendaEntry, Vehicle vehicle) {
-            agendaEntry.addVehicle(vehicle);
+        agendaEntry.addVehicle(vehicle);
     }
 
     public void removeVehiclesFromAgendaEntry(AgendaEntry agendaEntry, List<Vehicle> vehicles) {
@@ -82,10 +81,9 @@ public class AgendaController {
     }
 
 
-    public void cancelAgendaEntry(AgendaEntry entry){
+    public void cancelAgendaEntry(AgendaEntry entry) {
         entry.setStatus(Status.CANCELED);
     }
-
 
 
     public List<Vehicle> getVehiclesNotAssignedToAnyAgendaEntry(List<Vehicle> vehicles) {
@@ -101,4 +99,3 @@ public class AgendaController {
     }
 }
 
-}
