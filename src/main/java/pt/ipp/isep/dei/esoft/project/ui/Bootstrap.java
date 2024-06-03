@@ -59,6 +59,7 @@ public class Bootstrap implements Runnable {
 
         AgendaEntry agendaEntry1 = new AgendaEntry(entry1,null,null,"1 hour",Status.PLANNED,new Date());
         agenda.addEntry(agendaEntry1);
+        agenda.addEntry(new AgendaEntry(entry2,null,null,"1 hour",Status.PLANNED,new Date()));
     }
 
     public void addVehicleMaintenances(){

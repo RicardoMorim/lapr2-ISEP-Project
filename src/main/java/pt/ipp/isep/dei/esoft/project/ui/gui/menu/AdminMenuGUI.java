@@ -9,11 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AddVehicleToAgendaEntryGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
 public class AdminMenuGUI extends Application {
 
@@ -60,10 +56,12 @@ public class AdminMenuGUI extends Application {
         Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
         btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(new Stage()));
 
+        Button btnPostponeEntry = new Button("Postpone an Entry");
+        btnPostponeEntry.setOnAction(e -> new PostponeEntryGUI().start(new Stage()));
 
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
-                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry);
+                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry, btnPostponeEntry);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         BorderPane borderPane = new BorderPane();
