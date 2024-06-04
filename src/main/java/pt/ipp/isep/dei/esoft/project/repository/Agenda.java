@@ -20,6 +20,11 @@ public class Agenda implements Serializable {
         this.entries = new ArrayList<>();
     }
 
+    /**
+     * Sets entries.
+     *
+     * @param entries the entries
+     */
     public void setEntries(List<AgendaEntry> entries) {
         this.entries = entries;
     }
@@ -48,6 +53,12 @@ public class Agenda implements Serializable {
         this.entries.remove(entry);
     }
 
+    /**
+     * Update entry.
+     *
+     * @param old      the old
+     * @param newEntry the new entry
+     */
     public void updateEntry(AgendaEntry old, AgendaEntry newEntry){
         removeEntry(old);
         addEntry(newEntry);
@@ -63,6 +74,11 @@ public class Agenda implements Serializable {
         return List.copyOf(entries);
     }
 
+    /**
+     * Gets entries with no team.
+     *
+     * @return the entries with no team
+     */
     public List<AgendaEntry> getEntriesWithNoTeam() {
         List<AgendaEntry> entriesWithNoTeam = new ArrayList<>();
         for (AgendaEntry entry : entries) {
@@ -88,6 +104,12 @@ public class Agenda implements Serializable {
         return false;
     }
 
+    /**
+     * Gets vehicles not assigned to any agenda entry.
+     *
+     * @param vehicles the vehicles
+     * @return the vehicles not assigned to any agenda entry
+     */
     public List<Vehicle> getVehiclesNotAssignedToAnyAgendaEntry(List<Vehicle> vehicles) {
         List<Vehicle> vehiclesNotAssigned = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
@@ -98,6 +120,12 @@ public class Agenda implements Serializable {
         return vehiclesNotAssigned;
     }
 
+    /**
+     * Gets vehicle by plate.
+     *
+     * @param plate the plate
+     * @return the vehicle by plate
+     */
     public Vehicle getVehicleByPlate(String plate) {
         for (AgendaEntry agendaEntry : this.entries) {
             for (Vehicle vehicle : agendaEntry.getVehicles()) {

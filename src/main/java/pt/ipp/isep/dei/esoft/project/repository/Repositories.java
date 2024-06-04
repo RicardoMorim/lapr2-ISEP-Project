@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+/**
+ * The type Repositories.
+ */
 public class Repositories {
 
     private static Repositories instance;
@@ -32,6 +35,11 @@ public class Repositories {
         teamRepository = new TeamRepository();
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static Repositories getInstance() {
         if (instance == null) {
             synchronized (Repositories.class) {
@@ -41,54 +49,119 @@ public class Repositories {
         return instance;
     }
 
+    /**
+     * Gets team repository.
+     *
+     * @return the team repository
+     */
     public TeamRepository getTeamRepository() {
         return teamRepository;
     }
 
+    /**
+     * Gets agenda.
+     *
+     * @return the agenda
+     */
     public Agenda getAgenda() {
         return agenda;
     }
 
+    /**
+     * Gets entry repository.
+     *
+     * @return the entry repository
+     */
     public EntryRepository getEntryRepository() {
         return entryRepository;
     }
 
+    /**
+     * Gets to do list.
+     *
+     * @return the to do list
+     */
     public ToDoList getToDoList() {
         return toDoList;
     }
 
+    /**
+     * Gets job repository.
+     *
+     * @return the job repository
+     */
     public JobRepository getJobRepository() {
         return jobRepository;
     }
 
+    /**
+     * Gets skill repository.
+     *
+     * @return the skill repository
+     */
     public SkillRepository getSkillRepository() {
         return skillRepository;
     }
 
+    /**
+     * Gets vehicle repository.
+     *
+     * @return the vehicle repository
+     */
     public VehicleRepository getVehicleRepository() {
         return vehicleRepository;
     }
 
+    /**
+     * Gets collaborator repository.
+     *
+     * @return the collaborator repository
+     */
     public CollaboratorRepository getCollaboratorRepository() {
         return collaboratorRepository;
     }
 
+    /**
+     * Gets organization repository.
+     *
+     * @return the organization repository
+     */
     public OrganizationRepository getOrganizationRepository() {
         return organizationRepository;
     }
 
+    /**
+     * Gets task category repository.
+     *
+     * @return the task category repository
+     */
     public TaskCategoryRepository getTaskCategoryRepository() {
         return taskCategoryRepository;
     }
 
+    /**
+     * Gets authentication repository.
+     *
+     * @return the authentication repository
+     */
     public AuthenticationRepository getAuthenticationRepository() {
         return authenticationRepository;
     }
 
+    /**
+     * Gets green space repository.
+     *
+     * @return the green space repository
+     */
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
 
+    /**
+     * Gets agenda repository.
+     *
+     * @return the agenda repository
+     */
     public Agenda getAgendaRepository() {
         return agenda;
     }
