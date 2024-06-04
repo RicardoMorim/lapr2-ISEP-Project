@@ -15,8 +15,6 @@ public class AgendaEntry implements Serializable {
     private Status status;
     private Entry entry;
 
-    private Date date;
-
     /**
      * Instantiates a new Agenda entry.
      *
@@ -57,8 +55,6 @@ public class AgendaEntry implements Serializable {
         this.duration = duration;
         this.status = status;
     }
-
-
 
     /**
      * Gets team.
