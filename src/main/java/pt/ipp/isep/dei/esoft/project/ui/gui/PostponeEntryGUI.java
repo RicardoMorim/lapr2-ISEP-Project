@@ -2,14 +2,11 @@ package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-<<<<<<< HEAD
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-=======
 import javafx.scene.control.*;
->>>>>>> ricardo
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
@@ -40,34 +37,31 @@ public class PostponeEntryGUI extends Application {
             AgendaEntry selectedEntry = cbEntries.getSelectionModel().getSelectedItem();
 
             if (selectedEntry != null) {
-<<<<<<< HEAD
                 selectedEntry.setStatus(Status.POSTPONED);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 if (selectedEntry.getStatus() == Status.POSTPONED) {
-=======
 
-                agendaController.postponeEntry(selectedEntry);
+                    agendaController.postponeEntry(selectedEntry);
 
-                // Call the controller method to postpone the entry
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
->>>>>>> ricardo
-                    alert.setTitle("Success");
-                    alert.setHeaderText(null);
-                    alert.setContentText("The entry has been successfully postponed.");
-                } else {
-                    alert.setTitle("Failure");
-                    alert.setHeaderText(null);
-                    alert.setContentText("The entry could not be postponed.");
+                    // Call the controller method to postpone the entry
+                    if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
+                        alert.setTitle("Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText("The entry has been successfully postponed.");
+                    } else {
+                        alert.setTitle("Failure");
+                        alert.setHeaderText(null);
+                        alert.setContentText("The entry could not be postponed.");
+                    }
+                    alert.showAndWait();
                 }
-                alert.showAndWait();
             }
+
+            vbox.getChildren().addAll(lblEntry, cbEntries, btnPostpone);
+
+            Scene scene = new Scene(vbox, 300, 200);
+            primaryStage.setScene(scene);
+            primaryStage.show();
         });
-
-        vbox.getChildren().addAll(lblEntry, cbEntries, btnPostpone);
-
-        Scene scene = new Scene(vbox, 300, 200);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }
