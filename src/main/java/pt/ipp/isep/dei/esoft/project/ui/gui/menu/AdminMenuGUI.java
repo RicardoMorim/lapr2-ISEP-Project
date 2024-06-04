@@ -46,10 +46,10 @@ public class AdminMenuGUI extends Application {
         });
 
         Button btnRegisterJob = new Button("Register a job that a collaborator may have.");
-        // TODO - Add GUI for the button
+        // TODO - Add GUI for the button (last sprint US)
 
         Button btnRegisterCollaborator = new Button("Register a collaborator");
-        // TODO - Add GUI for the button
+        // TODO - Add GUI for the button (last sprint US)
 
         Button btnGenerateTeamProposal = new Button("Generate a team proposal automatically");
         btnGenerateTeamProposal.setOnAction(e -> {
@@ -58,9 +58,11 @@ public class AdminMenuGUI extends Application {
         });
 
         Button btnRegisterVehicle = new Button("Register Vehicle");
+        // TODO - Add GUI for the button (last sprint US)
         Button btnRegisterVehicleMaintenance = new Button("Register Vehicle maintenance");
+        // TODO - Add GUI for the button (last sprint US)
         Button btnListVehiclesNeedingMaintenance = new Button("Get a list of vehicles needing maintenance");
-        Button btnGetBestPipeRoutes = new Button("Get best water pipe routes.");
+        // TODO - Add GUI for the button - Not priority (last sprint US)
         Button btnAddEntryToAgenda = new Button("Add an entry to the Agenda");
         Button btnAddGreenSpace = new Button("Add a Green Space");
         Button btnAssignTeamToAgendaEntry = new Button("Assign a Team to an Agenda Entry");
@@ -76,26 +78,15 @@ public class AdminMenuGUI extends Application {
         grid.add(btnRegisterVehicle, 1, 2);
         grid.add(btnRegisterVehicleMaintenance, 0, 3);
         grid.add(btnListVehiclesNeedingMaintenance, 1, 3);
-        grid.add(btnGetBestPipeRoutes, 0, 4);
-        grid.add(btnAddEntryToAgenda, 1, 4);
-        grid.add(btnAddGreenSpace, 0, 5);
-        grid.add(btnAssignTeamToAgendaEntry, 1, 5);
-        grid.add(btnPostponeEntry, 0, 6);
-        grid.add(btnCancel, 1, 6);
-        grid.add(btnAddEntryToDoList, 0, 7);
-        grid.add(btnListGreenSpaces, 1, 7);
+        grid.add(btnAddEntryToAgenda, 0, 4);
+        grid.add(btnAddGreenSpace, 1, 4);
+        grid.add(btnAssignTeamToAgendaEntry, 0, 5);
+        grid.add(btnPostponeEntry, 1, 5);
+        grid.add(btnCancel, 0, 6);
+        grid.add(btnAddEntryToDoList, 1, 6);
+        grid.add(btnListGreenSpaces, 0, 7);
 
         return grid;
-    }
-
-    private void showRegisterSkillGUI() {
-        AddSkillToCollaboratorGUI registerSkillGUI = new AddSkillToCollaboratorGUI();
-        try {
-            registerSkillGUI.start(new Stage());
-        } catch (Exception ex) {
-            // Handle the exception
-            ex.printStackTrace();
-        }
     }
 
 }
