@@ -5,16 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
+import pt.ipp.isep.dei.esoft.project.domain.Status;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 public class PostponeEntryGUI extends Application {
@@ -33,24 +30,15 @@ public class PostponeEntryGUI extends Application {
         List<AgendaEntry> agendaEntries = agendaController.getAgenda().getEntries();
         cbEntries.getItems().addAll(agendaEntries);
 
-        Label lblDate = new Label("Date:");
-        DatePicker datePicker = new DatePicker();
-
         Button btnPostpone = new Button("Postpone");
 
-        // Add event handler to the button
         btnPostpone.setOnAction(e -> {
             AgendaEntry selectedEntry = cbEntries.getSelectionModel().getSelectedItem();
-            LocalDate selectedDate = datePicker.getValue();
-            agendaController.postponeEntry(selectedEntry, Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-
-
-            if (selectedEntry != null && selectedDate != null) {
-                // Call the controller method to postpone the entry
-               LocalDate entryDate = selectedEntry.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (selectedEntry != null) {
+                selectedEntry.setStatus(Status.POSTPONED);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                if (selectedDate.equals(entryDate)) {
+                if (selectedEntry.getStatus() == Status.POSTPONED) {
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
                     alert.setContentText("The entry has been successfully postponed.");
@@ -63,7 +51,7 @@ public class PostponeEntryGUI extends Application {
             }
         });
 
-        vbox.getChildren().addAll(lblEntry, cbEntries, lblDate, datePicker, btnPostpone);
+        vbox.getChildren().addAll(lblEntry, cbEntries, btnPostpone);
 
         Scene scene = new Scene(vbox, 300, 200);
         primaryStage.setScene(scene);
