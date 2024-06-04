@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
@@ -45,5 +46,11 @@ public class TeamController {
             teamProposals.add(team);
         }
         return teamProposals;
+    }
+
+    public void unassignTeam(AgendaEntry entry){
+        Team team = entry.getTeam();
+        entry.setTeam(null);
+        team.setAssigned(false);
     }
 }
