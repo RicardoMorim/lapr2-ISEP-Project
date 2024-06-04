@@ -14,9 +14,13 @@ However, be aware, this is a pedagogical simplification. On further projects and
 
 | UC/US | Description                                                          |                   
 |:------|:---------------------------------------------------------------------|
-| US009 | [Register a skill](../../us009/Readme.md)                            |
-| US010 | [Register a job](../../us010/Readme.md)                              |
-| US011 | [Register a collaborator and characteristics](../../us011/Readme.md) |
-| US012 | [Assign one or more skills](../../us012/Readme.md)                   |
-| US013 | [Generate a team proposal](../../us013/Readme.md)                    |
-| US014 | [Register a vehicle](../../us014/Readme.md)                          |
+| US020 | [Register a green space](../../us020/Readme.md)                      |
+| US021 | [Add a new toDoEntry to the To-Do List](../../us021/Readme.md)       |
+| US022 | [Add a skill to a collaborator](../../us022/Readme.md)               |
+| US023 | [Add a skill to a collaborator](../../us023/Readme.md)               |
+| US024 | [Postpone an entry in the Agenda](../../us024/Readme.md)             |
+| US025 | [Cancel an entry in the Agenda](../../us025/Readme.md)               |
+| US026 | [Assign a vehicle to an entry in the agenda ](../../us026/Readme.md) |
+| US027 | [List all green spaces managed by a GSM](../../us027/Readme.md)      |
+| US028 | [ ](../../us028/Readme.md)                                           |
+| US029 | [ ](../../us029/Readme.md)                                           |
