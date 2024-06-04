@@ -37,7 +37,7 @@ As a GSM, I want to Cancel an entry in the Agenda.
 **Input Data:**
 
 * Typed data:
-    * The 
+    * 
 
 **Output Data:**
 

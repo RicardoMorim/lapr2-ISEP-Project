@@ -1,86 +1,52 @@
-# US004 - Add a Skill to a Collaborator
+# US025 - Cancel an entry in the Agenda
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
+**Test 1:** Cancel exiting entry
 
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
-    }
+    public void testCancelEntry() {
+        // Create a mock of the Agenda
+        Agenda agendaMock = mock(Agenda.class);
+        // Create a mock of the Entry
+        Entry entryMock = mock(Entry.class);
+        // Assume getStatus method returns CANCELED
+        when(entryMock.getStatus()).thenReturn(Status.CANCELED);
+        // Assume getEntries method returns a list with one entry
+        when(agendaMock.getEntries()).thenReturn(Collections.singletonList(entryMock));
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
+        // Create an instance of CancelUI with the mocked Agenda
+        CancelUI cancelUI = new CancelUI(agendaMock);
+
+        // Call the method to cancel an entry
+        cancelUI.cancelEntry(entryMock);
+
+        // Verify that the status of the entry is set to CANCELED
+        verify(entryMock).setStatus(Status.CANCELED);
+    }
+}
+
+**Test 2:** Cancel non-existing entry
 
     @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    public void testCancelNonExistingEntry() {
+        Agenda agendaMock = mock(Agenda.class);
+        Entry entryMock = mock(Entry.class);
+        // Assume getEntries method returns an empty list
+        when(agendaMock.getEntries()).thenReturn(Collections.emptyList());
+
+        // Create an instance of CancelUI with the mocked Agenda
+        CancelUI cancelUI = new CancelUI(agendaMock);
+
+        // Call the method to cancel an entry
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            cancelUI.cancelEntry(entryMock);
+        });
+
+        // Verify that the exception message is as expected
+        assertEquals("Entry not found in the agenda.", exception.getMessage());
     }
-
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
-
-    @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
-    }
-
-**Test 4:** Ensure that a skill cannot be null or have null parameters
-
-    @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
-    }
-
-**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
-
-    @Test
-    void removeUnexistingSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.removeSkill(skill);
-        });
-    }
-
-
+}
 
 ## 5. Construction (Implementation)
 
@@ -95,7 +61,6 @@
 ```
 
 ### Class CollaboratorRepository
-
 
 ```java
     public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {

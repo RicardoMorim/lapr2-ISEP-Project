@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US025 - Cancel an entry in the Agenda
 
 ## 3. Design - User Story Realization
 
@@ -24,16 +24,15 @@
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* CancelEntryUI
+* CancelEntryController
+* AgendaEntry
+* Repositories
+* AgendaRepository
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* 
 
 ## 3.2. Sequence Diagram (SD)
 

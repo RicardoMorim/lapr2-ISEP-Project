@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US024 - Postpone an entry in the Agenda
 
 ## 3. Design - User Story Realization
 
@@ -24,16 +24,16 @@
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* PostponeEntryUI
+* PostponeEntryController
+* Agenda
+* Repositories
+* Entry
+* TeamRepository
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* 
 
 ## 3.2. Sequence Diagram (SD)
 
@@ -41,7 +41,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us004-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us024-sequence-diagram-System_Sequence_Diagram__SSD_.svg)
 
 ### Split Diagrams
 
@@ -49,4 +49,4 @@ N/A
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us004-class-diagram.svg)
+![Class Diagram](svg/us024-class-diagram.svg)
