@@ -32,6 +32,9 @@ public class GreenSpace implements Serializable {
         validatePark();
     }
 
+    public EmailWrapper getUser() {
+        return user;
+    }
 
     public String getName() {
         return this.name;
