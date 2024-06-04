@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Address;
+import pt.ipp.isep.dei.esoft.project.domain.EmailWrapper;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
@@ -50,6 +51,10 @@ public class GreenSpaceController {
 
     public boolean checkIfGreenSpaceAddressExists(Address address){
         return greenSpaceRepository.checkIfGreenSpaceAddressExists(address);
+    }
+
+    public List<GreenSpace>getGreenSpacesManagedByUser(EmailWrapper user){
+        return greenSpaceRepository.getGreenSpacesManagedByUser(user);
     }
 
     public boolean validateZipCode(String zipCode) {
