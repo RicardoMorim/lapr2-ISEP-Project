@@ -20,7 +20,7 @@ public class MainMenuGUI extends Application {
         btnLogin.setMinHeight(50); // Set the height of the button
         btnLogin.setOnAction(e -> {
             LoginUI authUI = new LoginUI();
-            authUI.start(new Stage());
+            authUI.start(primaryStage);
         });
 
         Button btnKnowTheDevTeam = new Button("Know the Development Team");
@@ -28,7 +28,7 @@ public class MainMenuGUI extends Application {
         btnKnowTheDevTeam.setMinHeight(50); // Set the height of the button
         btnKnowTheDevTeam.setOnAction(e -> {
             DevTeamGUI devTeamUI = new DevTeamGUI();
-            devTeamUI.start(new Stage());
+            devTeamUI.start(primaryStage);
         });
 
         VBox vbox = new VBox(btnLogin, btnKnowTheDevTeam);
