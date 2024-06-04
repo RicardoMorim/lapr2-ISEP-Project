@@ -4,6 +4,7 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class EmailWrapper implements Serializable {
     private transient Email email;
@@ -28,5 +29,18 @@ public class EmailWrapper implements Serializable {
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         email = new Email((String) in.readObject());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailWrapper that = (EmailWrapper) o;
+        return Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(email);
     }
 }

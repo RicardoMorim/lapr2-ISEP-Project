@@ -46,7 +46,6 @@ public class CollaboratorController {
     }
 
 
-
     public List<Collaborator> getCollaboratorList() {
         return collaboratorRepository.getCollaborators();
     }
@@ -73,8 +72,8 @@ public class CollaboratorController {
         }
     }
 
-    public void startTask(Team team){
-        for (Collaborator collaborator: team.getCollaborators()) {
+    public void startTask(Team team) {
+        for (Collaborator collaborator : team.getCollaborators()) {
             collaborator.setFree(false);
         }
     }
@@ -83,7 +82,6 @@ public class CollaboratorController {
         try {
             for (Skill skill : skillList) {
                 collaborator.addSkill(skill);
-                collaboratorRepository.update(collaborator, collaborator.getName(), collaborator.getEmail(), collaborator.getAddress(), collaborator.getPhone(), collaborator.getJob(), collaborator.getSkills(), collaborator.getBirthDate(), collaborator.getAdmissionDate(), collaborator.getIDtype(), collaborator.getTaxpayerNumber(), collaborator.getCitizenNumber());
 
             }
         } catch (IllegalArgumentException e) {
@@ -92,19 +90,19 @@ public class CollaboratorController {
     }
 
     public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-        Collaborator old = collaborator.clone();
         collaborator.addSkill(skill);
-        collaboratorRepository.update(old, collaborator);
 
     }
 
 
     public void removeSkillFromACollaborator(List<Skill> skillList, Collaborator collaborator) {
-        Collaborator old = collaborator.clone();
         for (Skill skill : skillList) {
             collaborator.removeSkill(skill);
         }
-        collaboratorRepository.update(old, collaborator);
+    }
+
+    public void removeSkillFromACollaborator(Skill skill, Collaborator collaborator) {
+        collaborator.removeSkill(skill);
     }
 
 
