@@ -34,3 +34,11 @@
 #menu {
     -fx-max-width: Infinity;
 }
+
+#formGrid {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 70, 0, 0, 5);
+}
+
+#btnLogin {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 70, 0, 0, -5);
+}

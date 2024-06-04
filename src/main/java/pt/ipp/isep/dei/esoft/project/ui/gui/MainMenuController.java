@@ -54,7 +54,7 @@ public class MainMenuController {
                     ((Pane) node).setPrefHeight(content.getPrefHeight());
                 }
             });
-        });
+      });
 
         // Add a ChangeListener to the height property of the VBox
         menu.heightProperty().addListener(new ChangeListener<Number>() {
