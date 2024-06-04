@@ -53,7 +53,7 @@ public class AddEntryToAgendaUI implements Runnable {
         Entry entry = new Entry(state, null, title, description, urgencyValue, expectedDuration);
 
         // Create the new AgendaEntry
-        AgendaEntry agendaEntry = new AgendaEntry(entry, duration, status);
+        AgendaEntry agendaEntry = new AgendaEntry(entry, duration, status, new Date());
 
         // Add the entry to the agenda
         agendaController.addEntry(agendaEntry);

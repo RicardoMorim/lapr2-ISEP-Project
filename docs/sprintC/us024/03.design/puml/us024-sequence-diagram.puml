@@ -33,34 +33,20 @@ activate Employee
                 AgendaRepo --> CTRL : agendaEntryList
             deactivate AgendaRepo
 
-            CTRL --> UI : uiFormatedEntryList
+            CTRL --> UI : entryList
         deactivate CTRL
 
-        UI --> Employee : shows the list of entries in the Agenda\nand planned dates and asks to select one
+        UI --> Employee : shows the list of entries and asks to select one
     deactivate UI
 
     Employee -> UI : selects an entry
     activate UI
 
-        UI --> Employee : asks to select a new date
-    deactivate UI
-
-    Employee -> UI : selects new date for the entry
-    activate UI
-
-        UI -> CTRL : updateAgendaEntryDate(selectedEntry, newDate)
+        UI -> CTRL : updateAgendaEntryStatus(selectedEntry, newStatus)
         activate CTRL
 
-            CTRL -> "EntryMapper" : updateEntryDate(selectedEntry, newDate)
-            activate "EntryMapper"
 
-                "EntryMapper" -> "EntryMapper" : updatedEntry = updateEntity(selectedEntry, newDate)
-
-
-            "EntryMapper" --> CTRL : updatedEntry
-            deactivate "EntryMapper"
-
-            CTRL -> AgendaRepo : updateEntryDate(updatedEntry)
+            CTRL -> AgendaRepo : updateEntryStatus(updatedEntry)
             activate AgendaRepo
 
                 AgendaRepo --> CTRL : success/failure

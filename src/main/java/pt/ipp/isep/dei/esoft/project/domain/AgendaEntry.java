@@ -14,6 +14,7 @@ public class AgendaEntry implements Serializable {
     private String duration;
     private Status status;
     private Entry entry;
+    private Date date;
 
     /**
      * Instantiates a new Agenda entry.
@@ -24,36 +25,48 @@ public class AgendaEntry implements Serializable {
      * @param duration          the duration
      * @param status            the status
      */
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = team;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
+        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status) {
+    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = null;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
+        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, Team team, String duration, Status status) {
+    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = team;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
+        this.date = date;
     }
 
-    public AgendaEntry(Entry entry, String duration, Status status) {
+    public AgendaEntry(Entry entry, String duration, Status status, Date date) {
         this.entry = entry;
         this.team = null;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     /**
