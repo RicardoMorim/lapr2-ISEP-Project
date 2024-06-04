@@ -7,6 +7,7 @@ module MainGUI {
     requires org.apache.commons.lang3;
     requires gs.core;
     requires org.jfree.jfreechart;
+    requires java.sql;
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
     opens pt.ipp.isep.dei.esoft.project.ui to javafx.graphics, javafx.fxml;

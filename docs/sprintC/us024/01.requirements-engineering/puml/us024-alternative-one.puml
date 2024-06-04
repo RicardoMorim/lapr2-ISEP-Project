@@ -12,7 +12,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to postpone an entry to the agenda
+    Employee -> System : asks to postpone an entry in the agenda
     activate System
 
     System --> Employee : shows the list of entries in the Agenda
@@ -21,10 +21,10 @@ activate Employee
     Employee -> System : selects an entry
     activate System
 
-    System --> Employee : asks to select a new date
+    System --> Employee : asks to confirm postponement
     deactivate System
 
-    Employee -> System : selects new date for the entry
+    Employee -> System : confirms postponement
     activate System
 
     System --> Employee : shows message of (in)success
