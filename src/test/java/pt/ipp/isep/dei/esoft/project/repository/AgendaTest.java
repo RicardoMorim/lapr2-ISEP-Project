@@ -64,4 +64,19 @@ class AgendaTest {
         assertTrue(entriesBefore.contains(entry1));
         assertFalse(entriesAfter.contains(entry1));
     }
+
+    @Test
+    void testUpdateEntry() {
+        // Add the old entry to the agenda
+        agenda.addEntry(oldEntry);
+
+        // Update the old entry with the new entry
+        agenda.updateEntry(oldEntry, newEntry);
+
+        // Verify that the old entry is removed
+        assertFalse(agenda.getEntries().contains(oldEntry));
+
+        // Verify that the new entry is added
+        assertTrue(agenda.getEntries().contains(newEntry));
+    }
 }
