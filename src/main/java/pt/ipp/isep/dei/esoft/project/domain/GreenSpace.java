@@ -24,13 +24,6 @@ public class GreenSpace implements Serializable {
         validatePark();
     }
 
-    public GreenSpace(String name, Address address, double area, Type type) {
-        this.name = name;
-        this.address = address;
-        this.type = type;
-        this.area = area;
-        validatePark();
-    }
 
 
     public String getName() {

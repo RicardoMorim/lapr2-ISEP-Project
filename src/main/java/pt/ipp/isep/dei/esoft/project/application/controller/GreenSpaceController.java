@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class GreenSpaceController {
         greenSpaceRepository.addGreenSpace(greenSpace);
     }
 
-    public void addGreenSpace(String name, Address address, double area, Type type) {
-        GreenSpace greenSpace = new GreenSpace(name, address, area, type);
+    public void addGreenSpace(String name, Address address, double area, Type type, Email user) {
+        GreenSpace greenSpace = new GreenSpace(name, address, area, type, user);
         greenSpaceRepository.addGreenSpace(greenSpace);
     }
 

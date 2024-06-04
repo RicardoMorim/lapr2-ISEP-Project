@@ -27,10 +27,10 @@ public class AdminMenuGUI extends Application {
         //btnRegisterCollaborator.setOnAction(e -> new RegisterCollaboratorUI().start(new Stage()));
 
         Button btnAddSkillToCollaborator = new Button("Add a skill to a collaborator");
-        btnAddSkillToCollaborator.setOnAction(e -> new AddSkillToCollaboratorGUI().start(new Stage()));
+        btnAddSkillToCollaborator.setOnAction(e -> new AddSkillToCollaboratorGUI().start(primaryStage));
 
         Button btnGenerateTeamProposal = new Button("Generate a team proposal automatically");
-        btnGenerateTeamProposal.setOnAction(e -> new GenerateTeamProposalGUI().start(new Stage()));
+        btnGenerateTeamProposal.setOnAction(e -> new GenerateTeamProposalGUI().start(primaryStage));
 
         Button btnRegisterVehicle = new Button("Register Vehicle");
         //btnRegisterVehicle.setOnAction(e -> new RegisterVehicleUI().start(new Stage()));
@@ -48,19 +48,19 @@ public class AdminMenuGUI extends Application {
         //btnAddEntryToAgenda.setOnAction(e -> new AddEntryToAgendaUI().start(new Stage()));
 
         Button btnAddGreenSpace = new Button("Add a Green Space");
-        btnAddGreenSpace.setOnAction(e -> new AddGreenSpaceGUI().start(new Stage()));
+        btnAddGreenSpace.setOnAction(e -> new AddGreenSpaceGUI().start(primaryStage));
 
         Button btnAssignTeamToAgendaEntry = new Button("Assign a Team to an Agenda Entry");
-        btnAssignTeamToAgendaEntry.setOnAction(e -> new AssignTeamToAgendaEntryGUI().start(new Stage()));
+        btnAssignTeamToAgendaEntry.setOnAction(e -> new AssignTeamToAgendaEntryGUI().start(primaryStage));
 
         Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
-        btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(new Stage()));
+        btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(primaryStage));
 
         Button btnPostponeEntry = new Button("Postpone an Entry to the Agenda");
-        btnPostponeEntry.setOnAction(e -> new PostponeEntryGUI().start(new Stage()));
+        btnPostponeEntry.setOnAction(e -> new PostponeEntryGUI().start(primaryStage));
 
         Button btnCancel = new Button("Cancel an entry in the Agenda");
-        btnCancel.setOnAction(e -> new CancelGUI().start(new Stage()));
+        btnCancel.setOnAction(e -> new CancelGUI().start(primaryStage));
 
         VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,

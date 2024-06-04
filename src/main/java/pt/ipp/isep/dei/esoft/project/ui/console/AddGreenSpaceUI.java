@@ -4,9 +4,9 @@ import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController
 import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AddGreenSpaceUI implements Runnable {
@@ -114,7 +114,7 @@ public class AddGreenSpaceUI implements Runnable {
     private void submitData() {
         if (Utils.confirm("Do you want to register the green space? (S/N)")) {
             try {
-                controller.addGreenSpace(name, address, area, type);
+                controller.addGreenSpace(name, address, area, type, Repositories.getInstance().getAuthenticationRepository().getCurrentUserSession().getUserId());
                 System.out.println("The green space was successfully registered.");
             } catch (IllegalArgumentException e) {
                 System.out.println("The green space was not registered.\nThere was an error registering it.\n");

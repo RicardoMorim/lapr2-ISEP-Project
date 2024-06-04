@@ -2,19 +2,13 @@ package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
+import pt.ipp.isep.dei.esoft.project.domain.Status;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 public class PostponeEntryGUI extends Application {
@@ -41,16 +35,14 @@ public class PostponeEntryGUI extends Application {
         // Add event handler to the button
         btnPostpone.setOnAction(e -> {
             AgendaEntry selectedEntry = cbEntries.getSelectionModel().getSelectedItem();
-            LocalDate selectedDate = datePicker.getValue();
-            agendaController.postponeEntry(selectedEntry, Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
+            if (selectedEntry != null) {
 
+                agendaController.postponeEntry(selectedEntry);
 
-            if (selectedEntry != null && selectedDate != null) {
                 // Call the controller method to postpone the entry
-               LocalDate entryDate = selectedEntry.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                if (selectedDate.equals(entryDate)) {
+                if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
                     alert.setContentText("The entry has been successfully postponed.");

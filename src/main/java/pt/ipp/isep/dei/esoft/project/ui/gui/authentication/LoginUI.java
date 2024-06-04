@@ -54,7 +54,32 @@ public class LoginUI {
                             primaryStage.close();
                             break;
                         }
-                        // TODO - Add more roles here as needed
+                        if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+                            // CollaboratorMenuGUI collaboratorMenuGUI = new CollaboratorMenuGUI();
+                            // collaboratorMenuGUI.start(new Stage());
+                            // primaryStage.close();
+                            break;
+                        }
+
+                        if (role.getDescription().equals(AuthenticationController.ROLE_GRM)) {
+                            // FreelancerMenuGUI freelancerMenuGUI = new FreelancerMenuGUI();
+                            // freelancerMenuGUI.start(new Stage());
+                            // primaryStage.close();
+                            break;
+                        }
+                        if (role.getDescription().equals(AuthenticationController.ROLE_VFM)){
+                            // VehicleMenuGUI vehicleMenuGUI = new VehicleMenuGUI();
+                            // vehicleMenuGUI.start(new Stage());
+                            // primaryStage.close();
+                            break;
+                        }
+                        if (role.getDescription().equals(AuthenticationController.ROLE_EMPLOYEE)){
+                            // EmployeeMenuGUI employeeMenuGUI = new EmployeeMenuGUI();
+                            // employeeMenuGUI.start(new Stage());
+                            // primaryStage.close();
+                            break;
+
+                        }
                     }
                 } else {
                     lblError.setText("No role assigned to user.");
@@ -66,6 +91,5 @@ public class LoginUI {
 
         Scene scene = new Scene(grid, 300, 200);
         primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }

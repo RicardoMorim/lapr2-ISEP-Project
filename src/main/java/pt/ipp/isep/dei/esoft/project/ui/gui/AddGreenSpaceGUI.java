@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 public class AddGreenSpaceGUI extends Application {
 
@@ -194,7 +195,7 @@ public class AddGreenSpaceGUI extends Application {
                 }
 
                 try {
-                    controller.addGreenSpace(name, address, area, type);
+                    controller.addGreenSpace(name, address, area, type, Repositories.getInstance().getAuthenticationRepository().getCurrentUserSession().getUserId());
                 } catch (IllegalArgumentException ex) {
                     showAlert(ex.getMessage());
                     return;
