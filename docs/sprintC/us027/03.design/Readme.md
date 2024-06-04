@@ -1,52 +1,49 @@
-# US004 - Add a skill to a collaborator
+# US027 - List all green spaces managed by a GSM.
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-| Interaction ID                                                      | Question: Which class is responsible for...                  | Answer                 | Justification (with patterns)                                                                                 |
-|:--------------------------------------------------------------------|:-------------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		                                                             | 	... coordinating the US?                                    | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the repository to get the collaborator list    | CollaboratorController | IE: its the controller with access to the collaborator repository                                             |
-|                                                                     | ... getting the collaborator list                            | CollaboratorRepository | IE: its the repository that stores the collaborator's information's                                           |
-| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?                              | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the skill repository to get the list of skills | SkillController        | IE: its the controller that has access to the skill repository                                                |
-| 			  		                                                             | 	... knowing the list of skills                              | SkillRepository        | IE: The repository keeps all the skills                                                                       |
-| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... validate skill                                           | Skill                  | IE: Validates the skill before validating it                                                                  |
-|                                                                     | ... saving the collaborator's skills                         | Collaborator           | IE: Manages collaborator's information                                                                        |
-| Step 6: Displays operation success 		                               | ... interacting with the actor?							                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
+_**Note that SSD - Alternative One is adopted.**_
 
+
+| Interaction ID | Question: Which class is responsible for...   | Answer                    | Justification (with patterns)                                                           |
+|:---------------|:----------------------------------------------|:--------------------------|:----------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?               | ListGreenSpacesUI         | Pure Fabrication: There is no need to assign this responsibility to any existing class. |
+|                | ... coordinating the US?                      | ListGreenSpacesController | Controller.                                                                             |
+| Step 2         | ... request the sorting algorithm?            | RegisterVehicleUI         | Pure Fabrication.                                                                       |
+| Step 3         | ... get the Green Space Repository?           | Repositories              | Information Expert, High cohesion, Low coupling.                                        |
+|                | ... having all the repositories?              | Repositories              | Information Expert, High cohesion, Low coupling.                                        |
+|                | ... creating the Green Spaces List?           | GreenSpaceRepository      | Information Expert.                                                                     |
+|                | ... verifying if the generated list is empty? | GreenSpaceRepository      | Information Expert.                                                                     |
+|                | ... having the list to organize?              | GreenSpaceRepository      | Information Expert.                                                                     |
+|                | ... organizing the list of green spaces?      | SortAlgorithms            | Protected Variations.                                                                   |
+| Step 4         | ... showing the created list?                 | RegisterVehicleUI         | Pure Fabrication.                                                                       |
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* GreenSpace
+
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* Repositories
+* ListGreenSpacesUI
+* ListGreenSpacesController
+* GreenSpaceRepository
+* SortAlgorithms
 
 ## 3.2. Sequence Diagram (SD)
+
+_**Note that SSD - Alternative Two is adopted.**_
 
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us004-sequence-diagram-full.svg)
-
-### Split Diagrams
-
-N/A
+![Sequence Diagram - Full](svg/us027-sequence-diagram-full.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us004-class-diagram.svg)
+![Class Diagram](svg/us027-class-diagram.svg)

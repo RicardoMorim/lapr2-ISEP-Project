@@ -4,12 +4,12 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
-
 import java.util.List;
 
 public class PostponeEntryUI implements Runnable {
 
     private final AgendaController agendaController = new AgendaController();
+
     @Override
     public void run() {
         List<AgendaEntry> agendaEntries = agendaController.getAgenda().getEntries();
@@ -21,9 +21,9 @@ public class PostponeEntryUI implements Runnable {
 
         AgendaEntry chosenEntry = agendaEntries.get(entryIndex);
 
-        chosenEntry.setStatus(Status.POSTPONED);
+        chosenEntry = agendaController.postponeEntry(chosenEntry);
 
-        if (chosenEntry.getStatus() == Status.POSTPONED)
+        if (chosenEntry.getStatus().equals(Status.POSTPONED))
             System.out.println("Entry postponed successfully");
         else
             System.out.println("Unable to postpone entry");

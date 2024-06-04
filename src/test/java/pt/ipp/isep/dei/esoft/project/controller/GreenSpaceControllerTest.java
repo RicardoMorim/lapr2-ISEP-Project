@@ -3,13 +3,10 @@ package pt.ipp.isep.dei.esoft.project.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
+import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
-import pt.isep.lei.esoft.auth.domain.model.Email;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,38 +19,56 @@ class GreenSpaceControllerTest {
     void setUp() {
         repository = new GreenSpaceRepository();
         controller = new GreenSpaceController(repository);
-        greenSpace = new GreenSpace("Park", "large-sized park", 500.0f, Type.GARDEN, new Email("admin@this.app"));
+        greenSpace = new GreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN);
     }
 
     @Test
-    void addGreenSpace_success() {
-        controller.addGreenSpace(greenSpace);
+    void addGreenSpaceByNameAddressAreaType_success() {
+        controller.addGreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN);
         assertEquals(1, repository.getGreenSpaces().size());
     }
 
     @Test
-    void getGreenSpaceList_success() {
-        List<GreenSpace> greenSpaces = new ArrayList<>();
-        greenSpaces.add(greenSpace);
-        repository.addGreenSpace(greenSpace);
-
-        List<GreenSpace> result = controller.getGreenSpaceList();
-
-        assertEquals(greenSpaces, result);
+    void addGreenSpaceByNameAddressAreaType_duplicateName() {
+        controller.addGreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN);
+        assertThrows(IllegalArgumentException.class, () -> controller.addGreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN));
     }
 
     @Test
-    void removeGreenSpace_success() {
-        repository.addGreenSpace(greenSpace);
-        controller.removeGreenSpace(greenSpace);
-        assertEquals(0, repository.getGreenSpaces().size());
+    void addGreenSpaceByNameAddressAreaType_duplicateAddress() {
+        controller.addGreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN);
+        assertThrows(IllegalArgumentException.class, () -> controller.addGreenSpace("Park2", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN));
     }
 
     @Test
-    void updateGreenSpace_success() {
-        GreenSpace newGreenSpace = new GreenSpace("Garden",  "Rua almeida valente",300.0f, Type.GARDEN, new Email("admin@this.app") );
-        repository.addGreenSpace(greenSpace);
-        controller.updateGreenSpace(greenSpace, newGreenSpace);
-        assertEquals(newGreenSpace, repository.getGreenSpaces().get(0));
+    void checkIfGreenSpaceNameExists_true() {
+        controller.addGreenSpace(greenSpace);
+        assertTrue(controller.checkIfGreenSpaceNameExists("Park"));
+    }
+
+    @Test
+    void checkIfGreenSpaceNameExists_false() {
+        assertFalse(controller.checkIfGreenSpaceNameExists("Park"));
+    }
+
+    @Test
+    void checkIfGreenSpaceAddressExists_true() {
+        controller.addGreenSpace(greenSpace);
+        assertTrue(controller.checkIfGreenSpaceAddressExists(new Address("Street", "City", "Zip")));
+    }
+
+    @Test
+    void checkIfGreenSpaceAddressExists_false() {
+        assertFalse(controller.checkIfGreenSpaceAddressExists(new Address("Street", "City", "Zip")));
+    }
+
+    @Test
+    void validateZipCode_valid() {
+        assertTrue(controller.validateZipCode("1234-555"));
+    }
+
+    @Test
+    void validateZipCode_invalid() {
+        assertFalse(controller.validateZipCode("1234a"));
     }
 }

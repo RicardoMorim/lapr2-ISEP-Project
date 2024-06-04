@@ -30,8 +30,7 @@ public class AgendaController {
         this.agenda = Repositories.getInstance().getAgenda();
     }
 
-    public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
-        entry.setDate(date);
+    public AgendaEntry postponeEntry(AgendaEntry entry) {
         entry.setStatus(Status.POSTPONED);
         return entry;
     }

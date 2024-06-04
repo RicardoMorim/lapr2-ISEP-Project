@@ -1,4 +1,4 @@
-# US004 - Add a Skill to a Collaborator
+# US021 - Add a new toDoEntry to the To-Do List
 
 ## 4. Tests
 
