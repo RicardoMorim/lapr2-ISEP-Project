@@ -20,8 +20,8 @@ public class AssignTeamToAgendaEntryGUI extends Application {
     private TeamController teamController = new TeamController();
     private AgendaController agendaController = new AgendaController();
 
-    public GridPane getAssignTeamToAgendaEntryGridPane() {
-        GridPane grid = new GridPane();
+    public GridPane getAssignTeamToAgendaEntryGridPane(double height, double width) {
+        GridPane grid = new GridPane(height, width);
         grid.setAlignment(Pos.CENTER);
         grid.setPadding(new Insets(20, 10, 10, 10));
         grid.setVgap(5);
