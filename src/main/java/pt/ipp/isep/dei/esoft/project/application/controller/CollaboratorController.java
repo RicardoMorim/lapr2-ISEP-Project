@@ -1,14 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Job;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
-
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,13 +33,13 @@ public class CollaboratorController {
     }
 
 
-    public Collaborator registerCollaborator(String name, String email, String address, String phone, Job job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
+    public Collaborator registerCollaborator(String name, String email, Address address, String phone, Job job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
         Collaborator collaborator = new Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber, skills);
         collaboratorRepository.add(collaborator);
         return collaborator;
     }
 
-    public Collaborator registerCollaborator(String name, String email, String address, String phone, Job job, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
+    public Collaborator registerCollaborator(String name, String email, Address address, String phone, Job job, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
         Collaborator collaborator = new Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber);
         collaboratorRepository.add(collaborator);
         return collaborator;
@@ -56,7 +51,7 @@ public class CollaboratorController {
         return collaboratorRepository.getCollaborators();
     }
 
-    public void updateCollaborator(Collaborator collaborator, String name, String email, String address, String phone, Job job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) {
+    public void updateCollaborator(Collaborator collaborator, String name, String email, Address address, String phone, Job job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) {
         try {
             collaboratorRepository.update(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber);
         } catch (IllegalArgumentException e) {
@@ -74,6 +69,12 @@ public class CollaboratorController {
 
     public void startTask(List<Collaborator> collaboratorList) {
         for (Collaborator collaborator : collaboratorList) {
+            collaborator.setFree(false);
+        }
+    }
+
+    public void startTask(Team team){
+        for (Collaborator collaborator: team.getCollaborators()) {
             collaborator.setFree(false);
         }
     }
@@ -106,8 +107,5 @@ public class CollaboratorController {
         collaboratorRepository.update(old, collaborator);
     }
 
-    public List<List<Collaborator>> GenerateTeamProposals(int minTeamSize, int maxTeamSize, List<Skill> requiredSkillList) {
-        return collaboratorRepository.GenerateTeamProposals(minTeamSize, maxTeamSize, requiredSkillList);
-    }
 
 }

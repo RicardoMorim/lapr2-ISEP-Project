@@ -1,15 +1,16 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskCategoryRepository {
+public class TaskCategoryRepository implements Serializable {
 
-    private final List<TaskCategory> taskCategories;
+
+    private List<TaskCategory> taskCategories;
     public TaskCategoryRepository() {
         taskCategories = new ArrayList<>();
     }
@@ -32,6 +33,11 @@ public class TaskCategoryRepository {
                     "Task Category requested for [" + taskCategoryDescription + "] does not exist.");
         }
         return taskCategory;
+    }
+
+
+    public void setTaskCategories(List<TaskCategory> taskCategories) {
+        this.taskCategories = taskCategories;
     }
 
     public Optional<TaskCategory> add(TaskCategory taskCategory) {

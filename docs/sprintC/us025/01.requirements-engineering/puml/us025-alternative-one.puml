@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram
+
+autonumber
+
+actor "Green Space\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System :requests to cancel an agenda entry
+    activate System
+
+
+    System --> Employee : shows the agenda entry list and asks to choose one
+    deactivate System
+
+    Employee -> System : chooses the agenda entry to cancel
+    activate System
+
+    System --> Employee : shows the updated entry information
+    deactivate System
+
+
+@enduml

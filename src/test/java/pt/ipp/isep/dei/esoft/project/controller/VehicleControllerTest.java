@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.VehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -98,18 +99,30 @@ class VehicleControllerTest {
 
     @Test
     void registerVehicleMaintenanceUpdatesKmLastMaintenance() {
+
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
         vehicleController.addVehicle(vehicle);
-        vehicleController.registerVehicleMaintenance("ABC-1234", new Date(), 5000);
-        assertEquals(5000, vehicle.getKmLastMaintenance());
+        // Create a future date for the maintenance
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1); // Adds one day to the current date
+        Date futureDate = calendar.getTime();
+
+        vehicleController.registerVehicleMaintenance("ABC-1234", futureDate, 5000);
+        assertEquals(5000, vehicleController.getVehicleByPlate("ABC-1234").getKmLastMaintenance());
     }
 
     @Test
     void registerVehicleMaintenanceUpdatesKmNextMaintenance() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
         vehicleController.addVehicle(vehicle);
-        vehicleController.registerVehicleMaintenance("ABC-1234", new Date(), 5000);
-        assertEquals(15000, vehicle.getKmNextMaintenance());
+
+        // Create a future date for the maintenance
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1000); // Adds one day to the current date
+        Date futureDate = calendar.getTime();
+
+        vehicleController.registerVehicleMaintenance("ABC-1234", futureDate, 5000);
+        assertEquals(15000, vehicleController.getVehicleByPlate("ABC-1234").getKmNextMaintenance());
     }
 
     @Test

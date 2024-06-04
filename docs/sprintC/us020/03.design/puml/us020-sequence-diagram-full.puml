@@ -1,0 +1,118 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram - US020
+
+autonumber
+
+actor "Green Space Manager \n(GSM)" as GRM
+participant ":RegisterGreenSpaceUI" as UI
+participant ":GreenSpaceController" as Controller
+participant ":Repositories" as RepositorySingleton
+participant "repositories:\nRepositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as Repository
+participant "greenSpace\n:GreenSpace" as GS
+participant "address\n:Address" as Address
+activate GRM
+
+GRM -> UI : requests to register a new green space
+activate UI
+loop while data is not valid
+UI --> GRM : requests green space name, city, street address and zip code
+deactivate UI
+GRM -> UI : types green space name, city, street address and zip code
+activate UI
+UI -> UI: validates data
+end
+UI -> Address : createAddress(city, street address, zip code)
+activate Address
+Address --> UI : address
+deactivate Address
+deactivate Controller
+UI -> Controller: getGreenSpace(name, address)
+activate Controller
+Controller -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> Controller: repositories
+                                        deactivate RepositorySingleton
+
+                                        Controller -> PLAT : getGreenSpaceRepository()
+                                        activate PLAT
+
+                                            PLAT --> Controller : greenSpaceRepository
+                                        deactivate PLAT
+Controller -> Repository: getGreenSpace(name, address)
+activate Repository
+Repository --> Controller: greenSpace
+deactivate Repository
+Controller --> UI: greenSpace
+deactivate Controller
+alt green space != null
+    UI --> GRM : notifies that green space already exists
+    else green space == null
+    loop while data is not valid
+    UI --> GRM : requests green space area
+
+deactivate UI
+    GRM -> UI : types requested data
+    activate UI
+    UI -> UI: validates data
+    end
+    UI -> Controller: getGreenSpaceType()
+    activate Controller
+    Controller -> RepositorySingleton : getInstance()
+                                            activate RepositorySingleton
+
+                                                RepositorySingleton --> Controller: repositories
+                                            deactivate RepositorySingleton
+
+                                            Controller -> PLAT : getGreenSpaceRepository()
+                                            activate PLAT
+
+                                                PLAT --> Controller : greenSpaceRepository
+                                            deactivate PLAT
+    Controller -> Repository: getGreenSpaceType()
+    activate Repository
+    Repository --> Controller: typeList
+    deactivate Repository
+    Controller --> UI: typeList
+    deactivate Controller
+    UI --> GRM : asks to select type
+    deactivate UI
+    GRM -> UI : selects type
+    activate UI
+    UI --> GRM : shows all data and requests confirmation
+    deactivate UI
+deactivate UI
+    GRM -> UI : confirms data
+    activate UI
+    UI --> Controller: saveNewGreenSpace(name, address, area, type)
+    activate Controller
+    Controller -> GS: createGreenSpace(name, address, area, type)
+    activate GS
+   GS --> Controller :greenSpace
+   deactivate GS
+   Controller -> RepositorySingleton : getInstance()
+                                               activate RepositorySingleton
+
+                                                   RepositorySingleton --> Controller: repositories
+                                               deactivate RepositorySingleton
+
+                                               Controller -> PLAT : getGreenSpaceRepository()
+                                               activate PLAT
+
+                                                   PLAT --> Controller : greenSpaceRepository
+                                               deactivate PLAT
+   Controller -> Repository: storeGreenSpace(greenSpace)
+   activate Repository
+   Repository --> Controller: success
+   deactivate Repository
+   Controller --> UI : success
+   deactivate Controller
+    UI --> GRM: notifies successful green space registration
+deactivate UI
+end
+@enduml

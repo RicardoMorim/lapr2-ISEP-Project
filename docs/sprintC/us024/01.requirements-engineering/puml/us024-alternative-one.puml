@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram
+
+autonumber
+
+actor "Green Space\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to postpone an entry to the agenda
+    activate System
+
+    System --> Employee : shows the list of entries in the Agenda
+    deactivate System
+
+    Employee -> System : selects an entry
+    activate System
+
+    System --> Employee : asks to select a new date
+    deactivate System
+
+    Employee -> System : selects new date for the entry
+    activate System
+
+    System --> Employee : shows message of (in)success
+    deactivate System
+
+@enduml

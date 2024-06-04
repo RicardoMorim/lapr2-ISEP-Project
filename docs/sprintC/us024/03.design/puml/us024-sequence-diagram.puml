@@ -1,0 +1,77 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "GSM" as Employee
+participant ":PostponeEntryUI" as UI
+participant ":PostponeEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as AgendaRepo
+
+activate Employee
+
+    Employee -> UI : asks to postpone an entry in the Agenda
+    activate UI
+
+        UI -> CTRL : getAgendaEntries()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> AgendaRepo : getAgendaEntries()
+            activate AgendaRepo
+
+                AgendaRepo --> CTRL : agendaEntryList
+            deactivate AgendaRepo
+
+            CTRL --> UI : uiFormatedEntryList
+        deactivate CTRL
+
+        UI --> Employee : shows the list of entries in the Agenda\nand planned dates and asks to select one
+    deactivate UI
+
+    Employee -> UI : selects an entry
+    activate UI
+
+        UI --> Employee : asks to select a new date
+    deactivate UI
+
+    Employee -> UI : selects new date for the entry
+    activate UI
+
+        UI -> CTRL : updateAgendaEntryDate(selectedEntry, newDate)
+        activate CTRL
+
+            CTRL -> "EntryMapper" : updateEntryDate(selectedEntry, newDate)
+            activate "EntryMapper"
+
+                "EntryMapper" -> "EntryMapper" : updatedEntry = updateEntity(selectedEntry, newDate)
+
+
+            "EntryMapper" --> CTRL : updatedEntry
+            deactivate "EntryMapper"
+
+            CTRL -> AgendaRepo : updateEntryDate(updatedEntry)
+            activate AgendaRepo
+
+                AgendaRepo --> CTRL : success/failure
+            deactivate AgendaRepo
+
+            CTRL --> UI : displays message of (in)success
+        deactivate CTRL
+
+        UI --> Employee : displays message of (in)success
+    deactivate UI
+
+deactivate Employee
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram - US026
+
+autonumber
+
+actor "Green Space Manager \n(GSM)" as GRM
+participant ":System" as System
+
+activate GRM
+
+GRM -> System : requests to assign one or more vehicles to an entry
+activate System
+System --> GRM : requests to select the entry
+deactivate System
+GRM -> System : selects the entry
+activate System
+    System --> GRM : requests to select the vehicles the user wants to add
+deactivate System
+    GRM -> System : selects the vehicle(s)
+   activate System
+       System --> GRM : shows all data and requests confirmation
+       deactivate System
+   deactivate System
+       GRM -> System : confirms data
+       activate System
+       System --> GRM: notifies successful vehicle registration
+   deactivate System
+   @enduml

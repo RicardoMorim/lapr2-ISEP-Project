@@ -1,0 +1,51 @@
+@startuml
+
+title Domain Model
+
+hide methods
+hide circle
+
+class Agenda {
+}
+
+class Entry {
+  startingDate
+  progressStatus
+}
+
+class GreenSpace {
+  name
+  type
+  size
+  manager
+}
+
+class Team {
+  teamId
+  maxNumberElements
+  minNumberElements
+}
+
+class Task {
+  title
+  description
+  duration
+  urgencyStatus
+}
+
+class Collaborator {
+  name
+  birthdate
+  admissionDate
+  mobileNumber
+  e-mail
+  taxpayerNumber
+}
+
+Agenda "1" -- "1..*" Entry : has
+Entry "*" -- "1" GreenSpace : is assigned
+Entry "*" -- "1" Team : assigned to
+Entry "1" -- "1" Task : is assigned
+Team "1" -- "1..*" Collaborator : has
+
+@enduml

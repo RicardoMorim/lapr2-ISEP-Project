@@ -1,27 +1,32 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.ToDoListRepository;
+import pt.ipp.isep.dei.esoft.project.repository.ToDoList;
+
+import java.util.List;
 
 public class ToDoListController {
-    private ToDoListRepository repository;
+    private ToDoList toDo;
     public ToDoListController(){
-        if (repository == null){
-            repository = Repositories.getInstance().getToDoListRepository();
+        if (toDo == null){
+            toDo = Repositories.getInstance().getToDoList();
         }
     }
 
-    public void addToDoList(ToDoList toDoList){
-        repository.addToDoList(toDoList);
+    public void addEntry(Entry entry){
+        toDo.addEntry(entry);
     }
 
-    public void removeToDoList(ToDoList toDoList){
-        repository.removeToDoList(toDoList);
+    public void removeEntry(Entry entry){
+        toDo.removeEntry(entry);
     }
 
-    public void updateToDoList(ToDoList old, ToDoList list){
-        repository.updateToDoList(old, list);
+    public void updateEntry(Entry old, Entry entry){
+        toDo.updateEntry(old, entry);
+    }
+
+    public List<Entry> getEntries(){
+        return toDo.getEntries();
     }
 }

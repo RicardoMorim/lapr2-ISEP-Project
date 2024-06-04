@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-public class Entry {
+import java.io.Serializable;
+
+public class Entry implements Serializable {
 
 
-    private String state;
+    private String state; // TODO - Utilizar uma class enum para o state
 
     private GreenSpace greenSpace;
 
@@ -11,11 +13,11 @@ public class Entry {
 
     private String description;
 
-    private String urgency;
+    private Urgency urgency;
 
     private float expectedDuration;
 
-    public Entry(String state, GreenSpace greenSpace, String title, String description, String urgency, float expectedDuration) {
+    public Entry(String state, GreenSpace greenSpace, String title, String description, Urgency urgency, float expectedDuration) {
         this.state = state;
         this.greenSpace = greenSpace;
         this.title = title;
@@ -56,11 +58,11 @@ public class Entry {
         this.description = description;
     }
 
-    public String getUrgency() {
+    public Urgency getUrgency() {
         return urgency;
     }
 
-    public void setUrgency(String urgency) {
+    public void setUrgency(Urgency urgency) {
         this.urgency = urgency;
     }
 

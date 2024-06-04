@@ -2,17 +2,21 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
-import javax.swing.text.html.Option;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SkillRepository {
+public class SkillRepository implements Serializable {
 
-    private final List<Skill> skills;
+    private List<Skill> skills;
 
     public SkillRepository() {
         this.skills = new ArrayList<Skill>();
+    }
+
+    public void setSkills(List<Skill> skills){
+        this.skills = skills;
     }
 
     public Optional<Skill> update(Skill skill, String name, String shortDescription) {
@@ -27,6 +31,7 @@ public class SkillRepository {
 
         throw new IllegalArgumentException("Skill not found.");
     }
+
 
     public Skill getSkillByName(String name) {
         for (Skill s : this.skills) {

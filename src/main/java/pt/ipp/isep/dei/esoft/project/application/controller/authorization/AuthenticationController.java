@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
 
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.isep.lei.esoft.auth.domain.model.Email;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public class AuthenticationController {
         } catch (IllegalArgumentException ex) {
             return false;
         }
+    }
+
+    public Email getUserEmail(){
+        return authenticationRepository.getCurrentUserSession().getUserId();
     }
 
     public List<UserRoleDTO> getUserRoles() {

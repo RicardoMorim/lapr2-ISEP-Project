@@ -1,11 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Organization {
+public class Organization implements Serializable {
     private final String vatNumber;
     private final List<Employee> employees;
     private final List<Task> tasks;

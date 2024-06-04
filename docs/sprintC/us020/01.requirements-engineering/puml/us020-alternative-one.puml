@@ -1,0 +1,46 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram - US020
+
+autonumber
+
+actor "Green Space Manager \n(GSM)" as GRM
+participant ":System" as System
+
+activate GRM
+
+GRM -> System : requests to register a new green space
+activate System
+loop while data is not valid
+System --> GRM : requests green space name, city, street address and zip code
+deactivate System
+GRM -> System : types green space name, city, street address and zip code
+activate System
+end
+alt green space != null
+    System --> GRM : notifies that green space already exists
+    else green space == null
+    loop while data is not valid
+    System --> GRM : requests green space area
+
+deactivate System
+    GRM -> System : types requested data
+    activate System
+    end
+
+    System --> GRM : asks to select type
+    deactivate System
+    GRM -> System : selects type
+    activate System
+    System --> GRM : shows all data and requests confirmation
+    deactivate System
+deactivate System
+    GRM -> System : confirms data
+    activate System
+    System --> GRM: notifies successful vehicle registration
+deactivate System
+end
+@enduml

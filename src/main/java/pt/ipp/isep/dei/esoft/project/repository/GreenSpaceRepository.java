@@ -1,11 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.Type;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-public class GreenSpaceRepository {
+public class GreenSpaceRepository implements Serializable {
     private List<GreenSpace> greenSpaces;
     private final List<String> typeList = List.of("garden", "medium-sized park", "large-sized park");
 
@@ -18,15 +22,14 @@ public class GreenSpaceRepository {
     }
 
 
-
-    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, String type, float area) {
+    public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, Type type, double area, Address address) {
         for (GreenSpace gs : this.greenSpaces) {
             if (gs.equals(g)) {
                 gs.setName(name);
                 gs.setType(type);
                 gs.setArea(area);
+                gs.setAddress(address);
                 return Optional.of(g);
-
             }
         }
 
@@ -47,7 +50,7 @@ public class GreenSpaceRepository {
 
     public GreenSpace updateGreenSpace(GreenSpace old_greenSpace, GreenSpace new_greenSpace) {
         if (!greenSpaces.contains(old_greenSpace))
-            throw new IllegalArgumentException("Vehicle does not exist");
+            throw new IllegalArgumentException("Green space does not exist");
         greenSpaces.remove(old_greenSpace);
         greenSpaces.add(new_greenSpace);
         return new_greenSpace;
@@ -56,5 +59,44 @@ public class GreenSpaceRepository {
     public List<GreenSpace> getGreenSpaces() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return List.copyOf(greenSpaces);
+    }
+
+
+    public GreenSpace getGreenSpaceByDesignation(String name) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(name)) {
+                return greenSpace;
+            }
+        }
+        throw new IllegalArgumentException("Green Space not found.");
+    }
+
+    public boolean checkIfGreenSpaceNameExists(String name) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean checkIfGreenSpaceAddressExists(Address address) {
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getAddress().equals(address)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validateZipCode(String zipCode) {
+        if (zipCode.isEmpty()) {
+            return false;
+        }
+        String zipPattern = "^[0-9]{4}-[0-9]{3}$";
+        return zipCode.matches(zipPattern);
+    }
+
+    public void setGreenSpaces(List<GreenSpace> greenSpaces) {
+        this.greenSpaces = greenSpaces;
     }
 }

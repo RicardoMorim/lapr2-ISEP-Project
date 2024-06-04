@@ -1,0 +1,72 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Spaces\nManager" as Employee
+participant "CancelUI" as UI
+participant "CancelEntryController" as CTRL
+participant ":Repositories" as REP
+participant "repositories\n:Repositories" as PLAT
+participant "agendaRepository\n:AgendaRepository" as AGR
+participant "AgendaEntry" as AG
+
+activate Employee
+group Repeat Register (while user wants to)
+    Employee -> UI : asks to cancel an entry in the agenda
+    activate UI
+    UI -> CTRL : getAgendaEntries()
+    activate CTRL
+
+    CTRL -> REP : getInstance()
+    activate REP
+    REP --> CTRL : repositories
+    deactivate REP
+    CTRL -> PLAT : getAgendaRepository()
+    activate PLAT
+    PLAT --> CTRL : agendaRepository
+    deactivate PLAT
+    CTRL -> AGR : getEntryList(agendaEntry)
+    activate AGR
+
+    AGR --> CTRL : entryList
+    deactivate AGR
+
+    CTRL --> UI : entrylist
+    deactivate CTRL
+
+    UI --> Employee : shows data and requests selected data (agendaEntry)
+    deactivate UI
+
+    Employee -> UI : selects requested data (agendaEntry)
+    activate UI
+
+    UI --> Employee : requests confirmation
+    deactivate UI
+
+    Employee -> UI : confirms data
+    activate UI
+    UI -> CTRL : cancelAgendaEntry(agendaEntry)
+    activate CTRL
+        CTRL -> AGR : cancelEntry(agendaEntry)
+        activate AGR
+
+        AGR -> AG : setNewEntryState()
+        activate AG
+
+        AG --> AGR : true/false
+        deactivate AG
+
+        AGR --> CTRL : true/false
+        deactivate AGR
+        CTRL --> UI : true/false
+        deactivate CTRL
+
+        UI --> Employee : displays operation success
+        deactivate UI
+
+end
+@enduml

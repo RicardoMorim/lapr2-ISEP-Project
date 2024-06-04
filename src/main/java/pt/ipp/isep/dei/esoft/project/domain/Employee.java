@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Serializable {
     private final String email;
     private String name;
     private String position;

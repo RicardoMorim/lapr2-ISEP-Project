@@ -1,39 +1,38 @@
-# US004 - Add a skill to a collaborator
+# US020 - Register a Green Space
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-| Interaction ID                                                      | Question: Which class is responsible for...                  | Answer                 | Justification (with patterns)                                                                                 |
-|:--------------------------------------------------------------------|:-------------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		                                                             | 	... coordinating the US?                                    | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the repository to get the collaborator list    | CollaboratorController | IE: its the controller with access to the collaborator repository                                             |
-|                                                                     | ... getting the collaborator list                            | CollaboratorRepository | IE: its the repository that stores the collaborator's information's                                           |
-| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?                              | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the skill repository to get the list of skills | SkillController        | IE: its the controller that has access to the skill repository                                                |
-| 			  		                                                             | 	... knowing the list of skills                              | SkillRepository        | IE: The repository keeps all the skills                                                                       |
-| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... validate skill                                           | Skill                  | IE: Validates the skill before validating it                                                                  |
-|                                                                     | ... saving the collaborator's skills                         | Collaborator           | IE: Manages collaborator's information                                                                        |
-| Step 6: Displays operation success 		                               | ... interacting with the actor?							                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
+| Interaction ID                                                           | Question: Which class is responsible for...                            | Answer               | Justification (with patterns)                                                                                |
+|:-------------------------------------------------------------------------|:-----------------------------------------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------|
+| Step 1: Requests to register a new green space 		                        | 	... interacting with the actor?                                       | RegisterGreenSpaceUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model |
+| 			  		                                                                  | 	... coordinating the US?                                              | GreenSpaceController | Controller                                                                                                   |
+| Step 2: Requests green space name, city, street address and zip code  		 | 	... requesting green space name and address?						                    | RegisterGreenSpaceUI | IE: Responsible for interacting with the user                                                                |
+| Step 3: Types green space name, city, street address and zip code        | 	... validating data?                                                  | RegisterGreenSpaceUI | IE: Responsible for validating data                                                                          |
+|                                                                          | ... temporarily keeping the typed data?                                | RegisterGreenSpaceUI | IE: Responsible for keeping the selected and typed data temporarily                                          |
+|                                                                          | ... accessing the repository to see if the green space already exists? | GreenSpaceController | IE: Its the controller with access to the green space repository                                             |
+| Step 4: Requests green space area		                                      | 	...interacting with the actor?                                        | RegisterGreenSpaceUI | IE: Responsible for interacting with the user                                                                |
+| Step 5: Types requested data                                             | ... accessing the green space repository to get the list of types?     | GreenSpaceController | IE: Its the controller that has access to the green space repository                                         |
+| 			  		                                                                  | 	... validating data?                                                  | RegisterGreenSpaceUI | IE: Responsible for validating data                                                                          |
+| Step 6: Asks to select type                                              | 	... interacting with the actor?                                       | RegisterGreenSpaceUI | IE: Responsible for interacting with the user                                                                |
+| Step 7: Selects a type                                                   | ... temporarily keeping the typed data?                                | RegisterGreenSpaceUI | IE: Responsible for keeping the selected and typed data temporarily                                          |                    |
+| Step 8: Shows all data and requests confirmation                         | ... showing all data and requesting confirmation?                      | RegisterGreenSpaceUI | IE: Temporarily knows inputted data until user confirmation                                                  |
+| Step 9: Confirms data		                                                  | ... saving all the data?                                               | GreenSpaceRepository | IE: Responsible for storing green space type objects                                                         |              
+| Step 10: Informs that green space was registered                         | ... informing operation success?                                       | RegisterGreenSpaceUI | IE: Responsible for interacting with the user                                                                |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* GreenSpaceController
+* GreenSpaceRepository 
+* GreenSpace
+* Address
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* RegisterGreenSpaceUI
 
 ## 3.2. Sequence Diagram (SD)
 
@@ -41,7 +40,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us004-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us020-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -49,4 +48,4 @@ N/A
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us004-class-diagram.svg)
+![Class Diagram](svg/us020-class-diagram.svg)

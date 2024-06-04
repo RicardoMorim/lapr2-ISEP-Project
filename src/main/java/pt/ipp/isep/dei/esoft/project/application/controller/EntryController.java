@@ -22,4 +22,6 @@ public class EntryController {
     public void updateEntry(Entry old, Entry entry){
         repository.updateEntry(old, entry);
     }
+
+
 }

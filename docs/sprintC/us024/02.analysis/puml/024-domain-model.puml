@@ -1,0 +1,34 @@
+@startuml
+
+title Domain Model
+
+hide methods
+hide circle
+
+class Agenda {
+}
+
+class AgendaEntry {
+  urgencyStatus
+  estimatedDate
+  progressStatus
+}
+
+class ToDoEntry {
+  title
+  description
+  duration
+}
+
+class GreenSpace {
+  name
+  type
+  size
+  manager
+}
+
+Agenda "1" -- "1..*" AgendaEntry : has
+AgendaEntry "1" -- "1" ToDoEntry : is
+ToDoEntry "1..*" -- "1" GreenSpace : assigned to
+
+@enduml

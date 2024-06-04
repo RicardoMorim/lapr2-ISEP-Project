@@ -1,0 +1,24 @@
+@startuml
+
+'left to right direction
+
+title Domain Model
+
+hide methods
+hide circle
+
+class GreenSpace {
+        name
+        type
+        area
+        address
+}
+class Address {
+        city
+        street address
+        zip code
+}
+
+GreenSpace"1" -> "1"Address : has an
+
+@enduml

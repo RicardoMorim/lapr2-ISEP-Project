@@ -1,90 +1,57 @@
-# US004 - Add a Skill to a Collaborator
+# US024 - Postpone an entry in the Agenda
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
+**Test 1:** Returns correct list of entries
 
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
+    public void testGetAgendaEntries() {
+        List<AgendaEntry> expectedEntries = new ArrayList<>();
+        expectedEntries.add(new AgendaEntry("Title1", new Date()));
+        expectedEntries.add(new AgendaEntry("Title2", new Date()));
+
+        when(agendaMock.getEntries()).thenReturn(expectedEntries);
+
+        List<AgendaEntry> actualEntries = controller.getAgendaEntries();
+
+        assertEquals(expectedEntries, actualEntries);
     }
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
+**Test 2:** Successfully updates the date
 
     @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    public void testUpdateDate_Success() {
+        Date oldDate = new Date();
+        Date newDate = new Date(oldDate.getTime() + 100000); // newDate after oldDate
+
+        AgendaEntry entry = mock(AgendaEntry.class);
+        when(entry.isAfter(newDate)).thenReturn(true);
+
+        AgendaEntry updatedEntry = controller.updateDate(entry, newDate);
+
+        verify(entry).setDate(newDate);
+        assertEquals(entry, updatedEntry);
     }
 
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
+**Test 3:** Fails to update if the new date is not after the current date
 
     @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    public void testUpdateDate_Failure() {
+        Date oldDate = new Date();
+        Date newDate = new Date(oldDate.getTime() - 100000); // newDate before oldDate
+
+        AgendaEntry entry = mock(AgendaEntry.class);
+        when(entry.isAfter(newDate)).thenReturn(false);
+
+        AgendaEntry updatedEntry = controller.updateDate(entry, newDate);
+
+        verify(entry, never()).setDate(newDate);
+        assertEquals(entry, updatedEntry);
     }
-
-**Test 4:** Ensure that a skill cannot be null or have null parameters
-
-    @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
-    }
-
-**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
-
-    @Test
-    void removeUnexistingSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.removeSkill(skill);
-        });
-    }
-
-
 
 ## 5. Construction (Implementation)
 
-### Class CollaboratorController
+### Class PostponeEntryController
 
 ```java
     public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
