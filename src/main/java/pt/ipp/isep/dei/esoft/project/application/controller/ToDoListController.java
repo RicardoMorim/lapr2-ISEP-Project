@@ -1,8 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.EmailWrapper;
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.ToDoList;
 
@@ -31,4 +29,5 @@ public class ToDoListController {
     public List<Entry> getEntries(){
         return toDo.getEntries();
     }
+
 }

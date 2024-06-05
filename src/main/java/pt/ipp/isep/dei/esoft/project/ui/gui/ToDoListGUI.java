@@ -1,4 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -35,9 +36,6 @@ public class ToDoListGUI extends Application {
         grid.add(new Label("Green Space:"), 0, 0);
         grid.add(greenSpaceComboBox, 1, 0);
 
-        TextField stateField = new TextField();
-        grid.add(new Label("State:"), 0, 1);
-        grid.add(stateField, 1, 1);
 
         TextField titleField = new TextField();
         grid.add(new Label("Title:"), 0, 2);
@@ -59,13 +57,12 @@ public class ToDoListGUI extends Application {
         Button addButton = new Button("Add Entry");
         addButton.setOnAction(e -> {
             GreenSpace greenSpace = greenSpaceComboBox.getValue();
-            String state = stateField.getText();
             String title = titleField.getText();
             String description = descriptionField.getText();
             Urgency urgency = urgencyComboBox.getValue();
             float expectedDuration = Float.parseFloat(durationField.getText());
 
-            Entry entry = new Entry(state, greenSpace, title, description, urgency, expectedDuration);
+            Entry entry = new Entry(greenSpace, title, description, urgency, expectedDuration);
             controller.addEntry(entry);
         });
         grid.add(addButton, 1, 6);

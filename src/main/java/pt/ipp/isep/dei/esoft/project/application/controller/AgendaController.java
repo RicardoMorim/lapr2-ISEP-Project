@@ -1,13 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
-import pt.ipp.isep.dei.esoft.project.domain.Status;
-import pt.ipp.isep.dei.esoft.project.domain.Team;
-import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.Agenda;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +28,22 @@ public class AgendaController {
 
     public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
         entry.setStatus(Status.POSTPONED);
-        entry.setDate(date);
+        entry.setStartDate(date);
         return entry;
     }
+
+    public void addEntry(Entry entry, Date startDate, String duration) {
+        agenda.addEntry(new AgendaEntry(entry, startDate, duration));
+    }
+
+    public void addEntry(Entry entry, Date startDate, Date endDate) {
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+    }
+
+    public void addEntry(Entry entry, Date startDate, Date endDate, String duration) {
+        agenda.addEntry(new AgendaEntry(entry, endDate, startDate, duration));
+    }
+
 
     /**
      * Add entry.
@@ -96,6 +105,23 @@ public class AgendaController {
 
     public void updateVehicle(Vehicle vehicle, Date date, int km) {
         agenda.getVehicleByPlate(vehicle.getPlate()).registerMaintenance(date, km);
+    }
+
+    public Date getEndDateFromDuration(Date startDate, String duration) {
+        return agenda.getEndDateFromDuration(startDate, duration);
+    }
+
+    public List<Team> getAvailableTeams(Date startDate, Date endDate, List<Team> teams) {
+        return agenda.filterUnavailableTeams(startDate, endDate, teams);
+    }
+
+    public List<AgendaEntry> getEntries() {
+        return agenda.getEntries();
+    }
+
+
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries){
+        return agenda.getToDoEntriesNotInAgenda(entries);
     }
 }
 

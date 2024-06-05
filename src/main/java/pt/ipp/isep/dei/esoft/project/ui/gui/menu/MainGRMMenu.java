@@ -31,7 +31,7 @@ public class MainGRMMenu {
         Button btnAddEntryToAgenda = new Button("Add an entry to the Agenda");
         btnAddEntryToAgenda.setOnAction(e -> {
             AddEntryToAgendaGUI addGreenSpaceGUI = new AddEntryToAgendaGUI();
-            content.getChildren().setAll(addGreenSpaceGUI.getGridPane());
+            content.getChildren().setAll(addGreenSpaceGUI.getGridPane(content.getHeight(), content.getWidth()));
         });
 
         Button btnAddGreenSpace = new Button("Add a Green Space");

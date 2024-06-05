@@ -1,43 +1,149 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.ToDoListController;
+import pt.ipp.isep.dei.esoft.project.domain.Entry;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AddEntryToAgendaGUI {
 
-    public GridPane getGridPane() {
-        GridPane grid = new GridPane();
+    private AgendaController agendaController;
+    private ToDoListController toDoListController;
+
+    public AddEntryToAgendaGUI() {
+
+        agendaController = new AgendaController();
+        toDoListController = new ToDoListController();
+    }
+
+    public GridPane getGridPane(double height, double width) {
+        GridPane grid = new GridPane(height, width);
+        grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 20, 20, 20));
 
-        TextField tfTask = new TextField();
-        TextField tfTeam = new TextField();
-        TextField tfVehicles = new TextField();
+        TableView<Entry> tvTask = new TableView<>();
+        TableColumn<Entry, String> colTitle = new TableColumn<>("Title");
+        TableColumn<Entry, String> colDescription = new TableColumn<>("Description");
+        TableColumn<Entry, String> colUrgency = new TableColumn<>("Urgency");
+        TableColumn<Entry, Float> colExpectedDuration = new TableColumn<>("Expected Duration");
+
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colUrgency.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUrgency().toString()));
+        colExpectedDuration.setCellValueFactory(cellData -> new SimpleFloatProperty(cellData.getValue().getExpectedDuration()).asObject());
+
+
+        tvTask.getColumns().add(colTitle);
+        tvTask.getColumns().add(colDescription);
+        tvTask.getColumns().add(colUrgency);
+        tvTask.getColumns().add(colExpectedDuration);
+        tvTask.setItems(FXCollections.observableArrayList(agendaController.getToDoEntriesNotInAgenda(toDoListController.getEntries())));
+
         TextField tfDuration = new TextField();
-        ComboBox<String> cbStatus = new ComboBox<>();
-        cbStatus.getItems().addAll("Planned", "Postponed", "Canceled", "Done");
+        DatePicker dpStartDate = new DatePicker();
+        DatePicker dpEndDate = new DatePicker();
 
         grid.add(new Label("Task:"), 0, 0);
-        grid.add(tfTask, 1, 0);
-        grid.add(new Label("Team:"), 0, 1);
-        grid.add(tfTeam, 1, 1);
-        grid.add(new Label("Vehicles/Equipment:"), 0, 2);
-        grid.add(tfVehicles, 1, 2);
-        grid.add(new Label("Expected Duration:"), 0, 3);
-        grid.add(tfDuration, 1, 3);
-        grid.add(new Label("Status:"), 0, 4);
-        grid.add(cbStatus, 1, 4);
+        grid.add(tvTask, 1, 0);
+
+        dpEndDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !tfDuration.getText().isEmpty()) {
+                tfDuration.clear();
+            }
+        });
+
+        Label lblStartDate = new Label("Start Date:");
+        Label lblEndDate = new Label("End Date (Optional):");
+        Label lblDuration = new Label("Expected Duration in hours (Optional):");
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String dateString = newValue.toString();
+                if (dateString.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                    // The date string is in the expected format
+                    dpStartDate.setStyle("");
+                    lblStartDate.setText("Start Date:");
+                } else {
+                    // The date string is not in the expected format
+                    dpStartDate.setStyle("-fx-background-color: red;");
+                    lblStartDate.setText("Start Date: Invalid date format.");
+                }
+            }
+        });
+
+        dpEndDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String dateString = newValue.toString();
+                if (dateString.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                    // The date string is in the expected format
+                    dpEndDate.setStyle("");
+                    lblEndDate.setText("End Date (Optional):");
+                } else {
+                    // The date string is not in the expected format
+                    dpEndDate.setStyle("-fx-background-color: red;");
+                    lblEndDate.setText("End Date (Optional): Invalid date format.");
+                }
+            }
+        });
 
         Button btnSubmit = new Button("Submit");
         btnSubmit.setOnAction(e -> {
-            // Add action to create a new Agenda entry with the entered data
+            Entry selectedEntry = tvTask.getSelectionModel().getSelectedItem();
+            if (selectedEntry != null) {
+                if (lblStartDate.getText().contains("required") || lblEndDate.getText().contains("Cannot") || lblDuration.getText().contains("Cannot"))
+                    new Alert(Alert.AlertType.ERROR, "Please correct the errors before submitting.").showAndWait();
+
+                LocalDate startDate = dpStartDate.getValue();
+                LocalDate endDate = dpEndDate.getValue();
+
+                if (startDate == null) {
+                    new Alert(Alert.AlertType.ERROR, "Start date is required.").showAndWait();
+                    return;
+                }
+
+                java.util.Date utilStartDate = java.sql.Date.valueOf(startDate);
+
+                java.util.Date utilEndDate = endDate != null ? java.sql.Date.valueOf(endDate) : null;
+
+                if (utilEndDate != null && utilStartDate.after(utilEndDate))
+                    new Alert(Alert.AlertType.ERROR, "End date cannot be before start date.").showAndWait();
+                else if (utilStartDate != null && tfDuration.getText().isEmpty())
+                    agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate);
+                else if (utilStartDate != null && !tfDuration.getText().isEmpty())
+                    agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate, tfDuration.getText());
+                else if (utilStartDate == null && !tfDuration.getText().isEmpty())
+                    agendaController.addEntry(selectedEntry, utilEndDate, tfDuration.getText());
+
+                tvTask.getItems().remove(selectedEntry);
+
+                new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.");
+            }
         });
-        grid.add(btnSubmit, 0, 5);
+
+        btnSubmit.getStyleClass().add("add-button");
+
+
+        grid.add(lblStartDate, 0, 3);
+        grid.add(dpStartDate, 1, 3);
+        grid.add(lblEndDate, 0, 4);
+        grid.add(dpEndDate, 1, 4);
+        grid.add(lblDuration, 0, 5);
+        grid.add(tfDuration, 1, 5);
+        grid.add(btnSubmit, 0, 7);
 
         return grid;
     }

@@ -16,7 +16,6 @@ public class Repositories {
     private final VehicleRepository vehicleRepository;
     private final SkillRepository skillRepository;
     private final GreenSpaceRepository greenSpaceRepository;
-    private final EntryRepository entryRepository;
     private final Agenda agenda;
     private final TeamRepository teamRepository;
 
@@ -30,7 +29,6 @@ public class Repositories {
         skillRepository = new SkillRepository();
         greenSpaceRepository = new GreenSpaceRepository();
         toDoList = new ToDoList();
-        entryRepository = new EntryRepository();
         agenda = new Agenda();
         teamRepository = new TeamRepository();
     }
@@ -67,14 +65,6 @@ public class Repositories {
         return agenda;
     }
 
-    /**
-     * Gets entry repository.
-     *
-     * @return the entry repository
-     */
-    public EntryRepository getEntryRepository() {
-        return entryRepository;
-    }
 
     /**
      * Gets to do list.

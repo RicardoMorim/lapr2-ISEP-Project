@@ -59,20 +59,29 @@ public class Bootstrap implements Runnable {
             Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
 
         } catch (IOException | ClassNotFoundException e) {
-            addTaskCategories();
-            addJobs();
             addOrganization();
-            addSkills();
             addUsers();
+            addSkills();
+            addJobs();
+            addTaskCategories();
+            addCollaborators();
             addBrands();
             addTypes();
             addModels();
             addVehicles();
-            addCollaborators();
+            addTeam();
+            addGreenSpaces();
             addEntries();
             addAgendaEntries();
-            addTeam();
         }
+    }
+
+    public void addGreenSpaces() {
+        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 1000, Type.LARGE_SIZED_PARK, new Email("gsm@this.app")));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Parque", new Address("Rua do Parque", "Porto", "1234-456"), 500, Type.GARDEN, new Email("admnin@this.app")));
+
     }
 
     public void addTeam() {
@@ -91,42 +100,41 @@ public class Bootstrap implements Runnable {
 
     public void addEntries() {
         // Get the necessary repositories
-        EntryRepository entryRepository = Repositories.getInstance().getEntryRepository();
+        ToDoList entryRepository = Repositories.getInstance().getToDoList();
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
-        // Create some addresses
-        Address address1 = new Address("Rua do Ricardo", "Porto", "123-456");
-        Address address2 = new Address("Rua do Gonçalo", "Porto", "123-456");
 
         // Create some GreenSpaces
-        GreenSpace greenSpace1 = new GreenSpace("Park1", address1, 1000, Type.GARDEN, new Email("admin1@this.app"));
-        GreenSpace greenSpace2 = new GreenSpace("Park2", address2, 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
-        greenSpaceRepository.addGreenSpace(greenSpace1);
-        greenSpaceRepository.addGreenSpace(greenSpace2);
+        GreenSpace greenSpace1 = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaces().get(0);
+        GreenSpace greenSpace2 = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaces().get(1);
+
 
         // Create some Entries
-        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
-        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", Urgency.MEDIUM, 3.0f);
+        Entry entry1 = new Entry(greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
+        Entry entry2 = new Entry(greenSpace2, "Title2", "Description2", Urgency.MEDIUM, 3.0f);
+        Entry entry3 = new Entry(greenSpace1, "Title3", "Description3", Urgency.LOW, 4.0f);
+        Entry entry4 = new Entry(greenSpace2, "Title4", "Description4", Urgency.HIGH, 5.0f);
+        Entry entry5 = new Entry(greenSpace1, "Title5", "Description5", Urgency.MEDIUM, 6.0f);
+        Entry entry6 = new Entry(greenSpace2, "Title6", "Description6", Urgency.LOW, 7.0f);
+        Entry entry7 = new Entry(greenSpace1, "Title7", "Description7", Urgency.HIGH, 8.0f);
+        Entry entry8 = new Entry(greenSpace2, "Title8", "Description8", Urgency.MEDIUM, 9.0f);
 
         // Add the Entries to the repository
         entryRepository.addEntry(entry1);
         entryRepository.addEntry(entry2);
+        entryRepository.addEntry(entry3);
+        entryRepository.addEntry(entry4);
+        entryRepository.addEntry(entry5);
+        entryRepository.addEntry(entry6);
+        entryRepository.addEntry(entry7);
+        entryRepository.addEntry(entry8);
     }
 
     public void addAgendaEntries() {
         Agenda agenda = Repositories.getInstance().getAgenda();
 
-        // Create some addresses
-        Address address1 = new Address("Rua do Ricardo", "Porto", "123-456");
-        Address address2 = new Address("Rua do Gonçalo", "Porto", "123-456");
-
-
-        GreenSpace greenSpace1 = new GreenSpace("Park1", address1, 1000, Type.GARDEN, new Email("admin1@this.app"));
-        GreenSpace greenSpace2 = new GreenSpace("Park2", address2, 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
-
-
-        Entry entry1 = new Entry("State1", greenSpace1, "Title1", "Description1", Urgency.HIGH, 2.0f);
-        Entry entry2 = new Entry("State2", greenSpace2, "Title2", "Description2", Urgency.MEDIUM, 3.0f);
+        Entry entry1 = Repositories.getInstance().getToDoList().getEntries().get(0);
+        Entry entry2 = Repositories.getInstance().getToDoList().getEntries().get(1);
 
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         Vehicle vehicle1 = vehicleRepository.getVehicleList().get(0);
@@ -135,12 +143,11 @@ public class Bootstrap implements Runnable {
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
 
-        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, "1 hour", Status.PLANNED, new Date());
-        AgendaEntry agendaEntry2 = new AgendaEntry(entry2, vehicles, "2 hours", Status.PLANNED, new Date());
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, "10", Status.PLANNED, new Date());
+        AgendaEntry agendaEntry2 = new AgendaEntry(entry2, vehicles, "30", Status.PLANNED, new Date());
         agenda.addEntry(agendaEntry1);
         agenda.addEntry(agendaEntry2);
     }
-
 
 
     public void addJobs() {

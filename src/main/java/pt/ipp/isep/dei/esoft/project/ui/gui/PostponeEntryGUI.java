@@ -35,7 +35,7 @@ public class PostponeEntryGUI extends Application {
         Label lblCurrentDate = new Label();
         cbEntries.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                lblCurrentDate.setText("Current Date: " + newValue.getDate().toString());
+                lblCurrentDate.setText("Current Date: " + newValue.getStartDate().toString());
             }
         });
 

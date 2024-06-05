@@ -33,6 +33,7 @@ public class AssignTeamToAgendaEntryGUI extends Application {
 
         // Create a VBox for the teams table
         VBox vboxTeams = new VBox(5);
+
         TableView<Team> tableTeams = createTeamsTable();
         vboxTeams.getChildren().add(tableTeams);
 

@@ -1,10 +1,16 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
+import pt.ipp.isep.dei.esoft.project.domain.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -135,5 +141,44 @@ public class Agenda implements Serializable {
             }
         }
         return null;
+    }
+
+
+    public List<Team> filterUnavailableTeams(Date startDate, Date endDate, List<Team> teams){
+        List<Team> availableTeams = new ArrayList<>(teams);
+
+        for (AgendaEntry entry: entries){
+            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)){
+                availableTeams.remove(entry.getTeam());
+            }
+        }
+
+        return availableTeams;
+    }
+
+
+    public Date getEndDateFromDuration(Date startDate, String duration){
+        int hoursByDay = 8;
+        if (startDate == null) {
+            return null;
+        }
+
+        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int durationInDays = Integer.parseInt(duration) / hoursByDay;
+
+        // If weekends should not be counted
+        int weekends = (int) start.datesUntil(start.plusDays(durationInDays)).filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+
+        LocalDate end = start.plusDays(durationInDays + weekends);
+
+        return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries){
+        List<Entry> toDoEntriesNotInAgenda = new ArrayList<>(entries);
+        for (AgendaEntry entry: this.entries){
+            toDoEntriesNotInAgenda.remove(entry.getEntry());
+        }
+        return toDoEntriesNotInAgenda;
     }
 }

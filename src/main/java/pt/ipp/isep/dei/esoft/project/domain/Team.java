@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team implements Serializable {
@@ -10,6 +11,14 @@ public class Team implements Serializable {
     public Team(List<Collaborator> collaborators) {
         this.collaborators = collaborators;
         this.isAssigned = false;
+    }
+
+    public List<Skill> getSkills() {
+        List<Skill> skills = new ArrayList<>();
+        for (Collaborator collaborator : collaborators) {
+            skills.addAll(collaborator.getSkills());
+        }
+        return skills;
     }
 
     public List<Collaborator> getCollaborators() {
