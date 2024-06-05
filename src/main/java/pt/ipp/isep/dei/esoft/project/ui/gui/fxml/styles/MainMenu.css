@@ -1,0 +1,44 @@
+#menu {
+    -fx-background-color: green;
+}
+
+#menu Button {
+    -fx-background-color: lightgreen;
+}
+
+#menu Button:hover {
+    -fx-background-color: green;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 0);
+}
+
+#menu Button:focused {
+    -fx-background-color: darkgreen;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+#menu Button {
+    -fx-max-width: Infinity;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+#content ImageView {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0);
+}
+
+#content {
+    -fx-max-width: Infinity;
+    -fx-max-height: Infinity;
+}
+
+#menu {
+    -fx-max-width: Infinity;
+}
+
+#formGrid {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 70, 0, 0, 5);
+}
+
+#btnLogin {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 70, 0, 0, -5);
+}

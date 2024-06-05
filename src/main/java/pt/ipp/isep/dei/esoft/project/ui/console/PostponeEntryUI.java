@@ -4,6 +4,9 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class PostponeEntryUI implements Runnable {
@@ -18,15 +21,20 @@ public class PostponeEntryUI implements Runnable {
             System.out.println("Cancelling operation.");
             return;
         }
-
         AgendaEntry chosenEntry = agendaEntries.get(entryIndex);
 
-        chosenEntry = agendaController.postponeEntry(chosenEntry);
-
-        if (chosenEntry.getStatus().equals(Status.POSTPONED))
-            System.out.println("Entry postponed successfully");
+        // Ask for the new date
+        Date newDate = Utils.readDateFromConsole("Enter the new date for the entry (dd-mm-yyyy): ");
+        Date oldDate = chosenEntry.getDate();
+        // Update the date and status of the chosen entry
+        chosenEntry = agendaController.postponeEntry(chosenEntry, newDate);
+        if (oldDate.before(newDate))
+            if (chosenEntry.getStatus().equals(Status.POSTPONED))
+                System.out.println("Entry postponed successfully");
+            else
+                System.out.println("Unable to postpone entry");
         else
-            System.out.println("Unable to postpone entry");
+            System.out.println("New date must be after old date");
 
     }
 }

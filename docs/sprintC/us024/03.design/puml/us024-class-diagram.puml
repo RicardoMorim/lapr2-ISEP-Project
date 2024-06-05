@@ -8,20 +8,20 @@ skinparam classAttributeIconSize 0
 'left to right direction
 
 
-PostponeEntryController --> Agenda
-PostponeEntryController ..> Repositories : repositories
-PostponeEntryController --> Entry
+EntryController --> Agenda
+EntryController ..> Repositories : repositories
+EntryController --> Entry
 Entry --> Team
-PostponeEntryUI ..> PostponeEntryController
+PostponeEntryUI ..> EntryController
 Repositories --> "1" Agenda
 Repositories --> "1" TeamRepository
 Repositories <-- Repositories : instance
-PostponeEntryUI_fx ..> PostponeEntryController
+PostponeEntryUI_fx ..> EntryController
 Agenda --> Entry
 
-  class PostponeEntryController {
+  class EntryController {
         -Agenda agenda
-        +PostponeEntryController()
+        +EntryController()
         -void getAgenda()
         +Entry displayAndSelectEntry()
     }
@@ -59,12 +59,12 @@ Agenda --> Entry
     }
 
     class PostponeEntryUI {
-        -PostponeEntryController controller
+        -EntryController controller
         -Entry entry
         -Calendar newDate
         +PostponeEntryUI()
         +void run()
-        -PostponeEntryController getController()
+        -EntryController getController()
         -void requestData()
         -void submitData()
         -void confirmsData()

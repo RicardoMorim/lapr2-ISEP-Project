@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="mainPane" stylesheets="@styles/MainMenu.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.MainMenuController">
+    <left>
+        <VBox id="menu" fx:id="menu" prefWidth="200">
+            <Button fx:id="btnLogin" onAction="#showLogin" text="Login" />
+            <Button fx:id="btnShowDevTeam" onAction="#showDevTeam" text="Show Dev Team" />
+        </VBox>
+    </left>
+    <center>
+        <Pane id="content" fx:id="content">
+            <!-- Content goes here -->
+        </Pane>
+    </center>
+</BorderPane>

@@ -1,33 +1,40 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class DevTeamGUI {
 
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Development Team");
+    public GridPane getDevTeamGUI() {
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(5);
+        grid.setHgap(5);
 
-        Label lblTeam = new Label();
-        lblTeam.setText("------------- DEVELOPMENT TEAM -------------\n" +
+        grid.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Label lblTeam = new Label("------------- DEVELOPMENT TEAM -------------\n" +
                 "  Ricardo Morim - 1XXXXXX@isep.ipp.pt\n" +
                 "  Gonçalo Fernandes - 1231170@isep.ipp.pt\n" +
                 "  Marisa Afonso - 1231151@isep.ipp.pt\n" +
                 "  Ana Filipa Alves - 1230929@isep.ipp.pt\n" +
                 "  Afonso Marques - 1221018@isep.ipp.pt\n");
 
-        lblTeam.setWrapText(true); // Wrap the text in the label
-        lblTeam.setAlignment(Pos.CENTER); // Center the text in the label
 
-        VBox vbox = new VBox(lblTeam);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.setAlignment(Pos.CENTER); // Center the VBox
+        grid.add(lblTeam, 0, 0);
 
-        Scene scene = new Scene(vbox, 400, 200);
+        return grid;
+    }
+
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Development Team");
+
+        GridPane grid = getDevTeamGUI();
+
+        Scene scene = new Scene(grid, 400, 200);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

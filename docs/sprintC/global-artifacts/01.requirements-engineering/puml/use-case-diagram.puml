@@ -7,6 +7,7 @@ left to right direction
 rectangle "System Actors" as actors{
     actor "Human Resources Manager (HRM)" as HRM
     actor "Fleet Manager (FM)" as FM
+    actor "Green Space Manager (GSM)" as GSM
 
 }
 rectangle "Use Cases" as usecases{
@@ -18,6 +19,16 @@ rectangle "Use Cases" as usecases{
     usecase "UC6 - Register a vehicle" as UC6
     usecase "UC7 - Register a vehicle’s check-up" as UC7
     usecase "UC8 - List the vehicles needing the check-up" as UC8
+    usecase "UC20 - Register a green space" as UC20
+    usecase "UC21 - Add a new toDoEntry to the To-Do List" as UC21
+    usecase "UC22 - Add a skill to a collaborator" as UC22
+    usecase "UC23 - Add a skill to a collaborator" as UC23
+    usecase "UC24 - Postpone an entry in the Agenda" as UC24
+    usecase "UC25 - Cancel an entry in the Agenda" as UC25
+    usecase "UC26 - Assign a vehicle to an entry in the agenda" as UC26
+    usecase "UC27 - List all green spaces managed by a GSM" as UC27
+    usecase "UC28 -  " as UC28
+    usecase "UC29 -  " as UC29
     HRM --> UC1
     HRM --> UC2
     HRM --> UC3
@@ -26,5 +37,15 @@ rectangle "Use Cases" as usecases{
     FM --> UC6
     FM --> UC7
     FM --> UC8
+    GSM --> UC20
+    GSM --> UC21
+    GSM --> UC22
+    GSM --> UC23
+    GSM --> UC24
+    GSM --> UC25
+    GSM --> UC26
+    GSM --> UC27
+    GSM --> UC28
+    GSM --> UC29
 }
 @enduml

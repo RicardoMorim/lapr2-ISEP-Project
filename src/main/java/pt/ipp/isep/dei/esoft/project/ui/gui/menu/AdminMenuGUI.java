@@ -4,86 +4,94 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.ui.gui.*;
+import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
 
 public class AdminMenuGUI extends Application {
 
+
+    private Pane content;
+
+    public AdminMenuGUI(Pane content) {
+        this.content = content;
+    }
+
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Musgo Sublime - Admin Menu");
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("Admin Menu");
+
+        GridPane grid = getAdminMenuGUI();
+
+        Scene scene = new Scene(grid, 800, 600);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
+    public GridPane getAdminMenuGUI() {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
 
         Button btnRegisterSkill = new Button("Register a skill that a collaborator may have.");
-        //btnRegisterSkill.setOnAction(e -> new RegisterSkillUI().start(new Stage()));
+        btnRegisterSkill.setOnAction(e -> {
+            AddSkillToCollaboratorGUI addSkillToCollaboratorGUI = new AddSkillToCollaboratorGUI();
+            content.getChildren().setAll(addSkillToCollaboratorGUI.getAddSkillToCollaboratorGUI(content.getHeight(), content.getWidth()));
+
+        });
 
         Button btnRegisterJob = new Button("Register a job that a collaborator may have.");
-        //btnRegisterJob.setOnAction(e -> new RegisterJobUI().start(new Stage()));
+        // TODO - Add GUI for the button (last sprint US)
 
         Button btnRegisterCollaborator = new Button("Register a collaborator");
-        //btnRegisterCollaborator.setOnAction(e -> new RegisterCollaboratorUI().start(new Stage()));
-
-        Button btnAddSkillToCollaborator = new Button("Add a skill to a collaborator");
-        btnAddSkillToCollaborator.setOnAction(e -> new AddSkillToCollaboratorGUI().start(primaryStage));
+        // TODO - Add GUI for the button (last sprint US)
 
         Button btnGenerateTeamProposal = new Button("Generate a team proposal automatically");
-        btnGenerateTeamProposal.setOnAction(e -> new GenerateTeamProposalGUI().start(primaryStage));
+        btnGenerateTeamProposal.setOnAction(e -> {
+            GenerateTeamProposalGUI generateTeamProposalGUI = new GenerateTeamProposalGUI();
+            content.getChildren().setAll(generateTeamProposalGUI.getGenerateTeamProposalGUI(content.getHeight(), content.getWidth()));
+        });
 
         Button btnRegisterVehicle = new Button("Register Vehicle");
-        //btnRegisterVehicle.setOnAction(e -> new RegisterVehicleUI().start(new Stage()));
-
+        // TODO - Add GUI for the button (last sprint US)
         Button btnRegisterVehicleMaintenance = new Button("Register Vehicle maintenance");
-        //btnRegisterVehicleMaintenance.setOnAction(e -> new RegisterVehicleMaintenanceUI().start(new Stage()));
-
+        // TODO - Add GUI for the button (last sprint US)
         Button btnListVehiclesNeedingMaintenance = new Button("Get a list of vehicles needing maintenance");
-        //btnListVehiclesNeedingMaintenance.setOnAction(e -> new ListVehiclesNeedingMaintenanceUI().start(new Stage()));
-
-        Button btnGetBestPipeRoutes = new Button("Get best water pipe routes.");
-        //btnGetBestPipeRoutes.setOnAction(e -> new GetBestPipeRoutesUI().start(new Stage()));
-
+        // TODO - Add GUI for the button - Not priority (last sprint US)
         Button btnAddEntryToAgenda = new Button("Add an entry to the Agenda");
-        //btnAddEntryToAgenda.setOnAction(e -> new AddEntryToAgendaUI().start(new Stage()));
-
         Button btnAddGreenSpace = new Button("Add a Green Space");
-        btnAddGreenSpace.setOnAction(e -> new AddGreenSpaceGUI().start(primaryStage));
-
         Button btnAssignTeamToAgendaEntry = new Button("Assign a Team to an Agenda Entry");
-        btnAssignTeamToAgendaEntry.setOnAction(e -> new AssignTeamToAgendaEntryGUI().start(primaryStage));
-
-        Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
-        btnAddVehicleToAgendaEntry.setOnAction(e -> new AddVehicleToAgendaEntryGUI().start(primaryStage));
-
+        btnAssignTeamToAgendaEntry.setOnAction(e -> {
+            AssignTeamToAgendaEntryGUI assignTeamToAgendaEntryGUI = new AssignTeamToAgendaEntryGUI();
+            content.getChildren().setAll(assignTeamToAgendaEntryGUI.getAssignTeamToAgendaEntryGridPane(content.getHeight(), content.getWidth()));
+        });
         Button btnPostponeEntry = new Button("Postpone an Entry to the Agenda");
-        btnPostponeEntry.setOnAction(e -> new PostponeEntryGUI().start(primaryStage));
-
         Button btnCancel = new Button("Cancel an entry in the Agenda");
-        btnCancel.setOnAction(e -> new CancelGUI().start(primaryStage));
-
         Button btnAddEntryToDoList = new Button("Add an entry to the ToDo List");
-        btnAddEntryToDoList.setOnAction(e -> new ToDoListGUI().start(primaryStage));
-
         Button btnListGreenSpaces = new Button("List Green Spaces");
-        btnListGreenSpaces.setOnAction(e -> new GreenSpaceManagerGUI().start(primaryStage));
 
-        VBox vbox = new VBox(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
-                btnGenerateTeamProposal, btnRegisterVehicle, btnRegisterVehicleMaintenance, btnListVehiclesNeedingMaintenance,
-                btnGetBestPipeRoutes, btnAddEntryToAgenda, btnAddGreenSpace, btnAssignTeamToAgendaEntry, btnPostponeEntry, btnCancel, btnAddEntryToDoList, btnListGreenSpaces);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10);
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(vbox);
+        grid.add(btnRegisterSkill, 0, 0);
+        grid.add(btnRegisterJob, 1, 0);
+        grid.add(btnRegisterCollaborator, 0, 1);
+        grid.add(btnGenerateTeamProposal, 0, 2);
+        grid.add(btnRegisterVehicle, 1, 2);
+        grid.add(btnRegisterVehicleMaintenance, 0, 3);
+        grid.add(btnListVehiclesNeedingMaintenance, 1, 3);
+        grid.add(btnAddEntryToAgenda, 0, 4);
+        grid.add(btnAddGreenSpace, 1, 4);
+        grid.add(btnAssignTeamToAgendaEntry, 0, 5);
+        grid.add(btnPostponeEntry, 1, 5);
+        grid.add(btnCancel, 0, 6);
+        grid.add(btnAddEntryToDoList, 1, 6);
+        grid.add(btnListGreenSpaces, 0, 7);
 
-
-        // Create an ImageView and add it to the right side of the BorderPane
-        Image image = new Image("file:src/main/resources/your_image.png"); // TODO change this path
-        ImageView imageView = new ImageView(image);
-        borderPane.setRight(imageView);
-
-        Scene scene = new Scene(borderPane, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return grid;
     }
+
 }

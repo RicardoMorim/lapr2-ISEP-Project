@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 
 public class MainMenuGUI extends Application {
 
@@ -19,8 +19,8 @@ public class MainMenuGUI extends Application {
         btnLogin.setMinWidth(200); // Set the width of the button
         btnLogin.setMinHeight(50); // Set the height of the button
         btnLogin.setOnAction(e -> {
-            LoginUI authUI = new LoginUI();
-            authUI.start(primaryStage);
+            LoginGUI authUI = new LoginGUI();
+            //authUI.start(primaryStage);
         });
 
         Button btnKnowTheDevTeam = new Button("Know the Development Team");

@@ -115,7 +115,7 @@ public class CollaboratorRepository implements Serializable {
 
     public List<Collaborator> getCollaborators() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
-        return List.copyOf(collaborators);
+        return collaborators;
     }
 
     private boolean validateCollaborator(Collaborator collaborator) {

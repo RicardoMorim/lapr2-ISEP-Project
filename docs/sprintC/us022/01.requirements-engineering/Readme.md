@@ -1,59 +1,72 @@
-# US004 - Add a skill to a collaborator
+# US023 - Add an entry to the Agenda
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a HRM, I want to add a skill to a collaborator.
+As a GSM, I want to assign a Team to an entry in the Agenda.
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
-> Skills are what enables a collaborator to do a certain task
+> The Agenda is made up of todo-list entries, the team that will carry out the task,
+> the vehicles/equipment assigned
+> to the task, expected duration, and the status (Planned, Postponed, Canceled,
+> Done).
+
 
 **From the client clarifications:**
 
-> **Question:** Can any skill be registered to any collaborator/job? Or should they be associated in categories in
-> association with a specific job?
+> **Question:** Tasks have a status of Planned, Postponed, Canceled or Done. When do they pass to "Planned" status? When
+> they are added to the agenda (before the GSM assigns a team) or when a team is assigned to them?
 >
-> **Answer:** There is no association, it totally depends on the CV of the collaborator.
+>**Answer:** The use of states and their values is a technical modeling issue, it is not the client's responsibility.
+> Assuming you are using states, a task would become "Planned" as soon as it enters the Agenda.
 
-> **Question:** Should it be possible to add the same skill to a collaborator multiple times?
+> **Question:** Task duration should be considered in hours or in half days (morning/afternoon)?
 >
-> **Answer:** That does not make sense.
+>**Answer:** Hours should be ok, but keep in mind, that the storage format doesn't need to be same as the input/output
+> format.
 
-> **Question:** Is there any certification/proof needed to register a skill to a collaborator?
+> **Question:** When a To-Do List entry is planned and moves to the Agenda, the status change from "Pending" to "
+> Planned". Should this entry be removed from the To-Do List or just change status to "Planned" as it is on the Agenda?
 >
-> **Answer:** no.
+>**Answer:** Changing the status in the To-Do list to Planned seems to be a good approach.
 
-> **Question:** Is there any limit of skills or a minimum number of skills?
+> **Question:**When the GSM plans a task (that was previously in To-Do) into the Agenda, what aditional data/information
+> does he need to input when planning?
 >
-> **Answer:** No.
+>**Answer:** The starting date for the task.
+> Later the GSM will be able to add the Team and vehicles (if required).
 
-> **Question:** Is there any special characteristic to be able to add a skill to a collaborator?
+> **Question:** When a new entry is added to the ToDo list, the default status of that task will be "pending" or no status at all is
+> considered on ToDo list?
+> Similarly, when a new entry is added to the Agenda, the status of that task will be, by default, set to "planned",
+> right?
 >
-> **Answer:** No.
+> **Answer:**"Pending" as default for to-do list entries and "Planned" as default for Agenda entries, sounds good;
 
-> **Question:** Can a collaborator have no skills assigned?
->
-> **Answer:** Yes.
+> **Question:** We also know that an Agenda entry has a target date, but is this target date supposed to be inputted upon transferring a task from the to-do list to the agenda, or is it supposed to be inputted upon creating the task in the to-do list?
+> 
+> **Answer:** To-do list entries doesn't have dates!
 
-
+> **Question:** Finally, during the last client meeting, we became aware that some tasks are meant to be reoccurring rather than occasional. Is this something that should be asked on creating the task in the to-do list? If so, what inputs should we expect from the user? The task's frequency in days?
+> 
+> **Answer:** For the current proof-of-concept there is no need to distinguish between recurring and occasional tasks.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The collaborator must exist in the system.
-* **AC3** The collaborator must not have the skill already.
-* **AC4:** The skill must exist in the system.
-
+* **AC2:** The to-do list entry must exist in the system.
+* **AC3:** The team must exist in the system and be free for a new task.
+* **AC4:** The vehicles must exist in the system and be free for a new task.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
-  characteristics." - there has to be at least one collaborator to be assigned a skill
-* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be at least one skill to be assigned to a collaborator
+* There is a dependency on "US021 - As a GSM, I want to add a new entry to the To-Do List.
+* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be
+  at least one skill to be assigned to a collaborator
 
 ### 1.5 Input and Output Data
 

@@ -5,14 +5,13 @@ import pt.ipp.isep.dei.esoft.project.domain.EmailWrapper;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Comparator;
 import java.util.Properties;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class GreenSpaceRepository implements Serializable {
     private List<GreenSpace> greenSpaces;
@@ -118,7 +117,7 @@ public class GreenSpaceRepository implements Serializable {
         // Load the properties file
         Properties prop = new Properties();
         try {
-            prop.load(new FileInputStream("config.properties"));
+            prop.load(new FileInputStream("src/main/resources/config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
