@@ -4,8 +4,9 @@ import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class VehicleController {
     private VehicleRepository vehicleRepository;
@@ -72,10 +73,13 @@ public class VehicleController {
 
     public void registerVehicleMaintenance(String plate, Date date, int km) {
         Vehicle vehicle = getVehicleByPlate(plate);
-        Vehicle old = vehicle.clone();
         vehicle.registerMaintenance(date, km);
-        vehicleRepository.updateVehicle(old, vehicle);
     }
+
+    public void registerVehicleMaintenance(Vehicle vehicle, Date date, int km) {
+        vehicle.registerMaintenance(date, km);
+    }
+
 
     public void getVehicleMaintenanceList(String plate) {
         Vehicle vehicle = getVehicleByPlate(plate);

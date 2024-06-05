@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterVehicleGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterVehicleMaintenanceGUI;
 
 public class MainVFMMenuGUI  {
 
@@ -32,13 +33,13 @@ public class MainVFMMenuGUI  {
             content.getChildren().setAll(registerVehicleGUI.getRegisterVehicleGUI(content.getHeight(), content.getWidth()));
         });
         Button btnRegisterVehicleMaintenance = new Button("Register Vehicle maintenance");
-        // TODO - Add GUI for the button (last sprint US)
-        Button btnListVehiclesNeedingMaintenance = new Button("Get a list of vehicles needing maintenance");
-        // TODO - Add GUI for the button - Not priority (last sprint US)
+        btnRegisterVehicleMaintenance.setOnAction(e -> {
+            RegisterVehicleMaintenanceGUI registerVehicleMaintenanceGUI = new RegisterVehicleMaintenanceGUI();
+            content.getChildren().setAll(registerVehicleMaintenanceGUI.getRegisterVehicleMaintenanceGUI());
+        });
 
         grid.add(btnRegisterVehicle, 1, 2);
         grid.add(btnRegisterVehicleMaintenance, 0, 3);
-        grid.add(btnListVehiclesNeedingMaintenance, 1, 3);
 
         applyButtonAnimations();
         return grid;
