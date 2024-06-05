@@ -1,0 +1,17 @@
+Biblioteca,AP;10
+Teatro,AP;7
+Pavilhao,AP;5
+Topo,AP;9
+ParqueInfantil,Topo,AP;16
+Macieirinha,ParqueInfantil,Topo,AP;26
+Fontaine,Miradouro,Topo,AP;20
+Miradouro,Topo,AP;12
+Capela,Topo,AP;13
+Torreao,Miradouro,Topo,AP;21
+Lago,AP;9
+Escadas3,Escadas2,Escadas1,AP;18
+Sentimentos,Escadas2,Escadas1,AP;20
+CasaRoseiral,Escadas2,Escadas1,AP;17
+JardimRoseiral,Escadas2,Escadas1,AP;16
+Escadas2,Escadas1,AP;13
+Escadas1,AP;10

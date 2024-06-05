@@ -6,7 +6,6 @@ import org.graphstream.graph.implementations.SingleGraph;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +17,8 @@ public class EvacuationSigns {
     private String locationNames[];
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
-        /*final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
+    public static void main(String[] args) throws IOException, InterruptedException {
+        final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
         EvacuationSigns es = new EvacuationSigns();
         boolean validFile = false;
         String fp1 = defaultPath;
@@ -54,15 +53,11 @@ public class EvacuationSigns {
                 validFile = true;
                 fp2 += filePath;
             } else {
-                System.out.println("File does not exist. Please enter a valid file name.");
+                System.out.println("File does not exist.");
             }
-        }*/
-
-        EvacuationSigns es = new EvacuationSigns();
-        es.readCSVContainingCosts("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
-        es.readCSVContainingNames("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_points_names.csv");
+        }
         es.findShortestPathToAP();
-        es.writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
+        es.writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/paths.csv");
         System.out.println("Please enter the name of the start point:");
         String startPoint = scanner.nextLine();
         while (!Arrays.asList(es.locationNames).contains(startPoint) || startPoint.isEmpty()) {
@@ -70,7 +65,12 @@ public class EvacuationSigns {
             System.out.println("Please enter the name of the start point:");
             startPoint = scanner.nextLine();
         }
-        es.visualizeGraph(es.graph, "Graph", true, "src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
+        es.visualizeGraph(es.graph, "Graph", true);
+        String[] path1 = es.calculatePathToAP(startPoint);
+        String[][] path = es.getNecessaryInformationForDot(path1);
+        es.generateDotFile(path, "PartialGraph");
+        //es.generateCompleteGraphDotFile("CompleteGraph");
+
     }
 
     public void readCSVContainingCosts(String fileName) {
@@ -224,7 +224,7 @@ public class EvacuationSigns {
         }
     }
 
-    public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
+    public void visualizeGraph(int[][] graph, String title, boolean openGUI) {
         Graph g = new SingleGraph(title);
 
         for (String locationName : locationNames) {
@@ -271,9 +271,130 @@ public class EvacuationSigns {
             ProcessBuilder pb = new ProcessBuilder("dot", "-Tjpg", dotFilePath, "-o", svgFilePath);
             Process p = pb.start();
             p.waitFor();
+
         } catch (IOException | InterruptedException e) {
             System.out.println("An error occurred while creating the SVG file.");
             e.printStackTrace();
         }
     }
+
+    public String[] calculatePathToAP(String startPoint) {
+        int startIndex = -1;
+        for (int i = 0; i < locationNames.length; i++) {
+            if (locationNames[i].equals(startPoint)) {
+                startIndex = i;
+                break;
+            }
+        }
+        if (startIndex == -1) {
+            System.out.println("Start point not found");
+            return null;
+        }
+
+        int apIndex = -1;
+        for (int i = 0; i < locationNames.length; i++) {
+            if (locationNames[i].equals("AP")) {
+                apIndex = i;
+                break;
+            }
+        }
+        if (apIndex == -1) {
+            System.out.println("AP not found");
+            return null;
+        }
+
+        DijkstraResult result = dijkstra(startIndex);
+        int[] parents = result.getParents();
+        StringBuilder path = new StringBuilder();
+        buildPath(startIndex, apIndex, parents, path);
+
+        String[] pathNodes = path.toString().split(",");
+        return pathNodes;
+    }
+
+    public int getCostBetweenPlaces(String place1, String place2) {
+        int index1 = -1;
+        int index2 = -1;
+        for (int i = 0; i < locationNames.length; i++) {
+            if (locationNames[i].equals(place1)) {
+                index1 = i;
+            }
+            if (locationNames[i].equals(place2)) {
+                index2 = i;
+            }
+        }
+        if (index1 == -1 || index2 == -1) {
+            System.out.println("One or both places not found");
+            return -1;
+        }
+        return graph[index1][index2];
+    }
+
+    public String[][] getNecessaryInformationForDot(String[] calculatePathToAP) {
+        String[][] necessaryInformation = new String[calculatePathToAP.length - 1][3];
+        for (int i = 0; i < calculatePathToAP.length - 1; i++) {
+            necessaryInformation[i][0] = calculatePathToAP[i];
+            necessaryInformation[i][1] = calculatePathToAP[i + 1];
+            necessaryInformation[i][2] = String.valueOf(getCostBetweenPlaces(calculatePathToAP[i], calculatePathToAP[i + 1]));
+        }
+        return necessaryInformation;
+    }
+
+    public void generateDotFile(String[][] array, String title) throws IOException, InterruptedException {
+        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/");
+        if (!directory.exists()) {
+            directory.mkdirs(); // If directory does not exist, create it
+        }
+        String outputFilePath = directory.getPath() + "/" + title + ".dot";
+        try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
+            writer.println("graph G {");
+            for (String[] row : array) {
+                String startNode = row[0];
+                String endNode = row[1];
+                String cost = row[2];
+                writer.println("\"" + startNode + "\" -- \"" + endNode + "\" [label=\"" + cost + "\"];");
+            }
+            writer.println("}");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+        // New code to generate SVG from DOT
+        String dotFilePath = outputFilePath;
+        String svgFilePath = directory.getPath() + "/" + title + ".jpg";
+        ProcessBuilder pb = new ProcessBuilder("dot", "-Tjpg", dotFilePath, "-o", svgFilePath);
+        Process p = pb.start();
+        p.waitFor();
+    }
+
+    /*public void generateCompleteGraphDotFile(String title) throws IOException, InterruptedException {
+        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/");
+        if (!directory.exists()) {
+            directory.mkdirs(); // If directory does not exist, create it
+        }
+        String outputFilePath = directory.getPath() + "/" + title + ".dot";
+        try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
+            writer.println("graph G {");
+            for (int i = 0; i < graph.length; i++) {
+                for (int j = i + 1; j < graph.length; j++) {
+                    if (graph[i][j] != 0) {
+                        writer.println("\"" + locationNames[i] + "\" -- \"" + locationNames[j] + "\" [label=\"" + graph[i][j] + "\"];");
+                    }
+                }
+            }
+            writer.println("}");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+        // New code to generate SVG from DOT
+        String dotFilePath = outputFilePath;
+        String svgFilePath = directory.getPath() + "/" + title + ".jpg";
+        ProcessBuilder pb = new ProcessBuilder("dot", "-Tjpg", dotFilePath, "-o", svgFilePath);
+        Process p = pb.start();
+        p.waitFor();
+    }*/
 }
+
+
+
