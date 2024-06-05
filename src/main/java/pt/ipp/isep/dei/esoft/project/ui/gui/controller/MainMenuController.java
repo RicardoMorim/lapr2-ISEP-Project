@@ -13,6 +13,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Authen
 import pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.AdminMenuGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainGRMMenu;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainHRMMenuGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainVFMMenuGUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -94,6 +95,13 @@ public class MainMenuController {
         content.getChildren().clear();
     }
 
+    @FXML
+    private void showGRMMenu() {
+        MainGRMMenu mainGRMMenu = new MainGRMMenu(content);
+        menu.getChildren().setAll(mainGRMMenu.getGridPane().getChildren());
+        content.getChildren().clear();
+    }
+
 
     @FXML
     private void showAdminMenu() {
@@ -105,7 +113,7 @@ public class MainMenuController {
     @FXML
     private void showVFMMenu() {
         MainVFMMenuGUI vfmMenuGUI = new MainVFMMenuGUI(content);
-        menu.getChildren().setAll(vfmMenuGUI.getAdminMenuGUI().getChildren());
+        menu.getChildren().setAll(vfmMenuGUI.getVFMMenuGUI().getChildren());
         content.getChildren().clear();
     }
 
@@ -129,6 +137,9 @@ public class MainMenuController {
                             showAdminMenu();
                         } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                             showVFMMenu();
+                        }
+                        else if(role.getDescription().equals(AuthenticationController.ROLE_GRM)){
+                            showGRMMenu();
                         }
                     }
                 }
