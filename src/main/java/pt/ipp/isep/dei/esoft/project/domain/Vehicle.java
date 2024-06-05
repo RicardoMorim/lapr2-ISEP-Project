@@ -50,7 +50,7 @@ public class Vehicle implements Serializable {
         this.kmNextMaintenance = kmLastMaintenance + checkupIntervalKM;
         this.maintenanceList = new TreeMap<>();
         this.validateVehicle();
-        this.registerMaintenance(registerDate, 5);
+        this.registerMaintenance(registerDate, 0);
     }
 
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance, Map<Date, Integer> maintenanceList) throws IllegalArgumentException {
@@ -68,7 +68,7 @@ public class Vehicle implements Serializable {
         this.kmNextMaintenance = kmLastMaintenance + checkupIntervalKM;
         this.maintenanceList = maintenanceList;
         this.validateVehicle();
-        this.registerMaintenance(registerDate, 5);
+        this.registerMaintenance(registerDate, 0);
     }
 
     public Map<Date, Integer> getMaintenance() {

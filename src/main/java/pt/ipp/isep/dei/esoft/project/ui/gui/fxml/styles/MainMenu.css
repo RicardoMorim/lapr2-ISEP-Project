@@ -4,6 +4,11 @@
 
 #menu Button {
     -fx-background-color: lightgreen;
+    -fx-max-width: Infinity;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
 }
 
 #menu Button:hover {
@@ -16,11 +21,6 @@
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
 }
 
-#menu Button {
-    -fx-max-width: Infinity;
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-}
 
 #content ImageView {
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0);
