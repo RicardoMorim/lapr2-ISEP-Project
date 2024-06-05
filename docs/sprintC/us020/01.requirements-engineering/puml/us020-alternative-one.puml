@@ -40,7 +40,7 @@ deactivate System
 deactivate System
     GRM -> System : confirms data
     activate System
-    System --> GRM: notifies successful vehicle registration
+    System --> GRM: notifies successful green space registration
 deactivate System
 end
 @enduml

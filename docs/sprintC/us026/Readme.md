@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US026 - Assign a vehicle to an entry in the agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

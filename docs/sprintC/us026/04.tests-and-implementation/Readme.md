@@ -1,4 +1,4 @@
-# US004 - Add a Skill to a Collaborator
+# US026 - Assign a vehicle to an entry in the agenda
 
 ## 4. Tests
 

@@ -69,7 +69,7 @@ class GreenSpace {
 
 class AgendaEntry{
     duration
-
+    date
 }
 
 class Entry{
@@ -79,14 +79,14 @@ class Entry{
 }
 
 Team "0,1" -- "*"Collaborator : has >
-Collaborator "1" -- "1"Address : has >
+Collaborator "1" -- "1"Address : resides in >
 Collaborator "*" -- "1"Job : has >
 Collaborator "*" -- "*"Skill : has >
 Vehicle "1" - "*" VehicleCheckup: has >
-GreenSpace "1"--"1" Address : has >
+GreenSpace "1"--"1" Address : is located in >
 GreenSpace "*" - "1" Type : has >
 Entry "*"--"1" GreenSpace : has >
-Entry "*"--"1" Urgency : has >
+Entry "*"--"1" Urgency : has a degree >
 AgendaEntry "0,1" -- "0,1" Team : has >
 AgendaEntry "0,1" -- "*" Vehicle : has >
 AgendaEntry "*" - "1" Status : has >
