@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Collaborator-> System: Request to see current task status
+System --> Collaborator: Provides current task status
+alt task exists
+Collaborator -> System: Request to update current task status to "completed"
+Collaborator <-- System: Provides confirmation of the operation
+else task does not exist
+System --> Collaborator: Error message
+end
+@enduml
