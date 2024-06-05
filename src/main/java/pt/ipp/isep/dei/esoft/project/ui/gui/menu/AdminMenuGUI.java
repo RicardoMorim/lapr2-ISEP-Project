@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
@@ -66,6 +67,12 @@ public class AdminMenuGUI extends Application {
         // TODO - Add GUI for the button - Not priority (last sprint US)
         Button btnAddEntryToAgenda = new Button("Add an entry to the Agenda");
         Button btnAddGreenSpace = new Button("Add a Green Space");
+
+        btnAddGreenSpace.setOnAction(e -> {
+            AddGreenSpaceGUI addGreenSpaceGUI = new AddGreenSpaceGUI();
+            content.getChildren().setAll(addGreenSpaceGUI.getGridPane());
+        });
+
         Button btnAssignTeamToAgendaEntry = new Button("Assign a Team to an Agenda Entry");
         btnAssignTeamToAgendaEntry.setOnAction(e -> {
             AssignTeamToAgendaEntryGUI assignTeamToAgendaEntryGUI = new AssignTeamToAgendaEntryGUI();
