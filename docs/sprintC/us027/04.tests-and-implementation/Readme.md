@@ -1,143 +1,109 @@
-# US004 - Add a Skill to a Collaborator
+# US027 - List all green spaces managed by a GSM.
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
+**Test 1:** Ensure that the green spaces can be fetched by user email
 
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
+    void getGreenSpacesByUser() {
+        GreenSpaceRepository repo = new GreenSpaceRepository();
+        GreenSpace greenSpace1 = new GreenSpace("Park1", new Address("Street1", "City1", "1234-567"), 100.0, new Type("Type1"), new Email("user1@gmail.com"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", new Address("Street2", "City2", "1234-567"), 200.0, new Type("Type2"), new Email("user1@gmail.com"));
+        repo.addGreenSpace(greenSpace1);
+        repo.addGreenSpace(greenSpace2);
+        List<GreenSpace> expected = List.of(greenSpace1, greenSpace2);
+        List<GreenSpace> result = repo.getGreenSpacesManagedByUser(new EmailWrapper(new Email("user1@gmail.com")));
+        assertEquals(expected, result);
     }
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
+
+**Test 2:** Ensure that the green spaces are sorted by size in descending order
+
 
     @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    void getGreenSpacesByUserSortedBySize() {
+        GreenSpaceRepository repo = new GreenSpaceRepository();
+        GreenSpace greenSpace1 = new GreenSpace("Park1", new Address("Street1", "City1", "1234-567"), 100.0, new Type("Type1"), new Email("user1@gmail.com"));
+        GreenSpace greenSpace2 = new GreenSpace("Park2", new Address("Street2", "City2", "1234-567"), 200.0, new Type("Type2"), new Email("user1@gmail.com"));
+        repo.addGreenSpace(greenSpace1);
+        repo.addGreenSpace(greenSpace2);
+        List<GreenSpace> expected = List.of(greenSpace2, greenSpace1); // greenSpace2 has larger size
+        List<GreenSpace> result = repo.getGreenSpacesManagedByUser(new EmailWrapper(new Email("user1@gmail.com")));
+        assertEquals(expected, result);
     }
-
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
-
-    @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
-    }
-
-**Test 4:** Ensure that a skill cannot be null or have null parameters
-
-    @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
-    }
-
-**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
-
-    @Test
-    void removeUnexistingSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.removeSkill(skill);
-        });
-    }
-
 
 
 ## 5. Construction (Implementation)
 
-### Class CollaboratorController
+### Class GreenSpaceController
 
-```java
-    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-    Collaborator old = collaborator.clone();
-    collaborator.addSkill(skill);
-    collaboratorRepository.update(old, collaborator);
-}
-```
-
-### Class CollaboratorRepository
-
-
-```java
-    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
-    boolean operationSuccess = false;
-
-    if (collaborators.contains(oldCollaborator)) {
-        this.collaborators.remove(oldCollaborator);
-        operationSuccess = this.collaborators.add(newCollaborator);
+    public List<GreenSpace> getGreenSpacesManagedByUser(EmailWrapper user) {
+        return greenSpaceRepository.getGreenSpacesManagedByUser(user);
     }
 
-    if (!operationSuccess) {
-        throw new IllegalArgumentException("Collaborator not found.");
-    }
+### Class GreenSpaceRepository
 
-    return newCollaborator;
-}
-```
-### Class Collaborator
 
-```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
-    }
-
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
+    public List<GreenSpace> getGreenSpacesManagedByUser(EmailWrapper user) {
+        List<GreenSpace> greenSpacesManaged = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.getUser().equals(user)) {
+                greenSpacesManaged.add(greenSpace);
         }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
-    
-        return this.skills;
     }
-```
+
+        // Load the properties file
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream("src/main/resources/config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Get the sorting algorithm from the properties file
+        String sortingAlgorithm = prop.getProperty("SortingAlgorithm");
+
+        // Sort the list based on the specified algorithm
+        if ("BubbleSort".equals(sortingAlgorithm)) {
+            bubbleSort(greenSpacesManaged);
+        } else if ("QuickSort".equals(sortingAlgorithm)) {
+            quickSort(greenSpacesManaged, 0, greenSpacesManaged.size() - 1);
+        }
+
+        return greenSpacesManaged;      
+    }
+
+
+### Class GreenSpaceManagerGUI
+
+
+    fetchButton.setOnAction(e -> {
+        String email = emailField.getText();
+        if (email.isEmpty()) {
+            showAlert("Email cannot be empty.");
+            return;
+        }
+        try{
+            new Email(email);
+        } catch (IllegalArgumentException ex) {
+            showAlert("Invalid email.");
+            return;
+        }
+        EmailWrapper user = new EmailWrapper(new Email(email));
+        List<GreenSpace> managedGreenSpaces = controller.getGreenSpacesManagedByUser(user);
+
+        greenSpaceListView.getItems().clear();
+        for (GreenSpace gs : managedGreenSpaces) {
+            greenSpaceListView.getItems().add(gs.toString());
+        }
+    });
+
 
 ## 6. Integration and Demo
 
-* A new option on the admin menu options was added.
+* A new option on the GSM menu options was added.
 
-* For demo purposes some skills are bootstrapped while system starts.
+* For demo purposes some green spaces are bootstrapped while system starts.
 
 ## 7. Observations
 
