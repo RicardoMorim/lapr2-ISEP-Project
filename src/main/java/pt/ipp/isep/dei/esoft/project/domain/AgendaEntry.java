@@ -119,8 +119,13 @@ public class AgendaEntry implements Serializable {
             return Status.TO_BE_DONE;
         }
 
-        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+        java.util.Date utilEndDate = new java.util.Date(endDate.getTime());
+
+
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate end = utilEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
         LocalDate now = LocalDate.now();
         if (start.isAfter(end)) {
             return Status.CANCELED;
@@ -142,7 +147,9 @@ public class AgendaEntry implements Serializable {
             return null;
         }
 
-        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+        
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int durationInDays = Integer.parseInt(duration) / hoursByDay;
 
         // If weekends should not be counted
