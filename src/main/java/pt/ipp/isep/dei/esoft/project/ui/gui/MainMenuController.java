@@ -11,8 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.AdminMenuGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainHRMMenuGUI;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
+
+import java.util.List;
 
 public class MainMenuController {
 
@@ -85,6 +90,13 @@ public class MainMenuController {
         });
     }
 
+    @FXML
+    private void showHRMMenu() {
+        MainHRMMenuGUI mainHRMMenuGUI = new MainHRMMenuGUI(content);
+        menu.getChildren().setAll(mainHRMMenuGUI.getGridPane().getChildren());
+        content.getChildren().clear();
+    }
+
 
     @FXML
     private void showAdminMenu() {
@@ -99,11 +111,22 @@ public class MainMenuController {
         Platform.runLater(() -> {
             // Create and show the LoginGUI
             LoginGUI loginGUI = new LoginGUI();
-
+            AuthenticationController authController = new AuthenticationController();
             // Set the callback function
             loginGUI.setOnLoginSuccess(() -> {
                 // Update the buttons on the left
-                showAdminMenu();
+                List<UserRoleDTO> roles = authController.getUserRoles();
+
+                if (roles!=null && !roles.isEmpty()){
+                    for (UserRoleDTO role: roles){
+                        if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+                            showHRMMenu();
+                        } else if (role.getDescription().equals(AuthenticationController.ROLE_ADMIN)){
+                            showAdminMenu();
+                        }
+                    }
+                }
+
                 menu.setPrefWidth(250);
             });
 

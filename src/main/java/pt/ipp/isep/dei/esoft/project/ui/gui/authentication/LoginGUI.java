@@ -23,10 +23,15 @@ public class LoginGUI {
 
     private AuthenticationController authController = new AuthenticationController();
 
+    private String userRole;
     private Runnable onLoginSuccess;
 
     public void setOnLoginSuccess(Runnable onLoginSuccess) {
         this.onLoginSuccess = onLoginSuccess;
+    }
+
+    public String getUserRole(){
+        return userRole;
     }
 
     private void animateTextField(TextField textField, Label label, double initialScale, double finalScale) {

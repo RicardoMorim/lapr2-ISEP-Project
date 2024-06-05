@@ -1,22 +1,19 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.menu;
 
 import javafx.animation.ScaleTransition;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
 
-public class AdminMenuGUI extends Application {
+public class AdminMenuGUI  {
 
 
     private Pane content;
@@ -24,18 +21,6 @@ public class AdminMenuGUI extends Application {
     public AdminMenuGUI(Pane content) {
         this.content = content;
     }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.setTitle("Admin Menu");
-
-        GridPane grid = getAdminMenuGUI();
-
-        Scene scene = new Scene(grid, 800, 600);
-        stage.setScene(scene);
-        stage.show();
-    }
-
 
 
     public GridPane getAdminMenuGUI() {
