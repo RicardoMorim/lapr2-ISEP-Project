@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Collaborator"
+participant ":CompleteTaskStatusUI" as CTSUI
+participant ":Repositories" as R
+participant ":Agenda" as A
+participant ":AgendaEntry" as AE
+
+activate Collaborator
+Collaborator -> CTSUI: run()
+activate CTSUI
+CTSUI -> R: getInstance()
+activate R
+CTSUI <-- R: instance
+deactivate R
+CTSUI -> A: getEntries()
+activate A
+CTSUI <-- A: entries
+deactivate A
+CTSUI -> CTSUI: showAndSelectIndex(entries, "Select the task that has been completed")
+CTSUI -> AE: setStatus(Status.DONE)
+activate AE
+CTSUI <-- AE: status updated
+deactivate AE
+Collaborator <-- CTSUI: "Task status has been updated to DONE."
+deactivate CTSUI
+@enduml

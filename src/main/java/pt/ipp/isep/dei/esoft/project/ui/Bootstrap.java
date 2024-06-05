@@ -82,6 +82,9 @@ public class Bootstrap implements Runnable {
         teamCollaborators.add(collaborators.get(0));
         teamCollaborators.add(collaborators.get(1));
         Team team = new Team(teamCollaborators);
+        for (Collaborator col: new Collaborator[] {collaborators.get(0), collaborators.get(1)})
+            col.setFree(false);
+        teamRepository.add(team);
     }
 
     public void addEntries() {
@@ -223,6 +226,9 @@ public class Bootstrap implements Runnable {
         Organization organization = new Organization("This Company");
         organization.addEmployee(new Employee("admin@this.app"));
         organization.addEmployee(new Employee("employee@this.app"));
+        organization.addEmployee(new Employee("hrm@this.app"));
+        organization.addEmployee(new Employee("vfm@this.app"));
+        organization.addEmployee(new Employee("grm@this.app"));
         organizationRepository.add(organization);
     }
 
@@ -246,6 +252,11 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE,
                 AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_GRM, AuthenticationController.ROLE_GRM);
+
+
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);
