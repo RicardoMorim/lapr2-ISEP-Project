@@ -6,37 +6,40 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
+| Interaction ID | Question: Which class is responsible for...           | Answer                 | Justification (with patterns)                                                                                 |
+|:--------------|:------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		    | 	... interacting with the actor?                      | GreenSpacesGUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  	        | 	... coordinating the US?                             | GreenSpaceController   | Controller                                                                                                    |
+| Step 2  		    | 	... requesting data?                                 | GreenSpaceController   | Information Expert                                                                                              |
+| Step 3			     | ... receiving the data?                               | GreenSpaceController   | Information Expert                                                                                              |
+| 			  		       | ... get the green space repository?					            | Repositories           | Information Expert, High cohesion, Low coupling                                                               |
+| 			  		       | ... get all the green spaces and return them as a list? | GreenSpaceRepository   | Information Expert                                                                                            |
+| Step 4  		    | 	...showing the green spaces to select?						           | GreenSpacesGUI         | Pure Fabrication                                                                                              |
+| Step 5  		    | ... handling the user selecting a green space?         | GreenSpacesGUI         | Pure Fabrication                                                                                              |
+| Step 6  		    | 	...show the confirmation info?                       | GreenSpacesGUI         | Pure Fabrication                                                                                              |
+| Step 7  		    | 	... instantiating a new To-Do List Entry?            | GreenSpaceController   | Creator, High cohesion, Low coupling                                                                          |
+| 		            | 	... validating all data (local validation)?          | GreenSpace             | Information Expert                                                                                            |
+| 			  		       | 	... validating all data (global validation)?         | GreenSpaceRepository   | Information Expert                                                                                     |
+| 			  		       | 	... saving the To-Do List Entry?                     | GreenSpaceRepository   | Information Expert                                                                                       |
+|               | ... having all the repositories?                      | Repositories           |  Information Expert, High cohesion, Low coupling                                                                                                        |
+| Step 8  		    | 	... informing operation success?                     | GreenSpacesGUI         | IE: is responsible for user interactions.                                                                     |
 
-| Interaction ID | Question: Which class is responsible for...   | Answer                    | Justification (with patterns)                                                           |
-|:---------------|:----------------------------------------------|:--------------------------|:----------------------------------------------------------------------------------------|
-| Step 1         | ... interacting with the actor?               | ListGreenSpacesUI         | Pure Fabrication: There is no need to assign this responsibility to any existing class. |
-|                | ... coordinating the US?                      | ListGreenSpacesController | Controller.                                                                             |
-| Step 2         | ... request the sorting algorithm?            | RegisterVehicleUI         | Pure Fabrication.                                                                       |
-| Step 3         | ... get the Green Space Repository?           | Repositories              | Information Expert, High cohesion, Low coupling.                                        |
-|                | ... having all the repositories?              | Repositories              | Information Expert, High cohesion, Low coupling.                                        |
-|                | ... creating the Green Spaces List?           | GreenSpaceRepository      | Information Expert.                                                                     |
-|                | ... verifying if the generated list is empty? | GreenSpaceRepository      | Information Expert.                                                                     |
-|                | ... having the list to organize?              | GreenSpaceRepository      | Information Expert.                                                                     |
-|                | ... organizing the list of green spaces?      | SortAlgorithms            | Protected Variations.                                                                   |
-| Step 4         | ... showing the created list?                 | RegisterVehicleUI         | Pure Fabrication.                                                                       |
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* GreenSpace
-
+* Green Space Manager
+* Green Space
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* Repositories
-* ListGreenSpacesUI
-* ListGreenSpacesController
+* GreenSpacesGUI
+* GreenSpaceController
 * GreenSpaceRepository
-* SortAlgorithms
+* Repositories
+
 
 ## 3.2. Sequence Diagram (SD)
-
-_**Note that SSD - Alternative Two is adopted.**_
 
 ### Full Diagram
 
