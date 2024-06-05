@@ -1,33 +1,46 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
-import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.Address;
+import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-public class AddGreenSpaceGUI extends Application {
+public class AddGreenSpaceGUI {
 
     private GreenSpaceController controller;
 
-    @Override
-    public void start(Stage primaryStage) {
+
+    public GridPane getGridPane() {
         controller = new GreenSpaceController();
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
-        grid.setHgap(5);
+        grid.setHgap(10);
+        grid.setAlignment(Pos.CENTER);
+
 
         TextField nameField = new TextField();
         TextField streetField = new TextField();
         TextField zipCodeField = new TextField();
         TextField cityField = new TextField();
+
+        // Create a TableView for the green spaces
+        TableView<GreenSpace> tableGreenSpaces = new TableView<>();
+        TableColumn<GreenSpace, String> colName = new TableColumn<>("Name");
+        TableColumn<GreenSpace, String> colAddress = new TableColumn<>("Address");
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().toString()));
+        tableGreenSpaces.getColumns().addAll(colName, colAddress);
+        tableGreenSpaces.getItems().addAll(controller.getGreenSpaceList());
+
 
 
         Button nextButton = new Button("Next");
@@ -58,7 +71,7 @@ public class AddGreenSpaceGUI extends Application {
                 }
 
                 // Proceed to next stage
-                showNextStage(primaryStage, name, address);
+                grid.getChildren().setAll(showNextStage(name, address));
             } else {
                 showAlert("All fields must be filled");
             }
@@ -137,10 +150,10 @@ public class AddGreenSpaceGUI extends Application {
         grid.add(cityField, 1, 3);
         grid.add(nextButton, 1, 4);
 
-        Scene scene = new Scene(grid, 300, 275);
-        primaryStage.setTitle("Add Green Space");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        GridPane.setConstraints(tableGreenSpaces, 3, 0, 1, 5);
+        grid.getChildren().add(tableGreenSpaces);
+
+        return grid;
     }
 
     private void showAlert(String message) {
@@ -151,11 +164,13 @@ public class AddGreenSpaceGUI extends Application {
         alert.showAndWait();
     }
 
-    private void showNextStage(Stage primaryStage, String name, Address address) {
+    private GridPane showNextStage(String name, Address address) {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
-        grid.setHgap(5);
+        grid.setHgap(10);
+        grid.setAlignment(Pos.CENTER);
+
 
         TextField areaField = new TextField();
         ComboBox<Type> typeComboBox = new ComboBox<>();
@@ -167,7 +182,7 @@ public class AddGreenSpaceGUI extends Application {
                 areaField.setStyle("-fx-text-inner-color: red;");
                 areaLabel.setStyle("-fx-text-fill: red;");
                 areaLabel.setText("Area: (Area must be a number)");
-            }else{
+            } else {
                 areaField.setStyle("-fx-text-inner-color: black;");
                 areaLabel.setStyle("-fx-text-fill: black;");
                 areaLabel.setText("Area: ");
@@ -196,11 +211,11 @@ public class AddGreenSpaceGUI extends Application {
 
                 try {
                     controller.addGreenSpace(name, address, area, type, Repositories.getInstance().getAuthenticationRepository().getCurrentUserSession().getUserId());
+
+                    grid.getChildren().setAll(getGridPane().getChildren());
                 } catch (IllegalArgumentException ex) {
                     showAlert(ex.getMessage());
-                    return;
                 }
-                primaryStage.close();
             } else {
                 showAlert("All fields must be filled");
             }
@@ -212,8 +227,20 @@ public class AddGreenSpaceGUI extends Application {
         grid.add(typeComboBox, 1, 1);
         grid.add(submitButton, 1, 2);
 
-        Scene scene = new Scene(grid, 300, 275);
-        primaryStage.setTitle("Add Green Space - Step 2");
-        primaryStage.setScene(scene);
+        // Create a TableView for the green spaces
+        TableView<GreenSpace> tableGreenSpaces = new TableView<>();
+        TableColumn<GreenSpace, String> colName = new TableColumn<>("Name");
+        TableColumn<GreenSpace, String> colAddress = new TableColumn<>("Address");
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().toString()));
+        tableGreenSpaces.getColumns().addAll(colName, colAddress);
+        tableGreenSpaces.getItems().addAll(controller.getGreenSpaceList());
+
+        GridPane.setConstraints(tableGreenSpaces, 3, 0, 1, 5); // Move the table to the third column
+        grid.getChildren().add(tableGreenSpaces);
+
+
+
+        return grid;
     }
 }

@@ -10,6 +10,7 @@ module MainGUI {
     requires java.sql;
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
+    opens pt.ipp.isep.dei.esoft.project.domain to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.ui to javafx.graphics, javafx.fxml;
     opens pt.ipp.isep.dei.esoft.project.ui.gui.menu to javafx.graphics, javafx.fxml;
 }

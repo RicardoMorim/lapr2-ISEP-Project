@@ -42,3 +42,13 @@
 #btnLogin {
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 70, 0, 0, -5);
 }
+
+TextField {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent black transparent;
+}
+
+Label{
+    -fx-font-weight: bold
+}
+
