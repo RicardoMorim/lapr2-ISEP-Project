@@ -12,12 +12,11 @@ participant ":RegisterSkillsUI" as RSUI
 participant ":RegisterSkillsController" as RSC
 participant ":Repositories" as R
 participant "repositories\n:Repositories" as RR
-participant "taskCategoryRepository\n:TaskCategoryRepository" as TCR
+participant "collaboratorRepository\n:CollaboratorRepository" as TCR
 
 activate HRM
 HRM -> RSUI: asks to register a new skill that a collaborator may have
 activate RSUI
-    RSUI -> RSC**: create
     RSUI -> RSC: get all skill categories
     activate RSC
         RSC -> R: get Instance()

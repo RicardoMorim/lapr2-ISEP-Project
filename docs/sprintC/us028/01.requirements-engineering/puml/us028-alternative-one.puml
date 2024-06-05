@@ -7,7 +7,7 @@ title System Sequence Diagram
 
 autonumber
 
-actor "Human Resources\nManager" as Employee
+actor "Collaborator" as Employee
 participant ":System" as System
 
 activate Employee

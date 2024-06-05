@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class CompleteTaskStatusUI {
+    -run(): void
+}
+
+class Repositories {
+    +getInstance(): Repositories
+    +getAgenda(): Agenda
+}
+
+class Agenda {
+    -entries: List<AgendaEntry>
+    +getEntries(): List<AgendaEntry>
+    +addEntry(entry: AgendaEntry): void
+    +removeEntry(entry: AgendaEntry): void
+    +updateEntry(old: AgendaEntry, newEntry: AgendaEntry): void
+}
+
+class AgendaEntry {
+    -team: Team
+    -vehicles: List<Vehicle>
+    -duration: String
+    -status: Status
+    -entry: Entry
+    -date: Date
+    +getTeam(): Team
+    +getEntry(): Entry
+    +setEntry(entry: Entry): void
+    +setTeam(team: Team): void
+    +getVehicles(): List<Vehicle>
+    +setVehicles(vehicles: List<Vehicle>): void
+    +getStatus(): Status
+    +setStatus(status: Status): void
+    +getDuration(): String
+    +setDuration(duration: String): void
+    +addVehicle(vehicle: Vehicle): void
+    +removeVehicle(vehicle: Vehicle): void
+}
+
+class AgendaController {
+    -agenda: Agenda
+    +postponeEntry(entry: AgendaEntry, date: Date): AgendaEntry
+    +addEntry(entry: AgendaEntry): void
+    +removeEntry(entry: AgendaEntry): void
+    +getAgenda(): Agenda
+    +assignTeamToEntry(team: Team, entry: AgendaEntry): void
+    +addVehiclesToAgendaEntry(agendaEntry: AgendaEntry, vehicle: Vehicle): void
+    +removeVehiclesFromAgendaEntry(agendaEntry: AgendaEntry, vehicles: List<Vehicle>): void
+    +cancelAgendaEntry(entry: AgendaEntry): void
+    +getVehiclesNotAssignedToAnyAgendaEntry(vehicles: List<Vehicle>): List<Vehicle>
+    +getVehiclesAssignedToAgendaEntry(entry: AgendaEntry): List<Vehicle>
+    +updateVehicle(vehicle: Vehicle, date: Date, km: int): void
+}
+
+
+CompleteTaskStatusUI --> AgendaController
+AgendaController --> Repositories
+Repositories --> Agenda
+Agenda --> AgendaEntry
+
+
+
+
+@enduml
