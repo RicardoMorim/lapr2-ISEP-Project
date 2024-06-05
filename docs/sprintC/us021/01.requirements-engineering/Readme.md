@@ -104,7 +104,7 @@ Similarly, when a new entry is added to the Agenda, the status of that task will
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US020 - Register a Green Space and its area" - there has to be ...
+* There is a dependency on "US020 - Register a Green Space and its area" - there has to be a green space registered in the system to be associated with the new toDoEntry.
 
 ### 1.5 Input and Output Data
 
@@ -128,7 +128,7 @@ Similarly, when a new entry is added to the Agenda, the status of that task will
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us021-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us021-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
 

@@ -4,8 +4,6 @@
 
 ### 3.1. Rationale
 
-_**Note that SSD - Alternative One is adopted.**_
-
 | Interaction ID | Question: Which class is responsible for...           | Answer                 | Justification (with patterns)                                                                                 |
 |:--------------|:------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		    | 	... interacting with the actor?                      | GreenSpacesGUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
