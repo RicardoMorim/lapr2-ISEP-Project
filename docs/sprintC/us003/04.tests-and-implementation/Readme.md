@@ -1,6 +1,9 @@
-# US003 - Register a collaborator and characteristics 
+# US003 - Register a collaborator and characteristics
 
-## 4. Tests 
+## 4. Tests
+
+**Test 1:** Ensure that a collaborator can be added
+
 
     @Test
     void addCollaboratorReturnsOptionalWithCollaborator() {
@@ -9,6 +12,10 @@
         assertEquals(collaborator, result.get());
     }
 
+
+**Test 2:** Ensure that a collaborator cannot be added if it already exists
+
+
     @Test
     void addCollaboratorThrowsExceptionWhenCollaboratorAlreadyExists() {
         collaboratorRepository.add(collaborator);
@@ -16,38 +23,39 @@
     }
 
 
-
 ## 5. Construction (Implementation)
 
-### Class CollaboratorRepository 
+### Class CollaboratorController
 
 
-```java
-    public Optional<Collaborator> add(Collaborator collaborator) {
-    Optional<Collaborator> newCollaborator = Optional.empty();
-    boolean operationSuccess = false;
-
-    if (validateCollaborator(collaborator)) {
-        newCollaborator = Optional.of(collaborator);
-        operationSuccess = collaborators.add(newCollaborator.get());
+    public void addCollaborator(Collaborator collaborator) throws IllegalArgumentException {
+        Collaborator old = collaborator.clone();
+        collaboratorRepository.update(old, collaborator);
     }
 
-    if (!operationSuccess) {
-        newCollaborator = Optional.empty();
+
+### Class CollaboratorRepository
+
+
+    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
+        boolean operationSuccess = false;
+
+        if (collaborators.contains(oldCollaborator)) {
+            this.collaborators.remove(oldCollaborator);
+            operationSuccess = this.collaborators.add(newCollaborator);
+        }
+
+        if (!operationSuccess) {
+            throw new IllegalArgumentException("Collaborator not found.");
+        }
+
+        return newCollaborator;
     }
 
-    return newCollaborator;
-}
-```
-
-
-
-## 6. Integration and Demo 
+## 6. Integration and Demo
 
 * A new option on the Employee menu options was added.
-
 * For demo purposes some tasks are bootstrapped while system starts.
-
 
 ## 7. Observations
 
