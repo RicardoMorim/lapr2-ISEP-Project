@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.AdminMenuGUI;
 
@@ -59,6 +61,8 @@ public class MainMenuController {
                     ((Pane) node).setPrefHeight(content.getPrefHeight());
                 }
             });
+
+            applyButtonAnimations();
       });
 
         // Add a ChangeListener to the height property of the VBox
@@ -108,6 +112,25 @@ public class MainMenuController {
             // Get the login form and set it as the content of the Pane
             content.getChildren().setAll(loginGUI.getLoginForm(content.getHeight(), content.getWidth() + menu.getWidth()));
         });
+    }
+
+
+    private void applyButtonAnimations() {
+        for (Node node : content.getChildren()) {
+            if (node instanceof Button && node.getStyleClass().contains("add-button")) {
+                Button button = (Button) node;
+
+                ScaleTransition st = new ScaleTransition(Duration.millis(300), button);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.1);
+                st.setToY(1.1);
+                st.setAutoReverse(true);
+
+                button.setOnMouseEntered(event -> st.playFromStart());
+                button.setOnMouseExited(event -> st.stop());
+            }
+        }
     }
 
     @FXML

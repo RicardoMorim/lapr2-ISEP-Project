@@ -1,12 +1,16 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.menu;
 
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
@@ -44,7 +48,6 @@ public class AdminMenuGUI extends Application {
         btnRegisterSkill.setOnAction(e -> {
             AddSkillToCollaboratorGUI addSkillToCollaboratorGUI = new AddSkillToCollaboratorGUI();
             content.getChildren().setAll(addSkillToCollaboratorGUI.getAddSkillToCollaboratorGUI(content.getHeight(), content.getWidth()));
-
         });
 
         Button btnRegisterJob = new Button("Register a job that a collaborator may have.");
@@ -98,7 +101,36 @@ public class AdminMenuGUI extends Application {
         grid.add(btnAddEntryToDoList, 1, 6);
         grid.add(btnListGreenSpaces, 0, 7);
 
+        applyButtonAnimations();
         return grid;
     }
+
+
+    private void applyButtonAnimations() {
+        applyButtonAnimationsToNode(content);
+    }
+
+    private void applyButtonAnimationsToNode(Node node) {
+        if (node instanceof Button && node.getStyleClass().contains("add-button")) {
+            Button button = (Button) node;
+
+            ScaleTransition st = new ScaleTransition(Duration.millis(300), button);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.setAutoReverse(true);
+
+            button.setOnMouseEntered(event -> st.playFromStart());
+            button.setOnMouseExited(event -> st.stop());
+        } else if (node instanceof Parent) {
+            Parent parent = (Parent) node;
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                applyButtonAnimationsToNode(child);
+            }
+        }
+    }
+
+
 
 }

@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.Address;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
@@ -40,7 +41,6 @@ public class AddGreenSpaceGUI {
         colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().toString()));
         tableGreenSpaces.getColumns().addAll(colName, colAddress);
         tableGreenSpaces.getItems().addAll(controller.getGreenSpaceList());
-
 
 
         Button nextButton = new Button("Next");
@@ -150,6 +150,29 @@ public class AddGreenSpaceGUI {
         grid.add(cityField, 1, 3);
         grid.add(nextButton, 1, 4);
 
+        Button btnRemove = new Button("Remove Green Space");
+        btnRemove.setOnAction(e -> {
+            GreenSpace selectedGreenSpace = tableGreenSpaces.getSelectionModel().getSelectedItem();
+            if (selectedGreenSpace != null) {
+                controller.removeGreenSpace(selectedGreenSpace);
+                tableGreenSpaces.getItems().remove(selectedGreenSpace);
+            } else {
+                showAlert("No green space selected.");
+            }
+        });
+
+        VBox vboxButtons = new VBox(10);
+        vboxButtons.setPadding(new Insets(15, 0, 0, 0));
+
+
+        // Add a class to the buttons
+        nextButton.getStyleClass().add("add-button");
+        btnRemove.getStyleClass().add("remove-button");
+
+        vboxButtons.getChildren().addAll(nextButton, btnRemove);
+
+        grid.add(vboxButtons, 1, 4);
+
         GridPane.setConstraints(tableGreenSpaces, 3, 0, 1, 5);
         grid.getChildren().add(tableGreenSpaces);
 
@@ -236,9 +259,30 @@ public class AddGreenSpaceGUI {
         tableGreenSpaces.getColumns().addAll(colName, colAddress);
         tableGreenSpaces.getItems().addAll(controller.getGreenSpaceList());
 
+        Button btnRemove = new Button("Remove Green Space");
+        btnRemove.setOnAction(e -> {
+            GreenSpace selectedGreenSpace = tableGreenSpaces.getSelectionModel().getSelectedItem();
+            if (selectedGreenSpace != null) {
+                controller.removeGreenSpace(selectedGreenSpace);
+                tableGreenSpaces.getItems().remove(selectedGreenSpace);
+            } else {
+                showAlert("No green space selected.");
+            }
+        });
+
+        VBox vboxButtons = new VBox(10);
+
+
+        // Add a class to the buttons
+        submitButton.getStyleClass().add("add-button");
+        btnRemove.getStyleClass().add("remove-button");
+
+        vboxButtons.getChildren().addAll(submitButton, btnRemove);
+
+        grid.add(vboxButtons,1,5);
+
         GridPane.setConstraints(tableGreenSpaces, 3, 0, 1, 5); // Move the table to the third column
         grid.getChildren().add(tableGreenSpaces);
-
 
 
         return grid;
