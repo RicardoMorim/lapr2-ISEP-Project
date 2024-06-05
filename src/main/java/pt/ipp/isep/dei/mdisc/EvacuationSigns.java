@@ -13,15 +13,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class EvacuationSigns {
     private int graph[][];
     private String locationNames[];
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        /*final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
         EvacuationSigns es = new EvacuationSigns();
         boolean validFile = false;
+        String fp1 = defaultPath;
         while (!validFile) {
             System.out.println("Please enter the name of the file you want to read the costs from:");
             String filePath = scanner.nextLine();
@@ -29,16 +30,17 @@ public class EvacuationSigns {
                 System.out.println("File name cannot be empty.");
                 continue;
             }
-            String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
-            File file1 = new File(defaultPath + filePath);
+            File file1 = new File(fp1 + filePath);
             if (file1.exists()) {
-                es.readCSVContainingCosts(defaultPath + filePath);
+                es.readCSVContainingCosts(fp1 + filePath);
+                fp1 += filePath;
                 validFile = true;
             } else {
                 System.out.println("File does not exist. Please enter a valid file name.");
             }
         }
         validFile = false;
+        String fp2 = defaultPath;
         while (!validFile) {
             System.out.println("Please enter the name of the file you want to read the names from:");
             String filePath = scanner.nextLine();
@@ -46,16 +48,29 @@ public class EvacuationSigns {
                 System.out.println("File name cannot be empty.");
                 continue;
             }
-            String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
-            File file1 = new File(defaultPath + filePath);
-            if (file1.exists()) {
-                es.readCSVContainingNames(defaultPath + filePath);
+            File file = new File(fp2 + filePath);
+            if (file.exists()) {
+                es.readCSVContainingNames(fp2 + filePath);
                 validFile = true;
+                fp2 += filePath;
             } else {
                 System.out.println("File does not exist. Please enter a valid file name.");
             }
-        }
+        }*/
+
+        EvacuationSigns es = new EvacuationSigns();
+        es.readCSVContainingCosts("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
+        es.readCSVContainingNames("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_points_names.csv");
         es.findShortestPathToAP();
+        es.writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
+        System.out.println("Please enter the name of the start point:");
+        String startPoint = scanner.nextLine();
+        while (!Arrays.asList(es.locationNames).contains(startPoint) || startPoint.isEmpty()) {
+            System.out.println("Invalid start point");
+            System.out.println("Please enter the name of the start point:");
+            startPoint = scanner.nextLine();
+        }
+        es.visualizeGraph(es.graph, "Graph", true, "src/main/java/pt/ipp/isep/dei/mdisc/database/input/us17_matrix.csv");
     }
 
     public void readCSVContainingCosts(String fileName) {
@@ -63,6 +78,9 @@ public class EvacuationSigns {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
+                if (line.startsWith("\uFEFF")) {
+                    line = line.substring(1);
+                }
                 values.add(line.split(";"));
             }
         } catch (IOException e) {
@@ -158,33 +176,78 @@ public class EvacuationSigns {
         }
     }
 
+    public void writePathsToCSV(String fileName) {
+        String[] paths = fileName.split("input/");
+        String p = paths[0];
+        p += "output/" + paths[1];
+
+        // Create output directory if it doesn't exist
+        File directory = new File(p.substring(0, p.lastIndexOf("/")));
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(p, StandardCharsets.UTF_8))) {
+
+            int apIndex = -1;
+            for (int i = 0; i < locationNames.length; i++) {
+                if (locationNames[i].equals("AP")) {
+                    apIndex = i;
+                    break;
+                }
+            }
+            if (apIndex == -1) {
+                System.out.println("AP not found");
+                return;
+            }
+            for (int i = 0; i < locationNames.length; i++) {
+                if (i != apIndex) {
+                    DijkstraResult result = dijkstra(i);
+                    int[] parents = result.getParents();
+                    int[] shortestDistances = result.getShortestDistances();
+                    StringBuilder path = new StringBuilder();
+                    buildPath(i, apIndex, parents, path);
+                    writer.println(path + ";" + shortestDistances[apIndex]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void buildPath(int startVertex, int endVertex, int[] parents, StringBuilder path) {
+        if (startVertex == endVertex) {
+            path.append(locationNames[startVertex]);
+        } else {
+            buildPath(startVertex, parents[endVertex], parents, path);
+            path.append(",").append(locationNames[endVertex]);
+        }
+    }
+
     public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
         Graph g = new SingleGraph(title);
 
-        for (int i = 0; i < graph.length; i++) {
-            g.addNode(Integer.toString(i));
+        for (String locationName : locationNames) {
+            g.addNode(locationName);
         }
 
+        // Use location names for edges
         for (int i = 0; i < graph.length; i++) {
             for (int j = i + 1; j < graph.length; j++) {
                 if (graph[i][j] != 0) {
-                    g.addEdge(i + "-" + j, Integer.toString(i), Integer.toString(j));
+                    g.addEdge(locationNames[i] + "-" + locationNames[j], locationNames[i], locationNames[j]);
                 }
             }
         }
 
-        if (!openGUI) {
-            return;
+        System.setProperty("org.graphstream.ui", "swing"); // Use Swing
+
+        if (openGUI) {
+            g.display();
         }
 
-        g.display();
-
         try {
-            Path inputPath = Paths.get(inputFilePath);
-            String inputFileName = inputPath.getFileName().toString();
-
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/";
-
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/database/output/";
             Files.createDirectories(Paths.get(outputFilePath));
 
             try (PrintWriter writer = new PrintWriter(outputFilePath + title + ".dot", StandardCharsets.UTF_8)) {
@@ -192,7 +255,7 @@ public class EvacuationSigns {
                 for (int i = 0; i < graph.length; i++) {
                     for (int j = i + 1; j < graph.length; j++) {
                         if (graph[i][j] != 0) {
-                            writer.println((i+1) + " -- " + (j + 1) + " [label=\"" + graph[i][j] + "\"];");
+                            writer.println("\"" + locationNames[i] + "\" -- \"" + locationNames[j] + "\" [label=\"" + graph[i][j] + "\"];");
                         }
                     }
                 }
@@ -201,7 +264,6 @@ public class EvacuationSigns {
                 System.out.println("An error occurred while writing to the file.");
                 e.printStackTrace();
             }
-
 
             // New code to generate SVG from DOT
             String dotFilePath = outputFilePath + title + ".dot";
@@ -214,6 +276,4 @@ public class EvacuationSigns {
             e.printStackTrace();
         }
     }
-
-
 }

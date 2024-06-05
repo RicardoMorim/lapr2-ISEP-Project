@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US026 - Assign a vehicle to an entry in the agenda
 
 ## 3. Design - User Story Realization
 

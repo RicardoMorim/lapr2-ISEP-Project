@@ -4,12 +4,10 @@ skinparam packageStyle rectangle
 'skinparam shadowing false
 'title Use Case Diagram Example
 left to right direction
-rectangle "System Actors" as actors{
     actor "Human Resources Manager (HRM)" as HRM
     actor "Fleet Manager (FM)" as FM
 
-}
-rectangle "Use Cases" as usecases{
+
     usecase "UC1 - Register a skill" as UC1
     usecase "UC2 - Register a job" as UC2
     usecase "UC3 - Register a collaborator and characteristics" as UC3
@@ -26,5 +24,5 @@ rectangle "Use Cases" as usecases{
     FM --> UC6
     FM --> UC7
     FM --> UC8
-}
+
 @enduml

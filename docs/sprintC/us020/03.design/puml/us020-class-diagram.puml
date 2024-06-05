@@ -13,10 +13,10 @@ class RegisterGreenSpaceUI {
 }
 
 class GreenSpaceController {
-    + getGreenSpaceRepository()
-    + registerSkill(skill)
-    + updateSkill(skill, name, shortDescription, Description)
-    + removeSkill(skill)
+    + getGreenSpace(name, address)
+    + getGreenSpaceType()
+    + saveNewGreenSpace(name, address, area, type)
+    +  storeGreenSpace(greenSpace)
 }
 
 
@@ -28,11 +28,10 @@ class GreenSpaceRepository {
 }
 class GreenSpace {
     - String name
-    - String address
     - Type type
-    - Float area
+    - Double area
 
-    + createGreenSpace(name, address, type, area)
+   + saveNewGreenSpace(name, address, area, type)
 }
 class Repositories {
     + getInstance()
