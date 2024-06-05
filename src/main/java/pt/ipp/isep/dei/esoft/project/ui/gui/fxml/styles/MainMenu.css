@@ -62,3 +62,11 @@ Label{
 
 }
 
+.remove-button{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+    -fx-max-width: 150;
+    -fx-max-height: 50;
+}

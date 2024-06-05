@@ -40,6 +40,6 @@ public class ToDoList {
     }
 
     public List<Entry> getEntries(){
-        return List.copyOf(entryList);
+        return entryList;
     }
 }

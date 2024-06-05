@@ -72,8 +72,7 @@ public class SkillRepository implements Serializable {
     }
 
     public List<Skill> getSkills() {
-        //This is a defensive copy, so that the repository cannot be modified from the outside.
-        return List.copyOf(skills);
+        return skills;
     }
 
 }

@@ -39,11 +39,7 @@ public class VehicleRepository {
     }
 
     public List<Vehicle> getVehicleList() {
-        List<Vehicle> newList = new ArrayList<>();
-        for (Vehicle vehicle : vehicleList) {
-            newList.add(new Vehicle(vehicle));
-        }
-        return newList;
+        return this.vehicleList;
     }
 
     public void addVehicle(Vehicle vehicle) {
