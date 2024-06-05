@@ -71,7 +71,7 @@ public class Agenda implements Serializable {
      */
     public List<AgendaEntry> getEntries() {
         // This is a defensive copy, so that the entries cannot be modified from the outside.
-        return List.copyOf(entries);
+        return entries;
     }
 
     /**

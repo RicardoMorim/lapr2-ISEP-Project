@@ -9,10 +9,6 @@ public class AuthenticationRepository {
     public AuthenticationRepository() {
         authenticationFacade = new AuthFacade();
     }
-//TODO CTRLZ
-    public AuthFacade getAuthenticationFacade() {
-        return authenticationFacade;
-    }
 
     public boolean doLogin(String email, String pwd) {
         return authenticationFacade.doLogin(email, pwd).isLoggedIn();

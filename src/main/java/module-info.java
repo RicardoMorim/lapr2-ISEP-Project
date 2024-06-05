@@ -13,4 +13,5 @@ module MainGUI {
     opens pt.ipp.isep.dei.esoft.project.domain to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.ui to javafx.graphics, javafx.fxml;
     opens pt.ipp.isep.dei.esoft.project.ui.gui.menu to javafx.graphics, javafx.fxml;
+    opens pt.ipp.isep.dei.esoft.project.ui.gui.controller to javafx.fxml;
 }

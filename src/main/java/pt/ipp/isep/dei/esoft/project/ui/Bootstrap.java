@@ -6,6 +6,9 @@ import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Bootstrap implements Runnable {
@@ -66,7 +69,6 @@ public class Bootstrap implements Runnable {
             addModels();
             addVehicles();
             addCollaborators();
-            addVehicleMaintenances();
             addEntries();
             addAgendaEntries();
             addTeam();
@@ -82,7 +84,7 @@ public class Bootstrap implements Runnable {
         teamCollaborators.add(collaborators.get(0));
         teamCollaborators.add(collaborators.get(1));
         Team team = new Team(teamCollaborators);
-        for (Collaborator col: new Collaborator[] {collaborators.get(0), collaborators.get(1)})
+        for (Collaborator col : new Collaborator[]{collaborators.get(0), collaborators.get(1)})
             col.setFree(false);
         teamRepository.add(team);
     }
@@ -119,7 +121,7 @@ public class Bootstrap implements Runnable {
         Address address2 = new Address("Rua do Gonçalo", "Porto", "123-456");
 
 
-        GreenSpace greenSpace1 = new GreenSpace("Park1", address1 , 1000, Type.GARDEN, new Email("admin1@this.app"));
+        GreenSpace greenSpace1 = new GreenSpace("Park1", address1, 1000, Type.GARDEN, new Email("admin1@this.app"));
         GreenSpace greenSpace2 = new GreenSpace("Park2", address2, 2000, Type.LARGE_SIZED_PARK, new Email("admin2@this.app"));
 
 
@@ -139,12 +141,7 @@ public class Bootstrap implements Runnable {
         agenda.addEntry(agendaEntry2);
     }
 
-    public void addVehicleMaintenances() {
-        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
-        for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
-            vehicle.registerMaintenance(new Date(), vehicle.getCurrentKM() - 10000);
-        }
-    }
+
 
     public void addJobs() {
         JobRepository jobRepository = Repositories.getInstance().getJobRepository();
@@ -208,15 +205,15 @@ public class Bootstrap implements Runnable {
 
     private void addVehicles() {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
-        vehicleRepository.addVehicle("AA-00-00", "BMW", "X1", "SUV", 2000, 2500, 1000, new Date(), new Date(), 10000, 0);
-        vehicleRepository.addVehicle("AA-00-01", "Mercedes", "A", "Sedan", 1500, 2000, 60000, new Date(), new Date(), 10000, 50000);
-        vehicleRepository.addVehicle("AA-00-02", "Audi", "A3", "Sedan", 1500, 2000, 12003210, new Date(), new Date(), 10000, 12003000);
-        vehicleRepository.addVehicle("AA-00-03", "Toyota", "Corolla", "Sedan", 1500, 2000, 12310, new Date(), new Date(), 10000, 12300);
-        vehicleRepository.addVehicle("AA-00-04", "Honda", "Civic", "Sedan", 1500, 2000, 6540, new Date(), new Date(), 10000, 6000);
-        vehicleRepository.addVehicle("AA-00-05", "Ford", "Fiesta", "Sedan", 1500, 2000, 21340, new Date(), new Date(), 10000, 21300);
-        vehicleRepository.addVehicle("AA-00-06", "Chevrolet", "Spark", "Sedan", 1500, 2000, 1235430, new Date(), new Date(), 10000, 1235400);
-        vehicleRepository.addVehicle("AA-00-07", "Hyundai", "Accent", "Sedan", 1500, 2000, 12340, new Date(), new Date(), 10000, 12300);
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        vehicleRepository.addVehicle("AA-00-00", "BMW", "X1", "SUV", 2000, 2500, 1000, Date.from(LocalDate.parse("01-12-2023", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("01-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 0);
+        vehicleRepository.addVehicle("AA-00-01", "Mercedes", "A", "Sedan", 1500, 2000, 60000, Date.from(LocalDate.parse("02-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 50000);
+        vehicleRepository.addVehicle("AA-00-02", "Audi", "A3", "Sedan", 1500, 2000, 12003210, Date.from(LocalDate.parse("06-12-2023", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 12003000);
+        vehicleRepository.addVehicle("AA-00-03", "Toyota", "Corolla", "Sedan", 1500, 2000, 12310, Date.from(LocalDate.parse("15-12-2023", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 12300);
+        vehicleRepository.addVehicle("AA-00-04", "Honda", "Civic", "Sedan", 1500, 2000, 6540, Date.from(LocalDate.parse("01-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 6000);
+        vehicleRepository.addVehicle("AA-00-05", "Ford", "Fiesta", "Sedan", 1500, 2000, 21340, Date.from(LocalDate.parse("10-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 21300);
+        vehicleRepository.addVehicle("AA-00-06", "Chevrolet", "Spark", "Sedan", 1500, 2000, 1235430, Date.from(LocalDate.parse("05-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 1235400);
+        vehicleRepository.addVehicle("AA-00-07", "Hyundai", "Accent", "Sedan", 1500, 2000, 12340, Date.from(LocalDate.parse("03-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 12300);
     }
 
     private void addOrganization() {
@@ -250,19 +247,15 @@ public class Bootstrap implements Runnable {
         //TODO: add Authentication users here: should be created for each user in the organization
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
-        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE,
-                AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE, AuthenticationController.ROLE_EMPLOYEE);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_GRM, AuthenticationController.ROLE_GRM);
 
 
+        authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
-                AuthenticationController.ROLE_ADMIN);
-
-        authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd",
-                AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd", AuthenticationController.ROLE_EMPLOYEE);
         authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "hrm", AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("GRM", "grm@this.app", "grm", AuthenticationController.ROLE_GRM);
         authenticationRepository.addUserWithRole("vfm", "vfm@this.app", "vfm", AuthenticationController.ROLE_VFM);

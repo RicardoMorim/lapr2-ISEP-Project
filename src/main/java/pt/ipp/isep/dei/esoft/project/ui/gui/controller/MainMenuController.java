@@ -1,9 +1,7 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.controller;
 
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,9 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.AdminMenuGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainHRMMenuGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.menu.MainVFMMenuGUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
@@ -68,23 +68,20 @@ public class MainMenuController {
             });
 
             applyButtonAnimations();
-      });
+        });
 
         // Add a ChangeListener to the height property of the VBox
-        menu.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Get the number of buttons in the VBox
-                int numButtons = menu.getChildren().size();
+        menu.heightProperty().addListener((observable, oldValue, newValue) -> {
+            // Get the number of buttons in the VBox
+            int numButtons = menu.getChildren().size();
 
-                // Calculate the height for each button
-                double buttonHeight = newValue.doubleValue() / numButtons;
+            // Calculate the height for each button
+            double buttonHeight = newValue.doubleValue() / numButtons;
 
-                // Set the height of each button
-                for (Node node : menu.getChildren()) {
-                    if (node instanceof Button) {
-                        ((Button) node).setPrefHeight(buttonHeight);
-                    }
+            // Set the height of each button
+            for (Node node : menu.getChildren()) {
+                if (node instanceof Button) {
+                    ((Button) node).setPrefHeight(buttonHeight);
                 }
             }
         });
@@ -106,6 +103,13 @@ public class MainMenuController {
     }
 
     @FXML
+    private void showVFMMenu() {
+        MainVFMMenuGUI vfmMenuGUI = new MainVFMMenuGUI(content);
+        menu.getChildren().setAll(vfmMenuGUI.getAdminMenuGUI().getChildren());
+        content.getChildren().clear();
+    }
+
+    @FXML
     private void showLogin() {
         // Delay the execution of the showLogin method
         Platform.runLater(() -> {
@@ -117,12 +121,14 @@ public class MainMenuController {
                 // Update the buttons on the left
                 List<UserRoleDTO> roles = authController.getUserRoles();
 
-                if (roles!=null && !roles.isEmpty()){
-                    for (UserRoleDTO role: roles){
-                        if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+                if (roles != null && !roles.isEmpty()) {
+                    for (UserRoleDTO role : roles) {
+                        if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
                             showHRMMenu();
-                        } else if (role.getDescription().equals(AuthenticationController.ROLE_ADMIN)){
+                        } else if (role.getDescription().equals(AuthenticationController.ROLE_ADMIN)) {
                             showAdminMenu();
+                        } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+                            showVFMMenu();
                         }
                     }
                 }
