@@ -21,11 +21,16 @@ public class MainMenuController {
     private Button btnShowDevTeam;
     @FXML
     private Pane content;
+    public double oldWidth;
 
     @FXML
     public void initialize() {
         // Set the default selected button
         btnLogin.fire();
+
+        oldWidth = menu.getWidth();
+
+        menu.setPrefWidth(0);
 
         // Remove the margin between the buttons
         menu.setSpacing(0);
@@ -95,10 +100,13 @@ public class MainMenuController {
             loginGUI.setOnLoginSuccess(() -> {
                 // Update the buttons on the left
                 showAdminMenu();
+                menu.setPrefWidth(250);
             });
 
+            menu.getChildren().clear();
+
             // Get the login form and set it as the content of the Pane
-            content.getChildren().setAll(loginGUI.getLoginForm(content.getHeight(), content.getWidth()));
+            content.getChildren().setAll(loginGUI.getLoginForm(content.getHeight(), content.getWidth() + menu.getWidth()));
         });
     }
 
