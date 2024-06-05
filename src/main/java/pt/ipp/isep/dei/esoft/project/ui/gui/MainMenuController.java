@@ -58,8 +58,8 @@ public class MainMenuController {
         });
 
         content.getChildren().addListener((ListChangeListener<Node>) c -> {
-            content.setPrefWidth(1280 - menu.getWidth());
-            content.setPrefHeight(720);
+            content.setPrefWidth(1600 - menu.getWidth());
+            content.setPrefHeight(900);
             content.getChildren().forEach(node -> {
                 if (node instanceof Pane) {
                     ((Pane) node).setPrefWidth(content.getPrefWidth());

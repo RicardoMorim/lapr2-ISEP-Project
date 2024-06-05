@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddSkillToCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterCollaboratorGUI;
 
 public class MainHRMMenuGUI {
 
@@ -26,7 +27,7 @@ public class MainHRMMenuGUI {
         //btnRegisterJob.setOnAction(e -> new RegisterJobUI().start(new Stage()));
 
         Button btnRegisterCollaborator = new Button("Register a collaborator");
-        //btnRegisterCollaborator.setOnAction(e -> new RegisterCollaboratorUI().start(new Stage()));
+        btnRegisterCollaborator.setOnAction(e -> content.getChildren().setAll(new RegisterCollaboratorGUI().getRegisterCollaboratorGUI(content.getHeight(), content.getWidth())));
 
         Button btnAddSkillToCollaborator = new Button("Add a skill to a collaborator");
         btnAddSkillToCollaborator.setOnAction(e -> content.getChildren().setAll(new AddSkillToCollaboratorGUI().getAddSkillToCollaboratorGUI(content.getHeight(), content.getWidth())));
