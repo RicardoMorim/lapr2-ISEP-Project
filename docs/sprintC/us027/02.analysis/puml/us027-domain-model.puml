@@ -7,13 +7,14 @@ title Domain Model
 hide methods
 hide circle
 
-title Domain Model - US003
+title Domain Model - US027
 
 
 class GreenSpace {
 name
 size
 manager
+email
 }
 
 

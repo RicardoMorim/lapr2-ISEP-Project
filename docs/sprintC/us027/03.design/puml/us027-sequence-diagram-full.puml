@@ -3,86 +3,48 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title System Sequence Diagram (SSD) - US027
+
 autonumber
 
-'hide footbox
-actor "Organization Employee" as ADM
-participant ":AddSkillUI" as UI
-participant ":SkillController" as SkillCTRL
-participant ":CollaboratorController" as CollaboratorCTRL
-participant "SkillRepository:\nSkillRepository" as SkillRepository
-participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+actor "Green Space\n Manager (GSM)" as GSM
+participant "GreenSpacesGUI" as UI
+participant "GreenSpaceController" as ListCtrl
+participant "GreenSpaceRepository" as Repo
+participant ":ApplicationSession" as AppSession
 
 
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
+activate GSM
 
-activate ADM
-    ADM -> UI : asks to add one or more Skills to a collaborator
-    activate UI
-    UI -> CollaboratorCTRL** : create
-       UI -> CollaboratorCTRL: getCollaboratorList()
-       activate CollaboratorCTRL
-                       CollaboratorCTRL -> RepositorySingleton : getInstance()
-                       activate RepositorySingleton
+GSM -> UI : requests to view green spaces
+activate UI
 
-                           RepositorySingleton --> CollaboratorCTRL: repositories
-                       deactivate RepositorySingleton
+UI -> ListCtrl : getGreenSpaces()
+activate ListCtrl
 
-                       CollaboratorCTRL -> PLAT : getCollaboratorRepository()
-                       activate PLAT
+ListCtrl -> AppSession : getInstance()
+activate AppSession
+AppSession --> ListCtrl : session
+deactivate AppSession
 
-                           PLAT --> CollaboratorCTRL: CollaboratorRepository
-                       deactivate PLAT
+ListCtrl -> AppSession : getCurrentSession()
+activate AppSession
+AppSession --> ListCtrl : UserSession
+deactivate AppSession
+
+ListCtrl -> Repo : getGreenSpacesByUser(UserSession.getUserEmail())
+activate Repo
+Repo -> Repo : sort()
 
 
+Repo --> ListCtrl : greenSpaces
+deactivate Repo
 
-                       CollaboratorCTRL -> CollaboratorRepository : getCollaboratorList()
-                       activate CollaboratorRepository
+ListCtrl --> UI : greenSpaces
+deactivate ListCtrl
 
-                    CollaboratorRepository -> CollaboratorCTRL: returns collaboratorList
-                deactivate CollaboratorRepository
-           CollaboratorCTRL -> UI: returns collaboratorList
-       deactivate CollaboratorCTRL
-       UI -> ADM: shows the collaborator list and asks to choose one
-    deactivate UI
-    ADM -> UI : chooses the collaborator
+UI -> GSM : displays green spaces in a list
+deactivate UI
 
-    activate UI
-        UI -> SkillCTRL** : create
-        UI -> SkillCTRL : getSkills()
-        activate SkillCTRL
-        SkillCTRL -> RepositorySingleton : getInstance()
-             activate RepositorySingleton
-
-                  RepositorySingleton --> SkillCTRL: repositories
-             deactivate RepositorySingleton
-            SkillCTRL -> PLAT : getSkillRepository()
-            activate PLAT
-            PLAT --> SkillCTRL: SkillRepository
-            deactivate PLAT
-            SkillCTRL -> SkillRepository: getSkillsThatTheCollaboratorDoesNotHave(collaborator)
-            activate SkillRepository
-                SkillRepository -> SkillCTRL: returns skills
-            deactivate SkillRepository
-
-            SkillCTRL -> UI: returns skills
-            deactivate SkillCTRL
-
-        UI -> ADM: shows the skills that the collaborator doesn't \nhave and asks to choose the ones he wants to add
-    deactivate UI
-    ADM -> UI: chooses the skills that he wants to add
-
-    activate UI
-        UI -> CollaboratorCTRL: addSkills(collaborator, skills)
-        activate CollaboratorCTRL
-        loop for each skill in skills
-            CollaboratorCTRL -> Collaborator** : addSkill(skill)
-        end
-        CollaboratorCTRL -> UI: returns success
-    deactivate CollaboratorCTRL
-    UI -> ADM: shows the updated collaborator information
-    deactivate UI
-deactivate ADM
 
 @enduml

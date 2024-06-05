@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US027 - List all green spaces managed by a GSM.
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

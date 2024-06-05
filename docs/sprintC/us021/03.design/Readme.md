@@ -4,36 +4,42 @@
 
 ### 3.1. Rationale
 
-| Interaction ID                                                      | Question: Which class is responsible for...                  | Answer                 | Justification (with patterns)                                                                                 |
-|:--------------------------------------------------------------------|:-------------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		                                                             | 	... coordinating the US?                                    | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the repository to get the collaborator list    | CollaboratorController | IE: its the controller with access to the collaborator repository                                             |
-|                                                                     | ... getting the collaborator list                            | CollaboratorRepository | IE: its the repository that stores the collaborator's information's                                           |
-| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?                              | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the skill repository to get the list of skills | SkillController        | IE: its the controller that has access to the skill repository                                                |
-| 			  		                                                             | 	... knowing the list of skills                              | SkillRepository        | IE: The repository keeps all the skills                                                                       |
-| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... validate skill                                           | Skill                  | IE: Validates the skill before validating it                                                                  |
-|                                                                     | ... saving the collaborator's skills                         | Collaborator           | IE: Manages collaborator's information                                                                        |
-| Step 6: Displays operation success 		                               | ... interacting with the actor?							                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
+
+| Interaction ID | Question: Which class is responsible for...           | Answer                 | Justification (with patterns)                                                                                 |
+|:--------------|:------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		    | 	... interacting with the actor?                      | ToDoListGUI            | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  	        | 	... coordinating the US?                             | GreenSpaceController   | Controller                                                                                                    |
+| Step 2  		    | 	... requesting data?                                 | ToDoListGUI            | Pure Fabrication                                                                                              |
+| Step 3			     | ... receiving the data?                               | ToDoListGUI            | Pure Fabrication                                                                                              |
+| 			  		       | ... get the green space repository?					            | Repositories           | Information Expert, High cohesion, Low coupling                                                               |
+| 			  		       | ... get all the green spaces and return them as a list? | GreenSpaceRepository   | Information Expert                                                                                            |
+| Step 4  		    | 	...showing the green spaces to select?						           | ToDoListGUI            | Pure Fabrication                                                                                              |
+| Step 5  		    | ... handling the user selecting a green space?         | ToDoListGUI            | Pure Fabrication                                                                                              |
+| Step 6  		    | 	...show the confirmation info?                       | ToDoListGUI            | Pure Fabrication                                                                                              |
+| Step 7  		    | 	... instantiating a new To-Do List Entry?            | ToDoListController     | Creator, High cohesion, Low coupling                                                                          |
+| 		            | 	... validating all data (local validation)?          | ToDoList               | Information Expert                                                                                            |
+| 			  		       | 	... validating all data (global validation)?         | ToDoListRepository     | Information Expert                                                                                     |
+| 			  		       | 	... saving the To-Do List Entry?                     | ToDoListRepository     | Information Expert                                                                                       |
+|               | ... having all the repositories?                      | Repositories           |  Information Expert, High cohesion, Low coupling                                                                                                        |
+| Step 8  		    | 	... informing operation success?                     | ToDoListGUI            | IE: is responsible for user interactions.                                                                     |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* Green Space Manager
+* Green Space
+* ToDoList
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* ToDoListGUI
+* GreenSpaceController
+* GreenSpaceRepository
+* ToDoListController
+* ToDoListRepository
+* Repositories
+
 
 ## 3.2. Sequence Diagram (SD)
 
@@ -42,10 +48,6 @@ Other software classes (i.e. Pure Fabrication) identified:
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
 ![Sequence Diagram - Full](svg/us021-sequence-diagram-full.svg)
-
-### Split Diagrams
-
-N/A
 
 ## 3.3. Class Diagram (CD)
 
