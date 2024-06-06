@@ -158,7 +158,7 @@ public class AgendaEntry implements Serializable {
 
     public Date getEndDateFromDuration() {
         if (startDate == null) {
-            return null;
+            throw new IllegalArgumentException("Start date is required to calculate the end date");
         }
 
         java.util.Date utilStartDate = new java.util.Date(startDate.getTime());

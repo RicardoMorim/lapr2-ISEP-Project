@@ -74,6 +74,10 @@ public class AgendaController {
         return agenda;
     }
 
+    public List<AgendaEntry> getEntriesWithTeam(){
+        return agenda.getEntriesWithTeam();
+    }
+
 
     public void assignTeamToEntry(Team team, AgendaEntry entry) {
         entry.setTeam(team);

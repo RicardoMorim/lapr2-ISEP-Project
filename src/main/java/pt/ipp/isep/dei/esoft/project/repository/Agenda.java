@@ -188,4 +188,10 @@ public class Agenda implements Serializable {
         }
         return toDoEntriesNotInAgenda;
     }
+
+    public List<AgendaEntry> getEntriesWithTeam(){
+        return this.entries.stream()
+                .filter(entry -> entry.getTeam() != null)
+                .collect(Collectors.toList());
+    }
 }

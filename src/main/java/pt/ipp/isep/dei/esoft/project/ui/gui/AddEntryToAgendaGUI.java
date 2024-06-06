@@ -16,6 +16,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Urgency;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,22 +131,26 @@ public class AddEntryToAgendaGUI {
                     return;
                 }
 
-                java.util.Date utilStartDate = java.sql.Date.valueOf(startDate);
-
-                java.util.Date utilEndDate = endDate != null ? java.sql.Date.valueOf(endDate) : null;
+                java.util.Date utilStartDate = new Date(startDate.getYear(), startDate.getMonthValue(), startDate.getDayOfMonth());
+                java.util.Date utilEndDate = endDate != null ? new Date(endDate.getYear(), endDate.getMonthValue(), endDate.getDayOfMonth()) : null;
 
                 if (utilEndDate != null && utilStartDate.after(utilEndDate))
                     new Alert(Alert.AlertType.ERROR, "End date cannot be before start date.").showAndWait();
-                else if (utilStartDate != null && tfDuration.getText().isEmpty())
+                else if (utilStartDate != null && tfDuration.getText().isEmpty() && utilEndDate != null)
                     agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate);
-                else if (utilStartDate != null && !tfDuration.getText().isEmpty())
+                else if (utilStartDate != null && utilEndDate != null && !tfDuration.getText().isEmpty())
                     agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate, tfDuration.getText());
-                else if (utilStartDate == null && !tfDuration.getText().isEmpty())
-                    agendaController.addEntry(selectedEntry, utilEndDate, tfDuration.getText());
+                else if (utilStartDate != null && !tfDuration.getText().isEmpty() && utilEndDate == null)
+                    agendaController.addEntry(selectedEntry, utilStartDate, tfDuration.getText());
+                else
+                    new Alert(Alert.AlertType.ERROR, "Please provide a valid duration or end date and a start date.").showAndWait();
 
                 tvTask.getItems().remove(selectedEntry);
 
-                new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.");
+                new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.").showAndWait();
+
+
+
             }
         });
 

@@ -36,36 +36,40 @@ public class AssignTeamToAgendaEntryGUI {
         grid.setStyle("-fx-background-color: #ECECEC;");
         grid.setPrefSize(width, height);
 
+        // Top tables
+        TableView<AgendaEntry> tableEntriesNoTeam = createEntriesTableNoTeam();
         tableTeams = createTeamsTable(null);  // Initialize with null
         vboxTeams.getChildren().addAll(new Label("Teams:"), tableTeams);
 
-        // Create a VBox for the entries ComboBox and the buttons
-        VBox vboxEntries = new VBox(5);
-        TableView<AgendaEntry> tableEntries = createEntriesTable();
-
-        // Create a VBox for the team of the chosen entry
-        VBox vboxTeam = new VBox(5);
+        // Bottom tables
+        TableView<AgendaEntry> tableEntriesWithTeam = createEntriesTableWithTeam();
         ListView<String> lvTeam = new ListView<>();
-        tableEntries.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+        // Update team table when an entry is selected
+        tableEntriesNoTeam.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                lvTeam.getItems().setAll(newValue.getTeam() != null ? newValue.getTeam().getCollaborators().stream().map(Collaborator::getName).collect(Collectors.toList()) : Collections.emptyList());
                 updateTeamsTable(newValue);
             }
         });
 
-        Button btnRemove = createRemoveButton(tableEntries, lvTeam);
-        Button btnAdd = createAddButton(tableEntries, lvTeam);
-        vboxEntries.getChildren().addAll(new Label("Select an entry:"), tableEntries, btnAdd, btnRemove);
-        btnAdd.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-        btnRemove.setStyle("-fx-background-color: #FF6347; -fx-text-fill: white;");
+        // Update team list view when an entry is selected
+        tableEntriesWithTeam.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                lvTeam.getItems().setAll(newValue.getTeam() != null ? newValue.getTeam().getCollaborators().stream().map(Collaborator::getName).collect(Collectors.toList()) : Collections.emptyList());
+            }
+        });
 
-        vboxTeam.getChildren().addAll(new Label("Team of the selected entry:"), lvTeam);
+        Button btnAdd = createAddButton(tableEntriesNoTeam, tableEntriesWithTeam, lvTeam);
+        Button btnRemove = createRemoveButton(tableEntriesNoTeam, tableEntriesWithTeam, lvTeam);
 
-        // Add the VBoxes to the GridPane
-        GridPane.setConstraints(vboxEntries, 0, 0);
-        GridPane.setConstraints(vboxTeams, 1, 0);
-        GridPane.setConstraints(vboxTeam, 2, 0);
-        grid.getChildren().addAll(vboxTeams, vboxEntries, vboxTeam);
+        // Add the tables and buttons to the GridPane
+        GridPane.setConstraints(tableEntriesNoTeam, 0, 0);
+        GridPane.setConstraints(tableTeams, 1, 0);
+        GridPane.setConstraints(btnAdd, 0, 1);
+        GridPane.setConstraints(tableEntriesWithTeam, 0, 2);
+        GridPane.setConstraints(lvTeam, 1, 2);
+        GridPane.setConstraints(btnRemove, 0, 3);
+        grid.getChildren().addAll(tableEntriesNoTeam, tableTeams, btnAdd, tableEntriesWithTeam, lvTeam, btnRemove);
         grid.setAlignment(Pos.CENTER);
 
         return grid;
@@ -92,13 +96,6 @@ public class AssignTeamToAgendaEntryGUI {
             table.getItems().setAll(teamController.getUnassignedTeams());
         }
 
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
-                System.out.println("Selected team is now null.");
-            } else {
-                System.out.println("Selected team is now: " + newValue);
-            }
-        });
 
         return table;
     }
@@ -108,7 +105,7 @@ public class AssignTeamToAgendaEntryGUI {
         tableTeams.getItems().setAll(agendaController.getAgenda().filterUnavailableTeams(selectedEntry.getStartDate(), selectedEntry.getEndDate(), teamController.getTeams()));
     }
 
-    private TableView<AgendaEntry> createEntriesTable() {
+    private TableView<AgendaEntry> createEntriesTableNoTeam() {
         TableView<AgendaEntry> tableEntries = new TableView<>();
         TableColumn<AgendaEntry, String> colTitle = new TableColumn<>("Title");
         TableColumn<AgendaEntry, String> colDescription = new TableColumn<>("Description");
@@ -128,11 +125,33 @@ public class AssignTeamToAgendaEntryGUI {
         return tableEntries;
     }
 
-    private Button createAddButton(TableView<AgendaEntry> tableEntries, ListView<String> lvTeam) {
+    private TableView<AgendaEntry> createEntriesTableWithTeam() {
+        TableView<AgendaEntry> tableEntries = new TableView<>();
+        TableColumn<AgendaEntry, String> colTitle = new TableColumn<>("Title");
+        TableColumn<AgendaEntry, String> colDescription = new TableColumn<>("Description");
+        TableColumn<AgendaEntry, LocalDate> colStartDate = new TableColumn<>("Start Date");
+        TableColumn<AgendaEntry, LocalDate> colExpectedDuration = new TableColumn<>("Expected EndDate");
+
+        colTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getTitle()));
+        colDescription.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getDescription()));
+        colStartDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+        colExpectedDuration.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+
+        tableEntries.getColumns().addAll(colTitle, colDescription, colStartDate, colExpectedDuration);
+
+        tableEntries.getItems().addAll(agendaController.getAgenda().getEntriesWithTeam());
+
+        tableEntries.setPrefWidth(500);
+
+        return tableEntries;
+    }
+
+    private Button createAddButton(TableView<AgendaEntry> tableEntriesNoTeam, TableView<AgendaEntry> tableEntriesWithTeam, ListView<String> lvTeam) {
         Button btnAdd = new Button("Add Team");
+        btnAdd.getStyleClass().add("add-button");
         btnAdd.setOnAction(e -> {
             Team selectedTeam = tableTeams.getSelectionModel().getSelectedItem();
-            AgendaEntry selectedEntry = tableEntries.getSelectionModel().getSelectedItem();
+            AgendaEntry selectedEntry = tableEntriesNoTeam.getSelectionModel().getSelectedItem();
 
             if (selectedTeam == null) {
                 System.out.println("No team selected.");
@@ -143,19 +162,23 @@ public class AssignTeamToAgendaEntryGUI {
             if (selectedTeam != null && selectedEntry != null) {
                 agendaController.assignTeamToEntry(selectedTeam, selectedEntry);
                 tableTeams.getItems().remove(selectedTeam);
+                tableEntriesNoTeam.getItems().remove(selectedEntry);
+                tableEntriesWithTeam.getItems().add(selectedEntry);
                 lvTeam.getItems().setAll(selectedEntry.getTeam().getCollaborators().stream().map(Collaborator::getName).collect(Collectors.toList()));
             }
         });
         return btnAdd;
     }
 
-    private Button createRemoveButton(TableView<AgendaEntry> tableEntries, ListView<String> lvTeam) {
+    private Button createRemoveButton(TableView<AgendaEntry> tableEntriesNoTeam, TableView<AgendaEntry> tableEntriesWithTeam, ListView<String> lvTeam) {
         Button btnRemove = new Button("Remove Team");
+        btnRemove.getStyleClass().add("remove-button");
         btnRemove.setOnAction(e -> {
-            AgendaEntry selectedEntry = tableEntries.getSelectionModel().getSelectedItem();
+            AgendaEntry selectedEntry = tableEntriesWithTeam.getSelectionModel().getSelectedItem();
             if (selectedEntry != null && selectedEntry.getTeam() != null) {
-                tableTeams.getItems().add(selectedEntry.getTeam());
                 teamController.unassignTeam(selectedEntry);
+                tableEntriesWithTeam.getItems().remove(selectedEntry);
+                tableEntriesNoTeam.getItems().add(selectedEntry);
                 lvTeam.getItems().clear();
             }
         });
