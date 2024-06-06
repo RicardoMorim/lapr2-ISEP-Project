@@ -21,7 +21,7 @@ public class Skill implements Serializable {
     }
 
 
-    public String getShortDescription() {
+    public String getDescription() {
         return this.shortDescription;
     }
 

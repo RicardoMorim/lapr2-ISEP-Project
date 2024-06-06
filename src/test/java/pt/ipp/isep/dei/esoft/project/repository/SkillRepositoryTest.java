@@ -50,7 +50,7 @@ class SkillRepositoryTest {
         skillRepository.add(skill);
         Skill updatedSkill = skillRepository.update(skill, "Python", "Short Description").get();
         assertEquals("Python", updatedSkill.getName());
-        assertEquals("Short Description", updatedSkill.getShortDescription());
+        assertEquals("Short Description", updatedSkill.getDescription());
     }
 
     @Test

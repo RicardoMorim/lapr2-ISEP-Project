@@ -45,7 +45,7 @@ class SkillControllerTest {
         skillController.updateSkill(skillRepository, skill, "Python", "Updated Short Description");
 
         assertEquals("Python", skill.getName());
-        assertEquals("Updated Short Description", skill.getShortDescription());
+        assertEquals("Updated Short Description", skill.getDescription());
     }
 
     @Test

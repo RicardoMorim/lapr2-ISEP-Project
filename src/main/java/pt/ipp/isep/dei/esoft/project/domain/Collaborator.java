@@ -204,7 +204,7 @@ public class Collaborator implements Serializable {
         if (this.skills.contains(skill)) {
             throw new IllegalArgumentException("Collaborator already contains the skill");
         }
-        if (skill.getName() == null || skill.getShortDescription() == null) {
+        if (skill.getName() == null || skill.getDescription() == null) {
             throw new IllegalArgumentException("The name and short description cannot be null");
         }
         this.skills.add(skill);
