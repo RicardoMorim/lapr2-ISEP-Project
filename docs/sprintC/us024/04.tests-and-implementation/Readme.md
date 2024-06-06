@@ -2,102 +2,79 @@
 
 ## 4. Tests
 
-**Test 1:** Returns correct list of entries
+**Test 1:** Test if the status of the entry changes to POSTPONED after postponing it.
 
     @Test
-    public void testGetAgendaEntries() {
-        List<AgendaEntry> expectedEntries = new ArrayList<>();
-        expectedEntries.add(new AgendaEntry("Title1", new Date()));
-        expectedEntries.add(new AgendaEntry("Title2", new Date()));
-
-        when(agendaMock.getEntries()).thenReturn(expectedEntries);
-
-        List<AgendaEntry> actualEntries = controller.getAgendaEntries();
-
-        assertEquals(expectedEntries, actualEntries);
+     void postponeEntryShouldChangeStatusToPostponed() {
+        agendaController.postponeEntry(entry, new Date());
+        assertEquals(Status.POSTPONED, entry.getStatus());
     }
 
-**Test 2:** Successfully updates the date
+**Test 2:** Tests if the date of the entry changes after postponing it.
 
     @Test
-    public void testUpdateDate_Success() {
-        Date oldDate = new Date();
-        Date newDate = new Date(oldDate.getTime() + 100000); // newDate after oldDate
-
-        AgendaEntry entry = mock(AgendaEntry.class);
-        when(entry.isAfter(newDate)).thenReturn(true);
-
-        AgendaEntry updatedEntry = controller.updateDate(entry, newDate);
-
-        verify(entry).setDate(newDate);
-        assertEquals(entry, updatedEntry);
+    void postponeEntryShouldChangeDate() {
+        Date newDate = new Date();
+        agendaController.postponeEntry(entry, newDate);
+        assertEquals(newDate, entry.getStartDate());
     }
 
-**Test 3:** Fails to update if the new date is not after the current date
+**Test 3:** Tests if the entry is still in the agenda after postponing it.
 
     @Test
-    public void testUpdateDate_Failure() {
-        Date oldDate = new Date();
-        Date newDate = new Date(oldDate.getTime() - 100000); // newDate before oldDate
-
-        AgendaEntry entry = mock(AgendaEntry.class);
-        when(entry.isAfter(newDate)).thenReturn(false);
-
-        AgendaEntry updatedEntry = controller.updateDate(entry, newDate);
-
-        verify(entry, never()).setDate(newDate);
-        assertEquals(entry, updatedEntry);
+    void postponeEntryShouldStillBeInAgenda() {
+        agendaController.postponeEntry(entry, new Date());
+        assertTrue(agenda.getEntries().contains(entry));
     }
 
 ## 5. Construction (Implementation)
 
-### Class PostponeEntryController
+### Class EntryController
 
 ```java
-    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-    Collaborator old = collaborator.clone();
-    collaborator.addSkill(skill);
-    collaboratorRepository.update(old, collaborator);
+public class EntryController {
+    private AgendaController agendaController;
+
+    public PostponeEntryController(AgendaController agendaController) {
+        this.agendaController = agendaController;
+    }
+
+    public void postponeEntry(AgendaEntry entry, Date newDate) throws IllegalArgumentException {
+        AgendaEntry oldEntry = entry.clone();
+        agendaController.postponeEntry(entry, newDate);
+        agendaController.update(oldEntry, entry);
+    }
+}
+```
+### Class AgendaController
+
+```java
+public class AgendaController {
+
+    public void update(AgendaEntry oldEntry, AgendaEntry newEntry) {
+        boolean operationSuccess = false;
+
+        if (agenda.getEntries().contains(oldEntry)) {
+            this.agenda.getEntries().remove(oldEntry);
+            operationSuccess = this.agenda.getEntries().add(newEntry);
+        }
+
+        if (!operationSuccess) {
+            throw new IllegalArgumentException("Entry not found.");
+        }
+    }
 }
 ```
 
-### Class CollaboratorRepository
-
-
-```java
-    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
-    boolean operationSuccess = false;
-
-    if (collaborators.contains(oldCollaborator)) {
-        this.collaborators.remove(oldCollaborator);
-        operationSuccess = this.collaborators.add(newCollaborator);
-    }
-
-    if (!operationSuccess) {
-        throw new IllegalArgumentException("Collaborator not found.");
-    }
-
-    return newCollaborator;
-}
-```
-### Class Collaborator
-
-```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
-    }
-
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
-        }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
+### Class AgendaEntry
     
-        return this.skills;
+```java
+public class AgendaEntry {
+
+    public AgendaEntry clone() {
+        return new AgendaEntry(this.entry, this.team, this.vehicles, this.duration, this.status, this.startDate);
     }
+}
 ```
 
 ## 6. Integration and Demo

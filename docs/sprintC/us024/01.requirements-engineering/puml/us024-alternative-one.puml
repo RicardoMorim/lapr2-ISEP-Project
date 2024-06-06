@@ -18,7 +18,7 @@ activate Employee
     System --> Employee : shows the list of entries in the Agenda
     deactivate System
 
-    Employee -> System : selects an entry
+    Employee -> System : selects an entry and a new date
     activate System
 
     System --> Employee : asks to confirm postponement
