@@ -8,10 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AddEntryToAgendaGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.PostponeEntryGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
 public class MainGRMMenu {
 
@@ -54,6 +51,11 @@ public class MainGRMMenu {
         });
 
         Button btnCancel = new Button("Cancel an entry in the Agenda");
+        btnCancel.setOnAction(e -> {
+            CancelGUI cancelGUI = new CancelGUI();
+            content.getChildren().setAll(cancelGUI.getCancelEntryGridPane(content.getHeight(), content.getWidth()));
+        });
+
         Button btnAddEntryToDoList = new Button("Add an entry to the ToDo List");
         Button btnListGreenSpaces = new Button("List Green Spaces");
 

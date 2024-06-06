@@ -1,40 +1,58 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
-public class CancelGUI extends Application {
+public class CancelGUI {
 
     private final AgendaController agendaController = new AgendaController();
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Cancel an Entry");
+    public GridPane getCancelEntryGridPane(double height, double width){
+        GridPane grid = new GridPane(height, width);
+        grid.setVgap(5);
+        grid.setHgap(5);
+        grid.setAlignment(Pos.CENTER);
+
 
         VBox vbox = new VBox();
         vbox.setSpacing(10);
 
-        Label lblEntry = new Label("Entry:");
-        ComboBox<AgendaEntry> cbEntries = new ComboBox<>();
+        // Create a new TableView for the entries
+        TableView<AgendaEntry> tableEntries = new TableView<>();
+        TableColumn<AgendaEntry, String> colTitle = new TableColumn<>("Title");
+        TableColumn<AgendaEntry, String> colDescription = new TableColumn<>("Description");
+        TableColumn<AgendaEntry, LocalDate> colStartDate = new TableColumn<>("Start Date");
+        TableColumn<AgendaEntry, LocalDate> colExpectedDuration = new TableColumn<>("Expected EndDate");
+
+        colTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getTitle()));
+        colDescription.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getDescription()));
+        colStartDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+        colExpectedDuration.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+
+        tableEntries.getColumns().addAll(colTitle, colDescription, colStartDate, colExpectedDuration);
+
         List<AgendaEntry> agendaEntries = agendaController.getAgenda().getEntries();
-        cbEntries.getItems().addAll(agendaEntries);
+        tableEntries.getItems().addAll(agendaEntries);
 
         Button btnCancel = new Button("Cancel");
 
         // Add event handler to the button
         btnCancel.setOnAction(e -> {
-            AgendaEntry selectedEntry = cbEntries.getSelectionModel().getSelectedItem();
+            AgendaEntry selectedEntry = tableEntries.getSelectionModel().getSelectedItem();
 
             if (selectedEntry != null) {
                 agendaController.cancelAgendaEntry(selectedEntry);
@@ -53,10 +71,10 @@ public class CancelGUI extends Application {
             }
         });
 
-        vbox.getChildren().addAll(lblEntry, cbEntries, btnCancel);
+        btnCancel.getStyleClass().add("remove-button");
+        vbox.getChildren().addAll(tableEntries, btnCancel);
 
-        Scene scene = new Scene(vbox, 300, 200);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        grid.add(vbox, 0, 0);
+        return grid;
     }
 }
