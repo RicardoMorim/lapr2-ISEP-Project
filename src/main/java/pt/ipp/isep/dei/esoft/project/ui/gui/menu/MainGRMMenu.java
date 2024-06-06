@@ -58,11 +58,15 @@ public class MainGRMMenu {
 
         Button btnAddEntryToDoList = new Button("Add an entry to the ToDo List");
         btnAddEntryToDoList.setOnAction(e -> {
-            ToDoListGUI toDoListGUI = new ToDoListGUI();
-            content.getChildren().setAll(toDoListGUI.getAddEntryToToDoList(content.getHeight(), content.getWidth()));
+            AddEntryToDoListGUI addEntryToDoListGUI = new AddEntryToDoListGUI();
+            content.getChildren().setAll(addEntryToDoListGUI.getAddEntryToToDoList(content.getHeight(), content.getWidth()));
         });
 
         Button btnListGreenSpaces = new Button("List Green Spaces");
+        btnListGreenSpaces.setOnAction(e -> {
+            ListGreenSpacesGUI listGreenSpacesGUI = new ListGreenSpacesGUI();
+            content.getChildren().setAll(listGreenSpacesGUI.getListGreenSpacesGridPane(content.getHeight(), content.getWidth()));
+        });
 
         grid.add(btnAddEntryToAgenda, 0, 4);
         grid.add(btnAddGreenSpace, 1, 4);

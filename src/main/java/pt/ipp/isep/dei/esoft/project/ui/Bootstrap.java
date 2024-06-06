@@ -42,8 +42,6 @@ public class Bootstrap implements Runnable {
 
     public void loadData() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
-            addOrganization();
-            addUsers();
             Map<String, Object> data = (Map<String, Object>) ois.readObject();
             Repositories.getInstance().getTaskCategoryRepository().setTaskCategories((List<TaskCategory>) data.get("TaskCategoryRepository"));
             Repositories.getInstance().getJobRepository().setJobs((List<Job>) data.get("JobRepository"));
@@ -57,10 +55,10 @@ public class Bootstrap implements Runnable {
             Repositories.getInstance().getVehicleRepository().setTypeList((List<String>) data.get("Types"));
             Repositories.getInstance().getVehicleRepository().setBrandToModelsMap((Map<String, List<String>>) data.get("Models"));
             Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
-            updateEntryStatus();
-        } catch (IOException | ClassNotFoundException e) {
             addOrganization();
             addUsers();
+            updateEntryStatus();
+        } catch (IOException | ClassNotFoundException e) {
             addSkills();
             addJobs();
             addTaskCategories();
@@ -74,6 +72,8 @@ public class Bootstrap implements Runnable {
             addEntries();
             addAgendaEntries();
             updateEntryStatus();
+            addOrganization();
+            addUsers();
         }
     }
 
@@ -87,8 +87,9 @@ public class Bootstrap implements Runnable {
     public void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
-        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 1000, Type.LARGE_SIZED_PARK, new Email("gsm@this.app")));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("grm@this.app")));
         greenSpaceRepository.addGreenSpace(new GreenSpace("Parque", new Address("Rua do Parque", "Porto", "1234-456"), 500, Type.GARDEN, new Email("admnin@this.app")));
+        greenSpaceRepository.addGreenSpace(new GreenSpace("Covelo", new Address("Rua do Covelo", "Porto", "1211-443"), 5000, Type.MEDIUM_SIZED_PARK, new Email("grm@this.app")));
 
     }
 
@@ -266,7 +267,7 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_GRM, AuthenticationController.ROLE_GRM);
-
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE, AuthenticationController.ROLE_EMPLOYEE);
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_ADMIN);
 
@@ -274,6 +275,10 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "hrm", AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("GRM", "grm@this.app", "grm", AuthenticationController.ROLE_GRM);
         authenticationRepository.addUserWithRole("vfm", "vfm@this.app", "vfm", AuthenticationController.ROLE_VFM);
+
+        for(Collaborator col: Repositories.getInstance().getCollaboratorRepository().getCollaborators()){
+            authenticationRepository.addUserWithRole(col.getName(), col.getEmail(), "pwd", AuthenticationController.ROLE_EMPLOYEE);
+        }
     }
 
     private void addBrands() {

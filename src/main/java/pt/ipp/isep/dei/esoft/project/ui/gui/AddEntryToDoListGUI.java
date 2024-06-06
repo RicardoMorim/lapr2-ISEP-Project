@@ -18,7 +18,7 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
 
-public class ToDoListGUI {
+public class AddEntryToDoListGUI {
 
     private ToDoListController controller = new ToDoListController();
     private GreenSpaceController greenSpaceController = new GreenSpaceController();
