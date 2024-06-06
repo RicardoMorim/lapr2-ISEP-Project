@@ -7,7 +7,6 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 'left to right direction
 
-
 EntryController --> Agenda
 EntryController ..> Repositories : repositories
 EntryController --> Entry
@@ -19,75 +18,74 @@ Repositories <-- Repositories : instance
 PostponeEntryUI_fx ..> EntryController
 Agenda --> Entry
 
-  class EntryController {
-        -Agenda agenda
-        +EntryController()
-        -void getAgenda()
-        +Entry displayAndSelectEntry()
-    }
+class EntryController {
+    -Agenda agenda
+    +EntryController()
+    -void getAgenda()
+    +Entry displayAndSelectEntry()
+    +boolean postponeEntry(Entry entry, Date newDate)
+}
 
+class Entry {
+    -String entryTitle
+    -Date date
+    -Team team
+    +Entry(String state, String description, String urgency, String entryTitle, int duration, Date date, List<Vehicle> vehicles, Team team, GreenSpace greenSpace)
+    +Entry(String state, String description, String urgency, String entryTitle, int duration, Date date, GreenSpace greenSpace)
+    +void setTeam(Team team)
+    +String getEntryTitle()
+    +String getDateToString()
+    +Team getTeam()
+    +void setDate(Date date)
+    +Date getDate()
+    +Date validateDate()
+    +Date validatePostponeDate()
+    +String toString()
+}
 
-    class Entry {
-        -String entryTitle
-        -Calendar date
-        -Team team
-        +Entry(String state, String description, String urgency, String entryTitle, int duration, Calendar date, List<Vehicle> vehicles, Team team, GreenSpace greenSpace)
-        +Entry(String state, String description, String urgency, String entryTitle, int duration, Calendar date, GreenSpace greenSpace)
-        +void setTeam(Team team)
-        +String getEntryTitle()
-        +String getDateToString()
-        +Team getTeam()
-        +void setDate(Calendar date)
-        +Calendar getDate()
-        +Calendar validateDate()
-        +Calendar validatePostponeDate()
-        +String toString()
-    }
+class Team {
+    +List<Collaborator> getTeamMembers()
+}
 
-    class Team {
-        +List<Collaborator> getTeamMembers()
-    }
+class Agenda {
+    -static final List<Entry> agenda
+    +void addEntry(Entry entry)
+    +static void printEntryAt(int nList)
+    +static List<Entry> getAgenda()
+    +static Entry getEntryAt(int nList)
+    +static int getSize()
+}
 
+class PostponeEntryUI {
+    -EntryController controller
+    -Entry entry
+    -Date newDate
+    +PostponeEntryUI()
+    +void run()
+    -EntryController getController()
+    -void requestData()
+    -void submitData()
+    -void confirmsData()
+}
 
-    class Agenda {
-        -static final List<Entry> agenda
-        +void addEntry(Entry entry)
-        +static void printEntryAt(int nList)
-        +static List<Entry> getAgenda()
-        +static Entry getEntryAt(int nList)
-        +static int getSize()
-    }
-
-    class PostponeEntryUI {
-        -EntryController controller
-        -Entry entry
-        -Calendar newDate
-        +PostponeEntryUI()
-        +void run()
-        -EntryController getController()
-        -void requestData()
-        -void submitData()
-        -void confirmsData()
-    }
-
-    class PostponeEntryUI_fx {
-        -ListView<String> entriesListView
-        -List<Entry> entries
-        -List<String> hours
-        -Button button
-        -Label operationStatusLabel
-        -DatePicker postponeDatePicker
-        -ChoiceBox hourChoiceBox
-        +void initialize(URL url, ResourceBundle resourceBundle)
-        -void populateEntriesListView()
-        -void populateHoursListView()
-        -void postponingEntry()
-        -Calendar localDateToCalendar(LocalDate selectedDate)
-    }
+class PostponeEntryUI_fx {
+    -ListView<String> entriesListView
+    -List<Entry> entries
+    -List<String> hours
+    -Button button
+    -Label operationStatusLabel
+    -DatePicker postponeDatePicker
+    -ChoiceBox hourChoiceBox
+    +void initialize(URL url, ResourceBundle resourceBundle)
+    -void populateEntriesListView()
+    -void populateHoursListView()
+    -void postponingEntry()
+    -Date localDateToDate(LocalDate selectedDate)
+}
 
 class Repositories{
     +getInstance()
     + getAgenda(): Agenda
     + getTeamRepository(): TeamRepository
-    }
+}
 @enduml

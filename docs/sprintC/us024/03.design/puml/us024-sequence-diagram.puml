@@ -39,14 +39,13 @@ activate Employee
         UI --> Employee : shows the list of entries and asks to select one
     deactivate UI
 
-    Employee -> UI : selects an entry
+    Employee -> UI : selects an entry and provides a new date
     activate UI
 
-        UI -> CTRL : updateAgendaEntryStatus(selectedEntry, newStatus)
+        UI -> CTRL : postponeEntry(selectedEntry, newDate)
         activate CTRL
 
-
-            CTRL -> AgendaRepo : updateEntryStatus(updatedEntry)
+            CTRL -> AgendaRepo : updateEntryDateAndStatus(updatedEntry, newDate)
             activate AgendaRepo
 
                 AgendaRepo --> CTRL : success/failure
