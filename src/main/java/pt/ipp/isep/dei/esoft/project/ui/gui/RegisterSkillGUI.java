@@ -136,7 +136,7 @@ public class RegisterSkillGUI {
         // Add the tableBox to the main layout
         GridPane newGrid = new GridPane();
         newGrid.add(mainLayout, 0, 0);
-        newGrid.add(tableBox, 0, 1); // Adjust as needed
+        newGrid.add(tableBox, 0, 1);
         newGrid.setAlignment(Pos.CENTER);
 
         return newGrid;

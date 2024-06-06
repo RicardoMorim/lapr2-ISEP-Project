@@ -95,6 +95,7 @@ public class AdminMenuGUI {
         });
 
 
+
         grid.add(btnRegisterSkill, 0, 0);
         grid.add(btnRegisterJob, 1, 0);
         grid.add(btnRegisterCollaborator, 0, 1);

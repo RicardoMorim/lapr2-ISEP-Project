@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,6 +14,7 @@ import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -27,11 +30,12 @@ public class ListGreenSpacesGUI {
 
     public GridPane getListGreenSpacesGridPane(double height, double width) {
 
-        GridPane grid = new GridPane(height, width);
+        GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
         grid.setHgap(5);
         grid.setAlignment(Pos.CENTER);
+        grid.setPrefSize(width, height);
 
         // Load the properties file
         Properties prop = new Properties();
@@ -43,7 +47,8 @@ public class ListGreenSpacesGUI {
 
         // Create a ComboBox for the algorithms
         ComboBox<String> algorithmComboBox = new ComboBox<>();
-        algorithmComboBox.getItems().addAll(prop.getProperty("QuickSortingAlgorithm"), prop.getProperty("BubbleSortingAlgorithm"));
+        algorithmComboBox.getItems().addAll("QuickSort", "BubbleSort");
+        algorithmComboBox.setValue(prop.getProperty("SortingAlgorithm", "QuickSort"));
 
         Label algorithmLabel = new Label("Algorithm: ");
         grid.add(algorithmLabel, 0, 0);
@@ -73,6 +78,14 @@ public class ListGreenSpacesGUI {
                 return;
             }
 
+            // Save the selected algorithm to the properties file
+            try {
+                prop.setProperty("SortingAlgorithm", algorithm);
+                prop.store(new FileOutputStream("src/main/resources/config.properties"), null);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
             // Get the current logged user's email
             AuthenticationRepository authRepo = Repositories.getInstance().getAuthenticationRepository();
             Email user = authRepo.getCurrentUserSession().getUserId();
@@ -84,14 +97,8 @@ public class ListGreenSpacesGUI {
             if (managedGreenSpaces.isEmpty()) {
                 greenSpaceTableView.setPlaceholder(new Label("No green spaces managed by the user."));
             } else {
-                greenSpaceTableView.getItems().addAll(managedGreenSpaces);
-            }
-
-            // Use the selected algorithm
-            if (algorithm.equals("QuickSort")) {
-                prop.setProperty("SortingAlgorithm", "QuickSort");
-            } else if (algorithm.equals("BubbleSort")) {
-                prop.setProperty("SortingAlgorithm", "BubbleSort");
+                ObservableList<GreenSpace> observableList = FXCollections.observableArrayList(managedGreenSpaces);
+                greenSpaceTableView.setItems(observableList);
             }
         });
 
@@ -110,5 +117,4 @@ public class ListGreenSpacesGUI {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }
