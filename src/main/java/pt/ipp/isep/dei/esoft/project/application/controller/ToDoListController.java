@@ -14,6 +14,10 @@ public class ToDoListController {
         }
     }
 
+    public List<Entry> getToBeDoneEntries(){
+        return toDo.getToBeDoneEntries();
+    }
+
     public void addEntry(Entry entry){
         toDo.addEntry(entry);
     }

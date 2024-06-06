@@ -57,7 +57,7 @@ public class Bootstrap implements Runnable {
             Repositories.getInstance().getVehicleRepository().setTypeList((List<String>) data.get("Types"));
             Repositories.getInstance().getVehicleRepository().setBrandToModelsMap((Map<String, List<String>>) data.get("Models"));
             Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
-
+            updateEntryStatus();
         } catch (IOException | ClassNotFoundException e) {
             addOrganization();
             addUsers();
@@ -73,6 +73,14 @@ public class Bootstrap implements Runnable {
             addGreenSpaces();
             addEntries();
             addAgendaEntries();
+            updateEntryStatus();
+        }
+    }
+
+    public void updateEntryStatus(){
+        for (AgendaEntry entry : Repositories.getInstance().getAgenda().getEntries()) {
+            entry.setStatus(entry.getStatusBasedOnDates());
+            entry.getEntry().setState(entry.getStatus());
         }
     }
 
