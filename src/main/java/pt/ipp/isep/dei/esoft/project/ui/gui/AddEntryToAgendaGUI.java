@@ -11,9 +11,13 @@ import javafx.scene.layout.GridPane;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.ToDoListController;
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.Urgency;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddEntryToAgendaGUI {
 
@@ -49,7 +53,18 @@ public class AddEntryToAgendaGUI {
         tvTask.getColumns().add(colDescription);
         tvTask.getColumns().add(colUrgency);
         tvTask.getColumns().add(colExpectedDuration);
-        tvTask.setItems(FXCollections.observableArrayList(agendaController.getToDoEntriesNotInAgenda(toDoListController.getEntries())));
+        tvTask.setItems(FXCollections.observableArrayList(toDoListController.getToBeDoneEntries()));
+
+        Map<String, Integer> statusOrder = new HashMap<>();
+        statusOrder.put(Urgency.HIGH.toString(), 1);
+        statusOrder.put(Urgency.MEDIUM.toString(), 2);
+        statusOrder.put(Urgency.LOW.toString(), 3);
+
+        colUrgency.setComparator(Comparator.nullsLast(Comparator.comparing(urgency ->
+                statusOrder.getOrDefault(urgency, Integer.MAX_VALUE)
+        )));
+        tvTask.getSortOrder().add(colUrgency);
+        tvTask.sort();
 
         TextField tfDuration = new TextField();
         DatePicker dpStartDate = new DatePicker();

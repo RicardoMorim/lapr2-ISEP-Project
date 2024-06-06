@@ -90,6 +90,7 @@ public class AgendaEntry implements Serializable {
         this.duration = duration;
         this.endDate = getEndDateFromDuration();
         this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
     }
 
 
@@ -101,6 +102,7 @@ public class AgendaEntry implements Serializable {
         this.endDate = endDate;
         this.duration = getDurationFromEndDate();
         this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
     }
 
     public AgendaEntry(Entry entry, Date startDate, Date endDate, String duration) {
@@ -111,12 +113,13 @@ public class AgendaEntry implements Serializable {
         this.endDate = endDate;
         this.duration = duration;
         this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
     }
 
     public Status getStatusBasedOnDates() {
 
         if (startDate == null || endDate == null) {
-            return Status.TO_BE_DONE;
+            throw new IllegalArgumentException("Start and end dates are required to calculate the status");
         }
 
         java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
@@ -128,7 +131,7 @@ public class AgendaEntry implements Serializable {
 
         LocalDate now = LocalDate.now();
         if (start.isAfter(end)) {
-            return Status.CANCELED;
+            throw new IllegalArgumentException("End date cannot be before start date");
         }
         if (now.isBefore(start)) {
             return Status.PLANNED;
