@@ -1,0 +1,5 @@
+graph G {
+"Escadas3" -- "Escadas2" [label="5"];
+"Escadas2" -- "Escadas1" [label="3"];
+"Escadas1" -- "AP" [label="10"];
+}

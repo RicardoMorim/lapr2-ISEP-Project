@@ -1,0 +1,5 @@
+graph G {
+"Macieirinha" -- "ParqueInfantil" [label="10"];
+"ParqueInfantil" -- "Topo" [label="7"];
+"Topo" -- "AP" [label="9"];
+}

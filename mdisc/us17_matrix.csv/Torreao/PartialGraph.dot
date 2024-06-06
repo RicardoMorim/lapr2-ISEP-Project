@@ -1,0 +1,5 @@
+graph G {
+"Torreao" -- "Miradouro" [label="9"];
+"Miradouro" -- "Topo" [label="3"];
+"Topo" -- "AP" [label="9"];
+}
