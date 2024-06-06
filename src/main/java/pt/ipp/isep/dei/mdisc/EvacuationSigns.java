@@ -16,6 +16,11 @@ public class EvacuationSigns {
     private int graph[][];
     private String locationNames[];
     static Scanner scanner = new Scanner(System.in);
+    private List<String> assemblyPoints;
+
+    public EvacuationSigns() {
+        assemblyPoints = new ArrayList<>();
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
@@ -56,21 +61,43 @@ public class EvacuationSigns {
                 System.out.println("File does not exist.");
             }
         }
-        es.findShortestPathToAP();
-        es.writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/paths.csv");
-        System.out.println("Please enter the name of the start point:");
+        String matrixFileName = fp1.substring(fp1.lastIndexOf("/") + 1);
+        es.findShortestPathToAP(matrixFileName);
+        System.out.println("Please enter the name of the start point (Leave empty to compute for all points): ");
         String startPoint = scanner.nextLine();
-        while (!Arrays.asList(es.locationNames).contains(startPoint) || startPoint.isEmpty()) {
+        while (!Arrays.asList(es.locationNames).contains(startPoint) && !startPoint.isEmpty()) {
             System.out.println("Invalid start point");
-            System.out.println("Please enter the name of the start point:");
+            System.out.println("Please enter the name of the start point (Leave empty to compute for all points): ");
             startPoint = scanner.nextLine();
         }
-        es.visualizeGraph(es.graph, "Graph", true);
-        String[] path1 = es.calculatePathToAP(startPoint);
-        String[][] path = es.getNecessaryInformationForDot(path1);
-        es.generateDotFile(path, "PartialGraph");
+        es.visualizeGraph(es.graph, "Graph", true, matrixFileName);
+
         //es.generateCompleteGraphDotFile("CompleteGraph");
 
+
+        if (!Arrays.asList(es.locationNames).contains(startPoint) && startPoint.isEmpty()) {
+            for (String point : es.locationNames) {
+                if (!point.startsWith("AP")) {
+                    String[] paths1 = es.calculatePathToAP(point);
+                    if (paths1 != null) {
+                        String[][] paths = es.getNecessaryInformationForDot(paths1);
+                        es.generateDotFile(paths, "PartialGraph", matrixFileName + "/" + point);
+                    }
+                }
+            }
+        } else {
+            String[] path1 = es.calculatePathToAP(startPoint);
+            String[][] path = es.getNecessaryInformationForDot(path1);
+            es.generateDotFile(path, "PartialGraph", matrixFileName + "/" + startPoint);
+        }
+
+
+    }
+
+    public void calculatePathToAPAndGenerateDotFile(String startPoint, String matrixFileName) throws IOException, InterruptedException {
+        String[] path1 = calculatePathToAP(startPoint);
+        String[][] path = getNecessaryInformationForDot(path1);
+        generateDotFile(path, "PartialGraph", matrixFileName + "/" + startPoint);
     }
 
     public void readCSVContainingCosts(String fileName) {
@@ -108,7 +135,15 @@ public class EvacuationSigns {
             e.printStackTrace();
         }
         locationNames = names.toArray(new String[0]);
+
+        // Extract assembly points
+        for (String name : names) {
+            if (name.startsWith("AP")) {
+                assemblyPoints.add(name);
+            }
+        }
     }
+
 
     public DijkstraResult dijkstra(int source) {
         int n = graph.length;
@@ -152,34 +187,48 @@ public class EvacuationSigns {
         }
     }
 
-    public void findShortestPathToAP() {
-        int apIndex = -1;
-        for (int i = 0; i < locationNames.length; i++) {
-            if (locationNames[i].equals("AP")) {
-                apIndex = i;
-                break;
-            }
-        }
-        if (apIndex == -1) {
-            System.out.println("AP not found");
+    public void findShortestPathToAP(String matrixFileName) {
+        if (assemblyPoints.isEmpty()) {
+            System.out.println("No assembly points found");
             return;
         }
         for (int i = 0; i < locationNames.length; i++) {
-            if (i != apIndex) {
+            int nearestAPIndex = -1;
+            int shortestDistance = Integer.MAX_VALUE;
+            for (String ap : assemblyPoints) {
+                int apIndex = -1;
+                for (int j = 0; j < locationNames.length; j++) {
+                    if (locationNames[j].equals(ap)) {
+                        apIndex = j;
+                        break;
+                    }
+                }
+                if (apIndex == -1) {
+                    System.out.println("AP " + ap + " not found");
+                    continue;
+                }
+                DijkstraResult result = dijkstra(i);
+                int[] shortestDistances = result.getShortestDistances();
+                if (shortestDistances[apIndex] < shortestDistance) {
+                    shortestDistance = shortestDistances[apIndex];
+                    nearestAPIndex = apIndex;
+                }
+            }
+            if (nearestAPIndex != -1) {
                 DijkstraResult result = dijkstra(i);
                 int[] parents = result.getParents();
-                int[] shortestDistances = result.getShortestDistances();
-                System.out.print("Path from " + locationNames[i] + " to AP: ");
-                printShortestPath(i, apIndex, parents);
-                System.out.println(" with cost " + shortestDistances[apIndex]);
+                System.out.print("Path from " + locationNames[i] + " to " + locationNames[nearestAPIndex] + ": ");
+                printShortestPath(i, nearestAPIndex, parents);
+                System.out.println(" with cost " + shortestDistance);
+                writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/paths.csv", matrixFileName);
             }
         }
     }
 
-    public void writePathsToCSV(String fileName) {
+    public void writePathsToCSV(String fileName, String matrixFileName) {
         String[] paths = fileName.split("input/");
         String p = paths[0];
-        p += "output/" + paths[1];
+        p += "output/" + matrixFileName + "/" + paths[1];
 
         // Create output directory if it doesn't exist
         File directory = new File(p.substring(0, p.lastIndexOf("/")));
@@ -191,7 +240,7 @@ public class EvacuationSigns {
 
             int apIndex = -1;
             for (int i = 0; i < locationNames.length; i++) {
-                if (locationNames[i].equals("AP")) {
+                if (locationNames[i].startsWith("AP")) {
                     apIndex = i;
                     break;
                 }
@@ -224,7 +273,7 @@ public class EvacuationSigns {
         }
     }
 
-    public void visualizeGraph(int[][] graph, String title, boolean openGUI) {
+    public void visualizeGraph(int[][] graph, String title, boolean openGUI, String matrixFileName) {
         Graph g = new SingleGraph(title);
 
         for (String locationName : locationNames) {
@@ -247,7 +296,7 @@ public class EvacuationSigns {
         }
 
         try {
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/database/output/";
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/database/output/" + matrixFileName + "/";
             Files.createDirectories(Paths.get(outputFilePath));
 
             try (PrintWriter writer = new PrintWriter(outputFilePath + title + ".dot", StandardCharsets.UTF_8)) {
@@ -291,22 +340,39 @@ public class EvacuationSigns {
             return null;
         }
 
-        int apIndex = -1;
-        for (int i = 0; i < locationNames.length; i++) {
-            if (locationNames[i].equals("AP")) {
-                apIndex = i;
-                break;
+        int nearestAPIndex = -1;
+        int shortestDistance = Integer.MAX_VALUE;
+        for (String ap : assemblyPoints) {
+            int apIndex = -1;
+            for (int i = 0; i < locationNames.length; i++) {
+                if (locationNames[i].equals(ap)) {
+                    apIndex = i;
+                    break;
+                }
+            }
+            if (apIndex == -1) {
+                System.out.println("AP " + ap + " not found");
+                continue;
+            }
+
+            DijkstraResult result = dijkstra(startIndex);
+            int[] shortestDistances = result.getShortestDistances();
+
+            if (shortestDistances[apIndex] < shortestDistance) {
+                shortestDistance = shortestDistances[apIndex];
+                nearestAPIndex = apIndex;
             }
         }
-        if (apIndex == -1) {
-            System.out.println("AP not found");
+
+        if (nearestAPIndex == -1) {
+            System.out.println("No AP found");
             return null;
         }
 
         DijkstraResult result = dijkstra(startIndex);
         int[] parents = result.getParents();
         StringBuilder path = new StringBuilder();
-        buildPath(startIndex, apIndex, parents, path);
+        buildPath(startIndex, nearestAPIndex, parents, path);
 
         String[] pathNodes = path.toString().split(",");
         return pathNodes;
@@ -340,12 +406,13 @@ public class EvacuationSigns {
         return necessaryInformation;
     }
 
-    public void generateDotFile(String[][] array, String title) throws IOException, InterruptedException {
-        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/");
+    public void generateDotFile(String[][] array, String title, String subfolder) throws IOException, InterruptedException {
+        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/" + subfolder);
         if (!directory.exists()) {
             directory.mkdirs(); // If directory does not exist, create it
         }
         String outputFilePath = directory.getPath() + "/" + title + ".dot";
+
         try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
             writer.println("graph G {");
             for (String[] row : array) {
@@ -395,6 +462,3 @@ public class EvacuationSigns {
         p.waitFor();
     }*/
 }
-
-
-
