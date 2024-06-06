@@ -140,14 +140,14 @@ public class AgendaEntry implements Serializable {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
+        if (now.isAfter(start) && now.isBefore(end) && this.status != Status.CANCELED) {
+            return Status.IN_PROGRESS;
+        }
         if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED ) {
             return Status.PLANNED;
         }
         if (now.isAfter(end) && this.status != Status.CANCELED) {
             return Status.DONE;
-        }
-        if (now.isAfter(start) && now.isBefore(end) && this.status != Status.CANCELED) {
-            return Status.IN_PROGRESS;
         }
 
         return status;

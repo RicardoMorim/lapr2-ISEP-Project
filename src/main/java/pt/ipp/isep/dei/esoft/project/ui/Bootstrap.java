@@ -43,22 +43,25 @@ public class Bootstrap implements Runnable {
     public void loadData() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
             Map<String, Object> data = (Map<String, Object>) ois.readObject();
+            Repositories.getInstance().getJobRepository().setJobs((List<Job>) data.get("JobRepository"));
+            Repositories.getInstance().getSkillRepository().setSkills((List<Skill>) data.get("SkillRepository"));
             Repositories.getInstance().getCollaboratorRepository().setCollaborators((List<Collaborator>) data.get("CollaboratorRepository"));
             addOrganization();
             addUsers();
+            Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
             Repositories.getInstance().getTaskCategoryRepository().setTaskCategories((List<TaskCategory>) data.get("TaskCategoryRepository"));
-            Repositories.getInstance().getJobRepository().setJobs((List<Job>) data.get("JobRepository"));
-            Repositories.getInstance().getSkillRepository().setSkills((List<Skill>) data.get("SkillRepository"));
-            Repositories.getInstance().getVehicleRepository().setVehicleList((List<Vehicle>) data.get("VehicleRepository"));
-            Repositories.getInstance().getAgenda().setEntries((List<AgendaEntry>) data.get("Agenda"));
-            Repositories.getInstance().getGreenSpaceRepository().setGreenSpaces((List<GreenSpace>) data.get("GreenSpaceRepository"));
-            Repositories.getInstance().getToDoList().setEntries((List<Entry>) data.get("ToDoList"));
             Repositories.getInstance().getVehicleRepository().setBrandList((List<String>) data.get("Brands"));
             Repositories.getInstance().getVehicleRepository().setTypeList((List<String>) data.get("Types"));
             Repositories.getInstance().getVehicleRepository().setBrandToModelsMap((Map<String, List<String>>) data.get("Models"));
-            Repositories.getInstance().getTeamRepository().setTeams((List<Team>) data.get("TeamRepository"));
+            Repositories.getInstance().getVehicleRepository().setVehicleList((List<Vehicle>) data.get("VehicleRepository"));
+            Repositories.getInstance().getGreenSpaceRepository().setGreenSpaces((List<GreenSpace>) data.get("GreenSpaceRepository"));
+            Repositories.getInstance().getToDoList().setEntries((List<Entry>) data.get("ToDoList"));
+            Repositories.getInstance().getAgenda().setEntries((List<AgendaEntry>) data.get("Agenda"));
+
             updateEntryStatus();
         } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No data file found, bootstrapping data");
+            System.out.println(e.getMessage());
             addSkills();
             addJobs();
             addCollaborators();
@@ -112,8 +115,6 @@ public class Bootstrap implements Runnable {
     public void addEntries() {
         // Get the necessary repositories
         ToDoList entryRepository = Repositories.getInstance().getToDoList();
-        GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
-
 
         // Create some GreenSpaces
         GreenSpace greenSpace1 = Repositories.getInstance().getGreenSpaceRepository().getGreenSpaces().get(0);
