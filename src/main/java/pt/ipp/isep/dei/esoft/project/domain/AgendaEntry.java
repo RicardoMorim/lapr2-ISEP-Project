@@ -116,6 +116,13 @@ public class AgendaEntry implements Serializable {
         this.entry.setState(this.status);
     }
 
+
+    public void postPoneEntry(Date startDate){
+        this.startDate = startDate;
+        this.status = Status.POSTPONED;
+        this.endDate = getEndDateFromDuration();
+    }
+
     public Status getStatusBasedOnDates() {
 
         if (startDate == null || endDate == null) {
@@ -133,13 +140,17 @@ public class AgendaEntry implements Serializable {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
-        if (now.isBefore(start)) {
+        if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED ) {
             return Status.PLANNED;
         }
-        if (now.isAfter(end)) {
+        if (now.isAfter(end) && this.status != Status.CANCELED) {
             return Status.DONE;
         }
-        return Status.IN_PROGRESS;
+        if (now.isAfter(start) && now.isBefore(end) && this.status != Status.CANCELED) {
+            return Status.IN_PROGRESS;
+        }
+
+        return status;
 
 
     }

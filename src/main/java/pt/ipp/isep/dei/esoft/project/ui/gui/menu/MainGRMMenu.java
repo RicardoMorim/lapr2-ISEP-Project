@@ -11,6 +11,7 @@ import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddEntryToAgendaGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AddGreenSpaceGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.AssignTeamToAgendaEntryGUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.PostponeEntryGUI;
 
 public class MainGRMMenu {
 
@@ -47,6 +48,11 @@ public class MainGRMMenu {
             content.getChildren().setAll(assignTeamToAgendaEntryGUI.getAssignTeamToAgendaEntryGridPane(content.getHeight(), content.getWidth()));
         });
         Button btnPostponeEntry = new Button("Postpone an Entry to the Agenda");
+        btnPostponeEntry.setOnAction(e -> {
+            PostponeEntryGUI postponeEntryGUI = new PostponeEntryGUI();
+            content.getChildren().setAll(postponeEntryGUI.getPostponeEntryGridPane(content.getHeight(), content.getWidth()));
+        });
+
         Button btnCancel = new Button("Cancel an entry in the Agenda");
         Button btnAddEntryToDoList = new Button("Add an entry to the ToDo List");
         Button btnListGreenSpaces = new Button("List Green Spaces");

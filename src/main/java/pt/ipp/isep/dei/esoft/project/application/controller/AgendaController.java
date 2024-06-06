@@ -27,8 +27,7 @@ public class AgendaController {
     }
 
     public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
-        entry.setStatus(Status.POSTPONED);
-        entry.setStartDate(date);
+        entry.postPoneEntry(date);
         return entry;
     }
 
