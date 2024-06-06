@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Agenda.
@@ -24,6 +25,12 @@ public class Agenda implements Serializable {
      */
     public Agenda() {
         this.entries = new ArrayList<>();
+    }
+
+    public List<AgendaEntry> getEntriesByTeam(Team team) {
+        return this.entries.stream()
+                .filter(entry -> entry.getTeam() != null && entry.getTeam().equals(team))
+                .collect(Collectors.toList());
     }
 
     /**

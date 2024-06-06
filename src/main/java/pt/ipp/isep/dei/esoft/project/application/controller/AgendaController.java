@@ -43,6 +43,9 @@ public class AgendaController {
         agenda.addEntry(new AgendaEntry(entry, endDate, startDate, duration));
     }
 
+    public List<AgendaEntry> getEntriesByTeam(Team team) {
+        return agenda.getEntriesByTeam(team);
+    }
 
     /**
      * Add entry.

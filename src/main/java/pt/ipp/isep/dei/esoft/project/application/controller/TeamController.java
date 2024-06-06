@@ -21,6 +21,11 @@ public class TeamController {
         }
     }
 
+    public Team getTeamByCollaborator(Collaborator collaborator){
+        return teamRepository.getTeamByCollaborator(collaborator);
+    }
+
+
     public void addTeam(Team team) {
         teamRepository.add(team);
     }

@@ -16,6 +16,15 @@ public class TeamRepository implements Serializable {
         this.teams = new ArrayList<>();
     }
 
+    public Team getTeamByCollaborator(Collaborator collaborator){
+        for (Team team : teams) {
+            if (team.getCollaborators().contains(collaborator)) {
+                return team;
+            }
+        }
+        return null;
+    }
+
     public void add(Team team) {
         if (teams.contains(team))throw new IllegalArgumentException("Team already exists");
         teams.add(team);
