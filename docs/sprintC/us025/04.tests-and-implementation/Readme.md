@@ -2,100 +2,41 @@
 
 ## 4. Tests
 
-**Test 1:** Cancel exiting entry
+**Test 1:** Test if the status of the entry changes to CANCELLED after cancelling
 
     @Test
-    public void testCancelEntry() {
-        // Create a mock of the Agenda
-        Agenda agendaMock = mock(Agenda.class);
-        // Create a mock of the Entry
-        Entry entryMock = mock(Entry.class);
-        // Assume getStatus method returns CANCELED
-        when(entryMock.getStatus()).thenReturn(Status.CANCELED);
-        // Assume getEntries method returns a list with one entry
-        when(agendaMock.getEntries()).thenReturn(Collections.singletonList(entryMock));
-
-        // Create an instance of CancelUI with the mocked Agenda
-        CancelUI cancelUI = new CancelUI(agendaMock);
-
-        // Call the method to cancel an entry
-        cancelUI.cancelEntry(entryMock);
-
-        // Verify that the status of the entry is set to CANCELED
-        verify(entryMock).setStatus(Status.CANCELED);
+    void cancelEntryShouldChangeStatusToCancelled() {
+        agendaController.cancelEntry(entry);
+        assertEquals(Status.CANCELLED, entry.getStatus());
     }
 }
 
-**Test 2:** Cancel non-existing entry
+**Test 2:** Test if the entry is still in the agenda after cancelling
 
     @Test
-    public void testCancelNonExistingEntry() {
-        Agenda agendaMock = mock(Agenda.class);
-        Entry entryMock = mock(Entry.class);
-        // Assume getEntries method returns an empty list
-        when(agendaMock.getEntries()).thenReturn(Collections.emptyList());
-
-        // Create an instance of CancelUI with the mocked Agenda
-        CancelUI cancelUI = new CancelUI(agendaMock);
-
-        // Call the method to cancel an entry
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            cancelUI.cancelEntry(entryMock);
-        });
-
-        // Verify that the exception message is as expected
-        assertEquals("Entry not found in the agenda.", exception.getMessage());
+    void cancelEntryShouldStillBeInAgenda() {
+        agendaController.cancelEntry(entry);
+        assertTrue(agenda.getEntries().contains(entry));
     }
 }
 
 ## 5. Construction (Implementation)
 
-### Class CollaboratorController
+### Class EntryController
 
 ```java
-    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-    Collaborator old = collaborator.clone();
-    collaborator.addSkill(skill);
-    collaboratorRepository.update(old, collaborator);
-}
+
 ```
 
-### Class CollaboratorRepository
+### Class AgendaController
 
 ```java
-    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
-    boolean operationSuccess = false;
 
-    if (collaborators.contains(oldCollaborator)) {
-        this.collaborators.remove(oldCollaborator);
-        operationSuccess = this.collaborators.add(newCollaborator);
-    }
-
-    if (!operationSuccess) {
-        throw new IllegalArgumentException("Collaborator not found.");
-    }
-
-    return newCollaborator;
-}
 ```
 ### Class Collaborator
 
 ```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
-    }
 
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
-        }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
-    
-        return this.skills;
-    }
 ```
 
 ## 6. Integration and Demo
