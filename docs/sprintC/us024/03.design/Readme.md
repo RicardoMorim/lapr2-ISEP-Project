@@ -1,51 +1,52 @@
-# US024 - Postpone an entry in the Agenda
+# US024 - Postpone an entry in the Agenda 
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-| Interaction ID                                                      | Question: Which class is responsible for...                  | Answer                 | Justification (with patterns)                                                                                 |
-|:--------------------------------------------------------------------|:-------------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		                                                             | 	... coordinating the US?                                    | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the repository to get the collaborator list    | CollaboratorController | IE: its the controller with access to the collaborator repository                                             |
-|                                                                     | ... getting the collaborator list                            | CollaboratorRepository | IE: its the repository that stores the collaborator's information's                                           |
-| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?                              | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the skill repository to get the list of skills | SkillController        | IE: its the controller that has access to the skill repository                                                |
-| 			  		                                                             | 	... knowing the list of skills                              | SkillRepository        | IE: The repository keeps all the skills                                                                       |
-| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... validate skill                                           | Skill                  | IE: Validates the skill before validating it                                                                  |
-|                                                                     | ... saving the collaborator's skills                         | Collaborator           | IE: Manages collaborator's information                                                                        |
-| Step 6: Displays operation success 		                               | ... interacting with the actor?							                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
+| Interaction ID | Question: Which class is responsible for...  | Answer            | Justification (with patterns)                                                                                      |
+|:---------------|:---------------------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?              | PostponeEntryUI   | Pure Fabrication: The is no reason to assign this responsability to any existing class in the Domain Model         |
+|                | ... coordinating the US?                     | EntryController   | Controller                                                                                                         |
+|                | ... getting EntryRepository?                 | Repositories      | Repository                                                                                                         |
+|                | ... getting agendaEntry list?                | EntryRepository   | Repository                                                                                                         |
+| Step 2         | ... show the agendaEntry list?               | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for displaying information to the user                               |
+| Step 3         | ... selecting a agendaEntry ?                | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for capturing user input                                             |
+| Step 4         | ... requesting new date for the agendaEntry? | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for capturing user input                                             |
+| Step 5         | ... submitting the new date?                 | EntryController   | Controller:                                                                                                        |
+| Step 6         | ... displaying agendaEntry  data?            | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for displaying information to the user                               |
+| Step 7         | ... confirms data                            | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for capturing user input                                             |
+|                | ... validate submitted data?                 | EntryRepository   | Repository                                                                                                         |
+|                | ... postponing the agendaEntry?              | EntryRepository   | Repository                                                                                                         | 
+|                | ... create new agendaEntry?                  | EntryRepository   | Repository                                                                                                         |
+|                | ... verify local data?                       | AgendaEntry       | Information Expert: The AgendaEntry class has the information about the entry and is responsible for verifying it. |
+|                | ... notifying the team?                      | TeamRepository    | Repository                                                                                                         | 
+| Step 8         | ... informing operation success?             | PostponeEntryUI   | Pure Fabrication: The UI class is responsible for displaying information to the user                                                                                                 | 
+
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* PostponeEntryUI
-* PostponeEntryController
-* Agenda
-* Repositories
-* Entry
-* TeamRepository
+* AgendaEntry
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* 
+* Repositories
+* PostponeEntryUI
+* EntryController
+* EntryRepository
+* TeamRepository
 
 ## 3.2. Sequence Diagram (SD)
+
+*Note that SSD - Alternative Two is adopted.*
 
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
 ![Sequence Diagram - Full](svg/us024-sequence-diagram-System_Sequence_Diagram__SSD_.svg)
-
-### Split Diagrams
-
-N/A
 
 ## 3.3. Class Diagram (CD)
 
