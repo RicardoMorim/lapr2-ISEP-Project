@@ -62,10 +62,30 @@ public class CheckAssignedTasksGUI {
             filterTasks(table, startDatePicker.getValue(), endDatePicker.getValue(), status);
         });
 
+        Button setDoneButton = new Button("Set as Done");
+        setDoneButton.setOnAction(e -> {
+            AgendaEntry selectedTask = table.getSelectionModel().getSelectedItem();
+            if (selectedTask != null) {
+                selectedTask.setStatus(Status.DONE);
+                table.refresh();
+            } else {
+                // Show an error message if no task is selected
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a task to set as done.");
+                alert.showAndWait();
+            }
+        });
+
         HBox filtersBox = new HBox(10, new Label("Start Date:"), startDatePicker, new Label("End Date:"), endDatePicker, new Label("Status:"), statusComboBox, filterButton);
         filtersBox.setAlignment(Pos.CENTER);
 
-        vbox.getChildren().addAll(filtersBox, table);
+        HBox buttonsBox = new HBox(10, filterButton, setDoneButton);
+        buttonsBox.setAlignment(Pos.CENTER);
+
+        vbox.getChildren().addAll(filtersBox, buttonsBox, table);
+
 
         grid.add(vbox, 0, 0);
         return grid;

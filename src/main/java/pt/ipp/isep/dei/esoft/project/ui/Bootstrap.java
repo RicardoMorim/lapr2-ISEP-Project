@@ -81,9 +81,7 @@ public class Bootstrap implements Runnable {
 
     public void updateEntryStatus() {
         for (AgendaEntry entry : Repositories.getInstance().getAgenda().getEntries()) {
-            Status st = (entry.getStatusBasedOnDates());
-            entry.setStatus(st);
-            System.out.println("new entry status: " + entry.getStatus());
+            entry.setStatus(entry.getStatusBasedOnDates());
             entry.getEntry().setState(entry.getStatus());
         }
     }
