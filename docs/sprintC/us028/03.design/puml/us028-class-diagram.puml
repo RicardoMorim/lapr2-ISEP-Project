@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Collaborator {
+    -email: String
+    -name: String
+    -address: Address
+    -phone: String
+    -job: Job
+    -skills: List<Skill>
+    -birthDate: Date
+    -admissionDate: Date
+    -IDtype: String
+    -taxpayerNumber: int
+    -citizenNumber: int
+    -isFree: boolean
+}
+
+class Agenda {
+    -entries: List<AgendaEntry>
+}
+
+class AgendaEntry {
+    -team: Team
+    -vehicles: List<Vehicle>
+    -duration: String
+    -status: Status
+    -entry: Entry
+    -date: Date
+}
+
+class Status {
+    PLANNED
+    POSTPONED
+    CANCELED
+    DONE
+    TO_BE_DONE
+    IN_PROGRESS
+}
+
+class AddEntryToAgendaUI {
+}
+
+class Repositories {
+}
+
+AddEntryToAgendaUI --> AgendaController
+AgendaController --> Repositories
+Repositories --> Agenda
+Agenda --> AgendaEntry
+AgendaEntry --> Status
+AgendaEntry --> Team
+Team --> Collaborator
+
+
+@enduml

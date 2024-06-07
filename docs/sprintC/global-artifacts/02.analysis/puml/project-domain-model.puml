@@ -78,6 +78,15 @@ class Entry{
     expectedDuration
 }
 
+class Status{
+    toBeDone
+    done
+    canceled
+    postponed
+    planned
+    inProgress
+}
+
 Team "0,1" -- "*"Collaborator : has >
 Collaborator "1" -- "1"Address : resides in >
 Collaborator "*" -- "1"Job : has >
