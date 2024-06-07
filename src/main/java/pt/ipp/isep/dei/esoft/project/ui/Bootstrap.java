@@ -57,7 +57,6 @@ public class Bootstrap implements Runnable {
             Repositories.getInstance().getGreenSpaceRepository().setGreenSpaces((List<GreenSpace>) data.get("GreenSpaceRepository"));
             Repositories.getInstance().getToDoList().setEntries((List<Entry>) data.get("ToDoList"));
             Repositories.getInstance().getAgenda().setEntries((List<AgendaEntry>) data.get("Agenda"));
-
             updateEntryStatus();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No data file found, bootstrapping data");
@@ -82,7 +81,9 @@ public class Bootstrap implements Runnable {
 
     public void updateEntryStatus() {
         for (AgendaEntry entry : Repositories.getInstance().getAgenda().getEntries()) {
-            entry.setStatus(entry.getStatusBasedOnDates());
+            Status st = (entry.getStatusBasedOnDates());
+            entry.setStatus(st);
+            System.out.println("new entry status: " + entry.getStatus());
             entry.getEntry().setState(entry.getStatus());
         }
     }

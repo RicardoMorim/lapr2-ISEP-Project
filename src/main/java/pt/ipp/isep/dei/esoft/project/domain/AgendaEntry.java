@@ -137,19 +137,19 @@ public class AgendaEntry implements Serializable {
         LocalDate end = utilEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         LocalDate now = LocalDate.now();
+        System.out.println(start);
+        System.out.println(end);
+        System.out.println(now);
+        System.out.println(this.status);
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
-        if (now.isAfter(start) && now.isBefore(end) && this.status != Status.CANCELED) {
+        if (now.isAfter(start)  && this.status != Status.CANCELED) {
             return Status.IN_PROGRESS;
         }
         if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED ) {
             return Status.PLANNED;
         }
-        if (now.isAfter(end) && this.status != Status.CANCELED) {
-            return Status.DONE;
-        }
-
         return status;
 
 
