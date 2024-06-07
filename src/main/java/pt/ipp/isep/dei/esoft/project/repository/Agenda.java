@@ -46,6 +46,48 @@ public class Agenda implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    public boolean isDateAvailableForTeam(Date chosenStartDate, AgendaEntry entry) {
+        Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
+        for (AgendaEntry e : entries) {
+            if (e.getTeam() == entry.getTeam()) {
+                if ((chosenStartDate.compareTo(e.getStartDate()) >= 0 && chosenStartDate.compareTo(e.getEndDate()) <= 0) ||
+                        (chosenEndDate.compareTo(e.getStartDate()) >= 0 && chosenEndDate.compareTo(e.getEndDate()) <= 0) ||
+                        (chosenStartDate.compareTo(e.getStartDate()) <= 0 && chosenEndDate.compareTo(e.getEndDate()) >= 0)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
+        List<Date> suggestions = new ArrayList<>();
+        int daysBefore = 1;
+        int daysAfter = 1;
+
+        // Find the nearest available date before the chosen date
+        Date before = new Date(date.getTime() - daysBefore * 24 * 60 * 60 * 1000);
+        while (before.after(new Date())) { // Check if the date is not in the past
+            if (isDateAvailableForTeam(before, entry)) {
+                suggestions.add(before);
+                break;
+            }
+            daysBefore++;
+            before = new Date(date.getTime() - (long) daysBefore * 24 * 60 * 60 * 1000);
+        }
+
+        // Find the nearest available date after the chosen date
+        while (suggestions.size() < 2) {
+            Date after = new Date(date.getTime() + (long) daysAfter * 24 * 60 * 60 * 1000);
+            if (isDateAvailableForTeam(after, entry)) {
+                suggestions.add(after);
+            }
+            daysAfter++;
+        }
+
+        return suggestions;
+    }
+
     /**
      * Sets entries.
      *
@@ -178,12 +220,15 @@ public class Agenda implements Serializable {
 
 
     public Date getEndDateFromDuration(Date startDate, String duration) {
-        int hoursByDay = 8;
         if (startDate == null) {
-            return null;
+            throw new IllegalArgumentException("Start date is required to calculate the end date");
         }
 
-        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        final int hoursByDay = 8;
+
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int durationInDays = Integer.parseInt(duration) / hoursByDay;
 
         // If weekends should not be counted

@@ -35,6 +35,10 @@ public class AgendaController {
         return entry;
     }
 
+    public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
+        return agenda.findNearestAvailableDates(date, entry);
+    }
+
     public void addEntry(Entry entry, Date startDate, String duration) {
         agenda.addEntry(new AgendaEntry(entry, startDate, duration));
     }
@@ -49,6 +53,10 @@ public class AgendaController {
 
     public List<AgendaEntry> getEntriesByTeam(Team team) {
         return agenda.getEntriesByTeam(team);
+    }
+
+    public boolean isDateAvailableForTeam(Date date, AgendaEntry entry) {
+        return agenda.isDateAvailableForTeam(date, entry);
     }
 
     /**
