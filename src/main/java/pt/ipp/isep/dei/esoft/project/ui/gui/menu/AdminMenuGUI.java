@@ -94,7 +94,11 @@ public class AdminMenuGUI {
             content.getChildren().setAll(registerVehicleMaintenanceGUI.getRegisterVehicleMaintenanceGUI());
         });
 
-
+        Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
+        btnAddVehicleToAgendaEntry.setOnAction(e -> {
+            AddVehicleToAgendaEntryGUI addVehicleToAgendaEntryGUI = new AddVehicleToAgendaEntryGUI();
+            content.getChildren().setAll(addVehicleToAgendaEntryGUI.getAddVehicleToAgendaEntryGUIGridPane(content.getHeight(), content.getWidth()));
+        });
 
         grid.add(btnRegisterSkill, 0, 0);
         grid.add(btnRegisterJob, 1, 0);
@@ -105,10 +109,11 @@ public class AdminMenuGUI {
         grid.add(btnAddEntryToAgenda, 0, 4);
         grid.add(btnAddGreenSpace, 1, 4);
         grid.add(btnAssignTeamToAgendaEntry, 0, 5);
-        grid.add(btnPostponeEntry, 1, 5);
-        grid.add(btnCancel, 0, 6);
-        grid.add(btnAddEntryToDoList, 1, 6);
-        grid.add(btnListGreenSpaces, 0, 7);
+        grid.add(btnAddVehicleToAgendaEntry, 1,5);
+        grid.add(btnPostponeEntry, 0, 6);
+        grid.add(btnCancel, 1, 6);
+        grid.add(btnAddEntryToDoList, 0, 7);
+        grid.add(btnListGreenSpaces, 1, 7);
 
         applyButtonAnimations();
         return grid;

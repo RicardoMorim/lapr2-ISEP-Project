@@ -1,30 +1,28 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.VehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
-import java.util.List;
-
-public class AddVehicleToAgendaEntryGUI extends Application {
+public class AddVehicleToAgendaEntryGUI {
 
     private AgendaController agendaController = new AgendaController();
     private VehicleController vehicleController = new VehicleController();
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Add/Remove Vehicle to/from Agenda Entry");
+    public GridPane getAddVehicleToAgendaEntryGUIGridPane(double height, double width) {
+        GridPane grid = new GridPane(height, width);
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setAlignment(Pos.CENTER);
 
         ComboBox<AgendaEntry> cbAgendaEntry = new ComboBox<>();
         cbAgendaEntry.getItems().addAll(agendaController.getAgenda().getEntries());
@@ -81,8 +79,7 @@ public class AddVehicleToAgendaEntryGUI extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10));
 
-        Scene scene = new Scene(vbox, 300, 250);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        grid.add(vbox, 0, 0);
+        return grid;
     }
 }
