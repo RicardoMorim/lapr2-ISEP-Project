@@ -9,33 +9,27 @@ skinparam classAttributeIconSize 0
 
 EntryController --> Agenda
 EntryController ..> Repositories : repositories
-EntryController --> Entry
-Entry --> Team
-PostponeEntryUI ..> EntryController
+EntryController --> AgendaEntry
+PostponeEntryGUI ..> EntryController
 Repositories --> "1" Agenda
-Repositories --> "1" TeamRepository
+
 Repositories <-- Repositories : instance
-PostponeEntryUI_fx ..> EntryController
-Agenda --> Entry
+Agenda --> AgendaEntry
 
 class EntryController {
     -Agenda agenda
     +EntryController()
     -void getAgenda()
-    +Entry displayAndSelectEntry()
-    +boolean postponeEntry(Entry entry, Date newDate)
+    +AgendaEntry displayAndSelectEntry()
+    +boolean postponeEntry(AgendaEntry entry, Date newDate)
 }
 
-class Entry {
+class AgendaEntry {
     -String entryTitle
     -Date date
     -Team team
-    +Entry(String state, String description, String urgency, String entryTitle, int duration, Date date, List<Vehicle> vehicles, Team team, GreenSpace greenSpace)
-    +Entry(String state, String description, String urgency, String entryTitle, int duration, Date date, GreenSpace greenSpace)
-    +void setTeam(Team team)
     +String getEntryTitle()
     +String getDateToString()
-    +Team getTeam()
     +void setDate(Date date)
     +Date getDate()
     +Date validateDate()
@@ -43,44 +37,17 @@ class Entry {
     +String toString()
 }
 
-class Team {
-    +List<Collaborator> getTeamMembers()
-}
 
 class Agenda {
-    -static final List<Entry> agenda
+    -static final List<AgendaEntry> agenda
     +void addEntry(Entry entry)
     +static void printEntryAt(int nList)
-    +static List<Entry> getAgenda()
-    +static Entry getEntryAt(int nList)
+    +static List<AgendaEntry> getAgenda()
+    +static AgendaEntry getEntryAt(int nList)
     +static int getSize()
 }
 
-class PostponeEntryUI {
-    -EntryController controller
-    -Entry entry
-    -Date newDate
-    +PostponeEntryUI()
-    +void run()
-    -EntryController getController()
-    -void requestData()
-    -void submitData()
-    -void confirmsData()
-}
-
-class PostponeEntryUI_fx {
-    -ListView<String> entriesListView
-    -List<Entry> entries
-    -List<String> hours
-    -Button button
-    -Label operationStatusLabel
-    -DatePicker postponeDatePicker
-    -ChoiceBox hourChoiceBox
-    +void initialize(URL url, ResourceBundle resourceBundle)
-    -void populateEntriesListView()
-    -void populateHoursListView()
-    -void postponingEntry()
-    -Date localDateToDate(LocalDate selectedDate)
+class PostponeEntryGUI {
 }
 
 class Repositories{

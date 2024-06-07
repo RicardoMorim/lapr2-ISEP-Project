@@ -8,7 +8,7 @@ hide circle
 class Agenda {
 }
 
-class Entry {
+class AgendaEntry {
   startingDate
   progressStatus
 }
@@ -21,31 +21,33 @@ class GreenSpace {
 }
 
 class Team {
-  teamId
   maxNumberElements
   minNumberElements
 }
 
-class Task {
+class Entry {
   title
   description
   duration
-  urgencyStatus
+  urgency
+  Status
 }
 
 class Collaborator {
-  name
-  birthdate
-  admissionDate
-  mobileNumber
-  e-mail
-  taxpayerNumber
+    name
+    birthdate
+    admission date
+    address
+    contact
+    taxpayer number
+    identification document
+    identification number
 }
 
-Agenda "1" -- "1..*" Entry : has
-Entry "*" -- "1" GreenSpace : is assigned
-Entry "*" -- "1" Team : assigned to
-Entry "1" -- "1" Task : is assigned
+Agenda "1" -- "1..*" AgendaEntry : has
+AgendaEntry "*" -- "1" GreenSpace : is associated to
+AgendaEntry "*" -- "1" Team : assigned to
+AgendaEntry "1" -- "1" Entry : is assigned
 Team "1" -- "1..*" Collaborator : has
 
 @enduml

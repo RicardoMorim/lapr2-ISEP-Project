@@ -14,6 +14,7 @@ public class PostponeEntryUI implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("\n------- Postpone an entry in the Agenda --------\n");
         List<AgendaEntry> agendaEntries = agendaController.getAgenda().getEntries();
         int entryIndex = Utils.showAndSelectIndex(agendaEntries, "Choose an entry to postpone: ");
         if (entryIndex == -1) {
