@@ -8,10 +8,11 @@ title System Sequence Diagram (SSD)
 autonumber
 
 actor "GSM" as Employee
-participant ":PostponeEntryUI" as UI
-participant ":PostponeEntryController" as CTRL
+participant ":PostponeEntryGUI" as UI
+participant ":AgendaController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as AgendaRepo
+participant "agenda\n:Agenda" as AGR
 
 activate Employee
 
@@ -27,11 +28,17 @@ activate Employee
                 RepositorySingleton --> CTRL: repositories
             deactivate RepositorySingleton
 
-            CTRL -> AgendaRepo : getAgendaEntries()
+            CTRL -> AgendaRepo : getAgenda()
             activate AgendaRepo
 
-                AgendaRepo --> CTRL : agendaEntryList
+                AgendaRepo --> CTRL : agenda
             deactivate AgendaRepo
+
+             CTRL -> AGR : getEntries()
+                activate AGR
+
+            AGR --> CTRL : entries
+                deactivate AGR
 
             CTRL --> UI : entryList
         deactivate CTRL
