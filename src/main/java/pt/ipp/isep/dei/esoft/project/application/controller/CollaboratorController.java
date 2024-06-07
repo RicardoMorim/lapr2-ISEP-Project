@@ -3,11 +3,7 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.isep.lei.esoft.auth.domain.model.Email;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -24,49 +20,6 @@ public class CollaboratorController {
 
     public CollaboratorController(CollaboratorRepository collaboratorRepository) {
         this.collaboratorRepository = collaboratorRepository;
-    }
-
-    public void notifyPostPoneTeamMembers(AgendaEntry entry, Date oldDate) {
-        LocalDate oldLocalDate = oldDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
-        String formattedOldDate = oldLocalDate.format(formatter);
-        Date newStartDate = entry.getStartDate();
-        String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
-        Date newEndDate = entry.getEndDate();
-        String formatedNewEndDate = newEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
-        for (Collaborator collaborator : entry.getTeam().getCollaborators()) {
-            String message = "Dear collaborator " + collaborator.getName() + ",\n\nThe task " + entry.getEntry().getTitle() + " previously scheduled to start at " + formattedOldDate + " has been postponed to start at " + formatedNewStartDate + ".The new end date should be: " + formatedNewEndDate + ".\n\nBest regards, The Musgo Sublime Administration.\n";
-            Notification notification = new Notification("Task Postponed", message, new EmailWrapper(new Email(collaborator.getEmail())));
-            collaborator.addNotification(notification);
-        }
-    }
-
-    public void notifyNewTeam(Team team) {
-        StringBuilder teamMembers = new StringBuilder();
-        for (Collaborator collaborator : team.getCollaborators()) {
-            teamMembers.append(collaborator.getName()).append(", ");
-        }
-        teamMembers.deleteCharAt(teamMembers.length() - 1);
-        teamMembers.deleteCharAt(teamMembers.length() - 1);
-
-        for (Collaborator collaborator : team.getCollaborators()) {
-            String message = "Dear collaborator " + collaborator.getName() + ",\n\nYou have been chosen to integrate a new team!\n The team is composed by: " + teamMembers + ".\n\nBest regards, The Musgo Sublime Administration.\n";
-            Notification notification = new Notification("New Team", message, new EmailWrapper(new Email(collaborator.getEmail())));
-            collaborator.addNotification(notification);
-        }
-    }
-
-    public void notifyNewTaskTeamMembers(AgendaEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
-        Date newStartDate = entry.getStartDate();
-        String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
-        Date newEndDate = entry.getEndDate();
-        String formatedNewEndDate = newEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
-        for (Collaborator collaborator : entry.getTeam().getCollaborators()) {
-            String message = "Dear collaborator " + collaborator.getName() + ",\n\nYour team has been selected for a new task. We are forwarding you the details.\n\n" + entry.getEntry().getTitle() + "\nThe task should start on " + formatedNewStartDate + "\nIt should be completed by " + formatedNewEndDate + ".\n\nBest regards, The Musgo Sublime Administration.\n";
-            Notification notification = new Notification("New Task", message, new EmailWrapper(new Email(collaborator.getEmail())));
-            collaborator.addNotification(notification);
-        }
     }
 
 

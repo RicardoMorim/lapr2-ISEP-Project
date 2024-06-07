@@ -25,7 +25,7 @@ public class AssignTeamToAgendaEntryGUI {
     private TeamController teamController = new TeamController();
     private AgendaController agendaController = new AgendaController();
     private VBox vboxTeams = new VBox(5);
-    private TableView<Team> tableTeams = new TableView<>();  // Single instance
+    private TableView<Team> tableTeams = new TableView<>();
 
     public GridPane getAssignTeamToAgendaEntryGridPane(double height, double width) {
         GridPane grid = new GridPane();
@@ -165,6 +165,7 @@ public class AssignTeamToAgendaEntryGUI {
                 tableEntriesNoTeam.getItems().remove(selectedEntry);
                 tableEntriesWithTeam.getItems().add(selectedEntry);
                 lvTeam.getItems().setAll(selectedEntry.getTeam().getCollaborators().stream().map(Collaborator::getName).collect(Collectors.toList()));
+                teamController.notifyNewTaskTeamMembers(selectedEntry);
             }
         });
         return btnAdd;
@@ -176,10 +177,12 @@ public class AssignTeamToAgendaEntryGUI {
         btnRemove.setOnAction(e -> {
             AgendaEntry selectedEntry = tableEntriesWithTeam.getSelectionModel().getSelectedItem();
             if (selectedEntry != null && selectedEntry.getTeam() != null) {
+                Team oldTeam = selectedEntry.getTeam();
                 teamController.unassignTeam(selectedEntry);
                 tableEntriesWithTeam.getItems().remove(selectedEntry);
                 tableEntriesNoTeam.getItems().add(selectedEntry);
                 lvTeam.getItems().clear();
+                teamController.notifyTeamRemoved(selectedEntry, oldTeam);
             }
         });
         return btnRemove;
