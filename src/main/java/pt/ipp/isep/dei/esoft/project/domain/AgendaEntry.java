@@ -123,6 +123,14 @@ public class AgendaEntry implements Serializable {
         this.endDate = getEndDateFromDuration();
     }
 
+    public String getDescription(){
+        return this.entry.getDescription();
+    }
+
+    public String getTitle() {
+        return this.entry.getTitle();
+    }
+
     public Status getStatusBasedOnDates() {
 
         if (startDate == null || endDate == null) {

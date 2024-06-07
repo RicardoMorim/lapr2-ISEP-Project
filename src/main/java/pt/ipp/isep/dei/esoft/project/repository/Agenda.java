@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
-import pt.ipp.isep.dei.esoft.project.domain.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.Team;
-import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
@@ -30,6 +27,22 @@ public class Agenda implements Serializable {
     public List<AgendaEntry> getEntriesByTeam(Team team) {
         return this.entries.stream()
                 .filter(entry -> entry.getTeam() != null && entry.getTeam().equals(team))
+                .collect(Collectors.toList());
+    }
+
+    public List<Vehicle> getVehiclesNotAssignedAtDates(List<Vehicle> vehicles, Date startDate, Date endDate) {
+        List<Vehicle> vehiclesNotAssigned = new ArrayList<>(vehicles);
+        for (AgendaEntry entry : entries) {
+            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)) {
+                vehiclesNotAssigned.removeAll(entry.getVehicles());
+            }
+        }
+        return vehiclesNotAssigned;
+    }
+
+    public List<AgendaEntry> getNotDoneEntries() {
+        return this.entries.stream()
+                .filter(entry -> entry.getStatus() != Status.DONE)
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +85,7 @@ public class Agenda implements Serializable {
      * @param old      the old
      * @param newEntry the new entry
      */
-    public void updateEntry(AgendaEntry old, AgendaEntry newEntry){
+    public void updateEntry(AgendaEntry old, AgendaEntry newEntry) {
         removeEntry(old);
         addEntry(newEntry);
     }
@@ -151,11 +164,11 @@ public class Agenda implements Serializable {
     }
 
 
-    public List<Team> filterUnavailableTeams(Date startDate, Date endDate, List<Team> teams){
+    public List<Team> filterUnavailableTeams(Date startDate, Date endDate, List<Team> teams) {
         List<Team> availableTeams = new ArrayList<>(teams);
 
-        for (AgendaEntry entry: entries){
-            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)){
+        for (AgendaEntry entry : entries) {
+            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)) {
                 availableTeams.remove(entry.getTeam());
             }
         }
@@ -164,7 +177,7 @@ public class Agenda implements Serializable {
     }
 
 
-    public Date getEndDateFromDuration(Date startDate, String duration){
+    public Date getEndDateFromDuration(Date startDate, String duration) {
         int hoursByDay = 8;
         if (startDate == null) {
             return null;
@@ -181,15 +194,15 @@ public class Agenda implements Serializable {
         return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
-    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries){
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
         List<Entry> toDoEntriesNotInAgenda = new ArrayList<>(entries);
-        for (AgendaEntry entry: this.entries){
+        for (AgendaEntry entry : this.entries) {
             toDoEntriesNotInAgenda.remove(entry.getEntry());
         }
         return toDoEntriesNotInAgenda;
     }
 
-    public List<AgendaEntry> getEntriesWithTeam(){
+    public List<AgendaEntry> getEntriesWithTeam() {
         return this.entries.stream()
                 .filter(entry -> entry.getTeam() != null)
                 .collect(Collectors.toList());

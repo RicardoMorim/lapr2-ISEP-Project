@@ -15,7 +15,6 @@ public class MainGUI extends Application {
     public static void main(String[] args) {
         bootstrap = new Bootstrap();
         bootstrap.run();
-
         launch(args);
     }
 
