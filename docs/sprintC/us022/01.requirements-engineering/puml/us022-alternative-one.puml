@@ -22,13 +22,19 @@ activate Employee
     Employee -> System : chooses the entry
     activate System
 
-    System --> Employee : asks to confirm the data
+    System --> Employee : asks for the start date
     deactivate System
 
-    Employee -> System : confirms the data
+    Employee -> System : provides the start date
     activate System
 
-    System --> Employee : shows the success of the operation
+    System --> Employee : asks for the end date or duration
+    deactivate System
+
+    Employee -> System : provides the end date or duration
+    activate System
+
+    System --> Employee : returns success
     deactivate System
 
 @enduml

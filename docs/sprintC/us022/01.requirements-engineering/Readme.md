@@ -12,8 +12,7 @@ As a GSM, I want to assign a Team to an entry in the Agenda.
 
 > The Agenda is made up of todo-list entries, the team that will carry out the task,
 > the vehicles/equipment assigned
-> to the task, expected duration, and the status (Planned, Postponed, Canceled,
-> Done).
+> to the task, expected duration, and the status.
 
 
 **From the client clarifications:**
@@ -57,34 +56,33 @@ As a GSM, I want to assign a Team to an entry in the Agenda.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The to-do list entry must exist in the system.
-* **AC3:** The team must exist in the system and be free for a new task.
-* **AC4:** The vehicles must exist in the system and be free for a new task.
+* **AC1:** The Start Date and a duration or the end date  are required to add an entry to the Agenda.
+* **AC2:** The system must use the provided end date and duration if both are provided
+* **AC3:** The system must calculate the one not provided if the user only provided either the duration or the end date
 
 ### 1.4. Found out Dependencies
 
 * There is a dependency on "US021 - As a GSM, I want to add a new entry to the To-Do List.
-* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be
-  at least one skill to be assigned to a collaborator
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * The collaborator
-    * The skill
+    * Duration
+
+* Chosen Data:
+    * Start Date
+    * End Date
 
 **Output Data:**
 
-* (In)Success of the operation
-* The updated skills of the collaborator
+* A new entry in the Agenda
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us004-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us0022-System_Sequence_Diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The user can always choose a different person to add the skill in case he makes a mistake
+* n/a
