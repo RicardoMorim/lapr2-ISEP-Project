@@ -17,8 +17,10 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CheckAssignedTasksGUI {
@@ -81,11 +83,8 @@ public class CheckAssignedTasksGUI {
         HBox filtersBox = new HBox(10, new Label("Start Date:"), startDatePicker, new Label("End Date:"), endDatePicker, new Label("Status:"), statusComboBox, filterButton);
         filtersBox.setAlignment(Pos.CENTER);
 
-        HBox buttonsBox = new HBox(10, filterButton, setDoneButton);
-        buttonsBox.setAlignment(Pos.CENTER);
-
-        vbox.getChildren().addAll(filtersBox, buttonsBox, table);
-
+        vbox.getChildren().addAll(filtersBox, table, setDoneButton);
+        setDoneButton.getStyleClass().add("add-button");
 
         grid.add(vbox, 0, 0);
         return grid;
@@ -100,11 +99,15 @@ public class CheckAssignedTasksGUI {
         TableColumn<AgendaEntry, String> endDateCol = new TableColumn<>("End Date");
         TableColumn<AgendaEntry, String> statusCol = new TableColumn<>("Status");
         descCol.setPrefWidth(200);
+        startDateCol.setPrefWidth(150);
+        endDateCol.setPrefWidth(150);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy", Locale.ENGLISH);
 
         titleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getTitle()));
         descCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEntry().getDescription()));
-        startDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartDate().toString()));
-        endDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndDate().toString()));
+        startDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter)));
+        endDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter)));
         statusCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
 
         table.getColumns().addAll(titleCol, descCol, startDateCol, endDateCol, statusCol);
