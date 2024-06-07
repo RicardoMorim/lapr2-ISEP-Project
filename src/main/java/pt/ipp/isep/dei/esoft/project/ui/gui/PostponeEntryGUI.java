@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
-import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
+import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class PostponeEntryGUI {
 
     private final AgendaController agendaController = new AgendaController();
-    private final CollaboratorController collaboratorController = new CollaboratorController();
+    private final TeamController teamController = new TeamController();
 
     public GridPane getPostponeEntryGridPane(double height, double width) {
         GridPane grid = new GridPane(height, width);
@@ -75,7 +75,7 @@ public class PostponeEntryGUI {
                         alert.setTitle("Success");
                         alert.setHeaderText(null);
                         alert.setContentText("The entry has been successfully postponed.");
-                        collaboratorController.notifyPostPoneTeamMembers(selectedEntry, oldStartDate);
+                        teamController.notifyPostPoneTeamMembers(selectedEntry, oldStartDate);
                     } else {
                         alert.setTitle("Failure");
                         alert.setHeaderText(null);

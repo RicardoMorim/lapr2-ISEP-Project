@@ -97,6 +97,8 @@ public class GenerateTeamProposalGUI {
                 currentTeamIndex = 0;
                 updateTeamDisplay(lblCurrentTeam, btnNext, btnPrev);
 
+                teamController.notifyNewTeam(selectedTeam);
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Team Proposal Accepted");
                 alert.setHeaderText(null);

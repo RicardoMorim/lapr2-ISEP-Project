@@ -201,6 +201,8 @@ public class RegisterCollaboratorGUI {
                         phone, job, java.sql.Date.valueOf(birthDate),
                         java.sql.Date.valueOf(admissionDate), idType, nif, idNumber);
 
+                collaboratorController.notifyNewCollaborator(collaborator);
+
                 tableView.getItems().add(collaborator);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

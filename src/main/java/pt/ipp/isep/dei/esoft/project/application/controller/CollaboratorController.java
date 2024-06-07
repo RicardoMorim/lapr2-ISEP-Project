@@ -32,6 +32,9 @@ public class CollaboratorController {
         return collaboratorRepository.getCollaboratorByEmail(email);
     }
 
+    public void notifyNewCollaborator(Collaborator collaborator) {
+        collaboratorRepository.notifyNewCollaborator();
+    }
 
     public Collaborator registerCollaborator(String name, String email, Address address, String phone, Job
             job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber,
