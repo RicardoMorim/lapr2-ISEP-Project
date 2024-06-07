@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Collaborator implements Serializable {
     private String email;
     private String name;
@@ -19,6 +20,7 @@ public class Collaborator implements Serializable {
     private int taxpayerNumber;
     private int citizenNumber;
     boolean isFree = true;
+    private List<Notification> notifications;
 
     public Collaborator(String email, String name, Address address, String phone, Job job, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) throws IllegalArgumentException {
 
@@ -33,6 +35,7 @@ public class Collaborator implements Serializable {
         this.taxpayerNumber = taxpayerNumber;
         this.citizenNumber = citizenNumber;
         this.skills = new ArrayList<Skill>();
+        this.notifications = new ArrayList<>();
         isValid();
     }
 
@@ -49,8 +52,16 @@ public class Collaborator implements Serializable {
         this.taxpayerNumber = taxpayerNumber;
         this.citizenNumber = citizenNumber;
         this.skills = skills;
+        this.notifications = new ArrayList<>();
         isValid();
     }
+
+
+
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
+    }
+
 
     public String getName() {
         return name;
