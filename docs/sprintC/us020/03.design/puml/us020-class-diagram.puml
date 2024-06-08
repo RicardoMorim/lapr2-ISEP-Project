@@ -3,7 +3,7 @@
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-'skinparam linetype orto
+
 
 skinparam classAttributeIconSize 0
 
@@ -22,6 +22,7 @@ class GreenSpaceController {
 
 
 class GreenSpaceRepository {
+    - List<GreenSpace> greenSpaces
     + getGreenSpace(name, address)
     + getGreenSpaceType()
     + storeGreenSpace(greenSpace)

@@ -2,71 +2,55 @@
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
-
+**Test 1:** Checks if the setName() method correctly sets the name of a GreenSpace object when provided with a valid name or throws an IllegalArgumentException when provided with an empty string.
+     
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
+    void setName_success() {
+        greenSpace.setName("Garden");
+        assertEquals("Garden", greenSpace.getName());
     }
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
-
     @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    void setName_emptyName() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setName(""));
     }
 
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
+
+**Test 2:** This test checks if the setType() method correctly sets the type of GreenSpace object when provided with a valid type.
+
+     @Test
+    void setType_success() {
+        greenSpace.setType(Type.GARDEN);
+        assertEquals(Type.GARDEN, greenSpace.getType());
+    }
+
+
+**Test 3:** The first test checks if the setAddress() method correctly sets the address of a GreenSpace object when provided with a valid address and the other checks if the setAddress() method throws an IllegalArgumentException when provided with an empty address.
 
     @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    void setAddress_success() {
+        greenSpace.setAddress(new Address("New Address", "New City", "1234-123"));
+        assertEquals("New Address 1234-123 New City", greenSpace.getAddress().toString());
+    }
+
+    @Test
+    void setAddress_emptyAddress() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setAddress(new Address("", "", "")));
     }
 
 **Test 4:** Ensure that a skill cannot be null or have null parameters
 
-    @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
+     @Test
+    void setArea_success() {
+        greenSpace.setArea(600.0f);
+        assertEquals(600.0f, greenSpace.getArea());
     }
+
+    @Test
+    void setArea_negativeArea() {
+        assertThrows(IllegalArgumentException.class, () -> greenSpace.setArea(-1.0f));
+    }
+
 
 **Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
 
