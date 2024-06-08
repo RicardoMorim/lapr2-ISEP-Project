@@ -26,9 +26,17 @@ public class AgendaController {
         this.agenda = Repositories.getInstance().getAgenda();
     }
 
+    public List<Vehicle> getVehiclesNotAssignedAtDates(List<Vehicle> vehicles, Date startDate, Date endDate) {
+        return agenda.getVehiclesNotAssignedAtDates(vehicles, startDate, endDate);
+    }
+
     public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
         entry.postPoneEntry(date);
         return entry;
+    }
+
+    public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
+        return agenda.findNearestAvailableDates(date, entry);
     }
 
     public void addEntry(Entry entry, Date startDate, String duration) {
@@ -45,6 +53,10 @@ public class AgendaController {
 
     public List<AgendaEntry> getEntriesByTeam(Team team) {
         return agenda.getEntriesByTeam(team);
+    }
+
+    public boolean isDateAvailableForTeam(Date date, AgendaEntry entry) {
+        return agenda.isDateAvailableForTeam(date, entry);
     }
 
     /**
@@ -74,7 +86,11 @@ public class AgendaController {
         return agenda;
     }
 
-    public List<AgendaEntry> getEntriesWithTeam(){
+    public List<AgendaEntry> getNotDoneEntries() {
+        return agenda.getNotDoneEntries();
+    }
+
+    public List<AgendaEntry> getEntriesWithTeam() {
         return agenda.getEntriesWithTeam();
     }
 
@@ -126,7 +142,7 @@ public class AgendaController {
     }
 
 
-    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries){
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
         return agenda.getToDoEntriesNotInAgenda(entries);
     }
 }

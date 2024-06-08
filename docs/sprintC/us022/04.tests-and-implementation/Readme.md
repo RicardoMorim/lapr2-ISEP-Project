@@ -1,141 +1,153 @@
-# US004 - Add a Skill to a Collaborator
+# US022 - Add an entry to the Agenda
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
+**Test 1:** Ensure that a new entry is created in the Agenda
 
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
+    void addEntryToAgenda(){
+        Agenda agenda = new Agenda();
+        Entry entry = new Entry("Meeting", "Meeting with the team", new Date(), new Date());
+        agenda.addEntry(new AgendaEntry(entry, new Date(), 20));
+        assertEquals(entry, agenda.getEntries().get(0).getEntry());
     }
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
+**Test 2:** Ensure that the dates are correct
 
-    @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+   
+    @test
+    void addEntryToAgendaWithDates(){
+        Agenda agenda = new Agenda();
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Entry entry = new Entry("Meeting", "Meeting with the team", Urgency.NORMAL);
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+        assertEquals(startDate, agenda.getEntries().get(0).getStartDate());
+        assertEquals(endDate, agenda.getEntries().get(0).getEndDate());
     }
 
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
-
+**Test 3:** Ensure that an end date is properly calculated from the start date and duration
+  
     @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
+    void addEntryToAgendaWithDuration(){
+        Agenda agenda = new Agenda();
+        Date startDate = new Date();
+        Entry entry = new Entry("Meeting", "Meeting with the team", Urgency.NORMAL);
+        agenda.addEntry(new AgendaEntry(entry, startDate, 10));
+        Date endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+        assertEquals(endDate, agenda.getEntries().get(0).getEndDate());
     }
 
-**Test 4:** Ensure that a skill cannot be null or have null parameters
+
+**Test 4:** Ensure that a duration can be calculated 
 
     @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
+    void addEntryToAgendaWithDuration(){
+        Agenda agenda = new Agenda();
+        Date startDate = new Date();
+        Date endDate = startDate+24*60*60*1000;
+        Entry entry = new Entry("Meeting", "Meeting with the team", Urgency.NORMAL);
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+        assertEquals(10, agenda.getEntries().get(0).getDuration());
     }
 
-**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
+**Test 5:** Ensure that the proper status is added to the entry when in progress
 
     @Test
-    void removeUnexistingSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.removeSkill(skill);
-        });
+    void addEntryToAgendaWithDuration(){
+        Agenda agenda = new Agenda();
+        Date startDate = new Date()-24*60*60*1000;
+        Date endDate = startDate+2*24*60*60*1000;
+        Entry entry = new Entry("Meeting", "Meeting with the team", Urgency.NORMAL);
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+        assertEquals(Status.IN_PROGRESS, agenda.getEntries().get(0).getStatus());
+    }
+
+**Test 6:** Ensure that the proper status is added to the entry when planned
+
+
+    @Test
+    void addEntryToAgendaWithDuration(){
+        Agenda agenda = new Agenda();
+        Date startDate = new Date()+24*60*60*1000;
+        Date endDate = startDate+3*24*60*60*1000;
+        Entry entry = new Entry("Meeting", "Meeting with the team", Urgency.NORMAL);
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+        assertEquals(Status.PLANNED, agenda.getEntries().get(0).getStatus());
     }
 
 
 
 ## 5. Construction (Implementation)
 
-### Class CollaboratorController
+### Class Agenda
 
 ```java
-    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-    Collaborator old = collaborator.clone();
-    collaborator.addSkill(skill);
-    collaboratorRepository.update(old, collaborator);
+public void addEntry(AgendaEntry entry) {
+    this.entries.add(entry);
 }
 ```
 
-### Class CollaboratorRepository
-
+### Class AgendaEntry
 
 ```java
-    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
-    boolean operationSuccess = false;
-
-    if (collaborators.contains(oldCollaborator)) {
-        this.collaborators.remove(oldCollaborator);
-        operationSuccess = this.collaborators.add(newCollaborator);
-    }
-
-    if (!operationSuccess) {
-        throw new IllegalArgumentException("Collaborator not found.");
-    }
-
-    return newCollaborator;
+public AgendaEntry(Entry entry, Date startDate, Date endDate) {
+    this.entry = entry;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.duration = getDurationFromdates();
+    this.status = getStatusFromDates();
 }
 ```
-### Class Collaborator
 
 ```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
-    }
-
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
-        }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
-    
-        return this.skills;
-    }
+public AgendaEntry(Entry entry, Date startDate, String duration) {
+    this.entry = entry;
+    this.startDate = startDate;
+    this.duration = duration;
+    this.endDate = getEndDateFromDuration;
+    this.status = getStatusFromDates();
+}
 ```
+
+```java
+public AgendaEntry(Entry entry, Date startDate, Date endDate, String duration) {
+    this.entry = entry;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.duration = duration;
+    this.status = getStatusFromDates();
+}
+```
+
+## Class Agenda Controller
+```java
+public addEntryToAgenda(Entry entry, Date startDate, Date endDate){
+    AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, endDate);
+    agenda.addEntry(agendaEntry);
+}
+```
+
+```java
+public addEntryToAgenda(Entry entry, Date startDate, String duration){
+    AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, duration);
+    agenda.addEntry(agendaEntry);
+}
+```
+
+```java
+public addEntryToAgenda(Entry entry, Date startDate, Date endDate, String duration){
+    AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, endDate, duration);
+    agenda.addEntry(agendaEntry);
+}
+```
+
+
+
 
 ## 6. Integration and Demo
 
-* A new option on the admin menu options was added.
+* A new option on the admin and GRM menu options was added.
 
 * For demo purposes some skills are bootstrapped while system starts.
 

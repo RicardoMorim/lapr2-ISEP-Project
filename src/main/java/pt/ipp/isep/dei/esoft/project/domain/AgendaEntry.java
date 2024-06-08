@@ -30,56 +30,64 @@ public class AgendaEntry implements Serializable {
      * @param team     the team
      * @param vehicles the vehicles equipment
      * @param duration the duration
-     * @param status   the status
      */
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date startDate) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = vehicles;
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
+        this.status = getStatusBasedOnDates();
+        entry.setState(this.status);
+
     }
 
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, Status status, Date startDate, Date endDate) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, Date startDate, Date endDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = vehicles;
-        this.status = status;
+        this.vehicles = new ArrayList<>(vehicles);
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = this.getDurationFromEndDate();
+        this.status = getStatusBasedOnDates();
+        entry.setState(this.status);
+
     }
 
-    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date startDate) {
+    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
         this.team = null;
-        this.vehicles = vehicles;
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
+        this.status = getStatusBasedOnDates();
+        entry.setState(this.status);
+
     }
 
-    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date startDate) {
+    public AgendaEntry(Entry entry, Team team, String duration, Date startDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = new ArrayList<>();
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
+        this.status = getStatusBasedOnDates();
+        entry.setState(this.status);
+
     }
 
-    public AgendaEntry(Entry entry, String duration, Status status, Date startDate) {
+    public AgendaEntry(Entry entry, String duration, Date startDate) {
         this.entry = entry;
         this.team = null;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
+        this.status = getStatusBasedOnDates();
+        entry.setState(this.status);
     }
 
     public AgendaEntry(Entry entry, Date startDate, String duration) {
@@ -117,10 +125,18 @@ public class AgendaEntry implements Serializable {
     }
 
 
-    public void postPoneEntry(Date startDate){
+    public void postPoneEntry(Date startDate) {
         this.startDate = startDate;
         this.status = Status.POSTPONED;
         this.endDate = getEndDateFromDuration();
+    }
+
+    public String getDescription() {
+        return this.entry.getDescription();
+    }
+
+    public String getTitle() {
+        return this.entry.getTitle();
     }
 
     public Status getStatusBasedOnDates() {
@@ -140,19 +156,22 @@ public class AgendaEntry implements Serializable {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
-        if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED ) {
-            return Status.PLANNED;
-        }
-        if (now.isAfter(end) && this.status != Status.CANCELED) {
+        if (this.status == Status.DONE)
             return Status.DONE;
-        }
-        if (now.isAfter(start) && now.isBefore(end) && this.status != Status.CANCELED) {
+        if (now.isAfter(start) && this.status != Status.CANCELED) {
             return Status.IN_PROGRESS;
         }
-
+        if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED) {
+            return Status.PLANNED;
+        }
+        if (this.status == null) {
+            if (now.isBefore(start))
+                return Status.PLANNED;
+            if (now.isAfter(start))
+                return Status.IN_PROGRESS;
+            return Status.PLANNED;
+        }
         return status;
-
-
     }
 
 
@@ -162,7 +181,7 @@ public class AgendaEntry implements Serializable {
         }
 
         java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
-        
+
         LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int durationInDays = Integer.parseInt(duration) / hoursByDay;
 

@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
-import pt.ipp.isep.dei.mdisc.IrrigationSystem;
+import pt.ipp.isep.dei.mdisc.sprint2.IrrigationSystem;
 
 import java.io.File;
 import java.util.ArrayList;

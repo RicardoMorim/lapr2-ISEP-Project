@@ -16,8 +16,8 @@ class addEntryTodoListUI {
 
 class Repositories {
     + getInstance()
-    + getSkillRepository()
-    + getCollaboratorRepository()
+    + getAgenda()
+    + getToDoList()
 }
 
 class ToDoController{
@@ -25,7 +25,7 @@ class ToDoController{
     + AddEntry(entry)
 }
 
-class EntryController{
+class AgendaController{
     + getAgenda()
     + getEntries()
 }
@@ -40,16 +40,28 @@ class ToDoList{
 }
 
 class Entry{
-
+    Title
+    Description
+    Urgency
+    Status
 }
 
+class AgendaEntry{
+    Entry
+    Team
+    Vehicle
+    startDate
+    endDate
+    duration
+}
 
 addEntryTodoListUI --> ToDoController
 ToDoController --> Repositories
+addEntryTodoListUI --> AgendaController
 Repositories --> ToDoList
-addEntryTodoListUI --> EntryController
-EntryController --> Repositories
+AgendaController --> Repositories
 Repositories --> Agenda
-Agenda --> Entry: contains
+AgendaEntry --> Entry: contains
 ToDoList --> Entry: contains
+Agenda -> AgendaEntry: contains
 @enduml

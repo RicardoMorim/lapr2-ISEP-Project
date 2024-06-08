@@ -14,9 +14,9 @@ import pt.ipp.isep.dei.esoft.project.domain.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.Urgency;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,8 +131,8 @@ public class AddEntryToAgendaGUI {
                     return;
                 }
 
-                java.util.Date utilStartDate = new Date(startDate.getYear(), startDate.getMonthValue(), startDate.getDayOfMonth());
-                java.util.Date utilEndDate = endDate != null ? new Date(endDate.getYear(), endDate.getMonthValue(), endDate.getDayOfMonth()) : null;
+                java.util.Date utilStartDate = java.util.Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                java.util.Date utilEndDate = endDate != null ? java.util.Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) : null;
 
                 if (utilEndDate != null && utilStartDate.after(utilEndDate))
                     new Alert(Alert.AlertType.ERROR, "End date cannot be before start date.").showAndWait();

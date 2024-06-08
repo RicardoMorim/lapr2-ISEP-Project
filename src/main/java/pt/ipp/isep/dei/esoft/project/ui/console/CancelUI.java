@@ -15,6 +15,7 @@ public class CancelUI implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("\n------- Cancel an entry in the Agenda --------\n");
 
         System.out.println("Requesting to cancel an agenda entry.");
 

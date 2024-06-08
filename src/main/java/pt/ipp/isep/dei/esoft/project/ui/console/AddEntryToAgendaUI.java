@@ -34,15 +34,7 @@ public class AddEntryToAgendaUI implements Runnable {
         Urgency urgencyValue = urgencyList.get(urgency);
         float expectedDuration = (float) Utils.readDoubleFromConsole("Enter the expected duration: ");
         String duration = Utils.readLineFromConsole("Enter the duration: ");
-        Status[] statusValues = Status.values();
-        List<Status> statusList = Arrays.asList(statusValues);
-        int statusIndex = Utils.showAndSelectIndex(statusList, "");
-        Status status = statusList.get(statusIndex);
 
-        if (statusIndex < 0) {
-            System.out.println("cancelling operation");
-            return;
-        }
         if (urgency < 0) {
             System.out.println("cancelling operation");
             return;
@@ -52,7 +44,7 @@ public class AddEntryToAgendaUI implements Runnable {
         Entry entry = new Entry(null, title, description, urgencyValue, expectedDuration);
 
         // Create the new AgendaEntry
-        AgendaEntry agendaEntry = new AgendaEntry(entry, duration, status, new Date());
+        AgendaEntry agendaEntry = new AgendaEntry(entry, duration, new Date());
 
         // Add the entry to the agenda
         agendaController.addEntry(agendaEntry);

@@ -7,16 +7,20 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
-public class PostponeEntryGUI{
+public class PostponeEntryGUI {
 
     private final AgendaController agendaController = new AgendaController();
+    private final TeamController teamController = new TeamController();
 
     public GridPane getPostponeEntryGridPane(double height, double width) {
         GridPane grid = new GridPane(height, width);
@@ -56,26 +60,46 @@ public class PostponeEntryGUI{
 
         Button btnPostpone = new Button("Postpone");
 
-        // Add the CSS class to the button
         btnPostpone.getStyleClass().add("add-button");
 
         btnPostpone.setOnAction(e -> {
             AgendaEntry selectedEntry = tableEntries.getSelectionModel().getSelectedItem();
             LocalDate newDate = dpNewDate.getValue();
-            java.util.Date date = java.sql.Date.valueOf(newDate);
+            java.util.Date date = java.util.Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date oldStartDate = selectedEntry.getStartDate();
             if (selectedEntry != null && date != null) {
-                selectedEntry = agendaController.postponeEntry(selectedEntry, date);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
-                    alert.setTitle("Success");
-                    alert.setHeaderText(null);
-                    alert.setContentText("The entry has been successfully postponed.");
+                if (agendaController.isDateAvailableForTeam(date, selectedEntry)) {
+                    selectedEntry = agendaController.postponeEntry(selectedEntry, date);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
+                        alert.setTitle("Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText("The entry has been successfully postponed.");
+                        teamController.notifyPostPoneTeamMembers(selectedEntry, oldStartDate);
+                    } else {
+                        alert.setTitle("Failure");
+                        alert.setHeaderText(null);
+                        alert.setContentText("The entry could not be postponed. Try again later.");
+                    }
+                    alert.showAndWait();
+                    tableEntries.getItems().setAll(agendaController.getAgenda().getEntries());
                 } else {
-                    alert.setTitle("Failure");
+                    List<Date> suggestions = agendaController.findNearestAvailableDates(date, selectedEntry);
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
                     alert.setHeaderText(null);
-                    alert.setContentText("The entry could not be postponed.");
+                    if (suggestions.size() == 1) {
+                        LocalDate suggestedDate = suggestions.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        alert.setContentText("The chosen date is not available. Here is a suggestion: " + suggestedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    } else {
+                        LocalDate suggestedDate1 = suggestions.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate suggestedDate2 = suggestions.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        alert.setContentText("The chosen date is not available. Here are some suggestions: \n" +
+                                "Closest date before: " + suggestedDate1.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "\n" +
+                                "Closest date after: " + suggestedDate2.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    }
+                    alert.showAndWait();
                 }
-                alert.showAndWait();
             }
         });
 

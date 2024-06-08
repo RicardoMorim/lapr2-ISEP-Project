@@ -20,12 +20,19 @@ class Collaborator {
     skills
 }
 
-class TechnicalSkill {
-        name
-        shortDescription
-        fullDescription
+class Team {
+
 }
 
-TechnicalSkill "0...*" - "*" Collaborator : is assigned to >
+class AgendaEntry{
+    entry
+    vehicleList
+    startDate
+    status
+    endDate
+}
+
+Collaborator "*" - "1" Team  : is assigned to >
+Team "1" - "1...*" AgendaEntry : is assigned to >
 
 @enduml

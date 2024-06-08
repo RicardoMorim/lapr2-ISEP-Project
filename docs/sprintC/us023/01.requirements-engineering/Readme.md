@@ -10,63 +10,43 @@ As a HRM, I want to add a skill to a collaborator.
 
 **From the specifications document:**
 
-> Skills are what enables a collaborator to do a certain task
+> Teams are the groups of collaborators that work together in a project. The teams are created by the HRM and are
+> associated with an agenda entry. The teams are composed of collaborators that have the skills required by the HRM.
 
 **From the client clarifications:**
 
-> **Question:** Can any skill be registered to any collaborator/job? Or should they be associated in categories in
-> association with a specific job?
+> **Question:** 1) When I choose to associate a team with an agenda entry, is there a maximum number of team members? 2)
+> Are the team members collaborators, GSM...? We can choose them through their email, right?
 >
-> **Answer:** There is no association, it totally depends on the CV of the collaborator.
+>**Answer:** Have you ever read the text of the US05 concerning the generation of Teams?
 
-> **Question:** Should it be possible to add the same skill to a collaborator multiple times?
+> **Question:** Should the team be generated like in the us05 or should each element be selected manually?
 >
-> **Answer:** That does not make sense.
-
-> **Question:** Is there any certification/proof needed to register a skill to a collaborator?
->
-> **Answer:** no.
-
-> **Question:** Is there any limit of skills or a minimum number of skills?
->
-> **Answer:** No.
-
-> **Question:** Is there any special characteristic to be able to add a skill to a collaborator?
->
-> **Answer:** No.
-
-> **Question:** Can a collaborator have no skills assigned?
->
-> **Answer:** Yes.
-
-
+> **Answer:** There is only one US that allows to create teams, as you mentioned, the US05.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The collaborator must exist in the system.
-* **AC3** The collaborator must not have the skill already.
-* **AC4:** The skill must exist in the system.
-
+* **AC2:** The team must be free in the time of the entry
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - As an HRM, I want to register a collaborator with a job and fundamental
-  characteristics." - there has to be at least one collaborator to be assigned a skill
-* There is a dependency on "US001 - As an HRM, I want to register skills that a collaborator may have" - there has to be at least one skill to be assigned to a collaborator
+* There is a dependency on "US005 - As an HRM, I want to generate a team proposal automatically" - the team has to be
+  generated
+* There is a dependency on "US0022 - As a GSM, I want to add a new entry in the Agenda." - the agenda entry must exist
+  in order to add a team to it
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Typed data:
-    * The collaborator
-    * The skill
+* Chosen data:
+    * Team
+    * Entry 
 
 **Output Data:**
 
 * (In)Success of the operation
-* The updated skills of the collaborator
 
 ### 1.6. System Sequence Diagram (SSD)
 

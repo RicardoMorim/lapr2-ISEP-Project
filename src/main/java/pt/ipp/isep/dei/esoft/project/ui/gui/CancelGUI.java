@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class CancelGUI {
 
     private final AgendaController agendaController = new AgendaController();
+    private final TeamController teamController = new TeamController();
 
     public GridPane getCancelEntryGridPane(double height, double width){
         GridPane grid = new GridPane(height, width);
@@ -56,6 +58,7 @@ public class CancelGUI {
 
             if (selectedEntry != null) {
                 agendaController.cancelAgendaEntry(selectedEntry);
+                teamController.notifyTeamCancelled(selectedEntry);
             }
 
             if (selectedEntry.getStatus() == Status.CANCELED) {

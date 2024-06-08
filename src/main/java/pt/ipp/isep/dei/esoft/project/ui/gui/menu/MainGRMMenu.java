@@ -44,6 +44,13 @@ public class MainGRMMenu {
             AssignTeamToAgendaEntryGUI assignTeamToAgendaEntryGUI = new AssignTeamToAgendaEntryGUI();
             content.getChildren().setAll(assignTeamToAgendaEntryGUI.getAssignTeamToAgendaEntryGridPane(content.getHeight(), content.getWidth()));
         });
+
+        Button btnAddVehicleToAgendaEntry = new Button("Add a vehicle to an Agenda Entry");
+        btnAddVehicleToAgendaEntry.setOnAction(e -> {
+            AddVehicleToAgendaEntryGUI addVehicleToAgendaEntryGUI = new AddVehicleToAgendaEntryGUI();
+            content.getChildren().setAll(addVehicleToAgendaEntryGUI.getAddVehicleToAgendaEntryGUIGridPane(content.getHeight(), content.getWidth()));
+        });
+
         Button btnPostponeEntry = new Button("Postpone an Entry to the Agenda");
         btnPostponeEntry.setOnAction(e -> {
             PostponeEntryGUI postponeEntryGUI = new PostponeEntryGUI();
@@ -75,6 +82,7 @@ public class MainGRMMenu {
         grid.add(btnCancel, 0, 6);
         grid.add(btnAddEntryToDoList, 1, 6);
         grid.add(btnListGreenSpaces, 0, 7);
+        grid.add(btnAddVehicleToAgendaEntry, 1, 7);
 
         applyButtonAnimations();
         return grid;

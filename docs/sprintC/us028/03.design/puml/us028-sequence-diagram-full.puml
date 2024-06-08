@@ -1,0 +1,50 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Collaborator"
+participant ":System"
+participant ":TaskRepository"
+
+activate "Collaborator"
+
+"Collaborator" -> ":System" : requests to consult assigned tasks
+activate ":System"
+
+":System" --> "Collaborator" : asks for the start and end dates
+deactivate ":System"
+
+"Collaborator" -> ":System" : provides the dates
+activate ":System"
+
+":System" -> ":TaskRepository" : retrieves tasks assigned between the provided dates
+activate ":TaskRepository"
+
+":TaskRepository" --> ":System" : returns tasks
+deactivate ":TaskRepository"
+
+":System" --> "Collaborator" : displays tasks sorted by date
+deactivate ":System"
+
+"Collaborator" -> ":System" : requests to filter tasks by status
+activate ":System"
+
+":System" --> "Collaborator" : asks for the status to filter by
+deactivate ":System"
+
+"Collaborator" -> ":System" : provides the status
+activate ":System"
+
+":System" -> ":TaskRepository" : retrieves tasks with the provided status
+activate ":TaskRepository"
+
+":TaskRepository" --> ":System" : returns filtered tasks
+deactivate ":TaskRepository"
+
+":System" --> "Collaborator" : displays filtered tasks
+deactivate ":System"
+
+@enduml

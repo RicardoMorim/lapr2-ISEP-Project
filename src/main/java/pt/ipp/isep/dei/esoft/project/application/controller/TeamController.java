@@ -9,6 +9,7 @@ import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class TeamController {
     private TeamRepository teamRepository;
@@ -23,6 +24,27 @@ public class TeamController {
 
     public Team getTeamByCollaborator(Collaborator collaborator){
         return teamRepository.getTeamByCollaborator(collaborator);
+    }
+
+
+    public void notifyPostPoneTeamMembers(AgendaEntry entry, Date oldDate) {
+        teamRepository.notifyPostPoneTeamMembers(entry, oldDate);
+    }
+
+    public void notifyNewTeam(Team team) {
+        teamRepository.notifyNewTeam(team);
+    }
+
+    public void notifyNewTaskTeamMembers(AgendaEntry entry) {
+        teamRepository.notifyNewTaskTeamMembers(entry);
+    }
+
+    public void notifyTeamRemoved(AgendaEntry entry, Team team) {
+        teamRepository.notifyTeamRemoved(entry, team);
+    }
+
+    public void notifyTeamCancelled(AgendaEntry entry) {
+        teamRepository.notifyTeamCancelled(entry);
     }
 
 
