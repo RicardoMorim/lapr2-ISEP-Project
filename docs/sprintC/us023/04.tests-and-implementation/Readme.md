@@ -1,143 +1,87 @@
-# US004 - Add a Skill to a Collaborator
+# US023 - Assign A Team To An Agenda NEtry
 
 ## 4. Tests
 
-**Test 1:** Ensure that a skill can be added
+**Test 1** Ensure that a team is added to an entry
 
     @Test
-    void addSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        List<Skill> newSkills = col.addSkill(skill);
-        Skill addedSkill = newSkills.get(0);
-        Skill colaboratorSkill = col.getSkills().get(0);
-        assertEquals(skill, addedSkill);
-        assertEquals(skill, colaboratorSkill);
+    void testAssignTeamToEntry() {
+        // Setup
+        Team team = new Team("Team A");
+        AgendaEntry entry = new AgendaEntry("Entry 1");
+
+        // Execute
+        entry.assignTeam(team);
+
+        // Assert
+        assertEquals(team, entry.getAssignedTeam());
     }
 
-**Test 2:** Ensure that a skill added in the constructor can be removed
+**Test 2** Ensure that a team cannot be assigned to two entries at the same time 
 
     @Test
-    void removeSkillTestWithSkillsAddedThroughTheConstructor() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        List<Skill> skills = new ArrayList<>();
-        skills.add(skill);
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, skills);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
-    }
+    void testTeamCannotBeAssignedToTwoEntriesAtSameTime() {
+        // Setup
+        Team team = new Team("Team A");
+        AgendaEntry entry1 = new AgendaEntry("Entry 1");
+        AgendaEntry entry2 = new AgendaEntry("Entry 2");
 
-**Test 3:** Ensure that a skill added later to the collaborator can be removed
-
-    @Test
-    void removeSkillWithSkillsAddedLater() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc");
-        col.addSkill(skill);
-        assertEquals(skill, col.getSkills().get(0));
-        col.removeSkill(skill);
-        assertTrue(col.getSkills().isEmpty());
-    }
-
-**Test 4:** Ensure that a skill cannot be null or have null parameters
-
-    @Test
-    void addNullSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill AllNull = new Skill(null, null, null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(AllNull);
-        });
-
-        Skill nameNull = new Skill(null, "Desc", "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(nameNull);
-        });
-        Skill DescNull = new Skill("nome", "Desc", null);
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(DescNull);
-        });
-        Skill ShortDescNull = new Skill("nome", null, "Descrição");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.addSkill(ShortDescNull);
-        });
-    }
-
-**Test 5:** Ensure an exception is thrown when a skill that the collaborator does not have is removed
-
-    @Test
-    void removeUnexistingSkill() {
-        Job job = new Job("jardineiro", "jardineiro", "jardineiro");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", "Collaborator", "908767", job, new Date(), new Date(), "ID", 123456, 78910, new ArrayList<>());
-        Skill skill = new Skill("Carta A", "pode conduzir motas", "O collaborador pode conduzir qualquer mota com menos de 125cc :)");
-        assertThrows(IllegalArgumentException.class, () -> {
-            col.removeSkill(skill);
-        });
+        // Execute
+        entry1.assignTeam(team);
+        assertThrows(IllegalArgumentException.class, () -> entry2.assignTeam(team));
     }
 
 
-
-## 5. Construction (Implementation)
-
-### Class CollaboratorController
-
-```java
-    public void addSkillToACollaborator(Skill skill, Collaborator collaborator) throws IllegalArgumentException {
-    Collaborator old = collaborator.clone();
-    collaborator.addSkill(skill);
-    collaboratorRepository.update(old, collaborator);
-}
-```
-
-### Class CollaboratorRepository
-
-
-```java
-    public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
-    boolean operationSuccess = false;
-
-    if (collaborators.contains(oldCollaborator)) {
-        this.collaborators.remove(oldCollaborator);
-        operationSuccess = this.collaborators.add(newCollaborator);
-    }
-
-    if (!operationSuccess) {
-        throw new IllegalArgumentException("Collaborator not found.");
-    }
-
-    return newCollaborator;
-}
-```
-### Class Collaborator
-
-```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
-    }
-
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
-        }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
+## 5. Implementation
+### Team Controller class
     
-        return this.skills;
-    }
-```
+    ```java
+        public class TeamController {
+            private final TeamRepository teamRepository;
+            public List<Team> getTeams() {
+                return teamRepository.getTeams();
+            }
+        }
+    ```
+
+### Team Repository class
+
+    ```java
+        public class TeamRepository {
+            private final List<Team> teams = new ArrayList<>();
+            public List<Team> getTeams() {
+                return teams;
+            }
+        }
+    ```
+
+### AgendaController class
+
+    ```java
+        public class AgendaController {
+            private final AgendaRepository agendaRepository;
+            public List<AgendaEntry> getEntries() {
+                return agendaRepository.getEntries();
+            }
+        }
+    ```
+
+### Agenda class
+
+    ```java
+        public class AgendaRepository {
+            private final List<AgendaEntry> entries = new ArrayList<>();
+            public List<AgendaEntry> getEntries() {
+                return entries;
+            }
+        }
+    ```
 
 ## 6. Integration and Demo
 
-* A new option on the admin menu options was added.
+* A new option on the admin and GRM menu options was added.
 
-* For demo purposes some skills are bootstrapped while system starts.
+* For demo purposes a team is bootstrapped while system starts.
 
 ## 7. Observations
 
