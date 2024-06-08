@@ -23,7 +23,7 @@ class AgendaEntryTest {
         team = new Team(Arrays.asList(collaborator));
         vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
 
-        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "1", new Date());
+        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "10", new Date());
     }
 
     @Test
@@ -107,5 +107,26 @@ class AgendaEntryTest {
     void removeVehicleRemovesVehicleWhenVehicleExists() {
         agendaEntry.removeVehicle(vehicle);
         assertFalse(agendaEntry.getVehicles().contains(vehicle));
+    }
+
+ //TODO fix these tests
+    @Test
+    void getEndDateFromDurationReturnsCorrectEndDate() {
+        Date expectedEndDate = new Date(agendaEntry.getStartDate().getTime() + 3600000);
+        assertEquals(expectedEndDate, agendaEntry.getEndDateFromDuration());
+    }
+
+    @Test
+    void getDurationFromEndDateReturnsCorrectDuration() {
+        String expectedDuration = "8";
+        assertEquals(expectedDuration, agendaEntry.getDurationFromEndDate());
+    }
+
+    @Test
+    void postPoneEntryChangesStartDateAndStatus() {
+        Date newStartDate = new Date(agendaEntry.getStartDate().getTime() + 7200000); // 2 hours later
+        agendaEntry.postPoneEntry(newStartDate);
+        assertEquals(newStartDate, agendaEntry.getStartDate());
+        assertEquals(Status.POSTPONED, agendaEntry.getStatus());
     }
 }

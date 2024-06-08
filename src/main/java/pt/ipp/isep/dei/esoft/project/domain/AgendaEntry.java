@@ -34,7 +34,7 @@ public class AgendaEntry implements Serializable {
     public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = vehicles;
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
@@ -46,7 +46,7 @@ public class AgendaEntry implements Serializable {
     public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, Date startDate, Date endDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = vehicles;
+        this.vehicles = new ArrayList<>(vehicles);
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = this.getDurationFromEndDate();
@@ -58,7 +58,7 @@ public class AgendaEntry implements Serializable {
     public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
         this.team = null;
-        this.vehicles = vehicles;
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
@@ -70,7 +70,7 @@ public class AgendaEntry implements Serializable {
     public AgendaEntry(Entry entry, Team team, String duration, Date startDate) {
         this.entry = entry;
         this.team = team;
-        this.vehicles = new ArrayList<>();
+        this.vehicles = new ArrayList<>(vehicles);
         this.duration = duration;
         this.startDate = startDate;
         this.endDate = getEndDateFromDuration();
@@ -164,9 +164,14 @@ public class AgendaEntry implements Serializable {
         if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED) {
             return Status.PLANNED;
         }
+        if (this.status == null) {
+            if (now.isBefore(start))
+                return Status.PLANNED;
+            if (now.isAfter(start))
+                return Status.IN_PROGRESS;
+            return Status.PLANNED;
+        }
         return status;
-
-
     }
 
 
