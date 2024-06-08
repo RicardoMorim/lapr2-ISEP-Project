@@ -109,6 +109,7 @@ public class Bootstrap implements Runnable {
         for (Collaborator col : new Collaborator[]{collaborators.get(0), collaborators.get(1)})
             col.setFree(false);
         teamRepository.add(team);
+        teamRepository.notifyNewTeam(team);
     }
 
     public void addEntries() {
@@ -202,11 +203,25 @@ public class Bootstrap implements Runnable {
         List<Skill> list3 = new ArrayList<>();
         list3.add(skill1);
         list3.add(skill2);
-        collaboratorRepository.add(new Collaborator("ricardo@gmail.com", "ricardo", new Address("Rua do Ricardo", "Porto", "123-456"), "913456789", jobs.get(0), new Date(), new Date(), "CC", 13456789, 12345678, new ArrayList<>(list3)));
-        collaboratorRepository.add(new Collaborator("goncalo@gmail.com", "goncalo", new Address("Rua do Gonçalo", "Porto", "123-456"), "961456789", jobs.get(1), new Date(), new Date(), "CC", 12456789, 12345679, new ArrayList<>(list2)));
-        collaboratorRepository.add(new Collaborator("marisa@gmail.com", "marisa", new Address("Rua da Marisa", "Porto", "123-456"), "931345689", jobs.get(2), new Date(), new Date(), "CC", 12346789, 12345689, new ArrayList<>(list1)));
-        collaboratorRepository.add(new Collaborator("filipa@gmail.com", "filipa", new Address("Rua da Filipa", "Porto", "123-456"), "962345679", jobs.get(3), new Date(), new Date(), "CC", 12356789, 12345789, new ArrayList<>(list1)));
-        collaboratorRepository.add(new Collaborator("coll@gmail.com", "collaborator", new Address("123 Street", "Porto", "123-456"), "123456789", jobs.get(4), new Date(), new Date(), "CC", 12345678, 13456789, new ArrayList<>(list3)));
+        Collaborator col1 = new Collaborator("ricardo@gmail.com", "ricardo", new Address("Rua do Ricardo", "Porto", "123-456"), "913456789", jobs.get(0), new Date(), new Date(), "CC", 13456789, 12345678, new ArrayList<>(list3));
+        collaboratorRepository.notifyNewCollaborator(col1);
+        collaboratorRepository.add(col1);
+
+        Collaborator col2 = new Collaborator("goncalo@gmail.com", "goncalo", new Address("Rua do Gonçalo", "Porto", "123-456"), "961456789", jobs.get(1), new Date(), new Date(), "CC", 12456789, 12345679, new ArrayList<>(list2));
+        collaboratorRepository.notifyNewCollaborator(col2);
+        collaboratorRepository.add(col2);
+
+        Collaborator col3 = new Collaborator("marisa@gmail.com", "marisa", new Address("Rua da Marisa", "Porto", "123-456"), "931345689", jobs.get(2), new Date(), new Date(), "CC", 12346789, 12345689, new ArrayList<>(list1));
+        collaboratorRepository.notifyNewCollaborator(col3);
+        collaboratorRepository.add(col3);
+
+        Collaborator col4 = new Collaborator("filipa@gmail.com", "filipa", new Address("Rua da Filipa", "Porto", "123-456"), "962345679", jobs.get(3), new Date(), new Date(), "CC", 12356789, 12345789, new ArrayList<>(list1));
+        collaboratorRepository.notifyNewCollaborator(col4);
+        collaboratorRepository.add(col4);
+
+        Collaborator col5 = new Collaborator("coll@gmail.com", "collaborator", new Address("123 Street", "Porto", "123-456"), "123456789", jobs.get(4), new Date(), new Date(), "CC", 12345678, 13456789, new ArrayList<>(list3));
+        collaboratorRepository.notifyNewCollaborator(col5);
+        collaboratorRepository.add(col5);
 
     }
 

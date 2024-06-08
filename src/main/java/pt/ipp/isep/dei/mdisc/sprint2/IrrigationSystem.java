@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.mdisc;
+package pt.ipp.isep.dei.mdisc.sprint2;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -140,7 +140,7 @@ public class IrrigationSystem {
             Path inputPath = Paths.get(inputFilePath);
             String inputFileName = inputPath.getFileName().toString();
 
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/";
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/output/" + inputFileName.replace(".csv", "") + "/";
 
             Files.createDirectories(Paths.get(outputFilePath));
 
@@ -179,9 +179,9 @@ public class IrrigationSystem {
             String inputFileName = inputPath.getFileName().toString();
             // Replace the extension with .csv
             String outputFileName = "solution_" + inputFileName;
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/spint2/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
 
-            Files.createDirectories(Paths.get("src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/"));
+            Files.createDirectories(Paths.get("src/main/java/pt/ipp/isep/dei/mdisc/sprint2/output/" + inputFileName.replace(".csv", "") + "/"));
             try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
                 for (int i = 0; i < mst.length; i++) {
                     for (int j = 0; j < mst[i].length; j++) {
@@ -207,7 +207,7 @@ public class IrrigationSystem {
             String inputFileName = inputPath.getFileName().toString();
 
             String outputFileName = "solution_" + inputFileName.replace(".csv", ".txt");
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
 
             Files.createDirectories(Paths.get(outputFilePath.replace(outputFileName, "")));
             try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
@@ -249,7 +249,7 @@ public class IrrigationSystem {
                     while (!validFile) {
                         System.out.println("Please enter the file name:");
                         String filePath = scanner.nextLine();
-                        String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/";
+                        String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/";
                         File file = new File(defaultPath + filePath);
                         if (file.exists()) {
                             irrigationSystem.importCsv(defaultPath + filePath);
@@ -264,7 +264,7 @@ public class IrrigationSystem {
                     System.out.println("Please enter the folder path:");
                     String folderPath = scanner.nextLine();
                     if (folderPath.isEmpty()) {
-                        folderPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/";
+                        folderPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/";
                     }
                     irrigationSystem.testExecutionTime(folderPath);
                     break;
@@ -291,7 +291,7 @@ public class IrrigationSystem {
                 int secondLastSlashIndex = folderPath.lastIndexOf("/", lastSlashIndex - 1);
                 outputPath = folderPath.substring(0, secondLastSlashIndex) + "/output/";
             } else {
-                outputPath = "src/main/java/pt/ipp/isep/dei/mdisc/output/"; // Default path
+                outputPath = "src/main/java/pt/ipp/isep/dei/mdisc/spint2/output/"; // Default path
             }
             Files.createDirectories(Paths.get(outputPath));
 

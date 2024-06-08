@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.mdisc;
+package pt.ipp.isep.dei.mdisc.sprint3;
 
 public class DijkstraResult {
     private int[] parents;

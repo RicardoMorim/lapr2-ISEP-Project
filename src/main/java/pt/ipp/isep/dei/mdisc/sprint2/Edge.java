@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.mdisc;
+package pt.ipp.isep.dei.mdisc.sprint2;
 
 
 public class Edge {

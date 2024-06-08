@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +14,10 @@ public class Notification implements Serializable {
     private LocalDateTime timestamp;
     private boolean readStatus;
     private EmailWrapper recipient;
-    private static final long serialVersionUID = 1L;
     private String title;
     private String collaboratorName;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 
     public Notification(String title, String message, EmailWrapper recipient, String CollaboratorName) {
@@ -30,12 +32,12 @@ public class Notification implements Serializable {
 
     private void createNotificationFile() {
         String directoryName = this.collaboratorName.replaceAll("\\s+", "_"); // replace spaces with underscores
-        Path directoryPath = Paths.get("src/main/resources/" + directoryName);
+        Path directoryPath = Paths.get("src/main/resources/emails/" + directoryName);
         try {
             if (!Files.exists(directoryPath)) {
-                Files.createDirectory(directoryPath);
+                Files.createDirectories(directoryPath);
             }
-            String fileName = timestamp.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".txt";
+            String fileName = this.title + "_" + timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")) + ".txt";
             Path filePath = directoryPath.resolve(fileName);
             Files.write(filePath, message.getBytes());
         } catch (IOException e) {

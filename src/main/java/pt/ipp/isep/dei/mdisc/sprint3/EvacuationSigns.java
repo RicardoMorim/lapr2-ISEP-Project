@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.mdisc;
+package pt.ipp.isep.dei.mdisc.sprint3;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -23,7 +23,7 @@ public class EvacuationSigns {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/database/input/";
+        final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/input/";
         EvacuationSigns es = new EvacuationSigns();
         boolean validFile = false;
         String fp1 = defaultPath;
@@ -220,7 +220,7 @@ public class EvacuationSigns {
                 System.out.print("Path from " + locationNames[i] + " to " + locationNames[nearestAPIndex] + ": ");
                 printShortestPath(i, nearestAPIndex, parents);
                 System.out.println(" with cost " + shortestDistance);
-                writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/database/input/paths.csv", matrixFileName);
+                writePathsToCSV("src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/input/paths.csv", matrixFileName);
             }
         }
     }
@@ -296,7 +296,7 @@ public class EvacuationSigns {
         }
 
         try {
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/database/output/" + matrixFileName + "/";
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/output/" + matrixFileName + "/";
             Files.createDirectories(Paths.get(outputFilePath));
 
             try (PrintWriter writer = new PrintWriter(outputFilePath + title + ".dot", StandardCharsets.UTF_8)) {
@@ -407,7 +407,7 @@ public class EvacuationSigns {
     }
 
     public void generateDotFile(String[][] array, String title, String subfolder) throws IOException, InterruptedException {
-        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/" + subfolder);
+        File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/output/" + subfolder);
         if (!directory.exists()) {
             directory.mkdirs(); // If directory does not exist, create it
         }
