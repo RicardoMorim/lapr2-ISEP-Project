@@ -68,7 +68,6 @@ public class PostponeEntryGUI {
             java.util.Date date = java.util.Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date oldStartDate = selectedEntry.getStartDate();
             if (selectedEntry != null && date != null) {
-                // TODO add an exeption for the selected entry, that one should not interfere with the availability of the team also entries with the status of Canceled, should not interfere as well
                 if (agendaController.isDateAvailableForTeam(date, selectedEntry)) {
                     selectedEntry = agendaController.postponeEntry(selectedEntry, date);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
