@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.mdisc.sprint3;
 
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 
@@ -72,16 +73,20 @@ public class EvacuationSigns {
         }
         es.visualizeGraph(es.graph, "Graph", true, matrixFileName);
 
-        //es.generateCompleteGraphDotFile("CompleteGraph");
-
-
-        if (!Arrays.asList(es.locationNames).contains(startPoint) && startPoint.isEmpty()) {
+        if (!Arrays.asList(es.locationNames).contains(startPoint) || startPoint.isEmpty()) {
             for (String point : es.locationNames) {
                 if (!point.startsWith("AP")) {
                     String[] paths1 = es.calculatePathToAP(point);
                     if (paths1 != null) {
                         String[][] paths = es.getNecessaryInformationForDot(paths1);
                         es.generateDotFile(paths, "PartialGraph", matrixFileName + "/" + point);
+
+                        // Highlight the path in the graph
+                        List<String[]> pathEdges = new ArrayList<>();
+                        for (int i = 0; i < paths1.length - 1; i++) {
+                            pathEdges.add(new String[]{paths1[i], paths1[i + 1]});
+                        }
+                        es.visualizeGraphWithPath(es.graph, "GraphWithPath", false, matrixFileName, pathEdges, point);
                     }
                 }
             }
@@ -89,10 +94,16 @@ public class EvacuationSigns {
             String[] path1 = es.calculatePathToAP(startPoint);
             String[][] path = es.getNecessaryInformationForDot(path1);
             es.generateDotFile(path, "PartialGraph", matrixFileName + "/" + startPoint);
+
+            // Highlight the path in the graph
+            List<String[]> pathEdges = new ArrayList<>();
+            for (int i = 0; i < path1.length - 1; i++) {
+                pathEdges.add(new String[]{path1[i], path1[i + 1]});
+            }
+            es.visualizeGraphWithPath(es.graph, "GraphWithPath", true, matrixFileName, pathEdges, startPoint);
         }
-
-
     }
+
 
     public void calculatePathToAPAndGenerateDotFile(String startPoint, String matrixFileName) throws IOException, InterruptedException {
         String[] path1 = calculatePathToAP(startPoint);
@@ -433,6 +444,82 @@ public class EvacuationSigns {
         Process p = pb.start();
         p.waitFor();
     }
+
+
+    public void visualizeGraphWithPath(int[][] graph, String title, boolean openGUI, String matrixFileName, List<String[]> shortestPathEdges, String point) {
+        Graph g = new SingleGraph(title);
+
+        // Add nodes
+        for (String locationName : locationNames) {
+            g.addNode(locationName);
+        }
+
+        // Add edges
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = i + 1; j < graph.length; j++) {
+                if (graph[i][j] != 0) {
+                    g.addEdge(locationNames[i] + "-" + locationNames[j], locationNames[i], locationNames[j]);
+                }
+            }
+        }
+
+        // Highlight shortest path edges
+        for (String[] edge : shortestPathEdges) {
+            Edge e = g.getEdge(edge[0] + "-" + edge[1]);
+            if (e == null) {
+                e = g.getEdge(edge[1] + "-" + edge[0]);
+            }
+            if (e != null) {
+                e.setAttribute("ui.style", "fill-color: red;");
+            }
+        }
+
+        System.setProperty("org.graphstream.ui", "swing"); // Use Swing for GUI
+
+        // Display the graph if openGUI is true
+        if (openGUI) {
+            g.display();
+        }
+
+        try {
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/output/" + matrixFileName + "/" + point + "/";
+            Files.createDirectories(Paths.get(outputFilePath));
+
+            // Write the graph to a DOT file
+            try (PrintWriter writer = new PrintWriter(outputFilePath + title + ".dot", StandardCharsets.UTF_8)) {
+                writer.println("graph G {");
+                for (int i = 0; i < graph.length; i++) {
+                    for (int j = i + 1; j < graph.length; j++) {
+                        if (graph[i][j] != 0) {
+                            writer.println("\"" + locationNames[i] + "\" -- \"" + locationNames[j] + "\" [label=\"" + graph[i][j] + "\"];");
+                        }
+                    }
+                }
+
+                // Highlight shortest path in red
+                for (String[] edge : shortestPathEdges) {
+                    writer.println("\"" + edge[0] + "\" -- \"" + edge[1] + "\" [color=red];");
+                }
+
+                writer.println("}");
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing to the file.");
+                e.printStackTrace();
+            }
+
+            // Generate image from DOT file using Graphviz
+            String dotFilePath = outputFilePath + title + ".dot";
+            String svgFilePath = outputFilePath + title + ".jpg";
+            ProcessBuilder pb = new ProcessBuilder("dot", "-Tjpg", dotFilePath, "-o", svgFilePath);
+            Process p = pb.start();
+            p.waitFor();
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println("An error occurred while creating the image file.");
+            e.printStackTrace();
+        }
+    }
+
 
     /*public void generateCompleteGraphDotFile(String title) throws IOException, InterruptedException {
         File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/database/output/");
