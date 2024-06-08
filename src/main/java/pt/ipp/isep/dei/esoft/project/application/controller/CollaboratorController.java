@@ -33,7 +33,7 @@ public class CollaboratorController {
     }
 
     public void notifyNewCollaborator(Collaborator collaborator) {
-        collaboratorRepository.notifyNewCollaborator();
+        collaboratorRepository.notifyNewCollaborator(collaborator);
     }
 
     public Collaborator registerCollaborator(String name, String email, Address address, String phone, Job

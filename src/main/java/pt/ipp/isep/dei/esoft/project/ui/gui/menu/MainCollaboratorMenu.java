@@ -24,7 +24,13 @@ public class MainCollaboratorMenu {
             content.getChildren().setAll(checkAssignedTasksGUI.getAssignedTasks(content.getHeight(), content.getWidth()));
         });
 
-        grid.getChildren().setAll(btnCheckAssignedTasks);
+        Button btnCheckEmails = new Button("Check emails");
+        btnCheckEmails.setOnAction(e -> {
+            checkEmailsGUI checkEmailsGUI = new checkEmailsGUI();
+            content.getChildren().setAll(checkEmailsGUI.getCheckEmailsGridPane());
+        });
+
+        grid.getChildren().setAll(btnCheckAssignedTasks, btnCheckEmails);
 
 
         return grid;

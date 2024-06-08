@@ -62,6 +62,9 @@ public class Collaborator implements Serializable {
         this.notifications.add(notification);
     }
 
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
 
     public String getName() {
         return name;

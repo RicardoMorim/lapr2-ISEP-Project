@@ -7,10 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class TeamRepository implements Serializable {
     private List<Team> teams;
@@ -103,7 +100,7 @@ public class TeamRepository implements Serializable {
 
     public void notifyPostPoneTeamMembers(AgendaEntry entry, Date oldDate) {
         LocalDate oldLocalDate = oldDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         String formattedOldDate = oldLocalDate.format(formatter);
         Date newStartDate = entry.getStartDate();
         String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
@@ -154,7 +151,7 @@ public class TeamRepository implements Serializable {
     }
 
     public void notifyNewTaskTeamMembers(AgendaEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();
         String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
         Date newEndDate = entry.getEndDate();
@@ -180,7 +177,7 @@ public class TeamRepository implements Serializable {
 
 
     public void notifyTeamRemoved(AgendaEntry entry, Team team) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();
         String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
         Date newEndDate = entry.getEndDate();
@@ -204,7 +201,7 @@ public class TeamRepository implements Serializable {
     }
 
     public void notifyTeamCancelled(AgendaEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();
         String formatedNewStartDate = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter);
         Date newEndDate = entry.getEndDate();
@@ -227,6 +224,4 @@ public class TeamRepository implements Serializable {
             collaborator.addNotification(notification);
         }
     }
-
-
 }
