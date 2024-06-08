@@ -1,0 +1,52 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AgendaController {
+    + getAgendaEntries()
+    + addVehicleToAgendaEntry(vehicle, entry)
+}
+
+class VehicleController {
+    + getVehicles()
+}
+
+class AddVehicleToAgendaEntryUI {
+}
+
+class VehicleRepository {
+    - List<Vehicle> vehicles
+    + getVehicles()
+}
+
+class Agenda {
+    - List<AgendaEntry> entries
+    + getAgendaEntries()
+    + addVehicleToAgendaEntry(vehicle, entry)
+}
+
+class Repositories {
+    + getInstance()
+    + getAgenda()
+    + getVehicleRepository()
+}
+
+
+AddVehicleToAgendaEntryUI ..> AgendaController
+AddVehicleToAgendaEntryUI ..> VehicleController
+VehicleController ..> Repositories
+AgendaController ..> Repositories
+Repositories ..> VehicleRepository
+Repositories ..> Agenda
+VehicleController ..> VehicleRepository
+AgendaController ..> Agenda
+
+
+@enduml
