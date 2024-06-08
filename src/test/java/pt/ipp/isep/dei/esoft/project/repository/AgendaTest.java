@@ -20,12 +20,12 @@ class AgendaTest {
         agenda = new Agenda();
 
         GreenSpace greenSpace = new GreenSpace("Park", new Address("abacate", "morango", "1112-222"), 1000, Type.GARDEN, new Email("admin@this.app"));
-        Entry entry = new Entry("State", greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
+        Entry entry = new Entry(greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
 
-        entry1 = new AgendaEntry(entry, new Team(Collections.singletonList(collaborator)), Collections.singletonList(vehicle), "1 hour", Status.PLANNED);
-        entry2 = new AgendaEntry(entry, new Team(Collections.singletonList(collaborator)), Collections.singletonList(vehicle), "2 hours", Status.POSTPONED);
+        entry1 = new AgendaEntry(entry, Collections.singletonList(vehicle), "1 hour", Status.PLANNED, new Date());
+        entry2 = new AgendaEntry(entry, Collections.singletonList(vehicle), "2 hours", Status.POSTPONED, new Date());
     }
 
     @Test

@@ -31,7 +31,7 @@ class AgendaControllerTest {
      */
     @BeforeEach
     void setUp() {
-        todoEntry = Repositories.getInstance().getToDoList().getEntries().getFirst();
+        todoEntry = Repositories.getInstance().getToDoList().getEntries().get(0);
         agenda = new Agenda();
         List<Vehicle> vehicles = Repositories.getInstance().getVehicleRepository().getVehicleList();
         vehicle = Collections.singletonList(vehicles.get(0));

@@ -41,6 +41,9 @@ public class GreenSpaceRepository implements Serializable {
     }
 
     public void addGreenSpace(GreenSpace greenSpace) {
+        if (greenSpace == null) {
+            throw new IllegalArgumentException("GreenSpace cannot be null");
+        }
         if (greenSpaces.contains(greenSpace))
             throw new IllegalArgumentException("Green space already exists");
         greenSpaces.add(greenSpace);
