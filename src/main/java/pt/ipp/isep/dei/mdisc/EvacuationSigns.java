@@ -94,12 +94,6 @@ public class EvacuationSigns {
 
     }
 
-    public void calculatePathToAPAndGenerateDotFile(String startPoint, String matrixFileName) throws IOException, InterruptedException {
-        String[] path1 = calculatePathToAP(startPoint);
-        String[][] path = getNecessaryInformationForDot(path1);
-        generateDotFile(path, "PartialGraph", matrixFileName + "/" + startPoint);
-    }
-
     public void readCSVContainingCosts(String fileName) {
         List<String[]> values = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
