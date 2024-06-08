@@ -49,6 +49,9 @@ public class Agenda implements Serializable {
     public boolean isDateAvailableForTeam(Date chosenStartDate, AgendaEntry entry) {
         Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
         for (AgendaEntry e : entries) {
+            if (e == entry || e.getStatus() == Status.CANCELED) {
+                continue;
+            }
             if (e.getTeam() == entry.getTeam()) {
                 if ((chosenStartDate.compareTo(e.getStartDate()) >= 0 && chosenStartDate.compareTo(e.getEndDate()) <= 0) ||
                         (chosenEndDate.compareTo(e.getStartDate()) >= 0 && chosenEndDate.compareTo(e.getEndDate()) <= 0) ||

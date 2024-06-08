@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Arrays;
@@ -19,12 +18,12 @@ class AgendaEntryTest {
     @BeforeEach
     void setUp() {
         GreenSpace greenSpace = new GreenSpace("Park", new Address("porto", "maia", "1234-123"), 1000, Type.GARDEN, new Email("admin@this.app"));
-        entry = new Entry("State", greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
+        entry = new Entry( greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         team = new Team(Arrays.asList(collaborator));
         vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
 
-        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "1 hour", Status.PLANNED);
+        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "10", new Date());
     }
 
     @Test
@@ -49,12 +48,12 @@ class AgendaEntryTest {
 
     @Test
     void getDurationReturnsCorrectDuration() {
-        assertEquals("1 hour", agendaEntry.getDuration());
+        assertEquals("1", agendaEntry.getDuration());
     }
 
     @Test
     void setEntryChangesEntry() {
-        Entry newEntry = new Entry("New State", new GreenSpace("New Park", new Address("porto", "maia", "1234-123"), 1000, Type.GARDEN, new Email("admin@this.app")), "New Title", "New Description", Urgency.HIGH, 3.0f);
+        Entry newEntry = new Entry(new GreenSpace("New Park", new Address("porto", "maia", "1234-123"), 1000, Type.GARDEN, new Email("admin@this.app")), "New Title", "New Description", Urgency.HIGH, 3.0f);
         agendaEntry.setEntry(newEntry);
         assertEquals(newEntry, agendaEntry.getEntry());
     }
@@ -82,8 +81,8 @@ class AgendaEntryTest {
 
     @Test
     void setDurationChangesDuration() {
-        agendaEntry.setDuration("2 hours");
-        assertEquals("2 hours", agendaEntry.getDuration());
+        agendaEntry.setDuration("2");
+        assertEquals("2", agendaEntry.getDuration());
     }
 
     @Test
@@ -108,5 +107,26 @@ class AgendaEntryTest {
     void removeVehicleRemovesVehicleWhenVehicleExists() {
         agendaEntry.removeVehicle(vehicle);
         assertFalse(agendaEntry.getVehicles().contains(vehicle));
+    }
+
+ //TODO fix these tests
+    @Test
+    void getEndDateFromDurationReturnsCorrectEndDate() {
+        Date expectedEndDate = new Date(agendaEntry.getStartDate().getTime() + 3600000);
+        assertEquals(expectedEndDate, agendaEntry.getEndDateFromDuration());
+    }
+
+    @Test
+    void getDurationFromEndDateReturnsCorrectDuration() {
+        String expectedDuration = "8";
+        assertEquals(expectedDuration, agendaEntry.getDurationFromEndDate());
+    }
+
+    @Test
+    void postPoneEntryChangesStartDateAndStatus() {
+        Date newStartDate = new Date(agendaEntry.getStartDate().getTime() + 7200000); // 2 hours later
+        agendaEntry.postPoneEntry(newStartDate);
+        assertEquals(newStartDate, agendaEntry.getStartDate());
+        assertEquals(Status.POSTPONED, agendaEntry.getStatus());
     }
 }
