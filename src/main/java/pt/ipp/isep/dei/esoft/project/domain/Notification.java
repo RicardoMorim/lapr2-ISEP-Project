@@ -30,7 +30,7 @@ public class Notification implements Serializable {
 
     private void createNotificationFile() {
         String directoryName = this.collaboratorName.replaceAll("\\s+", "_"); // replace spaces with underscores
-        Path directoryPath = Paths.get("src/main/resources" + directoryName);
+        Path directoryPath = Paths.get("src/main/resources/" + directoryName);
         try {
             if (!Files.exists(directoryPath)) {
                 Files.createDirectory(directoryPath);
