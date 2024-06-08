@@ -1,0 +1,28 @@
+@startuml
+
+'left to right direction
+
+title Domain Model
+
+hide methods
+hide circle
+
+class Vehicle {
+    model
+    brand
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+    vehiclePlate
+}
+
+class AgendaEntry {
+    duration
+}
+
+Vehicle "*" - "0,1" AgendaEntry  : is assigned to
+@enduml

@@ -89,12 +89,12 @@ deactivate UI
 deactivate UI
     GRM -> UI : confirms data
     activate UI
-    UI --> Controller: saveNewGreenSpace(name, address, area, type)
-    activate Controller
-    Controller -> GS: createGreenSpace(name, address, area, type)
+    UI -> GS: saveNewGreenSpace(name, address, area, type)
     activate GS
-   GS --> Controller :greenSpace
+   GS --> UI :greenSpace
    deactivate GS
+   UI -> Controller: storeGreenSpace(greenSpace)
+   activate Controller
    Controller -> RepositorySingleton : getInstance()
                                                activate RepositorySingleton
 

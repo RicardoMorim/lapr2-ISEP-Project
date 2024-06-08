@@ -4,13 +4,12 @@ skinparam packageStyle rectangle
 'skinparam shadowing false
 'title Use Case Diagram Example
 left to right direction
-rectangle "System Actors" as actors{
     actor "Human Resources Manager (HRM)" as HRM
     actor "Fleet Manager (FM)" as FM
     actor "Green Space Manager (GSM)" as GSM
+    actor "Collaborator (CLB)" as CLB
 
-}
-rectangle "Use Cases" as usecases{
+
     usecase "UC1 - Register a skill" as UC1
     usecase "UC2 - Register a job" as UC2
     usecase "UC3 - Register a collaborator and characteristics" as UC3
@@ -27,8 +26,8 @@ rectangle "Use Cases" as usecases{
     usecase "UC25 - Cancel an entry in the Agenda" as UC25
     usecase "UC26 - Assign a vehicle to an entry in the agenda" as UC26
     usecase "UC27 - List all green spaces managed by a GSM" as UC27
-    usecase "UC28 -  " as UC28
-    usecase "UC29 -  " as UC29
+    usecase "UC28 - Consult tasks assigned to a collaborator" as UC28
+    usecase "UC29 - Record the completion of a task" as UC29
     HRM --> UC1
     HRM --> UC2
     HRM --> UC3
@@ -45,7 +44,7 @@ rectangle "Use Cases" as usecases{
     GSM --> UC25
     GSM --> UC26
     GSM --> UC27
-    GSM --> UC28
-    GSM --> UC29
-}
+    CLB --> UC28
+    CLB --> UC29
+
 @enduml

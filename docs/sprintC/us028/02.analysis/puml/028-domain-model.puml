@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Collaborator {
+    -name
+    -birthdate
+    -admission date
+    -address
+    -contact
+    -identification document
+    -identification number
+    -skills
+}
+
+class Team{
+}
+
+class Agenda {
+    -entries: List<AgendaEntry>
+}
+
+class AgendaEntry {
+    -team: Team
+    -vehicles: List<Vehicle>
+    -duration: String
+    -status: Status
+    -entry: Entry
+    -date: Date
+}
+
+class Status {
+    TOBEDONE
+    DONE
+    IN_PROGRESS
+    POSTPONED
+    CANCELED
+    PLANNED
+
+}
+
+Team "1...*" -- "*" Collaborator : is assigned to >
+Agenda --> AgendaEntry
+AgendaEntry --> Status
+AgendaEntry --> Team
+
+@enduml

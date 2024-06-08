@@ -1,0 +1,4 @@
+graph G {
+"Miradouro" -- "Topo" [label="3"];
+"Topo" -- "AP" [label="9"];
+}

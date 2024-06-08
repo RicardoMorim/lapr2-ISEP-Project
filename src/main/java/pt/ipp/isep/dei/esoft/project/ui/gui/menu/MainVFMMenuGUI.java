@@ -21,7 +21,7 @@ public class MainVFMMenuGUI  {
     }
 
 
-    public GridPane getAdminMenuGUI() {
+    public GridPane getVFMMenuGUI() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);

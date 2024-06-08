@@ -136,13 +136,13 @@ public class GreenSpaceRepository implements Serializable {
 
     private void bubbleSort(List<GreenSpace> list) {
         int n = list.size();
-        for (int i = 0; i < n-1; i++) {
-            for (int j = 0; j < n-i-1; j++) {
-                if (list.get(j).getArea() < list.get(j+1).getArea()) {
-                    // swap arr[j+1] and arr[j]
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (list.get(j).getArea() < list.get(j + 1).getArea()) {
+                    // Swap list[j+1] and list[j]
                     GreenSpace temp = list.get(j);
-                    list.set(j, list.get(j+1));
-                    list.set(j+1, temp);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
@@ -151,30 +151,25 @@ public class GreenSpaceRepository implements Serializable {
     private void quickSort(List<GreenSpace> list, int low, int high) {
         if (low < high) {
             int pi = partition(list, low, high);
-
-            quickSort(list, low, pi-1);
-            quickSort(list, pi+1, high);
+            quickSort(list, low, pi - 1);
+            quickSort(list, pi + 1, high);
         }
     }
 
     private int partition(List<GreenSpace> list, int low, int high) {
         double pivot = list.get(high).getArea();
-        int i = (low-1);
-        for (int j=low; j<high; j++) {
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
             if (list.get(j).getArea() > pivot) {
                 i++;
-
                 GreenSpace temp = list.get(i);
                 list.set(i, list.get(j));
                 list.set(j, temp);
             }
         }
-
-        GreenSpace temp = list.get(i+1);
-        list.set(i+1, list.get(high));
+        GreenSpace temp = list.get(i + 1);
+        list.set(i + 1, list.get(high));
         list.set(high, temp);
-
-        return i+1;
+        return i + 1;
     }
-
 }

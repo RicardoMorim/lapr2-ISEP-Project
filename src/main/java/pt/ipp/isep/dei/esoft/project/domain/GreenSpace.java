@@ -1,11 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.domain;
-
+import pt.ipp.isep.dei.esoft.project.repository.Agenda;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GreenSpace implements Serializable {
     private Type type;

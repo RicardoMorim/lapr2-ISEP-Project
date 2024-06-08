@@ -1,11 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
-import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Agenda.
@@ -18,6 +22,73 @@ public class Agenda implements Serializable {
      */
     public Agenda() {
         this.entries = new ArrayList<>();
+    }
+
+    public List<AgendaEntry> getEntriesByTeam(Team team) {
+        return this.entries.stream()
+                .filter(entry -> entry.getTeam() != null && entry.getTeam().equals(team))
+                .collect(Collectors.toList());
+    }
+
+    public List<Vehicle> getVehiclesNotAssignedAtDates(List<Vehicle> vehicles, Date startDate, Date endDate) {
+        List<Vehicle> vehiclesNotAssigned = new ArrayList<>(vehicles);
+        for (AgendaEntry entry : entries) {
+            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)) {
+                vehiclesNotAssigned.removeAll(entry.getVehicles());
+            }
+        }
+        return vehiclesNotAssigned;
+    }
+
+    public List<AgendaEntry> getNotDoneEntries() {
+        return this.entries.stream()
+                .filter(entry -> entry.getStatus() != Status.DONE)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDateAvailableForTeam(Date chosenStartDate, AgendaEntry entry) {
+        Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
+        for (AgendaEntry e : entries) {
+            if (e == entry || e.getStatus() == Status.CANCELED) {
+                continue;
+            }
+            if (e.getTeam() == entry.getTeam()) {
+                if ((chosenStartDate.compareTo(e.getStartDate()) >= 0 && chosenStartDate.compareTo(e.getEndDate()) <= 0) ||
+                        (chosenEndDate.compareTo(e.getStartDate()) >= 0 && chosenEndDate.compareTo(e.getEndDate()) <= 0) ||
+                        (chosenStartDate.compareTo(e.getStartDate()) <= 0 && chosenEndDate.compareTo(e.getEndDate()) >= 0)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
+        List<Date> suggestions = new ArrayList<>();
+        int daysBefore = 1;
+        int daysAfter = 1;
+
+        // Find the nearest available date before the chosen date
+        Date before = new Date(date.getTime() - daysBefore * 24 * 60 * 60 * 1000);
+        while (before.after(new Date())) { // Check if the date is not in the past
+            if (isDateAvailableForTeam(before, entry)) {
+                suggestions.add(before);
+                break;
+            }
+            daysBefore++;
+            before = new Date(date.getTime() - (long) daysBefore * 24 * 60 * 60 * 1000);
+        }
+
+        // Find the nearest available date after the chosen date
+        while (suggestions.size() < 2) {
+            Date after = new Date(date.getTime() + (long) daysAfter * 24 * 60 * 60 * 1000);
+            if (isDateAvailableForTeam(after, entry)) {
+                suggestions.add(after);
+            }
+            daysAfter++;
+        }
+
+        return suggestions;
     }
 
     /**
@@ -59,7 +130,7 @@ public class Agenda implements Serializable {
      * @param old      the old
      * @param newEntry the new entry
      */
-    public void updateEntry(AgendaEntry old, AgendaEntry newEntry){
+    public void updateEntry(AgendaEntry old, AgendaEntry newEntry) {
         removeEntry(old);
         addEntry(newEntry);
     }
@@ -135,5 +206,53 @@ public class Agenda implements Serializable {
             }
         }
         return null;
+    }
+
+
+    public List<Team> filterUnavailableTeams(Date startDate, Date endDate, List<Team> teams) {
+        List<Team> availableTeams = new ArrayList<>(teams);
+
+        for (AgendaEntry entry : entries) {
+            if (entry.getStartDate().before(endDate) && entry.getEndDate().after(startDate)) {
+                availableTeams.remove(entry.getTeam());
+            }
+        }
+
+        return availableTeams;
+    }
+
+
+    public Date getEndDateFromDuration(Date startDate, String duration) {
+        if (startDate == null) {
+            throw new IllegalArgumentException("Start date is required to calculate the end date");
+        }
+
+        final int hoursByDay = 8;
+
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int durationInDays = Integer.parseInt(duration) / hoursByDay;
+
+        // If weekends should not be counted
+        int weekends = (int) start.datesUntil(start.plusDays(durationInDays)).filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+
+        LocalDate end = start.plusDays(durationInDays + weekends);
+
+        return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
+        List<Entry> toDoEntriesNotInAgenda = new ArrayList<>(entries);
+        for (AgendaEntry entry : this.entries) {
+            toDoEntriesNotInAgenda.remove(entry.getEntry());
+        }
+        return toDoEntriesNotInAgenda;
+    }
+
+    public List<AgendaEntry> getEntriesWithTeam() {
+        return this.entries.stream()
+                .filter(entry -> entry.getTeam() != null)
+                .collect(Collectors.toList());
     }
 }

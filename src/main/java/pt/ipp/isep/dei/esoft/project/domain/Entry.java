@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Entry implements Serializable {
 
 
-    private String state; // TODO - Utilizar uma class enum para o state
+    private Status state;
 
     private GreenSpace greenSpace;
 
@@ -17,8 +17,8 @@ public class Entry implements Serializable {
 
     private float expectedDuration;
 
-    public Entry(String state, GreenSpace greenSpace, String title, String description, Urgency urgency, float expectedDuration) {
-        this.state = state;
+    public Entry(GreenSpace greenSpace, String title, String description, Urgency urgency, float expectedDuration) {
+        this.state = Status.TO_BE_DONE;
         this.greenSpace = greenSpace;
         this.title = title;
         this.description = description;
@@ -26,11 +26,11 @@ public class Entry implements Serializable {
         this.expectedDuration = expectedDuration;
     }
 
-    public String getState() {
+    public Status getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Status state) {
         this.state = state;
     }
 
@@ -76,16 +76,8 @@ public class Entry implements Serializable {
 
     @Override
     public String toString() {
-        return "ToDoList{" +
-                "state='" + state + '\'' +
-                ", greenSpace=" + greenSpace +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", urgency='" + urgency + '\'' +
-                ", expectedDuration=" + expectedDuration +
-                '}';
+        return title + '\'' + description + '\'' + urgency + '\'' + expectedDuration;
     }
-
 
 
 }

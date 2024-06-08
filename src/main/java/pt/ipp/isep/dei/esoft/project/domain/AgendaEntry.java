@@ -1,9 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * The type Agenda entry.
@@ -14,59 +19,214 @@ public class AgendaEntry implements Serializable {
     private String duration;
     private Status status;
     private Entry entry;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
+    private final int hoursByDay = 8;
 
     /**
      * Instantiates a new Agenda entry.
      *
-     * @param entry             the entry
-     * @param team              the team
+     * @param entry    the entry
+     * @param team     the team
      * @param vehicles the vehicles equipment
-     * @param duration          the duration
-     * @param status            the status
+     * @param duration the duration
+     * @param status   the status
      */
-    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Status status, Date startDate) {
         this.entry = entry;
         this.team = team;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = getEndDateFromDuration();
     }
 
-    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, Status status, Date startDate, Date endDate) {
+        this.entry = entry;
+        this.team = team;
+        this.vehicles = vehicles;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = this.getDurationFromEndDate();
+    }
+
+    public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Status status, Date startDate) {
         this.entry = entry;
         this.team = null;
         this.vehicles = vehicles;
         this.duration = duration;
         this.status = status;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = getEndDateFromDuration();
     }
 
-    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, Team team, String duration, Status status, Date startDate) {
         this.entry = entry;
         this.team = team;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = getEndDateFromDuration();
     }
 
-    public AgendaEntry(Entry entry, String duration, Status status, Date date) {
+    public AgendaEntry(Entry entry, String duration, Status status, Date startDate) {
         this.entry = entry;
         this.team = null;
         this.vehicles = new ArrayList<>();
         this.duration = duration;
         this.status = status;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = getEndDateFromDuration();
     }
 
-    public Date getDate() {
-        return date;
+    public AgendaEntry(Entry entry, Date startDate, String duration) {
+        this.entry = entry;
+        this.team = null;
+        this.vehicles = new ArrayList<>();
+        this.startDate = startDate;
+        this.duration = duration;
+        this.endDate = getEndDateFromDuration();
+        this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+
+    public AgendaEntry(Entry entry, Date startDate, Date endDate) {
+        this.entry = entry;
+        this.team = null;
+        this.vehicles = new ArrayList<>();
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = getDurationFromEndDate();
+        this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
+    }
+
+    public AgendaEntry(Entry entry, Date startDate, Date endDate, String duration) {
+        this.entry = entry;
+        this.team = null;
+        this.vehicles = new ArrayList<>();
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.status = getStatusBasedOnDates();
+        this.entry.setState(this.status);
+    }
+
+
+    public void postPoneEntry(Date startDate){
+        this.startDate = startDate;
+        this.status = Status.POSTPONED;
+        this.endDate = getEndDateFromDuration();
+    }
+
+    public String getDescription(){
+        return this.entry.getDescription();
+    }
+
+    public String getTitle() {
+        return this.entry.getTitle();
+    }
+
+    public Status getStatusBasedOnDates() {
+
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Start and end dates are required to calculate the status");
+        }
+
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+        java.util.Date utilEndDate = new java.util.Date(endDate.getTime());
+
+
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate end = utilEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate now = LocalDate.now();
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+        if (this.status == Status.DONE)
+            return Status.DONE;
+        if (now.isAfter(start)  && this.status != Status.CANCELED) {
+            return Status.IN_PROGRESS;
+        }
+        if (now.isBefore(start) && this.status != Status.POSTPONED && this.status != Status.CANCELED ) {
+            return Status.PLANNED;
+        }
+        return status;
+
+
+    }
+
+
+    public Date getEndDateFromDuration() {
+        if (startDate == null) {
+            throw new IllegalArgumentException("Start date is required to calculate the end date");
+        }
+
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+        
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int durationInDays = Integer.parseInt(duration) / hoursByDay;
+
+        // If weekends should not be counted
+        int weekends = (int) start.datesUntil(start.plusDays(durationInDays)).filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+
+        LocalDate end = start.plusDays(durationInDays + weekends);
+
+        return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    public String getDurationFromEndDate() {
+        if (endDate == null) {
+            throw new IllegalArgumentException("End date is required to calculate the duration");
+        }
+
+        java.util.Date utilStartDate = new java.util.Date(startDate.getTime());
+        java.util.Date utilEndDate = new java.util.Date(endDate.getTime());
+
+        LocalDate start = utilStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate end = utilEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        long daysBetween = ChronoUnit.DAYS.between(start, end);
+
+        long businessDays = Stream.iterate(start, date -> date.plusDays(1))
+                .limit(daysBetween)
+                .filter(date -> date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY)
+                .count();
+
+        long hours = businessDays * hoursByDay;
+
+        return String.valueOf(hours);
+    }
+
+    private LocalDate convertToLocalDate(Date dateToConvert) {
+        if (dateToConvert instanceof java.sql.Date) {
+            return ((java.sql.Date) dateToConvert).toLocalDate();
+        } else {
+            return dateToConvert.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+        }
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     /**
@@ -176,6 +336,7 @@ public class AgendaEntry implements Serializable {
         }
         this.vehicles.add(vehicle);
     }
+
     /**
      * Removes a vehicle from this agenda entry.
      *
@@ -188,4 +349,6 @@ public class AgendaEntry implements Serializable {
         }
         this.vehicles.remove(vehicle);
     }
+
+
 }

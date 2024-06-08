@@ -26,12 +26,11 @@ public class AddEntryToAgendaUI implements Runnable {
         System.out.println("\n-------Add an entry to the agenda.--------\n");
 
         // Get the necessary information from the user
-        String state = Utils.readLineFromConsole("Enter the state: ");
         String title = Utils.readLineFromConsole("Enter the title: ");
         String description = Utils.readLineFromConsole("Enter the description: ");
         Urgency[] urgencyValues = Urgency.values();
         List<Urgency> urgencyList = new ArrayList<>(Arrays.asList(urgencyValues));
-        int urgency = Utils.showAndSelectIndex( urgencyList,"Enter the urgency: ");
+        int urgency = Utils.showAndSelectIndex(urgencyList, "Enter the urgency: ");
         Urgency urgencyValue = urgencyList.get(urgency);
         float expectedDuration = (float) Utils.readDoubleFromConsole("Enter the expected duration: ");
         String duration = Utils.readLineFromConsole("Enter the duration: ");
@@ -40,17 +39,17 @@ public class AddEntryToAgendaUI implements Runnable {
         int statusIndex = Utils.showAndSelectIndex(statusList, "");
         Status status = statusList.get(statusIndex);
 
-        if (statusIndex < 0){
+        if (statusIndex < 0) {
             System.out.println("cancelling operation");
             return;
         }
-        if (urgency < 0){
+        if (urgency < 0) {
             System.out.println("cancelling operation");
             return;
         }
 
         // Create the new Entry
-        Entry entry = new Entry(state, null, title, description, urgencyValue, expectedDuration);
+        Entry entry = new Entry(null, title, description, urgencyValue, expectedDuration);
 
         // Create the new AgendaEntry
         AgendaEntry agendaEntry = new AgendaEntry(entry, duration, status, new Date());
@@ -59,7 +58,7 @@ public class AddEntryToAgendaUI implements Runnable {
         agendaController.addEntry(agendaEntry);
 
         System.out.println("The entry was successfully added to the agenda.");
-        for (AgendaEntry e: agendaController.getAgenda().getEntries())
+        for (AgendaEntry e : agendaController.getAgenda().getEntries())
             System.out.println(e);
     }
 }

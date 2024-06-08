@@ -7,26 +7,26 @@ title System Sequence Diagram - US026
 
 autonumber
 
-actor "Green Space Manager \n(GSM)" as GRM
+actor "Green Space Manager \n(GSM)" as GSM
 participant ":System" as System
 
-activate GRM
+activate GSM
 
-GRM -> System : requests to assign one or more vehicles to an entry
+GSM -> System : requests to assign one or more vehicles to an entry
 activate System
-System --> GRM : requests to select the entry
+System --> GSM : requests to select the entry
 deactivate System
-GRM -> System : selects the entry
+GSM -> System : selects the entry
 activate System
-    System --> GRM : requests to select the vehicles the user wants to add
+    System --> GSM : requests to select the vehicles the user wants to add
 deactivate System
-    GRM -> System : selects the vehicle(s)
+    GSM -> System : selects the vehicle(s)
    activate System
-       System --> GRM : shows all data and requests confirmation
+       System --> GSM : shows all data and requests confirmation
        deactivate System
    deactivate System
-       GRM -> System : confirms data
+       GSM -> System : confirms data
        activate System
-       System --> GRM: notifies successful vehicle registration
+       System --> GSM: notifies successful vehicle registration
    deactivate System
    @enduml

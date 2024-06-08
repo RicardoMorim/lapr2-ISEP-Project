@@ -7,15 +7,15 @@ autonumber
 
 'hide footbox
 actor "Green Spaces\nManager" as Employee
-participant "CancelUI" as UI
-participant "CancelEntryController" as CTRL
+participant "CancelGUI" as UI
+participant "AgendaController" as CTRL
 participant ":Repositories" as REP
 participant "repositories\n:Repositories" as PLAT
-participant "agendaRepository\n:AgendaRepository" as AGR
+participant "agenda\n:Agenda" as AGR
 participant "AgendaEntry" as AG
 
 activate Employee
-group Repeat Register (while user wants to)
+
     Employee -> UI : asks to cancel an entry in the agenda
     activate UI
     UI -> CTRL : getAgendaEntries()
@@ -25,14 +25,14 @@ group Repeat Register (while user wants to)
     activate REP
     REP --> CTRL : repositories
     deactivate REP
-    CTRL -> PLAT : getAgendaRepository()
+    CTRL -> PLAT : getAgenda()
     activate PLAT
-    PLAT --> CTRL : agendaRepository
+    PLAT --> CTRL : agenda
     deactivate PLAT
-    CTRL -> AGR : getEntryList(agendaEntry)
+    CTRL -> AGR : getEntries()
     activate AGR
 
-    AGR --> CTRL : entryList
+    AGR --> CTRL : entries
     deactivate AGR
 
     CTRL --> UI : entrylist
@@ -68,5 +68,5 @@ group Repeat Register (while user wants to)
         UI --> Employee : displays operation success
         deactivate UI
 
-end
+
 @enduml

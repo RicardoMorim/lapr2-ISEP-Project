@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US024 - Postpone an entry in the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

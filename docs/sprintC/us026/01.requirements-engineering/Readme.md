@@ -15,6 +15,14 @@ the Agenda.
 
 **From the client clarifications:**
 
+> **Question:** What is the criteria to accept an assign of a Vehicle to an Entry?
+Only Vehicle with no Entry's can be assigned ?
+Only Vehicles with no Entry on the day selected ?
+It is possible to add any kind of vehicles?
+>
+> **Answer:** The vehicle needs to be available in the period.
+Yes, any can of vehicles can be assigned.
+
 > **Question:** How will the Green Spaces Manager choose the vehicle to assign? By its plate?
 >
 > **Answer:** Assuming you mean assingning to a Task/Agenda Entry, the data related with vehicle should be provided in order to ease the selection.

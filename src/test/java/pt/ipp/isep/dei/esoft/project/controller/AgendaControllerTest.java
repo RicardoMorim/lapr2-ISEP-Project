@@ -36,7 +36,7 @@ class AgendaControllerTest {
         List<Vehicle> vehicles = Repositories.getInstance().getVehicleRepository().getVehicleList();
         vehicle = Collections.singletonList(vehicles.get(0));
         team = new Team(Collections.singletonList(Repositories.getInstance().getCollaboratorRepository().getCollaborators().get(0)));
-        entry = new AgendaEntry(todoEntry, team, vehicle, "1h", Status.PLANNED);
+        entry = new AgendaEntry(todoEntry, team, vehicle, "1h", Status.PLANNED, new Date());
         agendaController = new AgendaController(agenda);
     }
 
@@ -46,7 +46,7 @@ class AgendaControllerTest {
      */
     @Test
     void postponeEntryShouldChangeStatusToPostponed() {
-        agendaController.postponeEntry(entry);
+        agendaController.postponeEntry(entry, new Date());
         assertEquals(Status.POSTPONED, entry.getStatus());
     }
 

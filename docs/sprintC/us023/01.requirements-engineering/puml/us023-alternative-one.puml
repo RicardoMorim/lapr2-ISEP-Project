@@ -22,7 +22,7 @@ activate Employee
     Employee -> System : selects the entry
     activate System
 
-    System --> Employee : generates the teams and asks to select one
+    System --> Employee : Displays the available teams for that entry
     deactivate System
 
     Employee -> System : chooses the team

@@ -1,13 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
-import pt.ipp.isep.dei.esoft.project.domain.Status;
-import pt.ipp.isep.dei.esoft.project.domain.Team;
-import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.Agenda;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,10 +26,37 @@ public class AgendaController {
         this.agenda = Repositories.getInstance().getAgenda();
     }
 
+    public List<Vehicle> getVehiclesNotAssignedAtDates(List<Vehicle> vehicles, Date startDate, Date endDate) {
+        return agenda.getVehiclesNotAssignedAtDates(vehicles, startDate, endDate);
+    }
+
     public AgendaEntry postponeEntry(AgendaEntry entry, Date date) {
-        entry.setStatus(Status.POSTPONED);
-        entry.setDate(date);
+        entry.postPoneEntry(date);
         return entry;
+    }
+
+    public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
+        return agenda.findNearestAvailableDates(date, entry);
+    }
+
+    public void addEntry(Entry entry, Date startDate, String duration) {
+        agenda.addEntry(new AgendaEntry(entry, startDate, duration));
+    }
+
+    public void addEntry(Entry entry, Date startDate, Date endDate) {
+        agenda.addEntry(new AgendaEntry(entry, startDate, endDate));
+    }
+
+    public void addEntry(Entry entry, Date startDate, Date endDate, String duration) {
+        agenda.addEntry(new AgendaEntry(entry, endDate, startDate, duration));
+    }
+
+    public List<AgendaEntry> getEntriesByTeam(Team team) {
+        return agenda.getEntriesByTeam(team);
+    }
+
+    public boolean isDateAvailableForTeam(Date date, AgendaEntry entry) {
+        return agenda.isDateAvailableForTeam(date, entry);
     }
 
     /**
@@ -61,6 +84,14 @@ public class AgendaController {
      */
     public Agenda getAgenda() {
         return agenda;
+    }
+
+    public List<AgendaEntry> getNotDoneEntries() {
+        return agenda.getNotDoneEntries();
+    }
+
+    public List<AgendaEntry> getEntriesWithTeam() {
+        return agenda.getEntriesWithTeam();
     }
 
 
@@ -96,6 +127,23 @@ public class AgendaController {
 
     public void updateVehicle(Vehicle vehicle, Date date, int km) {
         agenda.getVehicleByPlate(vehicle.getPlate()).registerMaintenance(date, km);
+    }
+
+    public Date getEndDateFromDuration(Date startDate, String duration) {
+        return agenda.getEndDateFromDuration(startDate, duration);
+    }
+
+    public List<Team> getAvailableTeams(Date startDate, Date endDate, List<Team> teams) {
+        return agenda.filterUnavailableTeams(startDate, endDate, teams);
+    }
+
+    public List<AgendaEntry> getEntries() {
+        return agenda.getEntries();
+    }
+
+
+    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
+        return agenda.getToDoEntriesNotInAgenda(entries);
     }
 }
 

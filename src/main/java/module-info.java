@@ -8,6 +8,8 @@ module MainGUI {
     requires gs.core;
     requires org.jfree.jfreechart;
     requires java.sql;
+    requires bytes;
+    requires org.controlsfx.controls;
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
     opens pt.ipp.isep.dei.esoft.project.domain to javafx.base;

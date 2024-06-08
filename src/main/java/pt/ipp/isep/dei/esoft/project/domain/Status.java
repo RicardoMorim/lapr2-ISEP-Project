@@ -7,9 +7,17 @@ import java.io.Serializable;
  */
 public enum Status implements Serializable {
     /**
+     * To be done status.
+     */
+    TO_BE_DONE,
+    /**
      * Planned status.
      */
     PLANNED,
+    /**
+     * In progress status.
+     */
+    IN_PROGRESS,
     /**
      * Postponed status.
      */

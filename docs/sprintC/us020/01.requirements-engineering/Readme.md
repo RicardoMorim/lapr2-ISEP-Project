@@ -77,7 +77,7 @@ As a GSM, I want to register a green space, which has a name, an area, a type an
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us020-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us020-alternative-one-System_Sequence_Diagram___US020.svg)
 
 ### 1.7 Other Relevant Remarks
 

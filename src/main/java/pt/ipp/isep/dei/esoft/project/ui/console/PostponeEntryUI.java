@@ -5,7 +5,6 @@ import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Status;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +14,7 @@ public class PostponeEntryUI implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("\n------- Postpone an entry in the Agenda --------\n");
         List<AgendaEntry> agendaEntries = agendaController.getAgenda().getEntries();
         int entryIndex = Utils.showAndSelectIndex(agendaEntries, "Choose an entry to postpone: ");
         if (entryIndex == -1) {
@@ -25,7 +25,7 @@ public class PostponeEntryUI implements Runnable {
 
         // Ask for the new date
         Date newDate = Utils.readDateFromConsole("Enter the new date for the entry (dd-mm-yyyy): ");
-        Date oldDate = chosenEntry.getDate();
+        Date oldDate = chosenEntry.getStartDate();
         // Update the date and status of the chosen entry
         chosenEntry = agendaController.postponeEntry(chosenEntry, newDate);
         if (oldDate.before(newDate))

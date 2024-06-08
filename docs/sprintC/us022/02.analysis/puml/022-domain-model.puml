@@ -18,12 +18,20 @@ class ToDoList{
 }
 
 class Agenda{
-    entries
+    AgendaEntries
+}
+
+class AgendaEntry{
+    entry
+    startDate
+    endDate
+    duration
+    Team
+    vehicles
 }
 
 
-
 ToDoList "1" -  "*" Entry: Contains  >
-Entry "*" - "1" Agenda: gets added to >
-
+Entry "*" - "1" AgendaEntry: used to create >
+AgendaEntry "1" - "1" Agenda: gets added to >
 @enduml

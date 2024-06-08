@@ -22,5 +22,5 @@ However, be aware, this is a pedagogical simplification. On further projects and
 | US025 | [Cancel an entry in the Agenda](../../us025/Readme.md)               |
 | US026 | [Assign a vehicle to an entry in the agenda ](../../us026/Readme.md) |
 | US027 | [List all green spaces managed by a GSM](../../us027/Readme.md)      |
-| US028 | [ ](../../us028/Readme.md)                                           |
-| US029 | [ ](../../us029/Readme.md)                                           |
+| US028 | [Consult tasks assigned to a collaborator](../../us028/Readme.md)    |
+| US029 | [Record the completion of a task](../../us029/Readme.md)             |

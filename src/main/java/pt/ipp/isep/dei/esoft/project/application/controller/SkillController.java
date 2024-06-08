@@ -1,12 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
-import javax.swing.text.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +45,10 @@ public class SkillController {
         if (skillRepository.getSkills().contains(skill))
             throw new IllegalArgumentException("Skill already exists.");
 
-        if (skill.getName() == null || skill.getShortDescription() == null)
+        if (skill.getName() == null || skill.getDescription() == null)
             throw new IllegalArgumentException("Skill name or shortDescription parameters are null.");
 
-        if (skill.getName().isEmpty() || skill.getShortDescription().isEmpty())
+        if (skill.getName().isEmpty() || skill.getDescription().isEmpty())
             throw new IllegalArgumentException("Skill name or short description parameters are empty.");
 
 
@@ -64,7 +61,6 @@ public class SkillController {
     public void registerSkill(String name, String shortDescription) throws IllegalArgumentException {
         Skill skill = new Skill(name, shortDescription);
         registerSkill(skill);
-
     }
 
     public void updateSkill(SkillRepository repo, Skill skill, String name, String shortDescription) {

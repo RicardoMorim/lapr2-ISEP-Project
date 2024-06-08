@@ -11,8 +11,8 @@ participant ":AddEntryToDoListUI" as UI
 participant ":ToDoController" as ToDoCTRL
 participant "ToDoList:\TodoList" as ToDoList
 participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
-participant ":EntryController" as EntryCTRL
-participant "EntryRepository:\nEntryRepository" as EntryRepository
+participant ":AgendaController" as EntryCTRL
+participant "Agenda:\Agenda" as EntryRepository
 
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
@@ -20,8 +20,40 @@ participant "repositories\n:Repositories" as PLAT
 activate ADM
     ADM -> UI : asks to add an entry to the ToDoList
     activate UI
-    UI -> EntryCTRL ** : create
-       UI -> EntryCTRL: getEntries()
+
+               UI -> ToDoCTRL** : create
+               UI -> ToDoCTRL : addEntry()
+               activate ToDoCTRL
+               ToDoCTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                         RepositorySingleton --> ToDoCTRL: repositories
+                    deactivate RepositorySingleton
+                   ToDoCTRL -> PLAT : getSkillRepository()
+                   activate PLAT
+                   PLAT --> ToDoCTRL: ToDoList
+                   deactivate PLAT
+                   ToDoCTRL -> ToDoList: getEntries()
+                   activate ToDoList
+                       ToDoList -> ToDoCTRL: return entries
+                   deactivate ToDoList
+
+                   ToDoCTRL -> UI: return entries
+                   deactivate ToDoCTRL
+
+                UI -> ADM: asks to choose the entry to add
+           deactivate UI
+
+              ADM -> UI : chooses the entry
+                activate UI
+                UI -> ADM: Asks for the start date,\n and end date or duration
+            deactivate UI
+
+            ADM -> UI : enters the start date,\n and end date or duration
+            activate UI
+
+       UI -> EntryCTRL: create
+       UI -> EntryCTRL : addEntry()
        activate EntryCTRL
                        EntryCTRL -> RepositorySingleton : getInstance()
                        activate RepositorySingleton
@@ -29,48 +61,25 @@ activate ADM
                            RepositorySingleton --> EntryCTRL: repositories
                        deactivate RepositorySingleton
 
-                       EntryCTRL -> PLAT : getEntryRepository()
+                       EntryCTRL -> PLAT : getAgenda()
                        activate PLAT
 
-                           PLAT --> EntryCTRL: EntryRepository
+                           PLAT --> EntryCTRL: Agenda
                        deactivate PLAT
 
 
 
-                       EntryCTRL -> EntryRepository : getEntries()
+                       EntryCTRL -> EntryRepository : addEntry(entry)
                        activate EntryRepository
 
-                    EntryRepository -> EntryCTRL: returns entry list
+                    EntryRepository -> EntryCTRL: returns success
                 deactivate EntryRepository
-           EntryCTRL -> UI: returns entry list
+           EntryCTRL -> UI: returns success
        deactivate EntryCTRL
-       UI -> ADM: shows the entry list and asks to choose one
+       UI -> ADM: displays success
     deactivate UI
-    ADM -> UI : chooses the entry
 
-    activate UI
-        UI -> ToDoCTRL** : create
-        UI -> ToDoCTRL : addEntry(entry)
-        activate ToDoCTRL
-        ToDoCTRL -> RepositorySingleton : getInstance()
-             activate RepositorySingleton
 
-                  RepositorySingleton --> ToDoCTRL: repositories
-             deactivate RepositorySingleton
-            ToDoCTRL -> PLAT : getSkillRepository()
-            activate PLAT
-            PLAT --> ToDoCTRL: ToDoList
-            deactivate PLAT
-            ToDoCTRL -> ToDoList: AddEntry(entry)
-            activate ToDoList
-                ToDoList -> ToDoCTRL: return updated entries
-            deactivate ToDoList
-
-            ToDoCTRL -> UI: return updated entries
-            deactivate ToDoCTRL
-
-        UI -> ADM: display operation success\nalong withupdated entry list
-    deactivate UI
 deactivate ADM
 
 @enduml

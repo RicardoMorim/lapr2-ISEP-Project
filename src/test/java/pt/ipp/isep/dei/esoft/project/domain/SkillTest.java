@@ -17,9 +17,9 @@ class SkillTest {
 
 
     @Test
-    void getShortDescriptionReturnsCorrectShortDescription() {
+    void getShortDescriptionReturnsCorrectDescription() {
         Skill skill = new Skill("Java", "Short Description");
-        assertEquals("Short Description", skill.getShortDescription());
+        assertEquals("Short Description", skill.getDescription());
     }
 
     @Test
@@ -40,7 +40,7 @@ class SkillTest {
     void setShortDescriptionUpdatesShortDescription() {
         Skill skill = new Skill("Java", "Short Description");
         skill.setShortDescription("Updated Short Description");
-        assertEquals("Updated Short Description", skill.getShortDescription());
+        assertEquals("Updated Short Description", skill.getDescription());
     }
 
 
