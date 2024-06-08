@@ -7,10 +7,9 @@ autonumber
 
 'hide footbox
 actor "Organization Employee" as ADM
-participant ":AddEntryToDoListUI" as UI
-participant ":ToDoController" as ToDoCTRL
+participant ":AddEntryToDoListGUI" as UI
+participant ":ToDoListController" as ToDoCTRL
 participant "ToDoList:\TodoList" as ToDoList
-participant "CollaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant ":AgendaController" as EntryCTRL
 participant "Agenda:\Agenda" as EntryRepository
 
