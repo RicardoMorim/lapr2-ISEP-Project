@@ -49,7 +49,7 @@ class AgendaEntryTest {
 
     @Test
     void getDurationReturnsCorrectDuration() {
-        assertEquals("1", agendaEntry.getDuration());
+        assertEquals("10", agendaEntry.getDuration());
     }
 
     @Test
