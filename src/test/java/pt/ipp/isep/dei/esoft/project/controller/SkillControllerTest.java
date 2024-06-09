@@ -100,4 +100,55 @@ class SkillControllerTest {
         Collaborator collaborator = controller.registerCollaborator("John Doe", "john.doe@example.com", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), skills, new Date(), new Date(), "ID", 123456, 123456);
         assertEquals(skills, collaborator.getSkills());
     }
+
+    @Test
+    void testGetSkillByName() {
+        Skill skill = new Skill("Java", "Code");
+        skillRepository.add(skill);
+
+        Skill result = skillController.getSkillByName("Java");
+
+        assertEquals(skill, result);
+    }
+
+    @Test
+    void testGetSkillByNameWhenSkillDoesNotExist() {
+        assertThrows(IllegalArgumentException.class, () -> skillController.getSkillByName("Nonexistent Skill"));
+
+    }
+
+    @Test
+    void testRegisterSkillWithNullNameThrowsException() {
+
+        assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(new Skill(null, "Code")));
+    }
+
+    @Test
+    void testRegisterSkillWithEmptyNameThrowsException() {
+
+        assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(new Skill("", "Code")));
+    }
+
+    @Test
+    void testRegisterSkillWithInvalidNameThrowsException() {
+        Skill skill = new Skill("´?123_ AD.", "Code");
+
+        assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(skill));
+    }
+
+    @Test
+    void testGetSkillThatTheCollaboratorDoesNotHave() {
+        Skill skill1 = new Skill("Java", "Code");
+        Skill skill2 = new Skill("Python", "Code");
+        skillRepository.add(skill1);
+        skillRepository.add(skill2);
+
+        List<Skill> collaboratorSkills = List.of(skill1);
+        List<Skill> expected = List.of(skill2);
+
+        List<Skill> result = skillController.getSkillThatTheCollaboratorDoesNotHave(collaboratorSkills);
+
+        assertEquals(expected, result);
+    }
+
 }
