@@ -55,7 +55,6 @@ public class RegisterVehicleMaintenanceUI implements Runnable {
             try {
                 Vehicle selectedVehicle = vehicles.get(vehicleIndex);
                 vehicleController.registerVehicleMaintenance(selectedVehicle.getPlate(), date, km);
-                agendaController.updateVehicle(vehicles.get(vehicleIndex), date, km);
                 System.out.println("The vehicle's maintenance was successfully registered.");
             } catch (IllegalArgumentException e) {
                 System.out.println("The maintenance was not registered.\nThere was an error registering it.\n");

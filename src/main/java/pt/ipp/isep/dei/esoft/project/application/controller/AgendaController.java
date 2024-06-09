@@ -125,10 +125,6 @@ public class AgendaController {
         return entry.getVehicles();
     }
 
-    public void updateVehicle(Vehicle vehicle, Date date, int km) {
-        agenda.getVehicleByPlate(vehicle.getPlate()).registerMaintenance(date, km);
-    }
-
     public Date getEndDateFromDuration(Date startDate, String duration) {
         return agenda.getEndDateFromDuration(startDate, duration);
     }
