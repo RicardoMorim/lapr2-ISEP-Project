@@ -7,7 +7,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.ToDoListController;
 import pt.ipp.isep.dei.esoft.project.domain.Entry;
@@ -120,35 +122,53 @@ public class AddEntryToAgendaGUI {
         btnSubmit.setOnAction(e -> {
             Entry selectedEntry = tvTask.getSelectionModel().getSelectedItem();
             if (selectedEntry != null) {
-                if (lblStartDate.getText().contains("required") || lblEndDate.getText().contains("Cannot") || lblDuration.getText().contains("Cannot"))
-                    new Alert(Alert.AlertType.ERROR, "Please correct the errors before submitting.").showAndWait();
+                if (lblStartDate.getText().contains("required") || lblEndDate.getText().contains("Cannot") || lblDuration.getText().contains("Cannot")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please correct the errors before submitting.");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("logo.png"));
+                    alert.showAndWait();
+                }
 
                 LocalDate startDate = dpStartDate.getValue();
                 LocalDate endDate = dpEndDate.getValue();
 
                 if (startDate == null) {
-                    new Alert(Alert.AlertType.ERROR, "Start date is required.").showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Start date is required.");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("logo.png"));
+                    alert.showAndWait();
                     return;
                 }
 
                 java.util.Date utilStartDate = java.util.Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 java.util.Date utilEndDate = endDate != null ? java.util.Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) : null;
 
-                if (utilEndDate != null && utilStartDate.after(utilEndDate))
-                    new Alert(Alert.AlertType.ERROR, "End date cannot be before start date.").showAndWait();
-                else if (utilStartDate != null && tfDuration.getText().isEmpty() && utilEndDate != null)
+                if (utilEndDate != null && utilStartDate.after(utilEndDate)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "End date cannot be before start date.");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("logo.png"));
+                    alert.showAndWait();
+                    return;
+                } else if (utilStartDate != null && tfDuration.getText().isEmpty() && utilEndDate != null)
                     agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate);
                 else if (utilStartDate != null && utilEndDate != null && !tfDuration.getText().isEmpty())
                     agendaController.addEntry(selectedEntry, utilStartDate, utilEndDate, tfDuration.getText());
                 else if (utilStartDate != null && !tfDuration.getText().isEmpty() && utilEndDate == null)
                     agendaController.addEntry(selectedEntry, utilStartDate, tfDuration.getText());
-                else
-                    new Alert(Alert.AlertType.ERROR, "Please provide a valid duration or end date and a start date.").showAndWait();
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please provide a valid duration or end date and a start date.");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("logo.png"));
+                    alert.showAndWait();
+                }
+
 
                 tvTask.getItems().remove(selectedEntry);
 
-                new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.").showAndWait();
-
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
+                alert.showAndWait();
 
 
             }

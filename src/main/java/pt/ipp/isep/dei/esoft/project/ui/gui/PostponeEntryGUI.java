@@ -4,8 +4,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
 import pt.ipp.isep.dei.esoft.project.domain.AgendaEntry;
@@ -73,6 +75,8 @@ public class PostponeEntryGUI {
                 if (isDateAvailableForTeam && isDateAvailableForVehicles) {
                     selectedEntry = agendaController.postponeEntry(selectedEntry, date);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("logo.png"));
                     if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
                         alert.setTitle("Success");
                         alert.setHeaderText(null);
@@ -100,7 +104,6 @@ public class PostponeEntryGUI {
                                 "Closest date before: " + suggestedDate1.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "\n" +
                                 "Closest date after: " + suggestedDate2.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                     }
-                    alert.showAndWait();
                     if (isDateAvailableForTeam && !isDateAvailableForVehicles) {
                         alert.setTitle("Can not postpone the entry due to vehicle availability");
                         alertMessage += "\nIf these dates are not suitable, try to change the vehicles in the entry, and try again later.";
@@ -112,6 +115,7 @@ public class PostponeEntryGUI {
                         alertMessage += "\nIf these dates are not suitable, try to change the team and vehicles in the entry, and try again later.";
                     }
                     alert.setContentText(alertMessage);
+                    alert.setWidth(600);
                     alert.showAndWait();
                 }
             }

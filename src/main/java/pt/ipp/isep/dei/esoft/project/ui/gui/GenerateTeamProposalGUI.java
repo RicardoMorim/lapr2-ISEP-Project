@@ -4,7 +4,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
 import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
@@ -103,6 +105,8 @@ public class GenerateTeamProposalGUI {
                 alert.setTitle("Team Proposal Accepted");
                 alert.setHeaderText(null);
                 alert.setContentText("The team proposal was successfully accepted and stored.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });

@@ -52,7 +52,7 @@ public class Agenda implements Serializable {
             if (e == entry || e.getStatus() == Status.CANCELED) {
                 continue;
             }
-            if (e.getTeam() == entry.getTeam()) {
+            if (e.getTeam() == entry.getTeam() && e.getTeam() != null){
                 if (compareNewDatesToEntryDate(chosenStartDate, chosenEndDate, e)) return false;
             }
         }
