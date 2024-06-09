@@ -65,7 +65,7 @@ Num contexto real precisariamos de gerir também (in)disponibilidade dos veiculo
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us026-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us026-alternative-one-System_Sequence_Diagram___US026.svg)
 
 ### 1.7 Other Relevant Remarks
 

@@ -76,4 +76,34 @@ class GreenSpaceRepositoryTest {
     void getGreenSpaceByDesignation_notFound() {
         assertThrows(IllegalArgumentException.class, () -> repository.getGreenSpaceByDesignation("Park"));
     }
+
+    @Test
+    void getGreenSpaces_emptyRepository() {
+        assertTrue(repository.getGreenSpaces().isEmpty());
+    }
+
+    @Test
+    void addGreenSpace_nullGreenSpace() {
+        assertThrows(IllegalArgumentException.class, () -> repository.addGreenSpace(null));
+    }
+
+    @Test
+    void removeGreenSpace_nullGreenSpace() {
+        assertThrows(IllegalArgumentException.class, () -> repository.removeGreenSpace(null));
+    }
+
+    @Test
+    void updateGreenSpace_nullGreenSpace() {
+        assertThrows(IllegalArgumentException.class, () -> repository.updateGreenSpace(null, greenSpace));
+    }
+
+    @Test
+    void getGreenSpaceByDesignation_nonExistingDesignation() {
+        assertThrows(IllegalArgumentException.class, () -> repository.getGreenSpaceByDesignation("NonExistingPark"));
+    }
+
+    @Test
+    void getGreenSpaceByDesignation_nullDesignation() {
+        assertThrows(IllegalArgumentException.class, () -> repository.getGreenSpaceByDesignation(null));
+    }
 }

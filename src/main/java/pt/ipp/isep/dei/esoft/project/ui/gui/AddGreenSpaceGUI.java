@@ -13,11 +13,20 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Type;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
+/**
+ * GUI for managing GreenSpace objects.
+ */
 public class AddGreenSpaceGUI {
 
+    /**
+     * Constructs a new AddGreenSpaceGUI.
+     */
     private GreenSpaceController controller;
 
-
+    /**
+     * Returns the main GridPane of the GUI.
+     * @return the main GridPane
+     */
     public GridPane getGridPane() {
         controller = new GreenSpaceController();
 
@@ -179,6 +188,10 @@ public class AddGreenSpaceGUI {
         return grid;
     }
 
+    /**
+     * Shows an alert with the specified message.
+     * @param message the message to display in the alert
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -187,6 +200,12 @@ public class AddGreenSpaceGUI {
         alert.showAndWait();
     }
 
+    /**
+     * Returns a GridPane for the next stage of the GUI.
+     * @param name the name of the GreenSpace
+     * @param address the address of the GreenSpace
+     * @return a GridPane for the next stage
+     */
     private GridPane showNextStage(String name, Address address) {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
