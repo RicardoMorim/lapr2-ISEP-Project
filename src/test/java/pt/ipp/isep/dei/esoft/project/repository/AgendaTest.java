@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,8 +30,8 @@ class AgendaTest {
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
         Team t1 = new Team(Collections.singletonList(collaborator));
-        entry1 = new AgendaEntry(entry, t1, Collections.singletonList(vehicle), "10", new Date());
-        entry2 = new AgendaEntry(entry, t1, Collections.singletonList(vehicle), "20", new Date());
+        entry1 = new AgendaEntry(entry, t1, Collections.singletonList(vehicle), "50", new Date());
+        entry2 = new AgendaEntry(entry, t1, Collections.singletonList(vehicle), "50", new Date());
     }
 
     @Test
@@ -72,7 +75,7 @@ class AgendaTest {
     @Test
     void isDateAvailableForTeamShouldReturnTrueWhenDateIsAvailable() {
         agenda.addEntry(entry1);
-        assertTrue(agenda.isDateAvailableForTeam(new Date(System.currentTimeMillis() + 5 * 24 * 60 * 60 * 1000), entry2)); // 1 hour later
+        assertTrue(agenda.isDateAvailableForTeam(new Date(System.currentTimeMillis() + 10 * 24 * 60 * 60 * 1000), entry2)); // 1 hour later
     }
 
     @Test
@@ -162,5 +165,71 @@ class AgendaTest {
         agenda.addEntry(entry1);
         assertEquals(vehicle1, agenda.getVehicleByPlate("ABC-1234"));
         assertNull(agenda.getVehicleByPlate("XYZ-7890"));
+    }
+    @Test
+    void testGetEntriesByTeam() {
+        Team team = new Team(Collections.singletonList(new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456)));
+        AgendaEntry entryWithTeam = new AgendaEntry(new Entry(new GreenSpace("Park", new Address("abacate", "morango", "1112-222"), 1000, Type.GARDEN, new Email("admin@this.app")), "title", "description", Urgency.HIGH, 2.0f), team, Collections.singletonList(vehicle1), "10", new Date());
+        agenda.addEntry(entryWithTeam);
+        agenda.addEntry(entry1); // entry1 has no team
+        assertEquals(Collections.singletonList(entryWithTeam), agenda.getEntriesByTeam(team));
+    }
+
+    @Test
+    void testGetNotDoneEntries() {
+        entry1.setStatus(Status.DONE);
+        agenda.addEntry(entry1);
+        agenda.addEntry(entry2); // entry2 status is not DONE
+        assertEquals(Collections.singletonList(entry2), agenda.getNotDoneEntries());
+    }
+
+    @Test
+    void testGetEntriesWithNoTeam() {
+        entry1.setTeam(null);
+        agenda.addEntry(entry1);
+        agenda.addEntry(entry2); // entry2 has a team
+        assertEquals(Collections.singletonList(entry1), agenda.getEntriesWithNoTeam());
+    }
+
+    @Test
+    void testGetEntriesWithTeam() {
+        entry1.setTeam(null);
+        agenda.addEntry(entry1);
+        agenda.addEntry(entry2); // entry2 has a team
+        assertEquals(Collections.singletonList(entry2), agenda.getEntriesWithTeam());
+    }
+
+    @Test
+    void testGetToDoEntriesNotInAgenda() {
+        Entry entryNotInAgenda = new Entry(new GreenSpace("Park", new Address("abacate", "morango", "1112-222"), 1000, Type.GARDEN, new Email("admin@this.app")), "title", "description", Urgency.HIGH, 2.0f);
+        List<Entry> entries = Arrays.asList(entry1.getEntry(), entryNotInAgenda);
+        assertEquals(entries, agenda.getToDoEntriesNotInAgenda(entries));
+    }
+
+    @Test
+    void testFilterUnavailableTeams() {
+        Date startDate = new Date();
+        startDate = new Date(startDate.getTime() - 24 * 60 * 60 *1000);
+        Date endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000*5); // 1 day later
+        Team team = entry1.getTeam();
+        List<Team> teams = Arrays.asList(team);
+        assertEquals(Collections.singletonList(team), agenda.filterUnavailableTeams(startDate, endDate, teams));
+    }
+
+    @Test
+    void testGetEndDateFromDuration() {
+        Date startDate = new Date();
+        String duration = "8"; // 8 hours = 1 day
+
+        // Calculate the expected end date
+        final int hoursByDay = 8;
+        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int durationInDays = Integer.parseInt(duration) / hoursByDay;
+        int weekends = (int) start.datesUntil(start.plusDays(durationInDays)).filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+        LocalDate end = start.plusDays(durationInDays + weekends);
+        Date expectedEndDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Call the method under test and check the result
+        assertEquals(expectedEndDate, agenda.getEndDateFromDuration(startDate, duration));
     }
 }
