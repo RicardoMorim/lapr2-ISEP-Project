@@ -11,12 +11,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Team repository test.
+ */
 class TeamRepositoryTest {
 
     private TeamRepository teamRepository;
     private Team team1;
     private Team team2;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         teamRepository = new TeamRepository();
@@ -24,6 +30,9 @@ class TeamRepositoryTest {
         team2 = new Team(Collections.singletonList(new Collaborator("email2@example.com", "Jane Doe", new Address("789 Street", "Lisbon", "987-654"), "987654321", new Job("Job Title 2", "Job Description 2"), new Date(), new Date(), "ID Type", 456, 789)));
     }
 
+    /**
+     * Test add.
+     */
     @Test
     void testAdd() {
         teamRepository.add(team1);
@@ -31,6 +40,9 @@ class TeamRepositoryTest {
         assertTrue(teams.contains(team1));
     }
 
+    /**
+     * Test remove.
+     */
     @Test
     void testRemove() {
         teamRepository.add(team1);
@@ -39,6 +51,9 @@ class TeamRepositoryTest {
         assertFalse(teams.contains(team1));
     }
 
+    /**
+     * Test get unassigned teams.
+     */
     @Test
     void testGetUnassignedTeams() {
         teamRepository.add(team1);
@@ -48,6 +63,9 @@ class TeamRepositoryTest {
         assertTrue(unassignedTeams.contains(team2) && !unassignedTeams.contains(team1));
     }
 
+    /**
+     * Test get team by collaborator.
+     */
     @Test
     void testGetTeamByCollaborator() {
         teamRepository.add(team1);
@@ -55,6 +73,10 @@ class TeamRepositoryTest {
         Team team = teamRepository.getTeamByCollaborator(collaborator);
         assertEquals(team1, team);
     }
+
+    /**
+     * Test set teams.
+     */
     @Test
     void testSetTeams() {
         List<Team> newTeams = Arrays.asList(team1, team2);
@@ -62,6 +84,9 @@ class TeamRepositoryTest {
         assertEquals(newTeams, teamRepository.getTeams());
     }
 
+    /**
+     * Test generate team proposals.
+     */
     @Test
     void testGenerateTeamProposals() {
         List<Skill> requiredSkills = Arrays.asList(new Skill("Java","Desk"), new Skill("Python","Desk"));
@@ -73,6 +98,9 @@ class TeamRepositoryTest {
         assertFalse(teamProposals.isEmpty());
     }
 
+    /**
+     * Test has required skills.
+     */
     @Test
     void testHasRequiredSkills() {
         List<Collaborator> team = Arrays.asList(

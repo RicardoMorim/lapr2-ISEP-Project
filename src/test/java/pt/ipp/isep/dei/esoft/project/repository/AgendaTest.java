@@ -214,6 +214,10 @@ class AgendaTest {
         assertEquals(vehicle1, agenda.getVehicleByPlate("ABC-1234"));
         assertNull(agenda.getVehicleByPlate("XYZ-7890"));
     }
+
+    /**
+     * Test get entries by team.
+     */
     @Test
     void testGetEntriesByTeam() {
         Team team = new Team(Collections.singletonList(new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456)));
@@ -223,6 +227,9 @@ class AgendaTest {
         assertEquals(Collections.singletonList(entryWithTeam), agenda.getEntriesByTeam(team));
     }
 
+    /**
+     * Test get not done entries.
+     */
     @Test
     void testGetNotDoneEntries() {
         entry1.setStatus(Status.DONE);
@@ -231,6 +238,9 @@ class AgendaTest {
         assertEquals(Collections.singletonList(entry2), agenda.getNotDoneEntries());
     }
 
+    /**
+     * Test get entries with no team.
+     */
     @Test
     void testGetEntriesWithNoTeam() {
         entry1.setTeam(null);
@@ -239,6 +249,9 @@ class AgendaTest {
         assertEquals(Collections.singletonList(entry1), agenda.getEntriesWithNoTeam());
     }
 
+    /**
+     * Test get entries with team.
+     */
     @Test
     void testGetEntriesWithTeam() {
         entry1.setTeam(null);
@@ -247,6 +260,9 @@ class AgendaTest {
         assertEquals(Collections.singletonList(entry2), agenda.getEntriesWithTeam());
     }
 
+    /**
+     * Test get to do entries not in agenda.
+     */
     @Test
     void testGetToDoEntriesNotInAgenda() {
         Entry entryNotInAgenda = new Entry(new GreenSpace("Park", new Address("abacate", "morango", "1112-222"), 1000, Type.GARDEN, new Email("admin@this.app")), "title", "description", Urgency.HIGH, 2.0f);
@@ -254,6 +270,9 @@ class AgendaTest {
         assertEquals(entries, agenda.getToDoEntriesNotInAgenda(entries));
     }
 
+    /**
+     * Test filter unavailable teams.
+     */
     @Test
     void testFilterUnavailableTeams() {
         Date startDate = new Date();
@@ -264,6 +283,9 @@ class AgendaTest {
         assertEquals(Collections.singletonList(team), agenda.filterUnavailableTeams(startDate, endDate, teams));
     }
 
+    /**
+     * Test get end date from duration.
+     */
     @Test
     void testGetEndDateFromDuration() {
         Date startDate = new Date();
