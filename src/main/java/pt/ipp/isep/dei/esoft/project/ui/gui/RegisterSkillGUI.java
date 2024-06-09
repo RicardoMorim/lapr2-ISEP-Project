@@ -4,9 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
@@ -103,6 +105,8 @@ public class RegisterSkillGUI {
                 alert.setTitle("Registration Successful");
                 alert.setHeaderText(null);
                 alert.setContentText("Skill registered successfully.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
 
                 // Optionally, clear the fields after successful registration
@@ -114,6 +118,8 @@ public class RegisterSkillGUI {
                 alert.setTitle("Registration Failed");
                 alert.setHeaderText("Error registering skill");
                 alert.setContentText(e.getMessage());
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });
@@ -128,6 +134,8 @@ public class RegisterSkillGUI {
                 alert.setTitle("No Selection");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a skill to remove.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });

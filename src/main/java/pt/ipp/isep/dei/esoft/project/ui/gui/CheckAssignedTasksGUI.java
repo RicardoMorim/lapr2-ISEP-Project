@@ -4,9 +4,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.TeamController;
@@ -76,6 +78,8 @@ public class CheckAssignedTasksGUI {
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a task to set as done.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });

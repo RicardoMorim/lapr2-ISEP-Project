@@ -155,8 +155,8 @@ public class Bootstrap implements Runnable {
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
 
-        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, "10", Status.PLANNED, new Date());
-        AgendaEntry agendaEntry2 = new AgendaEntry(entry2, vehicles, "30", Status.PLANNED, new Date());
+        AgendaEntry agendaEntry1 = new AgendaEntry(entry1, "10", new Date());
+        AgendaEntry agendaEntry2 = new AgendaEntry(entry2, vehicles, "30", new Date());
         agenda.addEntry(agendaEntry1);
         agenda.addEntry(agendaEntry2);
     }

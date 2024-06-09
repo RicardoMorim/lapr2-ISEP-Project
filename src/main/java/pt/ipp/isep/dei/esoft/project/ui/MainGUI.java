@@ -18,15 +18,6 @@ public class MainGUI extends Application {
         launch(args);
     }
 
-//    @Override
-//    public void start(Stage primaryStage) {
-//        MainMenuGUI menu = new MainMenuGUI();
-//        primaryStage.setOnCloseRequest(e -> {
-//            bootstrap.saveData();
-//        });
-//        menu.start(primaryStage);
-//    }
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {

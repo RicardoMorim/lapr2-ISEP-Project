@@ -1,0 +1,98 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Organization Employee" as ADM
+participant ":AssignTeamToAgendaEntryGUI" as UI
+participant ":AgendaController" as AgendaCTRL
+participant ":TeamController" as TeamCTRL
+participant "TeamRepository:\nTeamRepository" as TeamRepository
+participant "Agenda:\nAgenda" as Agenda
+
+
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+activate ADM
+    ADM -> UI : asks to assign a team to an agenda entry
+    activate UI
+    UI -> AgendaCTRL** : create
+       UI -> AgendaCTRL: getCollaboratorList()
+       activate AgendaCTRL
+                       AgendaCTRL -> RepositorySingleton : getInstance()
+                       activate RepositorySingleton
+
+                           RepositorySingleton --> AgendaCTRL: repositories
+                       deactivate RepositorySingleton
+
+                       AgendaCTRL -> PLAT : getAgenda()
+                       activate PLAT
+
+                           PLAT --> AgendaCTRL: Agenda
+                       deactivate PLAT
+
+
+
+                       AgendaCTRL -> Agenda : getEntries()
+                       activate Agenda
+
+                    Agenda -> AgendaCTRL: returns entry list
+                deactivate Agenda
+           AgendaCTRL -> UI: returns entry list
+       deactivate AgendaCTRL
+       UI -> ADM: shows the entry list and asks to choose one
+    deactivate UI
+    ADM -> UI : chooses the entry
+
+    activate UI
+        UI -> TeamCTRL** : create
+        UI -> TeamCTRL : getTeams()
+        activate TeamCTRL
+        TeamCTRL -> RepositorySingleton : getInstance()
+             activate RepositorySingleton
+
+                  RepositorySingleton --> TeamCTRL: repositories
+             deactivate RepositorySingleton
+            TeamCTRL -> PLAT : getTeamRepository()
+            activate PLAT
+            PLAT --> TeamCTRL: TeamRepository
+            deactivate PLAT
+            TeamCTRL -> TeamRepository: getTeams()
+            activate TeamRepository
+                TeamRepository -> TeamCTRL: returns teams
+            deactivate TeamRepository
+
+            TeamCTRL -> UI: returns teams
+            deactivate TeamCTRL
+            UI -> AgendaCTRL: getAvailableTeams(entry, teams)
+
+            activate AgendaCTRL
+                AgendaCTRL -> Agenda : getAvailableTeams(entry, teams)
+                activate Agenda
+                    Agenda -> AgendaCTRL: returns available teams
+                deactivate Agenda
+            AgendaCTRL -> UI: returns available teams
+            deactivate AgendaCTRL
+        UI -> ADM: shows the available teams and asks to choose one
+
+    deactivate UI
+    ADM -> UI : chooses the team
+    activate UI
+    UI -> AgendaCTRL : assignTeam(entry, team)
+    activate AgendaCTRL
+        AgendaCTRL -> Agenda : assignTeam(entry, team)
+        activate Agenda
+            Agenda -> AgendaCTRL: returns success
+        deactivate Agenda
+    AgendaCTRL -> UI: returns success
+    deactivate AgendaCTRL
+    UI -> ADM: shows success message
+deactivate UI
+
+deactivate ADM
+
+@enduml

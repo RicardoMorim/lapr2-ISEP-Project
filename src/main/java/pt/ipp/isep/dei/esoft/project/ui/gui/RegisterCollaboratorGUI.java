@@ -4,9 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.JobController;
 import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
@@ -29,7 +31,7 @@ public class RegisterCollaboratorGUI {
     }
 
     public GridPane getRegisterCollaboratorGUI(double height, double width) {
-        GridPane gridPane = new GridPane();
+        GridPane gridPane = new GridPane(height, width);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setHgap(10);
@@ -209,6 +211,8 @@ public class RegisterCollaboratorGUI {
                 alert.setTitle("Registration Successful");
                 alert.setHeaderText(null);
                 alert.setContentText("Collaborator registered successfully.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
 
                 // Optionally, clear the fields after successful registration
@@ -230,6 +234,8 @@ public class RegisterCollaboratorGUI {
                 alert.setTitle("Registration Failed");
                 alert.setHeaderText("Error registering collaborator");
                 alert.setContentText(e.getMessage());
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });
@@ -244,6 +250,8 @@ public class RegisterCollaboratorGUI {
                 alert.setTitle("No Selection");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a collaborator to remove.");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("logo.png"));
                 alert.showAndWait();
             }
         });

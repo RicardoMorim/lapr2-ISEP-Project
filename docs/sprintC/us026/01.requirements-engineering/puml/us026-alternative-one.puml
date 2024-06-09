@@ -12,15 +12,15 @@ participant ":System" as System
 
 activate GSM
 
-GSM -> System : requests to assign one or more vehicles to an entry
+GSM -> System : requests to assign one vehicle to an entry
 activate System
 System --> GSM : requests to select the entry
 deactivate System
 GSM -> System : selects the entry
 activate System
-    System --> GSM : requests to select the vehicles the user wants to add
+    System --> GSM : requests to select the vehicle the user wants to add
 deactivate System
-    GSM -> System : selects the vehicle(s)
+    GSM -> System : selects the vehicle
    activate System
        System --> GSM : shows all data and requests confirmation
        deactivate System

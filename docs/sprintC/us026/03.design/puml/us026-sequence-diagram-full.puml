@@ -1,0 +1,83 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space Manager \n(GSM)" as GSM
+participant ":AddVehicleToAgendaEntryUI" as UI
+participant ":AgendaController" as agendaController
+participant ":VehicleController" as vehicleController
+participant ":Repositories" as RepositorySingleton
+participant "repositories:\nRepositories" as PLAT
+participant "agenda:\nAgenda" as agenda
+participant "vehicleRepository:\nVehicleRepository" as vehicles
+
+activate GSM
+
+GSM -> UI : requests to assign one vehicle to an entry
+activate UI
+UI -> agendaController : getAgendaEntries()
+activate agendaController
+    agendaController -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> agendaController: repositories
+                                        deactivate RepositorySingleton
+    agendaController -> PLAT : getAgenda()
+    activate PLAT
+    PLAT --> agendaController : agenda
+    deactivate PLAT
+                                        agendaController -> agenda : getAgendaEntries()
+                                        activate agenda
+
+                                            agenda --> agendaController : agenda entries
+                                        deactivate agenda
+agendaController --> UI : agenda entries
+deactivate agendaController
+UI --> GSM : requests to select the entry
+deactivate UI
+GSM -> UI : selects the entry
+activate UI
+UI -> vehicleController : getVehicles()
+activate vehicleController
+vehicleController -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> vehicleController: repositories
+                                        deactivate RepositorySingleton
+    vehicleController -> PLAT : getVehicleRepository()
+    activate PLAT
+    PLAT --> vehicleController : vehicleRepository
+    deactivate PLAT
+
+                                        vehicleController -> vehicles : getVehicles()
+                                        activate vehicles
+
+                                            vehicles --> vehicleController : vehicles list
+                                        deactivate vehicles
+vehicleController --> UI : vehicles list
+deactivate vehicleController
+UI --> GSM : requests to select the vehicle the user wants to add
+deactivate UI
+    GSM -> UI : selects the vehicle
+   activate UI
+       UI --> GSM : shows all data and requests confirmation
+       deactivate UI
+
+   deactivate UI
+       GSM -> UI : confirms data
+       activate UI
+       UI -> agendaController : addVehicleToAgendaEntry(vehicle, entry)
+       activate agendaController
+       agendaController -> agenda : addVehicleToAgendaEntry(vehicle, entry)
+       activate agenda
+         agenda --> agendaController : success
+         deactivate agenda
+         agendaController --> UI : success
+         deactivate agendaController
+       UI --> GSM: notifies successful vehicle registration
+   deactivate UI
+@enduml

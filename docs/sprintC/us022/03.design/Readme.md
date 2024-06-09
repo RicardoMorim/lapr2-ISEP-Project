@@ -4,36 +4,32 @@
 
 ### 3.1. Rationale
 
-| Interaction ID                                                      | Question: Which class is responsible for...                  | Answer                 | Justification (with patterns)                                                                                 |
-|:--------------------------------------------------------------------|:-------------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to assign one or more skills to a collaborator  		     | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		                                                             | 	... coordinating the US?                                    | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2: Shows the list of collaborators  		                         | 		... interacting with the actor?					                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 3: Choosing the collaborator  		                               | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the repository to get the collaborator list    | CollaboratorController | IE: its the controller with access to the collaborator repository                                             |
-|                                                                     | ... getting the collaborator list                            | CollaboratorRepository | IE: its the repository that stores the collaborator's information's                                           |
-| Step 4: shows the list of skills to assign to that collaborator  		 | 	...interacting with the actor?                              | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... accessing the skill repository to get the list of skills | SkillController        | IE: its the controller that has access to the skill repository                                                |
-| 			  		                                                             | 	... knowing the list of skills                              | SkillRepository        | IE: The repository keeps all the skills                                                                       |
-| Step 5: Chooses one or more skills to add                           | 	... interacting with the actor?                             | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                                                                     | ... validate skill                                           | Skill                  | IE: Validates the skill before validating it                                                                  |
-|                                                                     | ... saving the collaborator's skills                         | Collaborator           | IE: Manages collaborator's information                                                                        |
-| Step 6: Displays operation success 		                               | ... interacting with the actor?							                       | AddSkillUI             | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
+| Interaction ID                                                            | Question: Which class is responsible for...            | Answer              | Justification (with patterns)                                                                                 |
+|:--------------------------------------------------------------------------|:-------------------------------------------------------|:--------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1: asks to add an entry to the agenda  		                            | 	... interacting with the actor?                       | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		                                                                   | 	... coordinating the US?                              | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 2: Shows the list of entries  		                                     | 		... interacting with the actor?					                 | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 3: Choosing the Entry                                                | 	... interacting with the actor?                       | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                                                                           | ... accessing the repository to get the entry list     | ToDoListController  | IE: Controller                                                                                                |
+|                                                                           | ... getting the entry list                             | ToDoList            | IE: repository                                                                                                |
+| Step 4: asks for the start date and end dates or duration of the task  		 | 	...interacting with the actor?                        | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 5: Chooses the dates                                                 | 	... interacting with the actor?                       | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                                                                           | ... accessing the repository to add a new agenda entry | AgendaController    | IE: Controller                                                                                                |
+|                                                                           | ... storing the new entry                              | Agenda              | IE: repository                                                                                                |
+| Step 6: Displays operation success 		                                     | ... interacting with the actor?							                 | AddEntryToAgendaGUI | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model  |              
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* SkillController
-* CollaboratorController
-* Collaborator
-* Skill
-* CollaboratorRepository
-* SkillRepository
+* ToDoListController
+* ToDoList
+* AgendaController
+* Agenda
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* AddSkillUI
+* AddEntryToAgendaGUI
 
 ## 3.2. Sequence Diagram (SD)
 

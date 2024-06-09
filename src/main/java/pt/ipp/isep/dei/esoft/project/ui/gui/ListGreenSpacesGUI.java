@@ -6,7 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.EmailWrapper;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
@@ -115,6 +117,8 @@ public class ListGreenSpacesGUI {
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("logo.png"));
         alert.showAndWait();
     }
 }

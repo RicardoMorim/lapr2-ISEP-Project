@@ -6,7 +6,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.GreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.application.controller.ToDoListController;
 import pt.ipp.isep.dei.esoft.project.domain.EmailWrapper;
@@ -93,7 +95,10 @@ public class AddEntryToDoListGUI {
             Entry entry = new Entry(greenSpace, title, description, urgency, expectedDuration);
             controller.addEntry(entry);
 
-            new Alert(Alert.AlertType.INFORMATION, "Entry added successfully!").show();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Entry added successfully!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("logo.png"));
+            alert.showAndWait();
 
             titleField.clear();
             descriptionField.clear();

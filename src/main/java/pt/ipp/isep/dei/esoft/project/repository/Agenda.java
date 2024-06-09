@@ -52,15 +52,32 @@ public class Agenda implements Serializable {
             if (e == entry || e.getStatus() == Status.CANCELED) {
                 continue;
             }
-            if (e.getTeam() == entry.getTeam()) {
-                if ((chosenStartDate.compareTo(e.getStartDate()) >= 0 && chosenStartDate.compareTo(e.getEndDate()) <= 0) ||
-                        (chosenEndDate.compareTo(e.getStartDate()) >= 0 && chosenEndDate.compareTo(e.getEndDate()) <= 0) ||
-                        (chosenStartDate.compareTo(e.getStartDate()) <= 0 && chosenEndDate.compareTo(e.getEndDate()) >= 0)) {
-                    return false;
+            if (e.getTeam() == entry.getTeam() && e.getTeam() != null){
+                if (compareNewDatesToEntryDate(chosenStartDate, chosenEndDate, e)) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isDateAvailableForVehicles(Date chosenStartDate, AgendaEntry entry) {
+        Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
+        for (AgendaEntry e : entries) {
+            if (e == entry || e.getStatus() == Status.CANCELED) {
+                continue;
+            }
+            for (Vehicle vehicle : entry.getVehicles()) {
+                if (e.getVehicles().contains(vehicle)) {
+                    if (compareNewDatesToEntryDate(chosenStartDate, chosenEndDate, e)) return false;
                 }
             }
         }
         return true;
+    }
+
+    private boolean compareNewDatesToEntryDate(Date chosenStartDate, Date chosenEndDate, AgendaEntry e) {
+        return (chosenStartDate.compareTo(e.getStartDate()) >= 0 && chosenStartDate.compareTo(e.getEndDate()) <= 0) ||
+                (chosenEndDate.compareTo(e.getStartDate()) >= 0 && chosenEndDate.compareTo(e.getEndDate()) <= 0) ||
+                (chosenStartDate.compareTo(e.getStartDate()) <= 0 && chosenEndDate.compareTo(e.getEndDate()) >= 0);
     }
 
     public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
@@ -71,7 +88,7 @@ public class Agenda implements Serializable {
         // Find the nearest available date before the chosen date
         Date before = new Date(date.getTime() - daysBefore * 24 * 60 * 60 * 1000);
         while (before.after(new Date())) { // Check if the date is not in the past
-            if (isDateAvailableForTeam(before, entry)) {
+            if (isDateAvailableForTeam(before, entry) && isDateAvailableForVehicles(before, entry)) {
                 suggestions.add(before);
                 break;
             }
@@ -82,7 +99,7 @@ public class Agenda implements Serializable {
         // Find the nearest available date after the chosen date
         while (suggestions.size() < 2) {
             Date after = new Date(date.getTime() + (long) daysAfter * 24 * 60 * 60 * 1000);
-            if (isDateAvailableForTeam(after, entry)) {
+            if (isDateAvailableForTeam(after, entry) && isDateAvailableForVehicles(after, entry)) {
                 suggestions.add(after);
             }
             daysAfter++;

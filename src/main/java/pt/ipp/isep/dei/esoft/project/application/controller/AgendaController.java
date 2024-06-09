@@ -59,6 +59,10 @@ public class AgendaController {
         return agenda.isDateAvailableForTeam(date, entry);
     }
 
+    public  boolean isDateAvailableForVehicles(Date date, AgendaEntry entry) {
+        return agenda.isDateAvailableForVehicles(date, entry);
+    }
+
     /**
      * Add entry.
      *
@@ -123,10 +127,6 @@ public class AgendaController {
 
     public List<Vehicle> getVehiclesAssignedToAgendaEntry(AgendaEntry entry) {
         return entry.getVehicles();
-    }
-
-    public void updateVehicle(Vehicle vehicle, Date date, int km) {
-        agenda.getVehicleByPlate(vehicle.getPlate()).registerMaintenance(date, km);
     }
 
     public Date getEndDateFromDuration(Date startDate, String duration) {
