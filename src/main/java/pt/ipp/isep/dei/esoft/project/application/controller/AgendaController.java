@@ -59,6 +59,10 @@ public class AgendaController {
         return agenda.isDateAvailableForTeam(date, entry);
     }
 
+    public  boolean isDateAvailableForVehicles(Date date, AgendaEntry entry) {
+        return agenda.isDateAvailableForVehicles(date, entry);
+    }
+
     /**
      * Add entry.
      *
