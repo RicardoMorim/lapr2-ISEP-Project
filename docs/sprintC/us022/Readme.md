@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US022 - Add an entry to the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

@@ -40,7 +40,7 @@ public class MainVFMMenuGUI  {
 
         grid.add(btnRegisterVehicle, 1, 2);
         grid.add(btnRegisterVehicleMaintenance, 0, 3);
-
+        btnRegisterVehicle.fire();
         applyButtonAnimations();
         return grid;
     }

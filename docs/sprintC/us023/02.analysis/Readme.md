@@ -1,5 +1,4 @@
-# US004 - Add a skill to a collaborator
-
+# US023 - Assign a Team to the agenda Entry
 ## 2. Analysis
 
 ### 2.1. Relevant Domain Model Excerpt

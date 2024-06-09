@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US023 - Assign a team to the agenda entry
 
 ## 3. Design - User Story Realization
 

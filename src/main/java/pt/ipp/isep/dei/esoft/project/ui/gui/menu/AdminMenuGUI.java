@@ -106,16 +106,17 @@ public class AdminMenuGUI {
         grid.add(btnGenerateTeamProposal, 0, 2);
         grid.add(btnRegisterVehicle, 1, 2);
         grid.add(btnRegisterVehicleMaintenance, 0, 3);
-        grid.add(btnAddEntryToAgenda, 0, 4);
-        grid.add(btnAddGreenSpace, 1, 4);
+        grid.add(btnAddGreenSpace, 1, 3);
+        grid.add(btnAddEntryToDoList, 0, 4);
+        grid.add(btnAddEntryToAgenda, 1, 4);
         grid.add(btnAssignTeamToAgendaEntry, 0, 5);
         grid.add(btnAddVehicleToAgendaEntry, 1,5);
         grid.add(btnPostponeEntry, 0, 6);
         grid.add(btnCancel, 1, 6);
-        grid.add(btnAddEntryToDoList, 0, 7);
         grid.add(btnListGreenSpaces, 1, 7);
 
         applyButtonAnimations();
+        btnRegisterSkill.fire();
         return grid;
     }
 

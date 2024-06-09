@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US022 - Add an entry to the Agenda
 
 ## 2. Analysis
 

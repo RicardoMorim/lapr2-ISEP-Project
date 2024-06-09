@@ -75,14 +75,14 @@ public class MainGRMMenu {
             content.getChildren().setAll(listGreenSpacesGUI.getListGreenSpacesGridPane(content.getHeight(), content.getWidth()));
         });
 
-        grid.add(btnAddEntryToAgenda, 0, 4);
-        grid.add(btnAddGreenSpace, 1, 4);
+        grid.add(btnAddGreenSpace, 0, 0);
+        grid.add(btnAddEntryToDoList, 0, 1);
+        grid.add(btnAddEntryToAgenda, 1, 1);
+        grid.add(btnAddVehicleToAgendaEntry, 0, 2);
         grid.add(btnAssignTeamToAgendaEntry, 0, 5);
         grid.add(btnPostponeEntry, 1, 5);
         grid.add(btnCancel, 0, 6);
-        grid.add(btnAddEntryToDoList, 1, 6);
         grid.add(btnListGreenSpaces, 0, 7);
-        grid.add(btnAddVehicleToAgendaEntry, 1, 7);
 
         applyButtonAnimations();
         return grid;

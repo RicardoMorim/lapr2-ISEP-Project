@@ -1,4 +1,4 @@
-# US004 - Assign one or more skills 
+# US023 - Assign a team to the agenda entry
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

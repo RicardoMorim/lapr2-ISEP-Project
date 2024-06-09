@@ -23,14 +23,17 @@ public class IrrigationSystem {
     private int[][] graph;
 
     private int totalEdges;
+    private int numberOfConnections;
 
     public void importCsv(String filename) {
         List<String> nodes = new ArrayList<>();
         int totalEdges = 0;
+        numberOfConnections = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null && !line.isEmpty()) {
                 totalEdges++; // Count each line as an edge
+                numberOfConnections++;
                 String[] values = line.split(";");
                 if (!nodes.contains(values[0])) {
                     nodes.add(values[0]);
@@ -45,7 +48,6 @@ public class IrrigationSystem {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null && !line.isEmpty()) {
@@ -149,7 +151,7 @@ public class IrrigationSystem {
                 for (int i = 0; i < graph.length; i++) {
                     for (int j = i + 1; j < graph.length; j++) {
                         if (graph[i][j] != 0) {
-                            writer.println((i+1) + " -- " + (j + 1) + " [label=\"" + graph[i][j] + "\"];");
+                            writer.println((i + 1) + " -- " + (j + 1) + " [label=\"" + graph[i][j] + "\"];");
                         }
                     }
                 }
@@ -179,10 +181,10 @@ public class IrrigationSystem {
             String inputFileName = inputPath.getFileName().toString();
             // Replace the extension with .csv
             String outputFileName = "solution_" + inputFileName;
-            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/spint2/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
+            String outputFilePath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/output/" + inputFileName.replace(".csv", "") + "/" + outputFileName;
 
-            Files.createDirectories(Paths.get("src/main/java/pt/ipp/isep/dei/mdisc/sprint2/output/" + inputFileName.replace(".csv", "") + "/"));
-            try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
+            Files.createDirectories(Paths.get("src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/output/" + inputFileName.replace(".csv", "") + "/"));
+            try (PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath))) {
                 for (int i = 0; i < mst.length; i++) {
                     for (int j = 0; j < mst[i].length; j++) {
                         if (mst[i][j] != 0) {
@@ -211,7 +213,7 @@ public class IrrigationSystem {
 
             Files.createDirectories(Paths.get(outputFilePath.replace(outputFileName, "")));
             try (PrintWriter writer = new PrintWriter(outputFilePath, StandardCharsets.UTF_8)) {
-                writer.println("Graph Dimension = " + totalEdges + " : Graph Order = " + graph.length + " : Cost of a Minimum spanning tree = " + totalCost);
+                writer.println("Graph Dimension = " + numberOfConnections + " : Graph Order = " + graph.length + " : Cost of a Minimum spanning tree = " + totalCost);
             } catch (IOException e) {
                 System.out.println("An error occurred while writing to the file.");
                 e.printStackTrace();
@@ -228,9 +230,9 @@ public class IrrigationSystem {
         IrrigationSystem irrigationSystem = new IrrigationSystem();
 
         Scanner scanner = new Scanner(System.in);
-        int choice = 0;
+        int choice;
 
-        while (choice != 3) {
+        while (true) {
             System.out.println("Please choose an option:");
             System.out.println("1. Run for a single file");
             System.out.println("2. Run testExecutionTime function");
@@ -249,7 +251,7 @@ public class IrrigationSystem {
                     while (!validFile) {
                         System.out.println("Please enter the file name:");
                         String filePath = scanner.nextLine();
-                        String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/";
+                        String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database//1_jardim/";
                         File file = new File(defaultPath + filePath);
                         if (file.exists()) {
                             irrigationSystem.importCsv(defaultPath + filePath);
@@ -264,7 +266,7 @@ public class IrrigationSystem {
                     System.out.println("Please enter the folder path:");
                     String folderPath = scanner.nextLine();
                     if (folderPath.isEmpty()) {
-                        folderPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/";
+                        folderPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint2/database/1_jardim/";
                     }
                     irrigationSystem.testExecutionTime(folderPath);
                     break;
@@ -278,7 +280,6 @@ public class IrrigationSystem {
             }
         }
 
-        scanner.close();
     }
 
 
@@ -313,7 +314,7 @@ public class IrrigationSystem {
                                 double executionTimeSec = (double) executionTimeNano / 1000000.0; // Convert to milliseconds
                                 System.out.println("Execution time for " + filename + ": " + executionTimeSec + " milliseconds");
 
-                                writer.println(filename + "," + graph.length + "," + executionTimeSec); // Write to CSV
+                                writer.println(numberOfConnections + ";" + executionTimeSec); // Write to CSV
                                 generateExecutionTimeGraph(outputPath);
                                 writer.flush(); // Flush the PrintWriter
                             });
@@ -331,10 +332,12 @@ public class IrrigationSystem {
         try (BufferedReader br = new BufferedReader(new FileReader(outputPath + "execution_times.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                int inputSize = Integer.parseInt(values[1]);
-                double executionTime = Double.parseDouble(values[2]);
-                series.add(inputSize, executionTime);
+                if (line.contains(";")) {  // Check if the line contains a comma
+                    String[] values = line.split(";");
+                    int inputSize = Integer.parseInt(values[0]);
+                    double executionTime = Double.parseDouble(values[1]);
+                    series.add(inputSize, executionTime);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

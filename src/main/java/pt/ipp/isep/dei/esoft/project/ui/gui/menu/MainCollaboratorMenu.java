@@ -32,7 +32,7 @@ public class MainCollaboratorMenu {
 
         grid.getChildren().setAll(btnCheckAssignedTasks, btnCheckEmails);
 
-
+        btnCheckAssignedTasks.fire();
         return grid;
     }
 }

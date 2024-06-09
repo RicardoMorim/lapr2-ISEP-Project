@@ -40,7 +40,7 @@ public class MainHRMMenuGUI {
         grid.getChildren().setAll(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal);
 
-
+        btnRegisterSkill.fire();
         return grid;
     }
 }

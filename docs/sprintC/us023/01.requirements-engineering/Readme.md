@@ -1,4 +1,4 @@
-# US004 - Add a skill to a collaborator
+# US023 - Assign a team to an agenda entry
 
 ## 1. Requirements Engineering
 
