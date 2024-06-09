@@ -2,9 +2,9 @@
 
 **In the scope of this project, there is a direct relationship of _1 to 1_ between Use Cases (UC) and User Stories (US).**
 
-However, be aware, this is a pedagogical simplification. On further projects and course units there may also exist _1 to N **and/or** N to 1_ relationships between UC and US.
+The Use Case Diagram (UCD) below represents the main functionalities of the system.
 
-**Insert below the Use Case Diagram in a SVG format**
+The UCD is a visual representation of the system's functionalities, showing the interactions between the system and its users:
 
 ![Use Case Diagram](svg/use-case-diagram.svg)
 
@@ -14,6 +14,20 @@ However, be aware, this is a pedagogical simplification. On further projects and
 
 | UC/US | Description                                                          |                   
 |:------|:---------------------------------------------------------------------|
+| US001 | [Register a skill](../../us001/Readme.md)                            |
+| US002 | [Register a job](../../us002/Readme.md)                              |
+| US003 | [Register a collaborator and characteristics](../../us003/Readme.md) |
+| US004 | [Assign one or more skills](../../us004/Readme.md)                   |
+| US005 | [Generate a team proposal](../../us005/Readme.md)                    |
+| US006 | [Register a vehicle](../../us006/Readme.md)                          |
+| US007 | [Register a vehicle's check-up](../../us007/Readme.md)               |
+| US008 | [List of the vehicles needing the check-up](../../us008/Readme.md)   |
+| US009 | [Register a skill](../../us009/Readme.md)                            |
+| US010 | [Register a job](../../us010/Readme.md)                              |
+| US011 | [Register a collaborator and characteristics](../../us011/Readme.md) |
+| US012 | [Assign one or more skills](../../us012/Readme.md)                   |
+| US013 | [Generate a team proposal](../../us013/Readme.md)                    |
+| US014 | [Register a vehicle](../../us014/Readme.md)                          |
 | US020 | [Register a green space](../../us020/Readme.md)                      |
 | US021 | [Add a new toDoEntry to the To-Do List](../../us021/Readme.md)       |
 | US022 | [Add a skill to a collaborator](../../us022/Readme.md)               |

@@ -96,3 +96,4 @@ system being developed with other external systems._
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
 > - Regular backups should be performed to uphold data integrity and avert system malfunctions.
+> - The system should be designed to run smoothly on standard computing hardware commonly found in office settings, with no restrictions on material, shape, size, or weight.
