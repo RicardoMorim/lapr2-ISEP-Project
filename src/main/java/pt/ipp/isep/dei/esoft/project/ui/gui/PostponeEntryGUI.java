@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PostponeEntryGUI {
 
@@ -53,7 +54,9 @@ public class PostponeEntryGUI {
         Label lblCurrentDate = new Label();
         tableEntries.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                lblCurrentDate.setText("Current Date: " + newValue.getStartDate().toString());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy", Locale.ENGLISH);
+                lblCurrentDate.setText("Current Date: " + newValue.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter));
             }
         });
 
