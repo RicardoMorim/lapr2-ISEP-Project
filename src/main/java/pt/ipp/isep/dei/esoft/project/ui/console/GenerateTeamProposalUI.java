@@ -11,12 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Generate team proposal ui.
+ */
 public class GenerateTeamProposalUI implements Runnable {
 
     private final CollaboratorController collaboratorController;
     private final SkillController skillController;
     private final TeamController teamController;
 
+    /**
+     * Instantiates a new Generate team proposal ui.
+     */
     public GenerateTeamProposalUI() {
         this.collaboratorController = new CollaboratorController();
         this.skillController = new SkillController();
@@ -27,7 +33,7 @@ public class GenerateTeamProposalUI implements Runnable {
     public void run() {
 
         System.out.println("\n-----Generate a team proposal automatically.-----\n");
-        System.out.println("To Choose the team requirements in one line choose the following format:\nMinimum Team Size; Maximum Team Size; <Required Skill Name> <Required Skill Name> ... <Required Skill Name N>");
+        System.out.println("To Choose the team requirements in one line choose the following format:\nMaximum Team Size; Minimum Team Size; <Required Skill Name> <Required Skill Name> ... <Required Skill Name N>");
         System.out.println("To Choose the values separately for a more user friendly format just press enter.");
 
         String teamRequirements = Utils.readLineFromConsole("Enter the team requirements: ").trim();
@@ -92,6 +98,13 @@ public class GenerateTeamProposalUI implements Runnable {
 
     }
 
+    /**
+     * Generate team proposal.
+     *
+     * @param minTeamSize    the min team size
+     * @param maxTeamSize    the max team size
+     * @param requiredSkills the required skills
+     */
     public void generateTeamProposal(int minTeamSize, int maxTeamSize, List<Skill> requiredSkills) {
 
         if (Utils.confirm("Do you want to generate the team proposals? (S/N)")) {

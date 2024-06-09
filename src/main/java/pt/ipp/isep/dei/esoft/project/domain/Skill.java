@@ -16,7 +16,7 @@ public class Skill implements Serializable {
     /**
      * Constructs a new Skill with the given name and short description.
      *
-     * @param name the name of the skill
+     * @param name             the name of the skill
      * @param shortDescription a short description of the skill
      */
     public Skill(String name, String shortDescription) {
@@ -24,28 +24,30 @@ public class Skill implements Serializable {
         this.shortDescription = shortDescription;
     }
 
+
     /**
-     * Returns the name of the skill.
+     * Gets name.
      *
-     * @return the name of the skill
+     * @return the name
      */
     public String getName() {
         return this.name;
     }
 
+
     /**
-     * Returns a short description of the skill.
+     * Gets description.
      *
-     * @return a short description of the skill
+     * @return the description
      */
     public String getDescription() {
         return this.shortDescription;
     }
 
     /**
-     * Returns a list of the values of the skill.
+     * Gets skill values.
      *
-     * @return a list of the values of the skill
+     * @return the skill values
      */
     public List<String> getSkillValues() {
         List<String> values = new ArrayList<String>();
@@ -55,18 +57,18 @@ public class Skill implements Serializable {
     }
 
     /**
-     * Sets the name of the skill.
+     * Sets name.
      *
-     * @param name the name of the skill
+     * @param name the name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Sets the short description of the skill.
+     * Sets short description.
      *
-     * @param shortDescription the short description of the skill
+     * @param shortDescription the short description
      */
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;

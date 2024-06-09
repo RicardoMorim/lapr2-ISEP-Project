@@ -2,6 +2,10 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+/**
+ * The type Address.
+ */
 public class Address implements Serializable {
 
 
@@ -9,12 +13,23 @@ public class Address implements Serializable {
     private String city;
     private String zipCode;
 
+    /**
+     * Instantiates a new Address.
+     *
+     * @param streetName the street name
+     * @param city       the city
+     * @param zipCode    the zip code
+     */
     public Address(String streetName, String city, String zipCode) {
         this.streetName = streetName;
         this.city = city;
         this.zipCode = zipCode;
         validateAdress();
     }
+
+    /**
+     * Validate adress.
+     */
     public void validateAdress(){
         if (streetName == null || streetName.isEmpty()) {
             throw new IllegalArgumentException("Street name cannot be null or empty");
@@ -27,30 +42,66 @@ public class Address implements Serializable {
         }
     }
 
+    /**
+     * Gets street name.
+     *
+     * @return the street name
+     */
     public String getStreetName() {
         return streetName;
     }
 
+    /**
+     * Sets street name.
+     *
+     * @param streetName the street name
+     */
     public void setStreetName(String streetName) {
         this.streetName = streetName;
     }
 
+    /**
+     * Gets city.
+     *
+     * @return the city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Sets city.
+     *
+     * @param city the city
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Gets zip code.
+     *
+     * @return the zip code
+     */
     public String getZipCode() {
         return zipCode;
     }
 
+    /**
+     * Sets zip code.
+     *
+     * @param zipCode the zip code
+     */
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
+    /**
+     * Validate zip code boolean.
+     *
+     * @param zipCode the zip code
+     * @return the boolean
+     */
     public boolean validateZipCode(String zipCode) {
         if (zipCode.isEmpty()) {
             return false;

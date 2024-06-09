@@ -7,18 +7,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Skill repository.
+ */
 public class SkillRepository implements Serializable {
 
     private List<Skill> skills;
 
+    /**
+     * Instantiates a new Skill repository.
+     */
     public SkillRepository() {
         this.skills = new ArrayList<Skill>();
     }
 
+    /**
+     * Set skills.
+     *
+     * @param skills the skills
+     */
     public void setSkills(List<Skill> skills){
         this.skills = skills;
     }
 
+    /**
+     * Update optional.
+     *
+     * @param skill            the skill
+     * @param name             the name
+     * @param shortDescription the short description
+     * @return the optional
+     */
     public Optional<Skill> update(Skill skill, String name, String shortDescription) {
         for (Skill s : this.skills) {
             if (s.equals(skill)) {
@@ -33,6 +52,12 @@ public class SkillRepository implements Serializable {
     }
 
 
+    /**
+     * Gets skill by name.
+     *
+     * @param name the name
+     * @return the skill by name
+     */
     public Skill getSkillByName(String name) {
         for (Skill s : this.skills) {
             if (s.getName().equalsIgnoreCase(name)) {
@@ -42,6 +67,12 @@ public class SkillRepository implements Serializable {
         throw new IllegalArgumentException("Skill not found.");
     }
 
+    /**
+     * Add optional.
+     *
+     * @param skill the skill
+     * @return the optional
+     */
     public Optional<Skill> add(Skill skill) {
         Optional<Skill> newSkill = Optional.empty();
         if (skills.contains(skill)) {
@@ -55,6 +86,12 @@ public class SkillRepository implements Serializable {
     }
 
 
+    /**
+     * Remove optional.
+     *
+     * @param skill the skill
+     * @return the optional
+     */
     public Optional<Skill> remove(Skill skill) {
         Optional<Skill> newSkill = Optional.empty();
 
@@ -71,6 +108,11 @@ public class SkillRepository implements Serializable {
         return newSkill;
     }
 
+    /**
+     * Gets skills.
+     *
+     * @return the skills
+     */
     public List<Skill> getSkills() {
         return skills;
     }

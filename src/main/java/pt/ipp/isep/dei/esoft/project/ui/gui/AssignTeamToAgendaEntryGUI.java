@@ -20,6 +20,9 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+/**
+ * The type Assign team to agenda entry gui.
+ */
 public class AssignTeamToAgendaEntryGUI {
 
     private TeamController teamController = new TeamController();
@@ -27,6 +30,13 @@ public class AssignTeamToAgendaEntryGUI {
     private VBox vboxTeams = new VBox(5);
     private TableView<Team> tableTeams = new TableView<>();
 
+    /**
+     * Gets assign team to agenda entry grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the assign team to agenda entry grid pane
+     */
     public GridPane getAssignTeamToAgendaEntryGridPane(double height, double width) {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

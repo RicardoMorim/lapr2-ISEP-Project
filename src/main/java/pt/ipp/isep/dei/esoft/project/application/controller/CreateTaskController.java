@@ -13,6 +13,9 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Create task controller.
+ */
 public class CreateTaskController {
 
     private OrganizationRepository organizationRepository;
@@ -20,14 +23,24 @@ public class CreateTaskController {
     private AuthenticationRepository authenticationRepository;
 
 
-    //Repository instances are obtained from the Repositories class
+    /**
+     * Instantiates a new Create task controller.
+     */
+//Repository instances are obtained from the Repositories class
     public CreateTaskController() {
         getOrganizationRepository();
         getTaskCategoryRepository();
         getAuthenticationRepository();
     }
 
-    //Allows receiving the repositories as parameters for testing purposes
+    /**
+     * Instantiates a new Create task controller.
+     *
+     * @param organizationRepository   the organization repository
+     * @param taskCategoryRepository   the task category repository
+     * @param authenticationRepository the authentication repository
+     */
+//Allows receiving the repositories as parameters for testing purposes
     public CreateTaskController(OrganizationRepository organizationRepository,
                                 TaskCategoryRepository taskCategoryRepository,
                                 AuthenticationRepository authenticationRepository) {
@@ -65,6 +78,18 @@ public class CreateTaskController {
         return authenticationRepository;
     }
 
+    /**
+     * Create task optional.
+     *
+     * @param reference               the reference
+     * @param description             the description
+     * @param informalDescription     the informal description
+     * @param technicalDescription    the technical description
+     * @param duration                the duration
+     * @param cost                    the cost
+     * @param taskCategoryDescription the task category description
+     * @return the optional
+     */
     public Optional<Task> createTask(String reference, String description, String informalDescription,
                                      String technicalDescription, int duration, double cost,
                                      String taskCategoryDescription) {
@@ -99,7 +124,12 @@ public class CreateTaskController {
 
     }
 
-    //return the list of task categories
+    /**
+     * Gets task categories.
+     *
+     * @return the task categories
+     */
+//return the list of task categories
     public List<TaskCategory> getTaskCategories() {
         TaskCategoryRepository taskCategoryRepository = getTaskCategoryRepository();
         return taskCategoryRepository.getTaskCategories();

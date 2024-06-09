@@ -23,6 +23,9 @@ public class CreateTaskUI implements Runnable {
     private String taskCategoryDescription;
     private String empployeeEmail;
 
+    /**
+     * Instantiates a new Create task ui.
+     */
     public CreateTaskUI() {
         controller = new CreateTaskController();
     }

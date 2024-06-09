@@ -14,12 +14,27 @@ import java.lang.Runnable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Register collaborator ui.
+ */
 public class RegisterCollaboratorUI implements Runnable {
 
+    /**
+     * The Job controller.
+     */
     JobController jobController;
+    /**
+     * The Collaborator controller.
+     */
     CollaboratorController collaboratorController;
+    /**
+     * The Skill controller.
+     */
     SkillController skillController;
 
+    /**
+     * Instantiates a new Register collaborator ui.
+     */
     public RegisterCollaboratorUI() {
         this.jobController = new JobController();
         this.collaboratorController = new CollaboratorController();

@@ -20,11 +20,21 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
 
+/**
+ * The type Add entry to do list gui.
+ */
 public class AddEntryToDoListGUI {
 
     private ToDoListController controller = new ToDoListController();
     private GreenSpaceController greenSpaceController = new GreenSpaceController();
 
+    /**
+     * Gets add entry to to do list.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the add entry to to do list
+     */
     public GridPane getAddEntryToToDoList(double height, double width) {
         GridPane grid = new GridPane(height,width);
         grid.setPadding(new Insets(10, 10, 10, 10));

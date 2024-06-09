@@ -3,10 +3,18 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The type Task category.
+ */
 public class TaskCategory implements Serializable {
 
     private final String description;
 
+    /**
+     * Instantiates a new Task category.
+     *
+     * @param description the description
+     */
     public TaskCategory(String description) {
         this.description = description;
     }

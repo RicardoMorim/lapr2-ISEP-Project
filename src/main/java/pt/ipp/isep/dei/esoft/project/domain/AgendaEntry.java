@@ -26,10 +26,11 @@ public class AgendaEntry implements Serializable {
     /**
      * Instantiates a new Agenda entry.
      *
-     * @param entry    the entry
-     * @param team     the team
-     * @param vehicles the vehicles equipment
-     * @param duration the duration
+     * @param entry     the entry
+     * @param team      the team
+     * @param vehicles  the vehicles equipment
+     * @param duration  the duration
+     * @param startDate the start date
      */
     public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
@@ -43,6 +44,15 @@ public class AgendaEntry implements Serializable {
 
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param team      the team
+     * @param vehicles  the vehicles
+     * @param startDate the start date
+     * @param endDate   the end date
+     */
     public AgendaEntry(Entry entry, Team team, List<Vehicle> vehicles, Date startDate, Date endDate) {
         this.entry = entry;
         this.team = team;
@@ -55,6 +65,14 @@ public class AgendaEntry implements Serializable {
 
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param vehicles  the vehicles
+     * @param duration  the duration
+     * @param startDate the start date
+     */
     public AgendaEntry(Entry entry, List<Vehicle> vehicles, String duration, Date startDate) {
         this.entry = entry;
         this.team = null;
@@ -67,6 +85,14 @@ public class AgendaEntry implements Serializable {
 
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param team      the team
+     * @param duration  the duration
+     * @param startDate the start date
+     */
     public AgendaEntry(Entry entry, Team team, String duration, Date startDate) {
         this.entry = entry;
         this.team = team;
@@ -79,6 +105,13 @@ public class AgendaEntry implements Serializable {
 
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param duration  the duration
+     * @param startDate the start date
+     */
     public AgendaEntry(Entry entry, String duration, Date startDate) {
         this.entry = entry;
         this.team = null;
@@ -90,6 +123,13 @@ public class AgendaEntry implements Serializable {
         entry.setState(this.status);
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param startDate the start date
+     * @param duration  the duration
+     */
     public AgendaEntry(Entry entry, Date startDate, String duration) {
         this.entry = entry;
         this.team = null;
@@ -102,6 +142,13 @@ public class AgendaEntry implements Serializable {
     }
 
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param startDate the start date
+     * @param endDate   the end date
+     */
     public AgendaEntry(Entry entry, Date startDate, Date endDate) {
         this.entry = entry;
         this.team = null;
@@ -113,6 +160,14 @@ public class AgendaEntry implements Serializable {
         this.entry.setState(this.status);
     }
 
+    /**
+     * Instantiates a new Agenda entry.
+     *
+     * @param entry     the entry
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @param duration  the duration
+     */
     public AgendaEntry(Entry entry, Date startDate, Date endDate, String duration) {
         this.entry = entry;
         this.team = null;
@@ -125,20 +180,40 @@ public class AgendaEntry implements Serializable {
     }
 
 
+    /**
+     * Post pone entry.
+     *
+     * @param startDate the start date
+     */
     public void postPoneEntry(Date startDate) {
         this.startDate = startDate;
         this.status = Status.POSTPONED;
         this.endDate = getEndDateFromDuration();
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return this.entry.getDescription();
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return this.entry.getTitle();
     }
 
+    /**
+     * Gets status based on dates.
+     *
+     * @return the status based on dates
+     */
     public Status getStatusBasedOnDates() {
 
         if (startDate == null || endDate == null) {
@@ -175,6 +250,11 @@ public class AgendaEntry implements Serializable {
     }
 
 
+    /**
+     * Gets end date from duration.
+     *
+     * @return the end date from duration
+     */
     public Date getEndDateFromDuration() {
         if (startDate == null) {
             throw new IllegalArgumentException("Start date is required to calculate the end date");
@@ -193,6 +273,11 @@ public class AgendaEntry implements Serializable {
         return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    /**
+     * Gets duration from end date.
+     *
+     * @return the duration from end date
+     */
     public String getDurationFromEndDate() {
         if (endDate == null) {
             throw new IllegalArgumentException("End date is required to calculate the duration");
@@ -226,18 +311,38 @@ public class AgendaEntry implements Serializable {
         }
     }
 
+    /**
+     * Gets end date.
+     *
+     * @return the end date
+     */
     public Date getEndDate() {
         return endDate;
     }
 
+    /**
+     * Sets end date.
+     *
+     * @param endDate the end date
+     */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
+    /**
+     * Gets start date.
+     *
+     * @return the start date
+     */
     public Date getStartDate() {
         return startDate;
     }
 
+    /**
+     * Sets start date.
+     *
+     * @param startDate the start date
+     */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }

@@ -8,8 +8,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Collaborator test.
+ */
 class CollaboratorTest {
 
+    /**
+     * Add skill.
+     */
     @Test
     void addSkill() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -22,6 +28,9 @@ class CollaboratorTest {
         assertEquals(skill, colaboratorSkill);
     }
 
+    /**
+     * Remove skill test with skills added through the constructor.
+     */
     @Test
     void removeSkillTestWithSkillsAddedThroughTheConstructor() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -34,6 +43,9 @@ class CollaboratorTest {
         assertTrue(col.getSkills().isEmpty());
     }
 
+    /**
+     * Remove skill with skills added later.
+     */
     @Test
     void removeSkillWithSkillsAddedLater() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -46,6 +58,9 @@ class CollaboratorTest {
     }
 
 
+    /**
+     * Add null skill.
+     */
     @Test
     void addNullSkill() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -66,6 +81,9 @@ class CollaboratorTest {
         });
     }
 
+    /**
+     * Remove unexisting skill.
+     */
     @Test
     void removeUnexistingSkill() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -76,6 +94,9 @@ class CollaboratorTest {
         });
     }
 
+    /**
+     * Test equals and hash code.
+     */
     @Test
     void testEqualsAndHashCode() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -86,6 +107,9 @@ class CollaboratorTest {
         assertEquals(col1.hashCode(), col2.hashCode());
     }
 
+    /**
+     * Test clone.
+     */
     @Test
     void testClone() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -96,6 +120,9 @@ class CollaboratorTest {
     }
 
 
+    /**
+     * Add existing skill.
+     */
     @Test
     void addExistingSkill() {
         Job job = new Job("jardineiro", "jardineiro");
@@ -107,6 +134,9 @@ class CollaboratorTest {
         });
     }
 
+    /**
+     * Gets skills.
+     */
     @Test
     void getSkills() {
         Job job = new Job("jardineiro", "jardineiro");

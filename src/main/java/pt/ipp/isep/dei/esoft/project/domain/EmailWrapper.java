@@ -6,17 +6,35 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The type Email wrapper.
+ */
 public class EmailWrapper implements Serializable {
     private transient Email email;
 
+    /**
+     * Instantiates a new Email wrapper.
+     *
+     * @param email the email
+     */
     public EmailWrapper(Email email) {
         this.email = email;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public Email getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public void setEmail(Email email) {
         this.email = email;
     }

@@ -15,7 +15,6 @@ public class Task implements Serializable {
     private int duration;
     private double cost;
 
-
     private TaskCategory taskCategory;
 
     private Employee employee;

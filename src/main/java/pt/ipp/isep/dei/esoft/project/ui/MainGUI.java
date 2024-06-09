@@ -9,9 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * The type Main gui.
+ */
 public class MainGUI extends Application {
     private static Bootstrap bootstrap;
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         bootstrap = new Bootstrap();
         bootstrap.run();

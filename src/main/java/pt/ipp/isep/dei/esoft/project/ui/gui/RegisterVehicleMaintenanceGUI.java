@@ -20,15 +20,26 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The type Register vehicle maintenance gui.
+ */
 public class RegisterVehicleMaintenanceGUI {
 
     private VehicleController vehicleController;
     private TableView<Vehicle> tableView;
 
+    /**
+     * Instantiates a new Register vehicle maintenance gui.
+     */
     public RegisterVehicleMaintenanceGUI() {
         this.vehicleController = new VehicleController();
     }
 
+    /**
+     * Gets register vehicle maintenance gui.
+     *
+     * @return the register vehicle maintenance gui
+     */
     public GridPane getRegisterVehicleMaintenanceGUI() {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);

@@ -5,10 +5,16 @@ import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
 import java.util.List;
 
+/**
+ * The type List vehicles needing maintenance ui.
+ */
 public class ListVehiclesNeedingMaintenanceUI implements Runnable {
 
     private VehicleController vehicleController;
 
+    /**
+     * Instantiates a new List vehicles needing maintenance ui.
+     */
     public ListVehiclesNeedingMaintenanceUI() {
         this.vehicleController = new VehicleController();
     }

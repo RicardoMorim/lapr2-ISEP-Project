@@ -6,9 +6,15 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.List;
 
+/**
+ * The type Job controller.
+ */
 public class JobController {
     private JobRepository jobRepository;
 
+    /**
+     * Instantiates a new Job controller.
+     */
     public JobController() {
         if (jobRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -18,14 +24,29 @@ public class JobController {
         }
     }
 
+    /**
+     * Instantiates a new Job controller.
+     *
+     * @param jobRepository the job repository
+     */
     public JobController(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
 
+    /**
+     * Gets job repository.
+     *
+     * @return the job repository
+     */
     public JobRepository getJobRepository() {
         return jobRepository;
     }
 
+    /**
+     * Sets job repository.
+     *
+     * @param jobRepository the job repository
+     */
     public void setJobRepository(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
@@ -35,6 +56,12 @@ public class JobController {
         return !jobs.contains(job) && job.getName().matches("^[a-zA-Z\\s]*$");
     }
 
+    /**
+     * Register job.
+     *
+     * @param job the job
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void registerJob(Job job) throws IllegalArgumentException {
         if (jobRepository.getJobs().contains(job))
             throw new IllegalArgumentException("Job already exists.");
@@ -53,6 +80,14 @@ public class JobController {
         jobRepository.add(job);
     }
 
+    /**
+     * Register job job.
+     *
+     * @param name             the name
+     * @param shortDescription the short description
+     * @return the job
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Job registerJob(String name, String shortDescription) throws IllegalArgumentException {
         Job job = new Job(name, shortDescription);
         registerJob(job);
@@ -60,22 +95,30 @@ public class JobController {
     }
 
 
+    /**
+     * Update job.
+     *
+     * @param oldJob the old job
+     * @param newJob the new job
+     */
     public void updateJob(Job oldJob, Job newJob) {
-        try {
-            this.jobRepository.update(oldJob, newJob);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        this.jobRepository.update(oldJob, newJob);
     }
 
+    /**
+     * Remove job.
+     *
+     * @param job the job
+     */
     public void removeJob(Job job) {
-        try {
-            jobRepository.remove(job);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        jobRepository.remove(job);
     }
 
+    /**
+     * Gets job list.
+     *
+     * @return the job list
+     */
     public List<Job> getJobList() {
         return this.jobRepository.getJobs();
     }

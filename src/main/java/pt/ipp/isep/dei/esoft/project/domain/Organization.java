@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * The type Organization.
+ */
 public class Organization implements Serializable {
     private final String vatNumber;
     private final List<Employee> employees;
@@ -18,8 +21,7 @@ public class Organization implements Serializable {
     /**
      * This method is the constructor of the organization.
      *
-     * @param vatNumber The vat number of the organization. This is the identity of the organization, therefore it
-     *                  cannot be changed.
+     * @param vatNumber The vat number of the organization. This is the identity of the organization, therefore it                  cannot be changed.
      */
     public Organization(String vatNumber) {
         this.vatNumber = vatNumber;
@@ -48,7 +50,7 @@ public class Organization implements Serializable {
      * @param cost                 The cost of the task to be created.
      * @param taskCategory         The task category of the task to be created.
      * @param employee             The employee of the task to be created.
-     * @return
+     * @return optional optional
      */
     public Optional<Task> createTask(String reference, String description, String informalDescription,
                                      String technicalDescription, int duration, double cost,
@@ -139,7 +141,13 @@ public class Organization implements Serializable {
         return Objects.hash(vatNumber);
     }
 
-    //add employee to organization
+    /**
+     * Add employee boolean.
+     *
+     * @param employee the employee
+     * @return the boolean
+     */
+//add employee to organization
     public boolean addEmployee(Employee employee) {
         boolean success = false;
         if (validateEmployee(employee)) {

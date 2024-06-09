@@ -7,15 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Job repository.
+ */
 public class JobRepository implements Serializable {
 
     private List<Job> jobs;
 
 
+    /**
+     * Instantiates a new Job repository.
+     */
     public JobRepository() {
         this.jobs = new ArrayList<>();
     }
 
+    /**
+     * Update optional.
+     *
+     * @param job              the job
+     * @param name             the name
+     * @param shortDescription the short description
+     * @return the optional
+     */
     public Optional<Job> update(Job job, String name, String shortDescription) {
         for (Job j : this.jobs) {
             if (j.equals(job)) {
@@ -28,11 +42,23 @@ public class JobRepository implements Serializable {
         throw new IllegalArgumentException("Job not found.");
     }
 
+    /**
+     * Sets jobs.
+     *
+     * @param jobs the jobs
+     */
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
 
 
+    /**
+     * Update optional.
+     *
+     * @param oldJob the old job
+     * @param newJob the new job
+     * @return the optional
+     */
     public Optional<Job> update(Job oldJob, Job newJob) {
         if (this.jobs.contains(oldJob)) {
             this.jobs.remove(oldJob);
@@ -44,6 +70,12 @@ public class JobRepository implements Serializable {
     }
 
 
+    /**
+     * Add optional.
+     *
+     * @param job the job
+     * @return the optional
+     */
     public Optional<Job> add(Job job) {
         Optional<Job> newJob = Optional.empty();
         boolean operationSuccess = false;
@@ -78,6 +110,12 @@ public class JobRepository implements Serializable {
         return isValid;
     }
 
+    /**
+     * Remove optional.
+     *
+     * @param job the job
+     * @return the optional
+     */
     public Optional<Job> remove(Job job) {
         Optional<Job> newJob = Optional.empty();
         boolean operationSuccess = false;
@@ -94,6 +132,11 @@ public class JobRepository implements Serializable {
         return newJob;
     }
 
+    /**
+     * Gets jobs.
+     *
+     * @return the jobs
+     */
     public List<Job> getJobs() {
         return jobs;
     }

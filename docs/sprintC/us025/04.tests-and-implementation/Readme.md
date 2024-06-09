@@ -25,18 +25,49 @@
 ### Class EntryController
 
 ```java
+    public class EntryController {
+    private AgendaController agendaController;
 
+    public EntryController(AgendaController agendaController) {
+        this.agendaController = agendaController;
+    }
+
+    public void cancelEntry(AgendaEntry entry) throws IllegalArgumentException {
+        AgendaEntry oldEntry = entry.clone();
+        agendaController.cancelEntry(entry);
+        agendaController.update(oldEntry, entry);
+    }
+}
 ```
 
 ### Class AgendaController
 
 ```java
+    public class AgendaController {
 
+    public void update(AgendaEntry oldEntry, AgendaEntry newEntry) {
+        boolean operationSuccess = false;
+
+        if (agenda.getEntries().contains(oldEntry)) {
+            this.agenda.getEntries().remove(oldEntry);
+            operationSuccess = this.agenda.getEntries().add(newEntry);
+        }
+
+        if (!operationSuccess) {
+            throw new IllegalArgumentException("Entry not found.");
+        }
+    }
+}
 ```
-### Class Collaborator
+### Class AgendaEntry
 
 ```java
+    public class AgendaEntry {
 
+    public AgendaEntry clone() {
+        return new AgendaEntry(this.entry, this.team, this.vehicles, this.duration, this.status, this.startDate);
+    }
+}
 ```
 
 ## 6. Integration and Demo

@@ -22,17 +22,30 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Add entry to agenda gui.
+ */
 public class AddEntryToAgendaGUI {
 
     private AgendaController agendaController;
     private ToDoListController toDoListController;
 
+    /**
+     * Instantiates a new Add entry to agenda gui.
+     */
     public AddEntryToAgendaGUI() {
 
         agendaController = new AgendaController();
         toDoListController = new ToDoListController();
     }
 
+    /**
+     * Gets grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the grid pane
+     */
     public GridPane getGridPane(double height, double width) {
         GridPane grid = new GridPane(height, width);
         grid.setAlignment(Pos.CENTER);

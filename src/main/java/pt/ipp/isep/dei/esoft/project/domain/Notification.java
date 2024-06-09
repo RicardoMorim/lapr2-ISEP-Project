@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The type Notification.
+ */
 public class Notification implements Serializable {
     private String message;
     private LocalDateTime timestamp;
@@ -20,6 +23,14 @@ public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+    /**
+     * Instantiates a new Notification.
+     *
+     * @param title            the title
+     * @param message          the message
+     * @param recipient        the recipient
+     * @param CollaboratorName the collaborator name
+     */
     public Notification(String title, String message, EmailWrapper recipient, String CollaboratorName) {
         this.title = title;
         this.message = message;
@@ -45,42 +56,92 @@ public class Notification implements Serializable {
         }
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Gets message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Sets message.
+     *
+     * @param message the message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * Sets timestamp.
+     *
+     * @param timestamp the timestamp
+     */
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Is read status boolean.
+     *
+     * @return the boolean
+     */
     public boolean isReadStatus() {
         return readStatus;
     }
 
+    /**
+     * Sets read status.
+     *
+     * @param readStatus the read status
+     */
     public void setReadStatus(boolean readStatus) {
         this.readStatus = readStatus;
     }
 
+    /**
+     * Gets recipient.
+     *
+     * @return the recipient
+     */
     public EmailWrapper getRecipient() {
         return recipient;
     }
 
+    /**
+     * Sets recipient.
+     *
+     * @param recipient the recipient
+     */
     public void setRecipient(EmailWrapper recipient) {
         this.recipient = recipient;
     }

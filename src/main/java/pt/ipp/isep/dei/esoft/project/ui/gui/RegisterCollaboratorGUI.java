@@ -18,18 +18,40 @@ import pt.ipp.isep.dei.esoft.project.domain.Job;
 
 import java.time.LocalDate;
 
+/**
+ * The type Register collaborator gui.
+ */
 public class RegisterCollaboratorGUI {
 
+    /**
+     * The Job controller.
+     */
     JobController jobController;
+    /**
+     * The Collaborator controller.
+     */
     CollaboratorController collaboratorController;
+    /**
+     * The Skill controller.
+     */
     SkillController skillController;
 
+    /**
+     * Instantiates a new Register collaborator gui.
+     */
     public RegisterCollaboratorGUI() {
         this.jobController = new JobController();
         this.collaboratorController = new CollaboratorController();
         this.skillController = new SkillController();
     }
 
+    /**
+     * Gets register collaborator gui.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the register collaborator gui
+     */
     public GridPane getRegisterCollaboratorGUI(double height, double width) {
         GridPane gridPane = new GridPane(height, width);
         gridPane.setAlignment(Pos.CENTER);

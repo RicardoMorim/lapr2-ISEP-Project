@@ -12,14 +12,28 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+/**
+ * The type Register skill gui.
+ */
 public class RegisterSkillGUI {
 
+    /**
+     * The Skill controller.
+     */
     SkillController skillController;
 
+    /**
+     * Instantiates a new Register skill gui.
+     */
     public RegisterSkillGUI() {
         this.skillController = new SkillController();
     }
 
+    /**
+     * Gets register skill gui.
+     *
+     * @return the register skill gui
+     */
     public GridPane getRegisterSkillGUI() {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
