@@ -132,7 +132,6 @@ public class RegisterJobGUI {
         });
 
 
-
         // Populate the table with jobs
         tableView.getItems().addAll(jobController.getJobList());
 

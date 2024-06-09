@@ -34,7 +34,7 @@ public class Collaborator implements Serializable {
         this.IDtype = IDtype;
         this.taxpayerNumber = taxpayerNumber;
         this.citizenNumber = citizenNumber;
-        this.skills = new ArrayList<Skill>();
+        this.skills = new ArrayList<>();
         this.notifications = new ArrayList<>();
         isValid();
     }
@@ -51,7 +51,7 @@ public class Collaborator implements Serializable {
         this.IDtype = IDtype;
         this.taxpayerNumber = taxpayerNumber;
         this.citizenNumber = citizenNumber;
-        this.skills = skills;
+        this.skills = new ArrayList<>(skills);
         this.notifications = new ArrayList<>();
         isValid();
     }

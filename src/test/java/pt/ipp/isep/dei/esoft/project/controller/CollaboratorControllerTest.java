@@ -3,10 +3,7 @@ package pt.ipp.isep.dei.esoft.project.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.application.controller.CollaboratorController;
-import pt.ipp.isep.dei.esoft.project.domain.Address;
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Job;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 
 import java.util.*;
@@ -44,7 +41,6 @@ class CollaboratorControllerTest {
 
     @Test
     void updateCollaboratorUpdatesCollaboratorInRepository() {
-
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
         repository.add(collaborator);
         Address newAddress = new Address("456 Street", "Porto", "123-456");
@@ -108,5 +104,46 @@ class CollaboratorControllerTest {
     }
 
 
+    @Test
+    void testNotifyNewCollaborator() {
 
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
+
+        controller.notifyNewCollaborator(collaborator);
+
+        assertEquals(1, collaborator.getNotifications().size());
+    }
+
+    @Test
+    void testStartTask() {
+        // Given
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
+        Team team = new Team(Collections.singletonList(collaborator));
+
+        controller.startTask(team);
+
+        assertFalse(collaborator.isFree());
+    }
+
+    @Test
+    void testAddSkillToACollaborator() {
+        // Given
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, new ArrayList<>());
+        Skill skill = new Skill("Python", "AI");
+        // When
+        controller.addSkillToACollaborator(skill, collaborator);
+        // Then
+        assertTrue(collaborator.getSkills().contains(skill));
+    }
+
+    @Test
+    void testRemoveSkillFromACollaborator() {
+
+        Skill skill = new Skill("Java", "Code");
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(skill));
+
+        controller.removeSkillFromACollaborator(skill, collaborator);
+
+        assertFalse(collaborator.getSkills().contains(skill));
+    }
 }

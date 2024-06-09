@@ -241,4 +241,42 @@ class AgendaControllerTest {
         // Then
         assertEquals(team, agendaEntry.getTeam());
     }
+
+    @Test
+    void testIsDateAvailableForTeam() {
+        // Given
+        Date date = new Date();
+        // When
+        boolean result = agendaController.isDateAvailableForTeam(date, entry);
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    void testIsDateAvailableForVehicles() {
+        // Given
+        Date date = new Date();
+        // When
+        boolean result = agendaController.isDateAvailableForVehicles(date, entry);
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    void testGetNotDoneEntries() {
+        // Given
+        // When
+        List<AgendaEntry> result = agendaController.getNotDoneEntries();
+        // Then
+        assertNotNull(result);
+    }
+
+    @Test
+    void testGetEntries() {
+        // Given
+        // When
+        List<AgendaEntry> result = agendaController.getEntries();
+        // Then
+        assertNotNull(result);
+    }
 }

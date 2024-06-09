@@ -132,7 +132,5 @@ public class AgendaController {
         return agenda.getEntries();
     }
 
-
-
 }
 
