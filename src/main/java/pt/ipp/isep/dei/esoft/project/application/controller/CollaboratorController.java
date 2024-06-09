@@ -75,12 +75,6 @@ public class CollaboratorController {
         }
     }
 
-    public void startTask(List<Collaborator> collaboratorList) {
-        for (Collaborator collaborator : collaboratorList) {
-            collaborator.setFree(false);
-        }
-    }
-
     public void startTask(Team team) {
         for (Collaborator collaborator : team.getCollaborators()) {
             collaborator.setFree(false);

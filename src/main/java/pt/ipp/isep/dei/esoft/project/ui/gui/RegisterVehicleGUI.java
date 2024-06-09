@@ -38,21 +38,34 @@ public class RegisterVehicleGUI {
 
         Label brandLabel = new Label("Brand: ");
         gridPane.add(brandLabel, 0, 2);
-        TextField brandField = new TextField();
-        brandField.setPrefWidth(150);
-        gridPane.add(brandField, 1, 2);
+        ComboBox<String> brandComboBox = new ComboBox<>();
+        brandComboBox.getItems().addAll(vehicleController.getBrandList());
+        brandComboBox.setEditable(true);
+        brandComboBox.setPrefWidth(150);
+        gridPane.add(brandComboBox, 1, 2);
 
         Label modelLabel = new Label("Model: ");
         gridPane.add(modelLabel, 0, 3);
-        TextField modelField = new TextField();
-        modelField.setPrefWidth(150);
-        gridPane.add(modelField, 1, 3);
+        ComboBox<String> modelComboBox = new ComboBox<>();
+        modelComboBox.setEditable(true);
+        modelComboBox.setPrefWidth(150);
+        gridPane.add(modelComboBox, 1, 3);
 
-        Label typeLabel = new Label("Type: ");
+        // Update the model ComboBox whenever a new brand is selected
+        brandComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                modelComboBox.getItems().clear();
+                modelComboBox.getItems().addAll(vehicleController.getModelsForBrand(newValue));
+            }
+        });
+
+        Label typeLabel = new Label("Model: ");
         gridPane.add(typeLabel, 0, 4);
-        TextField typeField = new TextField();
-        typeField.setPrefWidth(150);
-        gridPane.add(typeField, 1, 4);
+        ComboBox<String> typeComboBox = new ComboBox<>();
+        typeComboBox.getItems().addAll(vehicleController.getTypeList());
+        typeComboBox.setEditable(true);
+        typeComboBox.setPrefWidth(150);
+        gridPane.add(typeComboBox, 1, 4);
 
         Label tareWeightLabel = new Label("Tare Weight: ");
         gridPane.add(tareWeightLabel, 0, 5);
@@ -129,7 +142,7 @@ public class RegisterVehicleGUI {
                 @Override
                 protected void updateItem(LocalDate item, boolean empty) {
                     super.updateItem(item, empty);
-                    if(empty) {
+                    if (empty) {
                         setText(null);
                     } else {
                         setText(formatter.format(item));

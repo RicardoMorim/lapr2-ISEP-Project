@@ -22,13 +22,6 @@ public class ToDoListController {
         toDo.addEntry(entry);
     }
 
-    public void removeEntry(Entry entry){
-        toDo.removeEntry(entry);
-    }
-
-    public void updateEntry(Entry old, Entry entry){
-        toDo.updateEntry(old, entry);
-    }
 
     public List<Entry> getEntries(){
         return toDo.getEntries();

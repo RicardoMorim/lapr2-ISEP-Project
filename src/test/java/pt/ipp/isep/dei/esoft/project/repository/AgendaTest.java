@@ -150,7 +150,7 @@ class AgendaTest {
     void testGetVehiclesNotAssignedToAnyAgendaEntry() {
         agenda.addEntry(entry1);
         List<Vehicle> vehicles = Arrays.asList(vehicle1, vehicle2);
-        assertEquals(Collections.singletonList(vehicle2), agenda.getVehiclesNotAssignedToAnyAgendaEntry(vehicles));
+        assertEquals(Arrays.asList(vehicle2), agenda.getVehiclesNotAssignedToAnyAgendaEntry(vehicles));
     }
 
     /**

@@ -52,11 +52,6 @@ public class TeamController {
         teamRepository.add(team);
     }
 
-    public Team createTeam(List<Collaborator> collaborators) {
-        Team team = new Team(collaborators);
-        teamRepository.add(team);
-        return team;
-    }
 
     public List<Team> getTeams(){
         return teamRepository.getTeams();

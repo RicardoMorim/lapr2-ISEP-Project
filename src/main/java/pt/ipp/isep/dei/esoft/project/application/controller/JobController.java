@@ -59,15 +59,6 @@ public class JobController {
         return job;
     }
 
-    public void updateJob(Job job, String name, String shortDescription) {
-        try {
-            job.setName(name);
-            job.setShortDescription(shortDescription);
-            this.jobRepository.update(job, name, shortDescription);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public void updateJob(Job oldJob, Job newJob) {
         try {

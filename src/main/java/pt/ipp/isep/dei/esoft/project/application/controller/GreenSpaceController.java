@@ -77,14 +77,6 @@ public class GreenSpaceController {
         greenSpaceRepository.updateGreenSpace(oldGreenSpace, newGreenSpace);
     }
 
-    /**
-     * Returns the GreenSpace with the specified designation.
-     * @param designation the designation of the GreenSpace to return
-     * @return the GreenSpace with the specified designation
-     */
-    public GreenSpace getGreenSpaceByDesignation(String designation) {
-        return greenSpaceRepository.getGreenSpaceByDesignation(designation);
-    }
 
     /**
      * Checks if a GreenSpace with the specified name exists in the repository.

@@ -547,17 +547,7 @@ public class Vehicle implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vehicle vehicle = (Vehicle) o;
-        return plate.equals(vehicle.plate) &&
-                brand.equals(vehicle.brand) &&
-                model.equals(vehicle.model) &&
-                type.equals(vehicle.type) &&
-                tareWeight == vehicle.tareWeight &&
-                grossWeight == vehicle.grossWeight &&
-                currentKM == vehicle.currentKM &&
-                registerDate.equals(vehicle.registerDate) &&
-                acquisitionDate.equals(vehicle.acquisitionDate) &&
-                checkupIntervalKM == vehicle.checkupIntervalKM &&
-                kmLastMaintenance == vehicle.kmLastMaintenance;
+        return plate.equals(vehicle.plate);
     }
 
     @Override

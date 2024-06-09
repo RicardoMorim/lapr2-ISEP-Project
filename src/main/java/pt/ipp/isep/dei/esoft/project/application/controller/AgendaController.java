@@ -95,10 +95,6 @@ public class AgendaController {
         return agenda.getNotDoneEntries();
     }
 
-    public List<AgendaEntry> getEntriesWithTeam() {
-        return agenda.getEntriesWithTeam();
-    }
-
 
     public void assignTeamToEntry(Team team, AgendaEntry entry) {
         entry.setTeam(team);
@@ -130,21 +126,13 @@ public class AgendaController {
         return entry.getVehicles();
     }
 
-    public Date getEndDateFromDuration(Date startDate, String duration) {
-        return agenda.getEndDateFromDuration(startDate, duration);
-    }
 
-    public List<Team> getAvailableTeams(Date startDate, Date endDate, List<Team> teams) {
-        return agenda.filterUnavailableTeams(startDate, endDate, teams);
-    }
 
     public List<AgendaEntry> getEntries() {
         return agenda.getEntries();
     }
 
 
-    public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
-        return agenda.getToDoEntriesNotInAgenda(entries);
-    }
+
 }
 

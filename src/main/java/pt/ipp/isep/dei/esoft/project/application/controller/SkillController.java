@@ -32,10 +32,6 @@ public class SkillController {
         return skillRepository.getSkillByName(name);
     }
 
-    public void setSkillRepository(SkillRepository skillRepository) {
-        this.skillRepository = skillRepository;
-    }
-
     private boolean validateSkill(Skill skill) {
         List<Skill> skills = skillRepository.getSkills();
         return !skills.contains(skill) && skill.getName().matches("^[a-zA-Z\\s]*$");
