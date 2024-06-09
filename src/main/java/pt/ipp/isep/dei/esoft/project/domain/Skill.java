@@ -16,7 +16,7 @@ public class Skill implements Serializable {
     /**
      * Constructs a new Skill with the given name and short description.
      *
-     * @param name the name of the skill
+     * @param name             the name of the skill
      * @param shortDescription a short description of the skill
      */
     public Skill(String name, String shortDescription) {

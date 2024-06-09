@@ -14,17 +14,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Team controller test.
+ */
 public class TeamControllerTest {
 
     private TeamRepository teamRepository;
     private TeamController teamController;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         teamRepository = new TeamRepository();
         teamController = new TeamController(teamRepository);
     }
 
+    /**
+     * Test get team by collaborator.
+     */
     @Test
     public void testGetTeamByCollaborator() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456);
@@ -37,6 +46,9 @@ public class TeamControllerTest {
         assertEquals(team, result);
     }
 
+    /**
+     * Test notify post pone team members.
+     */
     @Test
     public void testNotifyPostPoneTeamMembers() {
         GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
@@ -55,6 +67,9 @@ public class TeamControllerTest {
         // No assertions needed since it's a void method, but ensure no exceptions
     }
 
+    /**
+     * Test notify new team.
+     */
     @Test
     public void testNotifyNewTeam() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456);
@@ -65,6 +80,9 @@ public class TeamControllerTest {
         // No assertions needed since it's a void method, but ensure no exceptions
     }
 
+    /**
+     * Test notify new task team members.
+     */
     @Test
     public void testNotifyNewTaskTeamMembers() {
         GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
@@ -85,6 +103,9 @@ public class TeamControllerTest {
         // No assertions needed since it's a void method, but ensure no exceptions
     }
 
+    /**
+     * Test notify team removed.
+     */
     @Test
     public void testNotifyTeamRemoved() {
         GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
@@ -102,6 +123,9 @@ public class TeamControllerTest {
         // No assertions needed since it's a void method, but ensure no exceptions
     }
 
+    /**
+     * Test notify team cancelled.
+     */
     @Test
     public void testNotifyTeamCancelled() {
         GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
@@ -120,6 +144,9 @@ public class TeamControllerTest {
         // No assertions needed since it's a void method, but ensure no exceptions
     }
 
+    /**
+     * Test add team.
+     */
     @Test
     public void testAddTeam() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456);
@@ -131,6 +158,9 @@ public class TeamControllerTest {
         assertTrue(teamRepository.getTeams().contains(team));
     }
 
+    /**
+     * Test get teams.
+     */
     @Test
     public void testGetTeams() {
         List<Team> expectedTeams = new ArrayList<>();
@@ -145,6 +175,9 @@ public class TeamControllerTest {
         assertEquals(expectedTeams, result);
     }
 
+    /**
+     * Test get unassigned teams.
+     */
     @Test
     public void testGetUnassignedTeams() {
         List<Team> expectedTeams = new ArrayList<>();
@@ -160,6 +193,9 @@ public class TeamControllerTest {
         assertEquals(expectedTeams, result);
     }
 
+    /**
+     * Test generate team proposals.
+     */
     @Test
     public void testGenerateTeamProposals() {
         int minTeamSize = 2;
@@ -177,6 +213,9 @@ public class TeamControllerTest {
         assertNotNull(result);
     }
 
+    /**
+     * Test unassign team.
+     */
     @Test
     public void testUnassignTeam() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456);

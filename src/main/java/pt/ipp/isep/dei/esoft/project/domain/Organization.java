@@ -50,7 +50,7 @@ public class Organization implements Serializable {
      * @param cost                 The cost of the task to be created.
      * @param taskCategory         The task category of the task to be created.
      * @param employee             The employee of the task to be created.
-     * @return optional
+     * @return optional optional
      */
     public Optional<Task> createTask(String reference, String description, String informalDescription,
                                      String technicalDescription, int duration, double cost,

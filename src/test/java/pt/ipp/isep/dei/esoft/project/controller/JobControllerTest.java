@@ -16,17 +16,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Job controller test.
+ */
 class JobControllerTest {
 
     private JobRepository jobRepository;
     private JobController jobController;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         jobRepository = new JobRepository();
         jobController = new JobController(jobRepository);
     }
 
+    /**
+     * Register job successfully.
+     */
     @Test
     void registerJobSuccessfully() {
         Job job = new Job("Developer", "Short Description");
@@ -35,6 +44,9 @@ class JobControllerTest {
         assertTrue(jobRepository.getJobs().contains(job));
     }
 
+    /**
+     * Register job with existing job throws exception.
+     */
     @Test
     void registerJobWithExistingJobThrowsException() {
         Job job = new Job("Developer", "Short Description");
@@ -43,6 +55,9 @@ class JobControllerTest {
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Register job with null name throws exception.
+     */
     @Test
     void registerJobWithNullNameThrowsException() {
         Job job = new Job(null, "Short Description");
@@ -50,6 +65,9 @@ class JobControllerTest {
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Register job with empty name throws exception.
+     */
     @Test
     void registerJobWithEmptyNameThrowsException() {
         Job job = new Job("", "Short Description");
@@ -57,6 +75,9 @@ class JobControllerTest {
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Update job successfully.
+     */
     @Test
     void updateJobSuccessfully() {
         Job oldJob = new Job("Developer", "Short Description");
@@ -75,6 +96,9 @@ class JobControllerTest {
         assertFalse(jobRepository.getJobs().contains(oldJob));
     }
 
+    /**
+     * Remove job successfully.
+     */
     @Test
     void removeJobSuccessfully() {
         Job job = new Job("Developer", "Short Description");
@@ -90,7 +114,9 @@ class JobControllerTest {
     }
 
 
-
+    /**
+     * Test get collaborator repository.
+     */
     @Test
     void testGetCollaboratorRepository() {
         CollaboratorRepository expected = new CollaboratorRepository();
@@ -98,6 +124,9 @@ class JobControllerTest {
         assertEquals(expected, controller.getCollaboratorRepository());
     }
 
+    /**
+     * Test get collaborator list.
+     */
     @Test
     void testGetCollaboratorList() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -108,6 +137,9 @@ class JobControllerTest {
         assertEquals(expected, controller.getCollaboratorList());
     }
 
+    /**
+     * Test register collaborator with skills.
+     */
     @Test
     void testRegisterCollaboratorWithSkills() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -117,6 +149,9 @@ class JobControllerTest {
         assertEquals(skills, collaborator.getSkills());
     }
 
+    /**
+     * Register job should add job to repository.
+     */
     @Test
     void registerJobShouldAddJobToRepository() {
         Job job = new Job("Developer", "Short Description");
@@ -124,6 +159,9 @@ class JobControllerTest {
         assertTrue(jobRepository.getJobs().contains(job));
     }
 
+    /**
+     * Register job should throw exception when job already exists.
+     */
     @Test
     void registerJobShouldThrowExceptionWhenJobAlreadyExists() {
         Job job = new Job("Developer", "Short Description");
@@ -131,18 +169,27 @@ class JobControllerTest {
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Register job should throw exception when name is null.
+     */
     @Test
     void registerJobShouldThrowExceptionWhenNameIsNull() {
         Job job = new Job(null, "Short Description");
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Register job should throw exception when name is empty.
+     */
     @Test
     void registerJobShouldThrowExceptionWhenNameIsEmpty() {
         Job job = new Job("", "Short Description");
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Update job should update job in repository.
+     */
     @Test
     void updateJobShouldUpdateJobInRepository() {
         Job oldJob = new Job("Developer", "Short Description");
@@ -153,6 +200,9 @@ class JobControllerTest {
         assertFalse(jobRepository.getJobs().contains(oldJob));
     }
 
+    /**
+     * Remove job should remove job from repository.
+     */
     @Test
     void removeJobShouldRemoveJobFromRepository() {
         Job job = new Job("Developer", "Short Description");
@@ -162,6 +212,9 @@ class JobControllerTest {
     }
 
 
+    /**
+     * Test set job repository.
+     */
     @Test
     void testSetJobRepository() {
         JobRepository newJobRepository = new JobRepository();
@@ -169,30 +222,45 @@ class JobControllerTest {
         assertEquals(newJobRepository, jobController.getJobRepository());
     }
 
+    /**
+     * Test register job with null short description throws exception.
+     */
     @Test
     void testRegisterJobWithNullShortDescriptionThrowsException() {
         Job job = new Job("Developer", null);
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Test register job with empty short description throws exception.
+     */
     @Test
     void testRegisterJobWithEmptyShortDescriptionThrowsException() {
         Job job = new Job("Developer", "");
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Test register job with invalid name throws exception.
+     */
     @Test
     void testRegisterJobWithInvalidNameThrowsException() {
         Job job = new Job("123", "Short Description");
         assertThrows(IllegalArgumentException.class, () -> jobController.registerJob(job));
     }
 
+    /**
+     * Test register job with name and short description.
+     */
     @Test
     void testRegisterJobWithNameAndShortDescription() {
         Job job = jobController.registerJob("Developer", "Short Description");
         assertTrue(jobRepository.getJobs().contains(job));
     }
 
+    /**
+     * Test update job with non existing job throws exception.
+     */
     @Test
     void testUpdateJobWithNonExistingJobThrowsException() {
         Job oldJob = new Job("Old Developer", "Old Short Description");
@@ -200,12 +268,18 @@ class JobControllerTest {
         assertThrows(IllegalArgumentException.class, () -> jobController.updateJob(oldJob, newJob));
     }
 
+    /**
+     * Test remove job with non existing job throws exception.
+     */
     @Test
     void testRemoveJobWithNonExistingJobThrowsException() {
         Job job = new Job("Developer", "Short Description");
         assertThrows(IllegalArgumentException.class, () -> jobController.removeJob(job));
     }
 
+    /**
+     * Test get job list.
+     */
     @Test
     void testGetJobList() {
         Job job = new Job("Developer", "Short Description");

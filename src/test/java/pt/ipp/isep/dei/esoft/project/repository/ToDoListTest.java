@@ -10,6 +10,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type To do list test.
+ */
 public class ToDoListTest {
 
     private ToDoList toDoList;
@@ -17,6 +20,9 @@ public class ToDoListTest {
     private Entry entry1;
     private Entry entry2;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         greenSpace = new GreenSpace("Park", new Address("123 Street", "City", "12345"), 100, Type.MEDIUM_SIZED_PARK, new Email("park@example.com"));
@@ -25,6 +31,9 @@ public class ToDoListTest {
         toDoList = new ToDoList();
     }
 
+    /**
+     * Test default constructor.
+     */
     @Test
     public void testDefaultConstructor() {
         ToDoList list = new ToDoList();
@@ -32,6 +41,9 @@ public class ToDoListTest {
         assertTrue(list.getEntries().isEmpty());
     }
 
+    /**
+     * Test constructor with list.
+     */
     @Test
     public void testConstructorWithList() {
         List<Entry> entries = new ArrayList<>();
@@ -41,6 +53,9 @@ public class ToDoListTest {
         assertEquals(entry1, list.getEntries().get(0));
     }
 
+    /**
+     * Test add entry.
+     */
     @Test
     public void testAddEntry() {
         toDoList.addEntry(entry1);
@@ -53,6 +68,9 @@ public class ToDoListTest {
         assertEquals("Entry already in ToDo List", exception.getMessage());
     }
 
+    /**
+     * Test set entries.
+     */
     @Test
     public void testSetEntries() {
         List<Entry> entries = new ArrayList<>();
@@ -62,6 +80,9 @@ public class ToDoListTest {
         assertEquals(entry1, toDoList.getEntries().get(0));
     }
 
+    /**
+     * Test remove entry.
+     */
     @Test
     public void testRemoveEntry() {
         toDoList.addEntry(entry1);
@@ -74,6 +95,9 @@ public class ToDoListTest {
         assertEquals("Entry not in ToDo List", exception.getMessage());
     }
 
+    /**
+     * Test update entry.
+     */
     @Test
     public void testUpdateEntry() {
         toDoList.addEntry(entry1);
@@ -82,6 +106,9 @@ public class ToDoListTest {
         assertEquals(entry2, toDoList.getEntries().get(0));
     }
 
+    /**
+     * Test get entries.
+     */
     @Test
     public void testGetEntries() {
         List<Entry> entries = new ArrayList<>();
@@ -90,6 +117,9 @@ public class ToDoListTest {
         assertEquals(entries, toDoList.getEntries());
     }
 
+    /**
+     * Test get to be done entries.
+     */
     @Test
     public void testGetToBeDoneEntries() {
         entry1.setState(Status.TO_BE_DONE);

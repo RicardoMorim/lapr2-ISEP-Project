@@ -14,15 +14,24 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Vehicle controller test.
+ */
 class VehicleControllerTest {
     private VehicleController vehicleController;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         VehicleRepository vehicleRepository = new VehicleRepository();
         vehicleController = new VehicleController(vehicleRepository);
     }
 
+    /**
+     * Add vehicle successfully.
+     */
     @Test
     void addVehicleSuccessfully() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -30,6 +39,9 @@ class VehicleControllerTest {
         assertTrue(vehicleController.checkIfVehicleExists(vehicle));
     }
 
+    /**
+     * Remove vehicle successfully.
+     */
     @Test
     void removeVehicleSuccessfully() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -38,6 +50,9 @@ class VehicleControllerTest {
         assertFalse(vehicleController.checkIfVehicleExists(vehicle));
     }
 
+    /**
+     * Update vehicle successfully.
+     */
     @Test
     void updateVehicleSuccessfully() {
         Vehicle oldVehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -48,6 +63,9 @@ class VehicleControllerTest {
         assertTrue(vehicleController.checkIfVehicleExists(newVehicle));
     }
 
+    /**
+     * Gets vehicle by plate returns correct vehicle.
+     */
     @Test
     void getVehicleByPlateReturnsCorrectVehicle() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -56,12 +74,18 @@ class VehicleControllerTest {
         assertEquals(vehicle, retrievedVehicle);
     }
 
+    /**
+     * Gets vehicle by plate returns null when vehicle does not exist.
+     */
     @Test
     void getVehicleByPlateReturnsNullWhenVehicleDoesNotExist() {
         Vehicle retrievedVehicle = vehicleController.getVehicleByPlate("ABC-1234");
         assertNull(retrievedVehicle);
     }
 
+    /**
+     * Check if vehicle exists returns true when vehicle exists.
+     */
     @Test
     void checkIfVehicleExistsReturnsTrueWhenVehicleExists() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -69,12 +93,18 @@ class VehicleControllerTest {
         assertTrue(vehicleController.checkIfVehicleExists(vehicle));
     }
 
+    /**
+     * Check if vehicle exists returns false when vehicle does not exist.
+     */
     @Test
     void checkIfVehicleExistsReturnsFalseWhenVehicleDoesNotExist() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
         assertFalse(vehicleController.checkIfVehicleExists(vehicle));
     }
 
+    /**
+     * Check if vehicle exists returns true when old vehicle exists and new vehicle does not exist.
+     */
     @Test
     void checkIfVehicleExistsReturnsTrueWhenOldVehicleExistsAndNewVehicleDoesNotExist() {
         Vehicle oldVehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -83,6 +113,9 @@ class VehicleControllerTest {
         assertTrue(vehicleController.checkIfVehicleExists(oldVehicle, newVehicle));
     }
 
+    /**
+     * Check if vehicle exists returns false when old vehicle does not exist and new vehicle exists.
+     */
     @Test
     void checkIfVehicleExistsReturnsFalseWhenOldVehicleDoesNotExistAndNewVehicleExists() {
         Vehicle oldVehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -91,6 +124,9 @@ class VehicleControllerTest {
         assertFalse(vehicleController.checkIfVehicleExists(oldVehicle, newVehicle));
     }
 
+    /**
+     * Register vehicle maintenance adds maintenance to vehicle.
+     */
     @Test
     void registerVehicleMaintenanceAddsMaintenanceToVehicle() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -99,6 +135,9 @@ class VehicleControllerTest {
         assertTrue(vehicle.getMaintenanceList().contains(new Date() + " - 5000"));
     }
 
+    /**
+     * Register vehicle maintenance updates km last maintenance.
+     */
     @Test
     void registerVehicleMaintenanceUpdatesKmLastMaintenance() {
 
@@ -113,6 +152,9 @@ class VehicleControllerTest {
         assertEquals(5000, vehicleController.getVehicleByPlate("ABC-1234").getKmLastMaintenance());
     }
 
+    /**
+     * Register vehicle maintenance updates km next maintenance.
+     */
     @Test
     void registerVehicleMaintenanceUpdatesKmNextMaintenance() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
@@ -127,6 +169,9 @@ class VehicleControllerTest {
         assertEquals(15000, vehicleController.getVehicleByPlate("ABC-1234").getKmNextMaintenance());
     }
 
+    /**
+     * Gets maintenance list returns correct list.
+     */
     @Test
     void getMaintenanceListReturnsCorrectList() {
         Vehicle vehicle1 = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 9900, new Date(), new Date(), 10000, 0);
@@ -141,6 +186,9 @@ class VehicleControllerTest {
     }
 
 
+    /**
+     * Test get collaborator repository.
+     */
     @Test
     void testGetCollaboratorRepository() {
         CollaboratorRepository expected = new CollaboratorRepository();
@@ -148,6 +196,9 @@ class VehicleControllerTest {
         assertEquals(expected, controller.getCollaboratorRepository());
     }
 
+    /**
+     * Test get collaborator list.
+     */
     @Test
     void testGetCollaboratorList() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -158,6 +209,9 @@ class VehicleControllerTest {
         assertEquals(expected, controller.getCollaboratorList());
     }
 
+    /**
+     * Test register collaborator with skills.
+     */
     @Test
     void testRegisterCollaboratorWithSkills() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -167,6 +221,9 @@ class VehicleControllerTest {
         assertEquals(skills, collaborator.getSkills());
     }
 
+    /**
+     * Test validate plate.
+     */
     @Test
     void testValidatePlate() {
         assertTrue(vehicleController.validatePlate("AB-12-23"));
@@ -174,6 +231,9 @@ class VehicleControllerTest {
         assertFalse(vehicleController.validatePlate(""));
     }
 
+    /**
+     * Test set vehicle list.
+     */
     @Test
     void testSetVehicleList() {
         Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);

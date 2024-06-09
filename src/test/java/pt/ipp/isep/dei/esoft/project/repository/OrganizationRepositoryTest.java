@@ -8,8 +8,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Organization repository test.
+ */
 class OrganizationRepositoryTest {
 
+    /**
+     * Test add organization.
+     */
     @Test
     void testAddOrganization() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -20,6 +26,9 @@ class OrganizationRepositoryTest {
         assertEquals(organization, returnOrganization.get());
     }
 
+    /**
+     * Ensure get organization by employee works.
+     */
     @Test
     void ensureGetOrganizationByEmployeeWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -33,6 +42,9 @@ class OrganizationRepositoryTest {
         assertEquals(organization, result.get());
     }
 
+    /**
+     * Ensure get organization by employee fails.
+     */
     @Test
     void ensureGetOrganizationByEmployeeFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -47,6 +59,9 @@ class OrganizationRepositoryTest {
         assertTrue(result.isEmpty());
     }
 
+    /**
+     * Ensure get organization by email works.
+     */
     @Test
     void ensureGetOrganizationByEmailWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -61,6 +76,9 @@ class OrganizationRepositoryTest {
         assertEquals(organization, result.get());
     }
 
+    /**
+     * Ensure add organization works.
+     */
     @Test
     void ensureAddOrganizationWorks() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -80,6 +98,9 @@ class OrganizationRepositoryTest {
         assertNotSame(organization, returnOrganization.get());
     }
 
+    /**
+     * Ensure add organization duplicate fails.
+     */
     @Test
     void ensureAddOrganizationDuplicateFails() {
         OrganizationRepository organizationRepository = new OrganizationRepository();
