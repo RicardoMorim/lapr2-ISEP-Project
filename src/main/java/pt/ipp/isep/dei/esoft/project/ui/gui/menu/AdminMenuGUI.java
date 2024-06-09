@@ -103,6 +103,7 @@ public class AdminMenuGUI {
         grid.add(btnRegisterSkill, 0, 0);
         grid.add(btnRegisterJob, 1, 0);
         grid.add(btnRegisterCollaborator, 0, 1);
+        grid.add(btnAddSkillToCollaborator, 1, 1);
         grid.add(btnGenerateTeamProposal, 0, 2);
         grid.add(btnRegisterVehicle, 1, 2);
         grid.add(btnRegisterVehicleMaintenance, 0, 3);

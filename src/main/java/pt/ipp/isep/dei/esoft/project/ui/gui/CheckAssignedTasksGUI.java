@@ -79,7 +79,7 @@ public class CheckAssignedTasksGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a task to set as done.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             }
         });

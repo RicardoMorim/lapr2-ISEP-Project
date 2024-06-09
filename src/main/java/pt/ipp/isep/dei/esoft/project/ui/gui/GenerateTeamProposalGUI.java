@@ -106,7 +106,7 @@ public class GenerateTeamProposalGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("The team proposal was successfully accepted and stored.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             }
         });

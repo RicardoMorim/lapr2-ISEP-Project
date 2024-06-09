@@ -76,7 +76,7 @@ public class PostponeEntryGUI {
                     selectedEntry = agendaController.postponeEntry(selectedEntry, date);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image("logo.png"));
+                    stage.getIcons().add(new Image("logo.jpeg"));
                     if (selectedEntry.getStatus().equals(Status.POSTPONED)) {
                         alert.setTitle("Success");
                         alert.setHeaderText(null);

@@ -147,7 +147,7 @@ public class RegisterVehicleMaintenanceGUI {
                 alert.setHeaderText("Input Error");
                 alert.setContentText(lblError.getText());
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
                 event.consume();
             } else {

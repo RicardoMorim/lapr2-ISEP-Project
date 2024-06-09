@@ -118,7 +118,7 @@ public class ListGreenSpacesGUI {
         alert.setHeaderText(null);
         alert.setContentText(message);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("logo.png"));
+        stage.getIcons().add(new Image("logo.jpeg"));
         alert.showAndWait();
     }
 }

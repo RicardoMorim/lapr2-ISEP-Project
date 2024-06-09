@@ -37,7 +37,7 @@ public class MainHRMMenuGUI {
         btnGenerateTeamProposal.setOnAction(e -> content.getChildren().setAll(new GenerateTeamProposalGUI().getGenerateTeamProposalGUI(content.getHeight(), content.getWidth())));
 
 
-        grid.getChildren().setAll(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator,
+        grid.getChildren().setAll(btnRegisterSkill, btnRegisterJob, btnRegisterCollaborator, btnAddSkillToCollaborator, btnAddSkillToCollaborator,
                 btnGenerateTeamProposal);
 
         btnRegisterSkill.fire();

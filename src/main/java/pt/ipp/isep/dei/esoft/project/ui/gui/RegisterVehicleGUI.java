@@ -14,6 +14,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class RegisterVehicleGUI {
 
@@ -24,7 +25,7 @@ public class RegisterVehicleGUI {
     }
 
     public GridPane getRegisterVehicleGUI(double height, double width) {
-        GridPane gridPane = new GridPane();
+        GridPane gridPane = new GridPane(height, width);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setHgap(10);
@@ -112,6 +113,7 @@ public class RegisterVehicleGUI {
         Button removeButton = new Button("Remove Vehicle");
         removeButton.getStyleClass().add("remove-button");
 
+
         HBox buttonBox = new HBox(10, submitButton, removeButton);
         buttonBox.setAlignment(Pos.CENTER);
         gridPane.add(buttonBox, 0, 12, 2, 1);
@@ -137,18 +139,16 @@ public class RegisterVehicleGUI {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        year.setCellFactory(column -> {
-            return new TableCell<Vehicle, LocalDate>() {
-                @Override
-                protected void updateItem(LocalDate item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        setText(formatter.format(item));
-                    }
+        year.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(item));
                 }
-            };
+            }
         });
 
         TableColumn<Vehicle, String> kmColumn = new TableColumn<>("Current KM");
@@ -177,11 +177,60 @@ public class RegisterVehicleGUI {
         newGrid.add(mainLayout, 0, 0);
         newGrid.setAlignment(Pos.CENTER);
 
+        removeButton.setOnAction(actionEvent -> {
+            Vehicle vehicle = tableView.getSelectionModel().getSelectedItem();
+            if (vehicle != null) {
+                vehicleController.removeVehicle(vehicle);
+                tableView.getItems().remove(vehicle);
+            }
+        });
+
+
+        submitButton.setOnAction(actionEvent -> {
+            boolean plateValid = validateTextField(plateField, plateLabel);
+            boolean brandValid = validateTextField(brandComboBox.getEditor(), brandLabel);
+            boolean modelValid = validateTextField(modelComboBox.getEditor(), modelLabel);
+            boolean typeValid = validateTextField(typeComboBox.getEditor(), typeLabel);
+            boolean tareWeightValid = validateTextField(tareWeightField, tareWeightLabel);
+            boolean grossWeightValid = validateTextField(grossWeightField, grossWeightLabel);
+            boolean currentKMValid = validateTextField(currentKMField, currentKMLabel);
+            boolean registerDateValid = validateTextField(registerDatePicker.getEditor(), registerDateLabel);
+            boolean acquisitionDateValid = validateTextField(acquisitionDatePicker.getEditor(), acquisitionDateLabel);
+            boolean checkupIntervalKMValid = validateTextField(checkupIntervalKMField, checkupIntervalKMLabel);
+            boolean kmLastMaintenanceValid = validateTextField(kmLastMaintenanceField, kmLastMaintenanceLabel);
+
+            if (plateValid && brandValid && modelValid && typeValid && tareWeightValid && grossWeightValid && currentKMValid && registerDateValid && acquisitionDateValid && checkupIntervalKMValid && kmLastMaintenanceValid) {
+                String plate = plateField.getText();
+                String brand = brandComboBox.getValue();
+                String model = modelComboBox.getValue();
+                String type = typeComboBox.getValue();
+                int tareWeight = Integer.parseInt(tareWeightField.getText());
+                int grossWeight = Integer.parseInt(grossWeightField.getText());
+                int currentKM = Integer.parseInt(currentKMField.getText());
+                Date registerDate = Date.from(registerDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date acquisitionDate = Date.from(acquisitionDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                int checkupIntervalKM = Integer.parseInt(checkupIntervalKMField.getText());
+                int kmLastMaintenance = Integer.parseInt(kmLastMaintenanceField.getText());
+
+                vehicleController.addVehicle(new Vehicle(plate, brand, model, type, tareWeight, grossWeight, currentKM, registerDate, acquisitionDate, checkupIntervalKM, kmLastMaintenance));
+                plateField.clear();
+                brandComboBox.getSelectionModel().clearSelection();
+                modelComboBox.getSelectionModel().clearSelection();
+                typeComboBox.getSelectionModel().clearSelection();
+                tareWeightField.clear();
+                grossWeightField.clear();
+                currentKMField.clear();
+                registerDatePicker.getEditor().clear();
+                acquisitionDatePicker.getEditor().clear();
+                checkupIntervalKMField.clear();
+                kmLastMaintenanceField.clear();
+                tableView.getItems().setAll(vehicleController.getVehicleList());
+            }
+        });
+
         return newGrid;
     }
 
-    // Add validation methods here, similar to the RegisterCollaboratorGUI class
-    // For example:
     private boolean validateTextField(TextField textField, Label label) {
         if (textField.getText().trim().isEmpty()) {
             setFieldError(textField, label, "This field cannot be empty.");

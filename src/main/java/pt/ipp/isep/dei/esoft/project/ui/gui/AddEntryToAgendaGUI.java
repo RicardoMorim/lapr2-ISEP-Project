@@ -158,7 +158,7 @@ public class AddEntryToAgendaGUI {
                 else {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Please provide a valid duration or end date and a start date.");
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image("logo.png"));
+                    stage.getIcons().add(new Image("logo.jpeg"));
                     alert.showAndWait();
                 }
 
@@ -167,7 +167,7 @@ public class AddEntryToAgendaGUI {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Entry added to the Agenda successfully.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
 
 

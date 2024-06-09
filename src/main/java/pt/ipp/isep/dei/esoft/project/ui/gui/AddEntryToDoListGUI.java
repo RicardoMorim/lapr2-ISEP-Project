@@ -97,7 +97,7 @@ public class AddEntryToDoListGUI {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Entry added successfully!");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("logo.png"));
+            stage.getIcons().add(new Image("logo.jpeg"));
             alert.showAndWait();
 
             titleField.clear();

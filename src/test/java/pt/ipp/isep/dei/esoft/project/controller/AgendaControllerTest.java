@@ -10,10 +10,7 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -139,5 +136,110 @@ class AgendaControllerTest {
         agendaController.removeVehiclesFromAgendaEntry(entry, vehicles);
         assertFalse(entry.getVehicles().contains(newVehicle1));
         assertFalse(entry.getVehicles().contains(newVehicle2));
+    }
+
+
+
+    @Test
+    void whenAddEntryWithStartDateEndDateDuration_thenEntryIsAddedToAgenda() {
+        AgendaController controller = new AgendaController(new Agenda());
+        GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
+        Entry entry = new Entry(greenSpace, "entry", "e isso", Urgency.HIGH, 2);
+        Date startDate = new Date();
+        Date endDate = new Date();
+        String duration = "1h";
+
+        // When
+        controller.addEntry(entry, startDate, endDate, duration);
+
+        // Then
+        List<AgendaEntry> entries = controller.getEntries();
+        assertEquals(1, entries.size());
+        assertEquals(entry, entries.get(0).getEntry());
+        assertEquals(startDate, entries.get(0).getStartDate());
+        assertEquals(endDate, entries.get(0).getEndDate());
+        assertEquals(duration, entries.get(0).getDuration());
+    }
+
+    @Test
+    void whenRemoveEntry_thenEntryIsRemovedFromAgenda() {
+        // Given
+        AgendaController controller = new AgendaController(new Agenda());
+
+        GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
+        Entry entry = new Entry(greenSpace, "entry", "e isso", Urgency.HIGH, 2);
+        Date startDate = new Date();
+        Date endDate = new Date();
+        String duration = "1h";
+        AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, endDate, duration);
+        controller.addEntry(agendaEntry);
+
+        // When
+        controller.removeEntry(agendaEntry);
+
+        // Then
+        assertTrue(controller.getEntries().isEmpty());
+    }
+
+    @Test
+    void whenGetVehiclesNotAssignedAtDates_thenReturnsCorrectVehicles() {
+        // Given
+        AgendaController controller = new AgendaController(new Agenda());
+        vehicle1 = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
+        vehicle2 = new Vehicle("XYZ-7890", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
+        List<Vehicle> vehicles = Arrays.asList(vehicle1, vehicle2);
+        Date startDate = new Date();
+        Date endDate = new Date();
+
+        // When
+        List<Vehicle> result = controller.getVehiclesNotAssignedAtDates(vehicles, startDate, endDate);
+
+        // Then
+        assertEquals(vehicles, result);
+    }
+
+    @Test
+    void whenPostponeEntry_thenEntryDateIsUpdated() {
+        // Given
+        AgendaController controller = new AgendaController(new Agenda());
+
+        GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
+        Entry entry = new Entry(greenSpace, "entry", "e isso", Urgency.HIGH, 2);
+        Date startDate = new Date();
+        Date endDate = new Date();
+        String duration = "1";
+        AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, endDate, duration);
+
+        Date newDate = new Date();
+        controller.addEntry(agendaEntry);
+
+        // When
+        controller.postponeEntry(agendaEntry, newDate);
+
+        // Then
+        assertEquals(newDate, agendaEntry.getStartDate());
+    }
+
+    @Test
+    void whenAssignTeamToEntry_thenEntryTeamIsUpdated() {
+        // Given
+        AgendaController controller = new AgendaController(new Agenda());
+        GreenSpace greenSpace = new GreenSpace("Cidade", new Address("Rua da Cidade", "Porto", "1234-456"), 10000, Type.LARGE_SIZED_PARK, new Email("admin@this.app"));
+
+        Entry entry = new Entry(greenSpace, "entry", "e isso", Urgency.HIGH, 2);
+        Date startDate = new Date();
+        Date endDate = new Date();
+        String duration = "1h";
+        AgendaEntry agendaEntry = new AgendaEntry(entry, startDate, endDate, duration);
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
+
+        Team team = new Team(Collections.singletonList(collaborator));
+        controller.addEntry(agendaEntry);
+
+        // When
+        controller.assignTeamToEntry(team, agendaEntry);
+
+        // Then
+        assertEquals(team, agendaEntry.getTeam());
     }
 }

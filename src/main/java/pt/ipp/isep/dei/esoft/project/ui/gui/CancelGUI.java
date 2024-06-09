@@ -68,14 +68,14 @@ public class CancelGUI {
                 alert.setTitle("Entry Canceled");
                 alert.setContentText("The entry was successfully canceled.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("There was an error canceling the entry.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             }
         });

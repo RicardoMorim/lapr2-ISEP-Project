@@ -106,7 +106,7 @@ public class RegisterSkillGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("Skill registered successfully.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
 
                 // Optionally, clear the fields after successful registration
@@ -119,7 +119,7 @@ public class RegisterSkillGUI {
                 alert.setHeaderText("Error registering skill");
                 alert.setContentText(e.getMessage());
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             }
         });
@@ -135,7 +135,7 @@ public class RegisterSkillGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a skill to remove.");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("logo.png"));
+                stage.getIcons().add(new Image("logo.jpeg"));
                 alert.showAndWait();
             }
         });
