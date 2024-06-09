@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * The type Check assigned tasks gui.
+ */
 public class CheckAssignedTasksGUI {
 
     private Collaborator collaborator;
@@ -32,6 +35,9 @@ public class CheckAssignedTasksGUI {
     private TeamController teamController;
     private CollaboratorController collaboratorController;
 
+    /**
+     * Instantiates a new Check assigned tasks gui.
+     */
     public CheckAssignedTasksGUI() {
         collaboratorController = new CollaboratorController();
         this.agendaController = new AgendaController();
@@ -39,6 +45,13 @@ public class CheckAssignedTasksGUI {
         this.collaborator = collaboratorController.getCollaboratorByEmail(Repositories.getInstance().getAuthenticationRepository().getCurrentUserSession().getUserId().toString());
     }
 
+    /**
+     * Gets assigned tasks.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the assigned tasks
+     */
     public GridPane getAssignedTasks(double height, double width) {
         GridPane grid = new GridPane(height, width);
         grid.setVgap(5);

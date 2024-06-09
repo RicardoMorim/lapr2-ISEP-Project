@@ -11,6 +11,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * The type Bootstrap.
+ */
 public class Bootstrap implements Runnable {
 
     private static final String DATA_FILE = "appData.ser";
@@ -19,6 +22,9 @@ public class Bootstrap implements Runnable {
         loadData();
     }
 
+    /**
+     * Save data.
+     */
     public void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
             Map<String, Object> data = new HashMap<>();
@@ -40,6 +46,9 @@ public class Bootstrap implements Runnable {
         }
     }
 
+    /**
+     * Load data.
+     */
     public void loadData() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
             Map<String, Object> data = (Map<String, Object>) ois.readObject();
@@ -79,6 +88,9 @@ public class Bootstrap implements Runnable {
         }
     }
 
+    /**
+     * Update entry status.
+     */
     public void updateEntryStatus() {
         for (AgendaEntry entry : Repositories.getInstance().getAgenda().getEntries()) {
             entry.setStatus(entry.getStatusBasedOnDates());
@@ -86,6 +98,9 @@ public class Bootstrap implements Runnable {
         }
     }
 
+    /**
+     * Add green spaces.
+     */
     public void addGreenSpaces() {
         GreenSpaceRepository greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
 
@@ -97,6 +112,9 @@ public class Bootstrap implements Runnable {
 
     }
 
+    /**
+     * Add team.
+     */
     public void addTeam() {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         TeamRepository teamRepository = Repositories.getInstance().getTeamRepository();
@@ -112,6 +130,9 @@ public class Bootstrap implements Runnable {
         teamRepository.notifyNewTeam(team);
     }
 
+    /**
+     * Add entries.
+     */
     public void addEntries() {
         // Get the necessary repositories
         ToDoList entryRepository = Repositories.getInstance().getToDoList();
@@ -142,6 +163,9 @@ public class Bootstrap implements Runnable {
         entryRepository.addEntry(entry8);
     }
 
+    /**
+     * Add agenda entries.
+     */
     public void addAgendaEntries() {
         Agenda agenda = Repositories.getInstance().getAgenda();
 
@@ -162,6 +186,9 @@ public class Bootstrap implements Runnable {
     }
 
 
+    /**
+     * Add jobs.
+     */
     public void addJobs() {
         JobRepository jobRepository = Repositories.getInstance().getJobRepository();
 
@@ -191,6 +218,9 @@ public class Bootstrap implements Runnable {
     }
 
 
+    /**
+     * Add collaborators.
+     */
     public void addCollaborators() {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         List<Job> jobs = Repositories.getInstance().getJobRepository().getJobs();

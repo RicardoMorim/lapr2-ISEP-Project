@@ -9,13 +9,25 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * The type Team repository.
+ */
 public class TeamRepository implements Serializable {
     private List<Team> teams;
 
+    /**
+     * Instantiates a new Team repository.
+     */
     public TeamRepository() {
         this.teams = new ArrayList<>();
     }
 
+    /**
+     * Gets team by collaborator.
+     *
+     * @param collaborator the collaborator
+     * @return the team by collaborator
+     */
     public Team getTeamByCollaborator(Collaborator collaborator) {
         for (Team team : teams) {
             if (team.getCollaborators().contains(collaborator)) {
@@ -25,20 +37,40 @@ public class TeamRepository implements Serializable {
         return null;
     }
 
+    /**
+     * Add.
+     *
+     * @param team the team
+     */
     public void add(Team team) {
         if (teams.contains(team)) throw new IllegalArgumentException("Team already exists");
         teams.add(team);
     }
 
+    /**
+     * Remove.
+     *
+     * @param team the team
+     */
     public void remove(Team team) {
         if (!teams.contains(team)) throw new IllegalArgumentException("Team does not exists");
         teams.remove(team);
     }
 
+    /**
+     * Sets teams.
+     *
+     * @param teams the teams
+     */
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 
+    /**
+     * Gets unassigned teams.
+     *
+     * @return the unassigned teams
+     */
     public List<Team> getUnassignedTeams() {
         List<Team> unassignedTeams = new ArrayList<>();
         for (Team team : teams) {
@@ -49,10 +81,24 @@ public class TeamRepository implements Serializable {
         return unassignedTeams;
     }
 
+    /**
+     * Gets teams.
+     *
+     * @return the teams
+     */
     public List<Team> getTeams() {
         return teams;
     }
 
+    /**
+     * Generate team proposals list.
+     *
+     * @param minTeamSize       the min team size
+     * @param maxTeamSize       the max team size
+     * @param requiredSkillList the required skill list
+     * @param collaborators     the collaborators
+     * @return the list
+     */
     public List<List<Collaborator>> GenerateTeamProposals(int minTeamSize, int maxTeamSize, List<Skill> requiredSkillList, List<Collaborator> collaborators) {
         List<List<Collaborator>> allTeams = new ArrayList<>();
         List<Collaborator> collaboratorList = new ArrayList<>(collaborators);
@@ -83,6 +129,13 @@ public class TeamRepository implements Serializable {
         }
     }
 
+    /**
+     * Has required skills boolean.
+     *
+     * @param team           the team
+     * @param requiredSkills the required skills
+     * @return the boolean
+     */
     public boolean hasRequiredSkills(List<Collaborator> team, List<Skill> requiredSkills) {
         List<Skill> teamSkills = new ArrayList<>();
         for (Collaborator collaborator : team) {
@@ -98,6 +151,12 @@ public class TeamRepository implements Serializable {
         return true;
     }
 
+    /**
+     * Notify post pone team members.
+     *
+     * @param entry   the entry
+     * @param oldDate the old date
+     */
     public void notifyPostPoneTeamMembers(AgendaEntry entry, Date oldDate) {
         LocalDate oldLocalDate = oldDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
@@ -125,6 +184,11 @@ public class TeamRepository implements Serializable {
         }
     }
 
+    /**
+     * Notify new team.
+     *
+     * @param team the team
+     */
     public void notifyNewTeam(Team team) {
         StringBuilder teamMembers = new StringBuilder();
         for (Collaborator collaborator : team.getCollaborators()) {
@@ -150,6 +214,11 @@ public class TeamRepository implements Serializable {
         }
     }
 
+    /**
+     * Notify new task team members.
+     *
+     * @param entry the entry
+     */
     public void notifyNewTaskTeamMembers(AgendaEntry entry) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();
@@ -176,6 +245,12 @@ public class TeamRepository implements Serializable {
     }
 
 
+    /**
+     * Notify team removed.
+     *
+     * @param entry the entry
+     * @param team  the team
+     */
     public void notifyTeamRemoved(AgendaEntry entry, Team team) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();
@@ -200,6 +275,11 @@ public class TeamRepository implements Serializable {
         }
     }
 
+    /**
+     * Notify team cancelled.
+     *
+     * @param entry the entry
+     */
     public void notifyTeamCancelled(AgendaEntry entry) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy").withLocale(Locale.ENGLISH);
         Date newStartDate = entry.getStartDate();

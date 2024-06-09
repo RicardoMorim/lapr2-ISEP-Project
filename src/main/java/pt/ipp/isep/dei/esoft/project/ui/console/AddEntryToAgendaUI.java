@@ -13,10 +13,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Add entry to agenda ui.
+ */
 public class AddEntryToAgendaUI implements Runnable {
 
     private final AgendaController agendaController;
 
+    /**
+     * Instantiates a new Add entry to agenda ui.
+     */
     public AddEntryToAgendaUI() {
         this.agendaController = new AgendaController(new Agenda());
     }

@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Task category repository.
+ */
 public class TaskCategoryRepository implements Serializable {
 
 
     private List<TaskCategory> taskCategories;
+
+    /**
+     * Instantiates a new Task category repository.
+     */
     public TaskCategoryRepository() {
         taskCategories = new ArrayList<>();
     }
@@ -36,10 +43,21 @@ public class TaskCategoryRepository implements Serializable {
     }
 
 
+    /**
+     * Sets task categories.
+     *
+     * @param taskCategories the task categories
+     */
     public void setTaskCategories(List<TaskCategory> taskCategories) {
         this.taskCategories = taskCategories;
     }
 
+    /**
+     * Add optional.
+     *
+     * @param taskCategory the task category
+     * @return the optional
+     */
     public Optional<TaskCategory> add(TaskCategory taskCategory) {
 
         Optional<TaskCategory> newTaskCategory = Optional.empty();

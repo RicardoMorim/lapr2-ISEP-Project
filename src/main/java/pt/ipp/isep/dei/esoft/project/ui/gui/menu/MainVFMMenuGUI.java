@@ -11,16 +11,29 @@ import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterVehicleGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterVehicleMaintenanceGUI;
 
+/**
+ * The type Main vfm menu gui.
+ */
 public class MainVFMMenuGUI  {
 
 
     private Pane content;
 
+    /**
+     * Instantiates a new Main vfm menu gui.
+     *
+     * @param content the content
+     */
     public MainVFMMenuGUI(Pane content) {
         this.content = content;
     }
 
 
+    /**
+     * Gets vfm menu gui.
+     *
+     * @return the vfm menu gui
+     */
     public GridPane getVFMMenuGUI() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

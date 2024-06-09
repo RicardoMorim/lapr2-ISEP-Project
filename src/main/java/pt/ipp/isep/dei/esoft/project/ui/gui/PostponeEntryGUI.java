@@ -20,11 +20,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The type Postpone entry gui.
+ */
 public class PostponeEntryGUI {
 
     private final AgendaController agendaController = new AgendaController();
     private final TeamController teamController = new TeamController();
 
+    /**
+     * Gets postpone entry grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the postpone entry grid pane
+     */
     public GridPane getPostponeEntryGridPane(double height, double width) {
         GridPane grid = new GridPane(height, width);
         grid.setVgap(5);

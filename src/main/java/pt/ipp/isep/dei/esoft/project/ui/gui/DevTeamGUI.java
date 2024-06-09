@@ -11,8 +11,16 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The type Dev team gui.
+ */
 public class DevTeamGUI {
 
+    /**
+     * Gets dev team gui.
+     *
+     * @return the dev team gui
+     */
     public GridPane getDevTeamGUI() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(50, 50, 50, 50));
@@ -69,6 +77,11 @@ public class DevTeamGUI {
         return grid;
     }
 
+    /**
+     * Start.
+     *
+     * @param primaryStage the primary stage
+     */
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Development Team");
 

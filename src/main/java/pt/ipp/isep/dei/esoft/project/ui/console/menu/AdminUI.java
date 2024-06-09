@@ -9,15 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Admin ui.
+ *
  * @author Paulo Maio pam@isep.ipp.pt
  */
-
 public class AdminUI implements Runnable {
     private CollaboratorController collaboratorController;
     private JobController jobController;
     private SkillController skillController;
     private VehicleController vehicleController;
 
+    /**
+     * Instantiates a new Admin ui.
+     */
     public AdminUI() {
         System.out.println("AdminUI");
     }

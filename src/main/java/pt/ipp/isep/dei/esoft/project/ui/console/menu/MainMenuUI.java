@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Main menu ui.
+ *
  * @author Paulo Maio pam@isep.ipp.pt
  */
 public class MainMenuUI implements Runnable {
 
+    /**
+     * Instantiates a new Main menu ui.
+     */
     public MainMenuUI() {
     }
 

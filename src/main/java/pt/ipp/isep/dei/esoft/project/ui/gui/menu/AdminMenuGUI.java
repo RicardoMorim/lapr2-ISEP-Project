@@ -10,16 +10,29 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
+/**
+ * The type Admin menu gui.
+ */
 public class AdminMenuGUI {
 
 
     private Pane content;
 
+    /**
+     * Instantiates a new Admin menu gui.
+     *
+     * @param content the content
+     */
     public AdminMenuGUI(Pane content) {
         this.content = content;
     }
 
 
+    /**
+     * Gets admin menu gui.
+     *
+     * @return the admin menu gui
+     */
     public GridPane getAdminMenuGUI() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

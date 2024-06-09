@@ -7,18 +7,36 @@ import java.io.Serializable;
 import java.util.*;
 
 
+/**
+ * The type Collaborator repository.
+ */
 public class CollaboratorRepository implements Serializable {
 
     private List<Collaborator> collaborators;
 
+    /**
+     * Instantiates a new Collaborator repository.
+     */
     public CollaboratorRepository() {
         this.collaborators = new ArrayList<>();
     }
 
+    /**
+     * Sets collaborators.
+     *
+     * @param collaborators the collaborators
+     */
     public void setCollaborators(List<Collaborator> collaborators) {
         this.collaborators = collaborators;
     }
 
+    /**
+     * Gets collaborator by email.
+     *
+     * @param email the email
+     * @return the collaborator by email
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Collaborator getCollaboratorByEmail(String email) throws IllegalArgumentException {
         for (Collaborator collaborator : collaborators) {
             if (collaborator.getEmail().equals(email)) {
@@ -28,6 +46,11 @@ public class CollaboratorRepository implements Serializable {
         throw new IllegalArgumentException("Collaborator not found.");
     }
 
+    /**
+     * Notify new collaborator.
+     *
+     * @param collaborator the collaborator
+     */
     public void notifyNewCollaborator(Collaborator collaborator) {
         String message = "Hello " + collaborator.getName() + ",\n\n" +
                 "Welcome aboard! We're thrilled to have you join us as a collaborator. Your unique skills and perspectives are a valuable addition to our team.\n\n" +
@@ -39,6 +62,12 @@ public class CollaboratorRepository implements Serializable {
         collaborator.addNotification(notification);
     }
 
+    /**
+     * Add optional.
+     *
+     * @param collaborator the collaborator
+     * @return the optional
+     */
     public Optional<Collaborator> add(Collaborator collaborator) {
         Optional<Collaborator> newCollaborator = Optional.empty();
         boolean operationSuccess = false;
@@ -56,6 +85,12 @@ public class CollaboratorRepository implements Serializable {
     }
 
 
+    /**
+     * Remove optional.
+     *
+     * @param collaborator the collaborator
+     * @return the optional
+     */
     public Optional<Collaborator> remove(Collaborator collaborator) {
         Optional<Collaborator> newCollaborator = Optional.empty();
         boolean operationSuccess = false;
@@ -72,6 +107,23 @@ public class CollaboratorRepository implements Serializable {
         return newCollaborator;
     }
 
+    /**
+     * Update collaborator.
+     *
+     * @param collaborator   the collaborator
+     * @param name           the name
+     * @param email          the email
+     * @param address        the address
+     * @param phone          the phone
+     * @param job            the job
+     * @param skills         the skills
+     * @param birthDate      the birth date
+     * @param admissionDate  the admission date
+     * @param IDtype         the dtype
+     * @param taxpayerNumber the taxpayer number
+     * @param citizenNumber  the citizen number
+     * @return the collaborator
+     */
     public Collaborator update(Collaborator collaborator, String name, String email, Address address, String phone, Job job, List<Skill> skills, Date birthDate, Date admissionDate, String IDtype, int taxpayerNumber, int citizenNumber) {
         boolean operationSuccess = false;
 
@@ -99,6 +151,13 @@ public class CollaboratorRepository implements Serializable {
         return collaborator;
     }
 
+    /**
+     * Update collaborator.
+     *
+     * @param oldCollaborator the old collaborator
+     * @param newCollaborator the new collaborator
+     * @return the collaborator
+     */
     public Collaborator update(Collaborator oldCollaborator, Collaborator newCollaborator) {
         boolean operationSuccess = false;
 
@@ -114,6 +173,11 @@ public class CollaboratorRepository implements Serializable {
         return newCollaborator;
     }
 
+    /**
+     * Check for duplicate collaborator.
+     *
+     * @param collaborator the collaborator
+     */
     public void checkForDuplicateCollaborator(Collaborator collaborator) {
         if (collaborators.contains(collaborator)) {
             throw new IllegalArgumentException("That collaborator already exists in the database");
@@ -121,6 +185,11 @@ public class CollaboratorRepository implements Serializable {
     }
 
 
+    /**
+     * Gets collaborators.
+     *
+     * @return the collaborators
+     */
     public List<Collaborator> getCollaborators() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.
         return collaborators;

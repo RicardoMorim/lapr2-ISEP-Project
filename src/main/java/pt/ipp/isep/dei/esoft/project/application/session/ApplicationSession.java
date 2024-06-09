@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The type Application session.
+ */
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
     private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
@@ -18,6 +21,11 @@ public class ApplicationSession {
         Properties props = getProperties();
     }
 
+    /**
+     * Gets current session.
+     *
+     * @return the current session
+     */
     public UserSession getCurrentSession() {
         pt.isep.lei.esoft.auth.UserSession userSession = this.authenticationRepository.getCurrentUserSession();
         return new UserSession(userSession);
@@ -42,6 +50,11 @@ public class ApplicationSession {
 
     private static ApplicationSession singleton = null;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ApplicationSession getInstance() {
         if (singleton == null) {
             synchronized (ApplicationSession.class) {

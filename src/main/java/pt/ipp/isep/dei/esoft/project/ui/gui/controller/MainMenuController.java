@@ -17,8 +17,14 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
 
+/**
+ * The type Main menu controller.
+ */
 public class MainMenuController {
 
+    /**
+     * The Menu.
+     */
     public VBox menu;
     @FXML
     private Button btnLogin;
@@ -27,6 +33,9 @@ public class MainMenuController {
     @FXML
     private Pane content;
 
+    /**
+     * Initialize.
+     */
     @FXML
     public void initialize() {
         // Set the default selected button

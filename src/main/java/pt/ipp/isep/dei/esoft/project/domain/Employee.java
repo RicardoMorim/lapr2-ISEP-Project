@@ -3,12 +3,20 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The type Employee.
+ */
 public class Employee implements Serializable {
     private final String email;
     private String name;
     private String position;
     private String phone;
 
+    /**
+     * Instantiates a new Employee.
+     *
+     * @param email the email
+     */
     public Employee(String email) {
         this.email = email;
     }
@@ -30,6 +38,12 @@ public class Employee implements Serializable {
         return Objects.hash(email);
     }
 
+    /**
+     * Has email boolean.
+     *
+     * @param email the email
+     * @return the boolean
+     */
     public boolean hasEmail(String email) {
         return this.email.equals(email);
     }

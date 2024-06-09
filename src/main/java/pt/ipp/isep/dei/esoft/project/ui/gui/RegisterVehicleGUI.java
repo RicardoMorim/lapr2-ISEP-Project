@@ -16,14 +16,30 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * The type Register vehicle gui.
+ */
 public class RegisterVehicleGUI {
 
+    /**
+     * The Vehicle controller.
+     */
     VehicleController vehicleController;
 
+    /**
+     * Instantiates a new Register vehicle gui.
+     */
     public RegisterVehicleGUI() {
         this.vehicleController = new VehicleController();
     }
 
+    /**
+     * Gets register vehicle gui.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the register vehicle gui
+     */
     public GridPane getRegisterVehicleGUI(double height, double width) {
         GridPane gridPane = new GridPane(height, width);
         gridPane.setAlignment(Pos.CENTER);

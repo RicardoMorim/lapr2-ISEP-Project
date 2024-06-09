@@ -24,12 +24,26 @@ public class Agenda implements Serializable {
         this.entries = new ArrayList<>();
     }
 
+    /**
+     * Gets entries by team.
+     *
+     * @param team the team
+     * @return the entries by team
+     */
     public List<AgendaEntry> getEntriesByTeam(Team team) {
         return this.entries.stream()
                 .filter(entry -> entry.getTeam() != null && entry.getTeam().equals(team))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets vehicles not assigned at dates.
+     *
+     * @param vehicles  the vehicles
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return the vehicles not assigned at dates
+     */
     public List<Vehicle> getVehiclesNotAssignedAtDates(List<Vehicle> vehicles, Date startDate, Date endDate) {
         List<Vehicle> vehiclesNotAssigned = new ArrayList<>(vehicles);
         for (AgendaEntry entry : entries) {
@@ -40,12 +54,24 @@ public class Agenda implements Serializable {
         return vehiclesNotAssigned;
     }
 
+    /**
+     * Gets not done entries.
+     *
+     * @return the not done entries
+     */
     public List<AgendaEntry> getNotDoneEntries() {
         return this.entries.stream()
                 .filter(entry -> entry.getStatus() != Status.DONE)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Is date available for team boolean.
+     *
+     * @param chosenStartDate the chosen start date
+     * @param entry           the entry
+     * @return the boolean
+     */
     public boolean isDateAvailableForTeam(Date chosenStartDate, AgendaEntry entry) {
         Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
         for (AgendaEntry e : entries) {
@@ -59,6 +85,13 @@ public class Agenda implements Serializable {
         return true;
     }
 
+    /**
+     * Is date available for vehicles boolean.
+     *
+     * @param chosenStartDate the chosen start date
+     * @param entry           the entry
+     * @return the boolean
+     */
     public boolean isDateAvailableForVehicles(Date chosenStartDate, AgendaEntry entry) {
         Date chosenEndDate = getEndDateFromDuration(chosenStartDate, entry.getDuration());
         for (AgendaEntry e : entries) {
@@ -80,6 +113,13 @@ public class Agenda implements Serializable {
                 (chosenStartDate.compareTo(e.getStartDate()) <= 0 && chosenEndDate.compareTo(e.getEndDate()) >= 0);
     }
 
+    /**
+     * Find nearest available dates list.
+     *
+     * @param date  the date
+     * @param entry the entry
+     * @return the list
+     */
     public List<Date> findNearestAvailableDates(Date date, AgendaEntry entry) {
         List<Date> suggestions = new ArrayList<>();
         int daysBefore = 1;
@@ -226,6 +266,14 @@ public class Agenda implements Serializable {
     }
 
 
+    /**
+     * Filter unavailable teams list.
+     *
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @param teams     the teams
+     * @return the list
+     */
     public List<Team> filterUnavailableTeams(Date startDate, Date endDate, List<Team> teams) {
         List<Team> availableTeams = new ArrayList<>(teams);
 
@@ -239,6 +287,13 @@ public class Agenda implements Serializable {
     }
 
 
+    /**
+     * Gets end date from duration.
+     *
+     * @param startDate the start date
+     * @param duration  the duration
+     * @return the end date from duration
+     */
     public Date getEndDateFromDuration(Date startDate, String duration) {
         if (startDate == null) {
             throw new IllegalArgumentException("Start date is required to calculate the end date");
@@ -259,6 +314,12 @@ public class Agenda implements Serializable {
         return Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    /**
+     * Gets to do entries not in agenda.
+     *
+     * @param entries the entries
+     * @return the to do entries not in agenda
+     */
     public List<Entry> getToDoEntriesNotInAgenda(List<Entry> entries) {
         List<Entry> toDoEntriesNotInAgenda = new ArrayList<>(entries);
         for (AgendaEntry entry : this.entries) {
@@ -267,6 +328,11 @@ public class Agenda implements Serializable {
         return toDoEntriesNotInAgenda;
     }
 
+    /**
+     * Gets entries with team.
+     *
+     * @return the entries with team
+     */
     public List<AgendaEntry> getEntriesWithTeam() {
         return this.entries.stream()
                 .filter(entry -> entry.getTeam() != null)
