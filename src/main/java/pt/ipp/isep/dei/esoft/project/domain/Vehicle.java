@@ -3,6 +3,14 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * The Vehicle class represents a vehicle in the system.
+ * It contains information about the vehicle such as its plate, brand, model, type, tare weight, gross weight, current kilometers, register date, acquisition date, checkup interval in kilometers, kilometers at last maintenance, kilometers at next maintenance, and a maintenance list.
+ * The class provides methods for getting and setting these properties.
+ * It also provides methods for validating the vehicle, registering maintenance, and getting a list of maintenance.
+ * The class overrides the equals and hashCode methods to compare vehicles based on their properties.
+ * It also overrides the toString method to provide a string representation of the vehicle.
+ */
 public class Vehicle implements Serializable {
     private String plate;
     private String brand;
@@ -18,6 +26,11 @@ public class Vehicle implements Serializable {
     private int kmNextMaintenance;
     private Map<Date, Integer> maintenanceList;
 
+    /**
+     * Constructor that creates a new vehicle using another vehicle's data.
+     *
+     * @param vehicle The vehicle to copy data from.
+     */
     public Vehicle(Vehicle vehicle) {
         this.plate = vehicle.getPlate();
         this.brand = vehicle.getBrand();
@@ -35,6 +48,22 @@ public class Vehicle implements Serializable {
     }
 
 
+    /**
+     * Constructor that creates a new vehicle with the specified data.
+     *
+     * @param plate             The vehicle's plate.
+     * @param brand             The vehicle's brand.
+     * @param model             The vehicle's model.
+     * @param type              The vehicle's type.
+     * @param tareWeight        The vehicle's tare weight.
+     * @param grossWeight       The vehicle's gross weight.
+     * @param CurrentKM         The vehicle's current kilometers.
+     * @param registerDate      The vehicle's register date.
+     * @param acquisitionDate   The vehicle's acquisition date.
+     * @param checkupIntervalKM The vehicle's checkup interval in kilometers.
+     * @param kmLastMaintenance The vehicle's kilometers at last maintenance.
+     * @throws IllegalArgumentException If any of the arguments are invalid.
+     */
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance) throws IllegalArgumentException {
         this.plate = plate;
         this.brand = brand;
@@ -53,6 +82,23 @@ public class Vehicle implements Serializable {
         this.registerMaintenance(registerDate, kmLastMaintenance);
     }
 
+    /**
+     * Instantiates a new Vehicle.
+     *
+     * @param plate             the plate
+     * @param brand             the brand
+     * @param model             the model
+     * @param type              the type
+     * @param tareWeight        the tare weight
+     * @param grossWeight       the gross weight
+     * @param CurrentKM         the current km
+     * @param registerDate      the register date
+     * @param acquisitionDate   the acquisition date
+     * @param checkupIntervalKM the checkup interval km
+     * @param kmLastMaintenance the km last maintenance
+     * @param maintenanceList   the maintenance list
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Vehicle(String plate, String brand, String model, String type, int tareWeight, int grossWeight, int CurrentKM, Date registerDate, Date acquisitionDate, int checkupIntervalKM, int kmLastMaintenance, Map<Date, Integer> maintenanceList) throws IllegalArgumentException {
         this.plate = plate;
         this.brand = brand;
@@ -71,15 +117,30 @@ public class Vehicle implements Serializable {
         this.registerMaintenance(registerDate, 0);
     }
 
+    /**
+     * Gets maintenance.
+     *
+     * @return the maintenance
+     */
     public Map<Date, Integer> getMaintenance() {
         return maintenanceList;
     }
 
 
+    /**
+     * Gets plate.
+     *
+     * @return the plate
+     */
     public String getPlate() {
         return plate;
     }
 
+    /**
+     * Sets plate.
+     *
+     * @param plate the plate
+     */
     public void setPlate(String plate) {
         String old = this.plate;
         this.plate = plate;
@@ -90,14 +151,22 @@ public class Vehicle implements Serializable {
             this.plate = old;
             throw e;
         }
-
-
     }
 
+    /**
+     * Gets brand.
+     *
+     * @return the brand
+     */
     public String getBrand() {
         return brand;
     }
 
+    /**
+     * Sets brand.
+     *
+     * @param brand the brand
+     */
     public void setBrand(String brand) {
         String old = this.brand;
         this.brand = brand;
@@ -111,10 +180,20 @@ public class Vehicle implements Serializable {
         this.brand = brand;
     }
 
+    /**
+     * Gets model.
+     *
+     * @return the model
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * Sets model.
+     *
+     * @param model the model
+     */
     public void setModel(String model) {
         String old = this.model;
         this.model = model;
@@ -127,10 +206,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
     public void setType(String type) {
         String old = this.type;
         this.type = type;
@@ -143,10 +232,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets tare weight.
+     *
+     * @return the tare weight
+     */
     public int getTareWeight() {
         return tareWeight;
     }
 
+    /**
+     * Sets tare weight.
+     *
+     * @param tareWeight the tare weight
+     */
     public void setTareWeight(int tareWeight) {
         int old = this.tareWeight;
         this.tareWeight = tareWeight;
@@ -159,10 +258,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets gross weight.
+     *
+     * @return the gross weight
+     */
     public int getGrossWeight() {
         return grossWeight;
     }
 
+    /**
+     * Sets gross weight.
+     *
+     * @param grossWeight the gross weight
+     */
     public void setGrossWeight(int grossWeight) {
         int old = this.grossWeight;
         this.grossWeight = grossWeight;
@@ -175,10 +284,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets current km.
+     *
+     * @return the current km
+     */
     public int getCurrentKM() {
         return currentKM;
     }
 
+    /**
+     * Sets current km.
+     *
+     * @param currentKM the current km
+     */
     public void setCurrentKM(int currentKM) {
         int old = this.currentKM;
         this.currentKM = currentKM;
@@ -191,10 +310,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets register date.
+     *
+     * @return the register date
+     */
     public Date getRegisterDate() {
         return registerDate;
     }
 
+    /**
+     * Sets register date.
+     *
+     * @param registerDate the register date
+     */
     public void setRegisterDate(Date registerDate) {
         Date old = this.registerDate;
         this.registerDate = registerDate;
@@ -207,10 +336,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets acquisition date.
+     *
+     * @return the acquisition date
+     */
     public Date getAcquisitionDate() {
         return acquisitionDate;
     }
 
+    /**
+     * Sets acquisition date.
+     *
+     * @param acquisitionDate the acquisition date
+     */
     public void setAcquisitionDate(Date acquisitionDate) {
         Date old = this.acquisitionDate;
         this.acquisitionDate = acquisitionDate;
@@ -223,10 +362,20 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Gets checkup interval km.
+     *
+     * @return the checkup interval km
+     */
     public int getCheckupIntervalKM() {
         return checkupIntervalKM;
     }
 
+    /**
+     * Sets checkup interval km.
+     *
+     * @param checkupIntervalKM the checkup interval km
+     */
     public void setCheckupIntervalKM(int checkupIntervalKM) {
         int old = this.checkupIntervalKM;
         this.checkupIntervalKM = checkupIntervalKM;
@@ -240,18 +389,40 @@ public class Vehicle implements Serializable {
     }
 
 
+    /**
+     * Gets km last maintenance.
+     *
+     * @return the km last maintenance
+     */
     public int getKmLastMaintenance() {
         return kmLastMaintenance;
     }
 
+    /**
+     * Sets km last maintenance.
+     *
+     * @param kmLastMaintenance the km last maintenance
+     */
     public void setKmLastMaintenance(int kmLastMaintenance) {
         this.kmLastMaintenance = kmLastMaintenance;
     }
 
+    /**
+     * Gets km next maintenance.
+     *
+     * @return the km next maintenance
+     */
     public int getKmNextMaintenance() {
         return kmNextMaintenance;
     }
 
+
+    /**
+     * Validates the vehicle's data.
+     *
+     * @return true if the vehicle's data is valid, false otherwise.
+     * @throws IllegalArgumentException If any of the vehicle's data is invalid.
+     */
     public boolean validateVehicle() throws IllegalArgumentException {
         validateNotEmptyFields();
         validatePlateLength();
@@ -299,6 +470,12 @@ public class Vehicle implements Serializable {
         }
     }
 
+    /**
+     * Registers a maintenance operation for the vehicle.
+     *
+     * @param date The date of the maintenance operation.
+     * @param km   The kilometers at the time of the maintenance operation.
+     */
     public void registerMaintenance(Date date, int km) {
         if (this.maintenanceList.isEmpty() || date.after(((TreeMap<Date, Integer>) this.maintenanceList).lastKey())) {
             this.kmLastMaintenance = km;
@@ -307,6 +484,11 @@ public class Vehicle implements Serializable {
         this.maintenanceList.put(date, km);
     }
 
+    /**
+     * Gets maintenance list.
+     *
+     * @return the maintenance list
+     */
     public List<String> getMaintenanceList() {
         List<String> maintenanceListString = new ArrayList<>();
         for (Map.Entry<Date, Integer> entry : this.maintenanceList.entrySet()) {
@@ -315,11 +497,21 @@ public class Vehicle implements Serializable {
         return maintenanceListString;
     }
 
+    /**
+     * Sets maintenance list.
+     *
+     * @param maintenenceList the maintenence list
+     */
     public void setMaintenanceList(Map<Date, Integer> maintenenceList) {
         this.maintenanceList = maintenenceList;
     }
 
 
+    /**
+     * To string with maintenance list string.
+     *
+     * @return the string
+     */
     public String toStringWithMaintenanceList() {
 
         return "Vehicle{\n" +

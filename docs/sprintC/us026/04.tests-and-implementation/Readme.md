@@ -88,9 +88,6 @@ public void removeVehicle(Vehicle vehicle) {
         this.vehicles.remove(vehicle);
     }
 ```
-```java
-
-```
 
 ### Class CollaboratorRepository
 
@@ -111,31 +108,32 @@ public void removeVehicle(Vehicle vehicle) {
     return newCollaborator;
 }
 ```
-### Class Collaborator
+### Class AgendaEntry
 
 ```java
-    public Collaborator clone() {
-        return new Collaborator(this.email, this.name, this.address, this.phone, this.job, this.birthDate, this.admissionDate , this.IDtype, this.taxpayerNumber, this.citizenNumber, new ArrayList<>(this.skills));
+      public void addVehicle(Vehicle vehicle) {
+    if (this.vehicles.contains(vehicle)) {
+        throw new IllegalArgumentException("Vehicle already exists in the entry");
     }
-
-    public List<Skill> addSkill(Skill skill) {
-        if (this.skills.contains(skill)) {
-            throw new IllegalArgumentException("Collaborator already contains the skill");
+    this.vehicles.add(vehicle);
+}
+```
+```java
+public void removeVehicle(Vehicle vehicle) {
+        if (!this.vehicles.contains(vehicle)) {
+            throw new IllegalArgumentException("Vehicle does not exist in the entry");
         }
-        if (skill.getSkillValues().contains(null)) {
-            throw new IllegalArgumentException("No parameter of the skill cannot be null");
-        }
-        this.skills.add(skill);
-    
-        return this.skills;
+        this.vehicles.remove(vehicle);
     }
 ```
 
 ## 6. Integration and Demo
 
-* A new option on the admin menu options was added.
-
-* For demo purposes some skills are bootstrapped while system starts.
+* The user can assign a vehicle to an agenda entry by selecting the vehicle from the list of vehicles that are not assigned to any agenda entry.
+* The user can remove a vehicle from an agenda entry by selecting the vehicle from the list of vehicles assigned to that agenda entry.
+* The user can view the list of vehicles assigned to an agenda entry.
+* The user cannot assign the same vehicles to tasks that occur at the same time
+* For demo purposes some vehicles and agenda entries are bootstrapped while system starts.
 
 ## 7. Observations
 
