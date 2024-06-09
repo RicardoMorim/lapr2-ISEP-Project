@@ -13,19 +13,38 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Represents a repository for managing GreenSpace objects.
+ */
 public class GreenSpaceRepository implements Serializable {
     private List<GreenSpace> greenSpaces;
     private final List<String> typeList = List.of("garden", "medium-sized park", "large-sized park");
 
+    /**
+     * Constructs a new GreenSpaceRepository with the specified list of GreenSpaces.
+     * @param greenSpaces the list of GreenSpaces
+     */
     public GreenSpaceRepository(List<GreenSpace> greenSpaces) {
         this.greenSpaces = greenSpaces;
     }
 
+    /**
+     * Constructs a new GreenSpaceRepository with an empty list of GreenSpaces.
+     */
     public GreenSpaceRepository() {
         this.greenSpaces = new ArrayList<>();
     }
 
-
+    /**
+     * Updates the specified GreenSpace with the given parameters.
+     * @param g the GreenSpace to update
+     * @param name the new name
+     * @param type the new type
+     * @param area the new area
+     * @param address the new address
+     * @return an Optional containing the updated GreenSpace if it exists, otherwise an empty Optional
+     * @throws IllegalArgumentException if the GreenSpace does not exist
+     */
     public Optional<GreenSpace> updateGreenSpace(GreenSpace g, String name, Type type, double area, Address address) {
         for (GreenSpace gs : this.greenSpaces) {
             if (gs.equals(g)) {
@@ -40,6 +59,11 @@ public class GreenSpaceRepository implements Serializable {
         throw new IllegalArgumentException("Green Space not found.");
     }
 
+    /**
+     * Adds the specified GreenSpace to the repository.
+     * @param greenSpace the GreenSpace to add
+     * @throws IllegalArgumentException if the GreenSpace is null or already exists
+     */
     public void addGreenSpace(GreenSpace greenSpace) {
         if (greenSpace == null) {
             throw new IllegalArgumentException("GreenSpace cannot be null");
@@ -49,12 +73,24 @@ public class GreenSpaceRepository implements Serializable {
         greenSpaces.add(greenSpace);
     }
 
+    /**
+     * Removes the specified GreenSpace from the repository.
+     * @param greenSpace the GreenSpace to remove
+     * @throws IllegalArgumentException if the GreenSpace does not exist
+     */
     public void removeGreenSpace(GreenSpace greenSpace) {
         if (!greenSpaces.contains(greenSpace))
             throw new IllegalArgumentException("Green space does not exist");
         greenSpaces.remove(greenSpace);
     }
 
+    /**
+     * Updates the specified old GreenSpace with the new GreenSpace in the repository.
+     * @param old_greenSpace the old GreenSpace to update
+     * @param new_greenSpace the new GreenSpace to replace the old one
+     * @return the new GreenSpace
+     * @throws IllegalArgumentException if the old GreenSpace does not exist
+     */
     public GreenSpace updateGreenSpace(GreenSpace old_greenSpace, GreenSpace new_greenSpace) {
         if (!greenSpaces.contains(old_greenSpace))
             throw new IllegalArgumentException("Green space does not exist");
@@ -63,11 +99,20 @@ public class GreenSpaceRepository implements Serializable {
         return new_greenSpace;
     }
 
+    /**
+     * Returns a list of all GreenSpaces in the repository.
+     * @return a list of all GreenSpaces
+     */
     public List<GreenSpace> getGreenSpaces() {
         return greenSpaces;
     }
 
-
+    /**
+     * Returns the GreenSpace with the specified name.
+     * @param name the name of the GreenSpace to return
+     * @return the GreenSpace with the specified name
+     * @throws IllegalArgumentException if the GreenSpace does not exist
+     */
     public GreenSpace getGreenSpaceByDesignation(String name) {
         for (GreenSpace greenSpace : greenSpaces) {
             if (greenSpace.getName().equals(name)) {
@@ -77,6 +122,11 @@ public class GreenSpaceRepository implements Serializable {
         throw new IllegalArgumentException("Green Space not found.");
     }
 
+    /**
+     * Checks if a GreenSpace with the specified name exists in the repository.
+     * @param name the name of the GreenSpace to check
+     * @return true if the GreenSpace exists, false otherwise
+     */
     public boolean checkIfGreenSpaceNameExists(String name) {
         for (GreenSpace greenSpace : greenSpaces) {
             if (greenSpace.getName().equals(name)) {
@@ -86,6 +136,11 @@ public class GreenSpaceRepository implements Serializable {
         return false;
     }
 
+    /**
+     * Checks if a GreenSpace with the specified address exists in the repository.
+     * @param address the address of the GreenSpace to check
+     * @return true if the GreenSpace exists, false otherwise
+     */
     public boolean checkIfGreenSpaceAddressExists(Address address) {
         for (GreenSpace greenSpace : greenSpaces) {
             if (greenSpace.getAddress().equals(address)) {
@@ -95,6 +150,11 @@ public class GreenSpaceRepository implements Serializable {
         return false;
     }
 
+    /**
+     * Validates the specified zip code.
+     * @param zipCode the zip code to validate
+     * @return true if the zip code is valid, false otherwise
+     */
     public boolean validateZipCode(String zipCode) {
         if (zipCode.isEmpty()) {
             return false;
@@ -103,6 +163,10 @@ public class GreenSpaceRepository implements Serializable {
         return zipCode.matches(zipPattern);
     }
 
+    /**
+     * Sets the list of GreenSpaces in the repository.
+     * @param greenSpaces the new list of GreenSpaces
+     */
     public void setGreenSpaces(List<GreenSpace> greenSpaces) {
         this.greenSpaces = greenSpaces;
     }
