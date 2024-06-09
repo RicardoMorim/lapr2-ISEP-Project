@@ -10,11 +10,19 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Job repository test.
+ */
 class JobRepositoryTest {
 
     private JobRepository jobRepository;
     private Job job;
 
+    /**
+     * Sets up.
+     *
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     @BeforeEach
     void setUp() throws IllegalArgumentException {
 
@@ -29,6 +37,9 @@ class JobRepositoryTest {
 
     }
 
+    /**
+     * Add job returns optional with job.
+     */
     @Test
     void addJobReturnsOptionalWithJob() {
         Optional<Job> result = jobRepository.add(job);
@@ -36,6 +47,9 @@ class JobRepositoryTest {
         assertEquals(job, result.get());
     }
 
+    /**
+     * Add job throws error when job exists.
+     */
     @Test
     void addJobThrowsErrorWhenJobExists() {
 
@@ -44,6 +58,9 @@ class JobRepositoryTest {
 
     }
 
+    /**
+     * Remove job returns optional with job.
+     */
     @Test
     void removeJobReturnsOptionalWithJob() {
         jobRepository.add(job);
@@ -52,11 +69,17 @@ class JobRepositoryTest {
         assertEquals(job, result.get());
     }
 
+    /**
+     * Remove job returns empty optional when job does not exist.
+     */
     @Test
     void removeJobReturnsEmptyOptionalWhenJobDoesNotExist() {
         assertThrows(IllegalArgumentException.class, () -> jobRepository.remove(job));
     }
 
+    /**
+     * Update job updates and returns job.
+     */
     @Test
     void updateJobUpdatesAndReturnsJob() {
         jobRepository.add(job);
@@ -65,11 +88,17 @@ class JobRepositoryTest {
         assertEquals("Short Description", updatedJob.getShortDescription());
     }
 
+    /**
+     * Update job throws exception when job does not exist.
+     */
     @Test
     void updateJobThrowsExceptionWhenJobDoesNotExist() {
         assertThrows(IllegalArgumentException.class, () -> jobRepository.update(job, "Manager", "Short Description"));
     }
 
+    /**
+     * Gets jobs returns list of jobs.
+     */
     @Test
     void getJobsReturnsListOfJobs() {
         jobRepository.add(job);

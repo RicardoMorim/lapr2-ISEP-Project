@@ -7,17 +7,26 @@ import pt.isep.lei.esoft.auth.domain.model.Email;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * The type Entry test.
+ */
 public class EntryTest {
 
     private GreenSpace greenSpace;
     private Entry entry;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         greenSpace = new GreenSpace("Park", new Address("123 Street", "City", "12345"), 100, Type.MEDIUM_SIZED_PARK, new Email("park@example.com"));
         entry = new Entry(greenSpace, "Title", "Description", Urgency.HIGH, 2.5f);
     }
 
+    /**
+     * Test constructor.
+     */
     @Test
     public void testConstructor() {
         assertNotNull(entry);
@@ -29,6 +38,9 @@ public class EntryTest {
         assertEquals(2.5f, entry.getExpectedDuration());
     }
 
+    /**
+     * Test get set state.
+     */
     @Test
     public void testGetSetState() {
         assertEquals(Status.TO_BE_DONE, entry.getState());
@@ -36,6 +48,9 @@ public class EntryTest {
         assertEquals(Status.IN_PROGRESS, entry.getState());
     }
 
+    /**
+     * Test get set green space.
+     */
     @Test
     public void testGetSetGreenSpace() {
         assertEquals(greenSpace, entry.getGreenSpace());
@@ -44,6 +59,9 @@ public class EntryTest {
         assertEquals(newGreenSpace, entry.getGreenSpace());
     }
 
+    /**
+     * Test get set title.
+     */
     @Test
     public void testGetSetTitle() {
         assertEquals("Title", entry.getTitle());
@@ -51,6 +69,9 @@ public class EntryTest {
         assertEquals("New Title", entry.getTitle());
     }
 
+    /**
+     * Test get set description.
+     */
     @Test
     public void testGetSetDescription() {
         assertEquals("Description", entry.getDescription());
@@ -58,6 +79,9 @@ public class EntryTest {
         assertEquals("New Description", entry.getDescription());
     }
 
+    /**
+     * Test get set urgency.
+     */
     @Test
     public void testGetSetUrgency() {
         assertEquals(Urgency.HIGH, entry.getUrgency());
@@ -65,6 +89,9 @@ public class EntryTest {
         assertEquals(Urgency.LOW, entry.getUrgency());
     }
 
+    /**
+     * Test get set expected duration.
+     */
     @Test
     public void testGetSetExpectedDuration() {
         assertEquals(2.5f, entry.getExpectedDuration());
@@ -72,6 +99,9 @@ public class EntryTest {
         assertEquals(3.5f, entry.getExpectedDuration());
     }
 
+    /**
+     * Test to string.
+     */
     @Test
     public void testToString() {
         String expected = "Title'Description'HIGH'2.5";

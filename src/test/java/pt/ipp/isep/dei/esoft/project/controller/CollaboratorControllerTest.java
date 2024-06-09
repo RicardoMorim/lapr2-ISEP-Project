@@ -10,17 +10,26 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Collaborator controller test.
+ */
 class CollaboratorControllerTest {
 
     private CollaboratorController controller;
     private CollaboratorRepository repository;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         repository = new CollaboratorRepository();
         controller = new CollaboratorController(repository);
     }
 
+    /**
+     * Gets collaborator by email returns correct collaborator.
+     */
     @Test
     void getCollaboratorByEmailReturnsCorrectCollaborator() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
@@ -28,17 +37,26 @@ class CollaboratorControllerTest {
         assertEquals(collaborator, controller.getCollaboratorByEmail("john.doe@example.com"));
     }
 
+    /**
+     * Gets collaborator by email throws exception when email not found.
+     */
     @Test
     void getCollaboratorByEmailThrowsExceptionWhenEmailNotFound() {
         assertThrows(IllegalArgumentException.class, () -> controller.getCollaboratorByEmail("not.found@example.com"));
     }
 
+    /**
+     * Register collaborator adds collaborator to repository.
+     */
     @Test
     void registerCollaboratorAddsCollaboratorToRepository() {
         controller.registerCollaborator("John Doe", "john.doe@example.com", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), List.of(new Skill("Java", "Code")), new Date(), new Date(), "ID", 123456, 123456);
         assertNotNull(controller.getCollaboratorByEmail("john.doe@example.com"));
     }
 
+    /**
+     * Update collaborator updates collaborator in repository.
+     */
     @Test
     void updateCollaboratorUpdatesCollaboratorInRepository() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
@@ -50,6 +68,9 @@ class CollaboratorControllerTest {
         assertEquals(newAddress, updatedCollaborator.getAddress());
     }
 
+    /**
+     * Remove collaborator removes collaborator from repository.
+     */
     @Test
     void removeCollaboratorRemovesCollaboratorFromRepository() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
@@ -59,11 +80,17 @@ class CollaboratorControllerTest {
     }
 
 
+    /**
+     * Register collaborator should throw exception when email is invalid.
+     */
     @Test
     void registerCollaboratorShouldThrowExceptionWhenEmailIsInvalid() {
         assertThrows(IllegalArgumentException.class, () -> controller.registerCollaborator("John Doe", "invalid email", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), List.of(new Skill("Java", "Code")), new Date(), new Date(), "ID", 123456, 123456));
     }
 
+    /**
+     * Add skill to a collaborator should add skill to collaborator.
+     */
     @Test
     void addSkillToACollaboratorShouldAddSkillToCollaborator() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, new ArrayList<>());
@@ -73,6 +100,9 @@ class CollaboratorControllerTest {
         assertTrue(collaborator.getSkills().contains(skill));
     }
 
+    /**
+     * Add skill to a collaborator should throw exception when skill already exists.
+     */
     @Test
     void addSkillToACollaboratorShouldThrowExceptionWhenSkillAlreadyExists() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
@@ -81,6 +111,9 @@ class CollaboratorControllerTest {
         assertThrows(IllegalArgumentException.class, () -> controller.addSkillToACollaborator(skill, collaborator));
     }
 
+    /**
+     * Remove skill from a collaborator should remove skill from collaborator.
+     */
     @Test
     void removeSkillFromACollaboratorShouldRemoveSkillFromCollaborator() {
         List<Skill> skills = new ArrayList<>();
@@ -92,6 +125,9 @@ class CollaboratorControllerTest {
         assertTrue(Collections.disjoint(collaborator.getSkills(), skillsToRemove));
     }
 
+    /**
+     * Remove skill from a collaborator should throw exception when skill does not exist.
+     */
     @Test
     void removeSkillFromACollaboratorShouldThrowExceptionWhenSkillDoesNotExist() {
         Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
@@ -101,6 +137,9 @@ class CollaboratorControllerTest {
     }
 
 
+    /**
+     * Test notify new collaborator.
+     */
     @Test
     void testNotifyNewCollaborator() {
 
@@ -111,6 +150,9 @@ class CollaboratorControllerTest {
         assertEquals(1, collaborator.getNotifications().size());
     }
 
+    /**
+     * Test start task.
+     */
     @Test
     void testStartTask() {
         // Given
@@ -122,6 +164,9 @@ class CollaboratorControllerTest {
         assertFalse(collaborator.isFree());
     }
 
+    /**
+     * Test add skill to a collaborator.
+     */
     @Test
     void testAddSkillToACollaborator() {
         // Given
@@ -133,6 +178,9 @@ class CollaboratorControllerTest {
         assertTrue(collaborator.getSkills().contains(skill));
     }
 
+    /**
+     * Test remove skill from a collaborator.
+     */
     @Test
     void testRemoveSkillFromACollaborator() {
 
@@ -145,6 +193,9 @@ class CollaboratorControllerTest {
     }
 
 
+    /**
+     * Test get collaborator repository.
+     */
     @Test
     void testGetCollaboratorRepository() {
         CollaboratorRepository expected = new CollaboratorRepository();
@@ -152,6 +203,9 @@ class CollaboratorControllerTest {
         assertEquals(expected, controller.getCollaboratorRepository());
     }
 
+    /**
+     * Test get collaborator list.
+     */
     @Test
     void testGetCollaboratorList() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -162,6 +216,9 @@ class CollaboratorControllerTest {
         assertEquals(expected, controller.getCollaboratorList());
     }
 
+    /**
+     * Test register collaborator with skills.
+     */
     @Test
     void testRegisterCollaboratorWithSkills() {
         CollaboratorRepository repository = new CollaboratorRepository();

@@ -27,6 +27,7 @@ class AgendaControllerTest {
     private Vehicle vehicle1;
     private Vehicle vehicle2;
     private DateTimeFormatter formatter;
+
     /**
      * Sets up.
      */
@@ -90,6 +91,9 @@ class AgendaControllerTest {
         assertEquals(Arrays.asList(vehicle1, vehicle2), result);
     }
 
+    /**
+     * Add entry should add entry to agenda.
+     */
     @Test
     void addEntryShouldAddEntryToAgenda() {
         AgendaEntry newEntry = new AgendaEntry(todoEntry, team, Arrays.asList(vehicle1, vehicle2), "1", new Date());
@@ -97,6 +101,9 @@ class AgendaControllerTest {
         assertTrue(agenda.getEntries().contains(newEntry));
     }
 
+    /**
+     * Remove entry should remove entry from agenda.
+     */
     @Test
     void removeEntryShouldRemoveEntryFromAgenda() {
         AgendaEntry newEntry = new AgendaEntry(todoEntry, team, Arrays.asList(vehicle1, vehicle2), "1", new Date());
@@ -105,11 +112,17 @@ class AgendaControllerTest {
         assertFalse(agenda.getEntries().contains(newEntry));
     }
 
+    /**
+     * Gets agenda should return agenda.
+     */
     @Test
     void getAgendaShouldReturnAgenda() {
         assertEquals(agenda, agendaController.getAgenda());
     }
 
+    /**
+     * Assign team to entry should set team and assigned status.
+     */
     @Test
     void assignTeamToEntryShouldSetTeamAndAssignedStatus() {
         Team newTeam = new Team(Arrays.asList(new Collaborator("test@gmail.com", "test", new Address("Rua do Test", "Porto", "123-456"), "913456789", new Job("Gardener", "The collaborator prunes the grass every week"), new Date(), new Date(), "CC", 13456789, 12345678, new ArrayList<>())));
@@ -118,6 +131,9 @@ class AgendaControllerTest {
         assertTrue(newTeam.isAssigned());
     }
 
+    /**
+     * Add vehicles to agenda entry should add vehicle.
+     */
     @Test
     void addVehiclesToAgendaEntryShouldAddVehicle() {
         Vehicle newVehicle = new Vehicle("AA-00-02", "Audi", "A4", "Sedan", 1500, 2000, 60000, Date.from(LocalDate.parse("02-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 50000);
@@ -125,6 +141,9 @@ class AgendaControllerTest {
         assertTrue(entry.getVehicles().contains(newVehicle));
     }
 
+    /**
+     * Remove vehicles from agenda entry should remove vehicles.
+     */
     @Test
     void removeVehiclesFromAgendaEntryShouldRemoveVehicles() {
         Vehicle newVehicle1 = new Vehicle("AA-00-03", "Audi", "A5", "Sedan", 1500, 2000, 60000, Date.from(LocalDate.parse("02-01-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.parse("02-02-2024", formatter).atStartOfDay(ZoneId.systemDefault()).toInstant()), 10000, 50000);
@@ -138,7 +157,9 @@ class AgendaControllerTest {
     }
 
 
-
+    /**
+     * When add entry with start date end date duration then entry is added to agenda.
+     */
     @Test
     void whenAddEntryWithStartDateEndDateDuration_thenEntryIsAddedToAgenda() {
         AgendaController controller = new AgendaController(new Agenda());
@@ -160,6 +181,9 @@ class AgendaControllerTest {
         assertEquals(duration, entries.get(0).getDuration());
     }
 
+    /**
+     * When remove entry then entry is removed from agenda.
+     */
     @Test
     void whenRemoveEntry_thenEntryIsRemovedFromAgenda() {
         // Given
@@ -180,6 +204,9 @@ class AgendaControllerTest {
         assertTrue(controller.getEntries().isEmpty());
     }
 
+    /**
+     * When get vehicles not assigned at dates then returns correct vehicles.
+     */
     @Test
     void whenGetVehiclesNotAssignedAtDates_thenReturnsCorrectVehicles() {
         // Given
@@ -197,6 +224,9 @@ class AgendaControllerTest {
         assertEquals(vehicles, result);
     }
 
+    /**
+     * When postpone entry then entry date is updated.
+     */
     @Test
     void whenPostponeEntry_thenEntryDateIsUpdated() {
         // Given
@@ -219,6 +249,9 @@ class AgendaControllerTest {
         assertEquals(newDate, agendaEntry.getStartDate());
     }
 
+    /**
+     * When assign team to entry then entry team is updated.
+     */
     @Test
     void whenAssignTeamToEntry_thenEntryTeamIsUpdated() {
         // Given
@@ -242,6 +275,9 @@ class AgendaControllerTest {
         assertEquals(team, agendaEntry.getTeam());
     }
 
+    /**
+     * Test is date available for team.
+     */
     @Test
     void testIsDateAvailableForTeam() {
         // Given
@@ -252,6 +288,9 @@ class AgendaControllerTest {
         assertTrue(result);
     }
 
+    /**
+     * Test is date available for vehicles.
+     */
     @Test
     void testIsDateAvailableForVehicles() {
         // Given
@@ -262,6 +301,9 @@ class AgendaControllerTest {
         assertTrue(result);
     }
 
+    /**
+     * Test get not done entries.
+     */
     @Test
     void testGetNotDoneEntries() {
         // Given
@@ -271,6 +313,9 @@ class AgendaControllerTest {
         assertNotNull(result);
     }
 
+    /**
+     * Test get entries.
+     */
     @Test
     void testGetEntries() {
         // Given

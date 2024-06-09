@@ -16,17 +16,32 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Skill controller test.
+ */
 class SkillControllerTest {
 
+    /**
+     * The Skill repository.
+     */
     SkillRepository skillRepository;
+    /**
+     * The Skill controller.
+     */
     SkillController skillController;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         skillRepository = new SkillRepository();
         skillController = new SkillController(skillRepository);
     }
 
+    /**
+     * Register skill successfully.
+     */
     @Test
     void registerSkillSuccessfully() {
         Skill skill = new Skill("Java", "Short Description");
@@ -37,6 +52,9 @@ class SkillControllerTest {
         assertTrue(skills.contains(skill));
     }
 
+    /**
+     * Register skill fails when skill exists.
+     */
     @Test
     void registerSkillFailsWhenSkillExists() {
         Skill skill = new Skill("Java", "Short Description");
@@ -45,6 +63,9 @@ class SkillControllerTest {
         assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(skill));
     }
 
+    /**
+     * Update skill successfully.
+     */
     @Test
     void updateSkillSuccessfully() {
         Skill skill = new Skill("Java", "Short Description");
@@ -54,6 +75,9 @@ class SkillControllerTest {
         assertEquals("Updated Short Description", skill.getDescription());
     }
 
+    /**
+     * Remove skill successfully.
+     */
     @Test
     void removeSkillSuccessfully() {
         Skill skill = new Skill("Java", "Short Description");
@@ -64,6 +88,9 @@ class SkillControllerTest {
         assertFalse(skills.contains(skill));
     }
 
+    /**
+     * Gets skill list returns correct list.
+     */
     @Test
     void getSkillListReturnsCorrectList() {
         Skill skill = new Skill("Java", "Short Description");
@@ -75,6 +102,9 @@ class SkillControllerTest {
     }
 
 
+    /**
+     * Test get collaborator repository.
+     */
     @Test
     void testGetCollaboratorRepository() {
         CollaboratorRepository expected = new CollaboratorRepository();
@@ -82,6 +112,9 @@ class SkillControllerTest {
         assertEquals(expected, controller.getCollaboratorRepository());
     }
 
+    /**
+     * Test get collaborator list.
+     */
     @Test
     void testGetCollaboratorList() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -92,6 +125,9 @@ class SkillControllerTest {
         assertEquals(expected, controller.getCollaboratorList());
     }
 
+    /**
+     * Test register collaborator with skills.
+     */
     @Test
     void testRegisterCollaboratorWithSkills() {
         CollaboratorRepository repository = new CollaboratorRepository();
@@ -101,6 +137,9 @@ class SkillControllerTest {
         assertEquals(skills, collaborator.getSkills());
     }
 
+    /**
+     * Test get skill by name.
+     */
     @Test
     void testGetSkillByName() {
         Skill skill = new Skill("Java", "Code");
@@ -111,24 +150,36 @@ class SkillControllerTest {
         assertEquals(skill, result);
     }
 
+    /**
+     * Test get skill by name when skill does not exist.
+     */
     @Test
     void testGetSkillByNameWhenSkillDoesNotExist() {
         assertThrows(IllegalArgumentException.class, () -> skillController.getSkillByName("Nonexistent Skill"));
 
     }
 
+    /**
+     * Test register skill with null name throws exception.
+     */
     @Test
     void testRegisterSkillWithNullNameThrowsException() {
 
         assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(new Skill(null, "Code")));
     }
 
+    /**
+     * Test register skill with empty name throws exception.
+     */
     @Test
     void testRegisterSkillWithEmptyNameThrowsException() {
 
         assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(new Skill("", "Code")));
     }
 
+    /**
+     * Test register skill with invalid name throws exception.
+     */
     @Test
     void testRegisterSkillWithInvalidNameThrowsException() {
         Skill skill = new Skill("´?123_ AD.", "Code");
@@ -136,6 +187,9 @@ class SkillControllerTest {
         assertThrows(IllegalArgumentException.class, () -> skillController.registerSkill(skill));
     }
 
+    /**
+     * Test get skill that the collaborator does not have.
+     */
     @Test
     void testGetSkillThatTheCollaboratorDoesNotHave() {
         Skill skill1 = new Skill("Java", "Code");

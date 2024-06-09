@@ -7,8 +7,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The type Skill test.
+ */
 class SkillTest {
 
+    /**
+     * Gets name returns correct name.
+     */
     @Test
     void getNameReturnsCorrectName() {
         Skill skill = new Skill("Java", "Code");
@@ -16,12 +22,18 @@ class SkillTest {
     }
 
 
+    /**
+     * Gets short description returns correct description.
+     */
     @Test
     void getShortDescriptionReturnsCorrectDescription() {
         Skill skill = new Skill("Java", "Short Description");
         assertEquals("Short Description", skill.getDescription());
     }
 
+    /**
+     * Gets skill values returns correct values.
+     */
     @Test
     void getSkillValuesReturnsCorrectValues() {
         Skill skill = new Skill("Java", "Short Description");
@@ -29,6 +41,9 @@ class SkillTest {
         assertEquals(expectedValues, skill.getSkillValues());
     }
 
+    /**
+     * Sets name updates name.
+     */
     @Test
     void setNameUpdatesName() {
         Skill skill = new Skill("java", "Code");
@@ -36,6 +51,9 @@ class SkillTest {
         assertEquals("Python", skill.getName());
     }
 
+    /**
+     * Sets short description updates short description.
+     */
     @Test
     void setShortDescriptionUpdatesShortDescription() {
         Skill skill = new Skill("Java", "Short Description");
@@ -44,12 +62,18 @@ class SkillTest {
     }
 
 
+    /**
+     * Equals returns true for same object.
+     */
     @Test
     void equalsReturnsTrueForSameObject() {
         Skill skill = new Skill("java", "Code");
         assertTrue(skill.equals(skill));
     }
 
+    /**
+     * Equals returns false for null.
+     */
     @Test
     void equalsReturnsFalseForNull() {
         Skill skill = new Skill("java", "Code");
@@ -57,6 +81,9 @@ class SkillTest {
     }
 
 
+    /**
+     * Equals returns true for same values.
+     */
     @Test
     void equalsReturnsTrueForSameValues() {
         Skill skill1 = new Skill("Java", "Short Description");
@@ -64,6 +91,9 @@ class SkillTest {
         assertTrue(skill1.equals(skill2));
     }
 
+    /**
+     * Hash code returns same hash code for same values.
+     */
     @Test
     void hashCodeReturnsSameHashCodeForSameValues() {
         Skill skill1 = new Skill("Java", "Short Description");
