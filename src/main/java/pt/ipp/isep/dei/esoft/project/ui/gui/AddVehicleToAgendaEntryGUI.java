@@ -18,11 +18,21 @@ import java.time.format.FormatStyle;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Add vehicle to agenda entry gui.
+ */
 public class AddVehicleToAgendaEntryGUI {
 
     private AgendaController agendaController = new AgendaController();
     private VehicleController vehicleController = new VehicleController();
 
+    /**
+     * Gets add vehicle to agenda entry gui grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the add vehicle to agenda entry gui grid pane
+     */
     public GridPane getAddVehicleToAgendaEntryGUIGridPane(double height, double width) {
         GridPane grid = new GridPane(height, width);
         grid.setHgap(5);

@@ -1,15 +1,20 @@
 @startuml
-'skinparam monochrome true
+skinparam monochrome true
 skinparam packageStyle rectangle
-'skinparam shadowing false
-'title Use Case Diagram Example
+skinparam shadowing false
+
+title Use Case Diagram
+
 left to right direction
+
     actor "Human Resources Manager (HRM)" as HRM
     actor "Fleet Manager (FM)" as FM
     actor "Green Space Manager (GSM)" as GSM
+    actor "Software Quality Assessment Team Manager (QAM)" as QAM
     actor "Collaborator (CLB)" as CLB
 
 
+rectangle "Use Cases" as usecases{
     usecase "UC1 - Register a skill" as UC1
     usecase "UC2 - Register a job" as UC2
     usecase "UC3 - Register a collaborator and characteristics" as UC3
@@ -18,10 +23,21 @@ left to right direction
     usecase "UC6 - Register a vehicle" as UC6
     usecase "UC7 - Register a vehicle’s check-up" as UC7
     usecase "UC8 - List the vehicles needing the check-up" as UC8
+    usecase "UC9 - Perform a cost analysis" as UC9
+    usecase "UC10 - See the used equipment" as UC10
+    usecase "UC11 - Analyse the park by age groups" as UC11
+    usecase "UC12 - Import a .csv file" as UC12
+    usecase "UC13 - get the best pipe routes" as UC13
+    usecase "UC14 - Run tests for inputs of variable size" as UC14
+    usecase "UC15 - Predict the average monthly cost" as UC15
+    usecase "UC16 - Determine the best line that fits the data in US14." as UC16
+    usecase "UC17 - Place signs to evacuate park users" as UC17
+    usecase "UC18 - Place signs to evacuate park users to one of the several Assembly Points" as UC18
+    usecase "UC19 - Conclude about the worst-case time complexity" as UC19
     usecase "UC20 - Register a green space" as UC20
     usecase "UC21 - Add a new toDoEntry to the To-Do List" as UC21
-    usecase "UC22 - Add a skill to a collaborator" as UC22
-    usecase "UC23 - Add a skill to a collaborator" as UC23
+    usecase "UC22 - Add an entry to the Agenda" as UC22
+    usecase "UC23 - Assign a Team to an AgendaEntry" as UC23
     usecase "UC24 - Postpone an entry in the Agenda" as UC24
     usecase "UC25 - Cancel an entry in the Agenda" as UC25
     usecase "UC26 - Assign a vehicle to an entry in the agenda" as UC26
@@ -33,9 +49,20 @@ left to right direction
     HRM --> UC3
     HRM --> UC4
     HRM --> UC5
+
     FM --> UC6
     FM --> UC7
     FM --> UC8
+
+    GSM --> UC9
+    GSM --> UC10
+    GSM --> UC11
+    GSM --> UC12
+    GSM --> UC13
+    GSM --> UC15
+    GSM --> UC16
+    GSM --> UC17
+    GSM --> UC18
     GSM --> UC20
     GSM --> UC21
     GSM --> UC22
@@ -44,7 +71,11 @@ left to right direction
     GSM --> UC25
     GSM --> UC26
     GSM --> UC27
+
+    QAM --> UC14
+    QAM --> UC19
+
     CLB --> UC28
     CLB --> UC29
-
+}
 @enduml

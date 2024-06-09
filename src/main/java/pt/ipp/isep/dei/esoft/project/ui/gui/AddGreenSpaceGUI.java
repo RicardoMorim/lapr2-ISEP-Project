@@ -27,6 +27,7 @@ public class AddGreenSpaceGUI {
 
     /**
      * Returns the main GridPane of the GUI.
+     *
      * @return the main GridPane
      */
     public GridPane getGridPane() {
