@@ -18,7 +18,7 @@ class TeamTest {
     @BeforeEach
     void setUp() {
         skill = new Skill("Java", "Code");
-        Collaborator col = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", new Job("driver", "driver"), new Date(), new Date(), "ID", 123456, 78910, List.of(skill));
+        collaborator = new Collaborator("123@gmail.com", "Ricardo", new Address("456 Street", "Porto", "123-456"), "908767", new Job("driver", "driver"), new Date(), new Date(), "ID", 123456, 78910, List.of(skill));
         List<Collaborator> collaborators = new ArrayList<>();
         collaborators.add(collaborator);
         team = new Team(collaborators);

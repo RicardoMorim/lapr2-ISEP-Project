@@ -30,19 +30,19 @@ public class DevTeamGUI {
         grid.setAlignment(javafx.geometry.Pos.CENTER);
 
         String[] teamMembers = {
-                "Ricardo Morim\n1230481@isep.ipp.pt",
                 "Gonçalo Fernandes\n1231170@isep.ipp.pt",
-                "Marisa Afonso\n1231151@isep.ipp.pt",
+                "Ricardo Morim\n1230481@isep.ipp.pt",
                 "Ana Filipa Alves\n1230929@isep.ipp.pt",
-                // "Afonso Marques\n1221018@isep.ipp.pt"
+                "Marisa Afonso\n1231151@isep.ipp.pt",
+                "Afonso Marques\n1221018@isep.ipp.pt"
         };
 
         String[] imagePaths = {
-                "ricardo.jpg",
                 "goncalo.jpeg",
-                "marisa.jpeg",
+                "ricardo.jpg",
                 "filipa.jpg",
-                // "afonso.jpg"
+                "marisa.jpeg",
+                "afonso.jpg"
         };
 
         for (int i = 0; i < teamMembers.length; i++) {
