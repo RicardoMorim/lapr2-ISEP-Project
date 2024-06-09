@@ -7,7 +7,6 @@ public class Job implements Serializable {
     private String name;
     private String shortDescription;
 
-
     public Job(String name, String shortDescription) {
         this.name = name;
         this.shortDescription = shortDescription;

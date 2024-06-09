@@ -3,6 +3,10 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The Task class represents a task that an Employee can have.
+ * Each task has a reference, description, informal description, technical description, duration, cost, task category, and an employee.
+ */
 public class Task implements Serializable {
     private final String reference;
     private String description;
@@ -11,10 +15,23 @@ public class Task implements Serializable {
     private int duration;
     private double cost;
 
+
     private TaskCategory taskCategory;
 
     private Employee employee;
 
+    /**
+     * Instantiates a new Task.
+     *
+     * @param reference            the reference of the task
+     * @param description          the description of the task
+     * @param informalDescription  the informal description of the task
+     * @param technicalDescription the technical description of the task
+     * @param duration             the duration of the task
+     * @param cost                 the cost of the task
+     * @param taskCategory         the task category of the task
+     * @param employee             the employee of the task
+     */
     public Task(String reference, String description, String informalDescription, String technicalDescription,
                 int duration, double cost, TaskCategory taskCategory, Employee employee) {
 
