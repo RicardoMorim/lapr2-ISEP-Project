@@ -6,7 +6,6 @@ import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The type Vehicle controller.
@@ -159,17 +158,6 @@ public class VehicleController {
 
 
     /**
-     * Gets vehicle maintenance list.
-     *
-     * @param plate the plate
-     */
-    public void getVehicleMaintenanceList(String plate) {
-        Vehicle vehicle = getVehicleByPlate(plate);
-        vehicle.getMaintenanceList();
-    }
-
-
-    /**
      * Gets maintenance list.
      *
      * @param vehicleList the vehicle list
@@ -189,57 +177,6 @@ public class VehicleController {
         return vehicleRepository.getVehiclesNeedingMaintenance();
     }
 
-    /**
-     * Add brand.
-     *
-     * @param brand the brand
-     */
-    public void addBrand(String brand) {
-        if (brand.isEmpty()) {
-            throw new IllegalArgumentException("Brand cannot be empty.");
-        }
-
-        if (!brand.matches("[a-zA-Z]")) {
-            throw new IllegalArgumentException("Brand must contain only letters.");
-        }
-
-        vehicleRepository.addBrand(brand);
-    }
-
-    /**
-     * Add model.
-     *
-     * @param model the model
-     * @param brand the brand
-     */
-    public void addModel(String model, String brand) {
-        if (model.isEmpty() || brand.isEmpty()) {
-            throw new IllegalArgumentException("Model cannot be empty.");
-        }
-
-        if (!model.matches("[a-zA-Z]") || !brand.matches("[a-zA-Z]")) {
-            throw new IllegalArgumentException("Model must contain only letters.");
-        }
-
-        vehicleRepository.addModel(model, brand);
-    }
-
-    /**
-     * Add type.
-     *
-     * @param type the type
-     */
-    public void addType(String type) {
-        if (type.isEmpty()) {
-            throw new IllegalArgumentException("Type cannot be empty.");
-        }
-
-        if (!type.matches("[a-zA-Z]")) {
-            throw new IllegalArgumentException("Type must contain only letters.");
-        }
-
-        vehicleRepository.addType(type);
-    }
 
     /**
      * Gets brand list.
@@ -250,14 +187,6 @@ public class VehicleController {
         return vehicleRepository.getBrandList();
     }
 
-    /**
-     * Gets model list.
-     *
-     * @return the model list
-     */
-    public Map<String, List<String>> getModelList() {
-        return vehicleRepository.getBrandToModelsMap();
-    }
 
     /**
      * Gets type list.
@@ -268,60 +197,6 @@ public class VehicleController {
         return vehicleRepository.getTypeList();
     }
 
-    /**
-     * Remove brand.
-     *
-     * @param brand the brand
-     */
-    public void removeBrand(String brand) {
-        vehicleRepository.removeBrand(brand);
-    }
-
-    /**
-     * Remove model.
-     *
-     * @param model the model
-     * @param brand the brand
-     */
-    public void removeModel(String model, String brand) {
-        vehicleRepository.removeModel(model, brand);
-    }
-
-    /**
-     * Remove type.
-     *
-     * @param type the type
-     */
-    public void removeType(String type) {
-        vehicleRepository.removeType(type);
-    }
-
-    /**
-     * Sets brand list.
-     *
-     * @param brandList the brand list
-     */
-    public void setBrandList(List<String> brandList) {
-        vehicleRepository.setBrandList(brandList);
-    }
-
-    /**
-     * Sets model list.
-     *
-     * @param brandToModelsMap the brand to models map
-     */
-    public void setModelList(Map<String, List<String>> brandToModelsMap) {
-        vehicleRepository.setBrandToModelsMap(brandToModelsMap);
-    }
-
-    /**
-     * Sets type list.
-     *
-     * @param typeList the type list
-     */
-    public void setTypeList(List<String> typeList) {
-        vehicleRepository.setTypeList(typeList);
-    }
 
     /**
      * Gets vehicle list.

@@ -9,7 +9,13 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.Scanner;
 
+/**
+ * The type Add green space ui.
+ */
 public class AddGreenSpaceUI implements Runnable {
+    /**
+     * The Controller.
+     */
     GreenSpaceController controller;
     private String name;
     private double area;
@@ -18,8 +24,14 @@ public class AddGreenSpaceUI implements Runnable {
     private String zipCode;
     private String city;
     private Type type;
+    /**
+     * The Input.
+     */
     Scanner input = new Scanner(System.in);
 
+    /**
+     * Instantiates a new Add green space ui.
+     */
     public AddGreenSpaceUI() {
         this.controller = new GreenSpaceController();
     }
@@ -51,6 +63,12 @@ public class AddGreenSpaceUI implements Runnable {
         } while (type == null);
     }
 
+    /**
+     * Validate zip code boolean.
+     *
+     * @param zipCode the zip code
+     * @return the boolean
+     */
     public boolean validateZipCode(String zipCode) {
         if (zipCode.isEmpty()) {
             return false;

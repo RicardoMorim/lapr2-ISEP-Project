@@ -106,4 +106,62 @@ class GreenSpaceControllerTest {
         Collaborator collaborator = controller.registerCollaborator("John Doe", "john.doe@example.com", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), skills, new Date(), new Date(), "ID", 123456, 123456);
         assertEquals(skills, collaborator.getSkills());
     }
+
+    @Test
+    void testAddGreenSpace() {
+        GreenSpace greenSpace = new GreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        controller.addGreenSpace(greenSpace);
+        assertTrue(controller.checkIfGreenSpaceNameExists("Park"));
+    }
+
+    @Test
+    void testRemoveGreenSpace() {
+        GreenSpace greenSpace = new GreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        controller.addGreenSpace(greenSpace);
+        controller.removeGreenSpace(greenSpace);
+        assertFalse(controller.checkIfGreenSpaceNameExists("Park"));
+    }
+
+    @Test
+    void testUpdateGreenSpace() {
+        GreenSpace oldGreenSpace = new GreenSpace("Old Park", new Address("Old Street", "Old City", "Old Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        GreenSpace newGreenSpace = new GreenSpace("New Park", new Address("New Street", "New City", "New Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        controller.addGreenSpace(oldGreenSpace);
+        controller.updateGreenSpace(oldGreenSpace, newGreenSpace);
+        assertFalse(controller.checkIfGreenSpaceNameExists("Old Park"));
+        assertTrue(controller.checkIfGreenSpaceNameExists("New Park"));
+    }
+
+    @Test
+    void testGetGreenSpaceList() {
+        GreenSpace greenSpace = new GreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        controller.addGreenSpace(greenSpace);
+        List<GreenSpace> expected = List.of(greenSpace);
+        assertEquals(expected, controller.getGreenSpaceList());
+    }
+
+    @Test
+    void testCheckIfGreenSpaceNameExists() {
+        assertFalse(controller.checkIfGreenSpaceNameExists("Nonexistent Park"));
+    }
+
+    @Test
+    void testCheckIfGreenSpaceAddressExists() {
+        assertFalse(controller.checkIfGreenSpaceAddressExists(new Address("Nonexistent Street", "Nonexistent City", "Nonexistent Zip")));
+    }
+
+    @Test
+    void testGetGreenSpacesManagedByUser() {
+        GreenSpace greenSpace = new GreenSpace("Park", new Address("Street", "City", "Zip"), 500.0, Type.GARDEN, new Email("admin@this.app"));
+        controller.addGreenSpace(greenSpace);
+        List<GreenSpace> expected = List.of(greenSpace);
+        assertEquals(expected, controller.getGreenSpacesManagedByUser(new EmailWrapper(new Email("admin@this.app"))));
+    }
+
+    @Test
+    void testValidateZipCode() {
+        assertTrue(controller.validateZipCode("1234-567"));
+        assertFalse(controller.validateZipCode("1234567"));
+    }
+
 }

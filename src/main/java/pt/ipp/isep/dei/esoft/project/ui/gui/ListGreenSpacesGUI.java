@@ -22,14 +22,27 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * The type List green spaces gui.
+ */
 public class ListGreenSpacesGUI {
 
     private GreenSpaceController controller;
 
+    /**
+     * Instantiates a new List green spaces gui.
+     */
     public ListGreenSpacesGUI() {
         controller = new GreenSpaceController();
     }
 
+    /**
+     * Gets list green spaces grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the list green spaces grid pane
+     */
     public GridPane getListGreenSpacesGridPane(double height, double width) {
 
         GridPane grid = new GridPane();

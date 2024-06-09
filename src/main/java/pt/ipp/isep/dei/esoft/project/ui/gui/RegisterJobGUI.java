@@ -10,14 +10,28 @@ import javafx.scene.layout.VBox;
 import pt.ipp.isep.dei.esoft.project.application.controller.JobController;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 
+/**
+ * The type Register job gui.
+ */
 public class RegisterJobGUI {
 
+    /**
+     * The Job controller.
+     */
     JobController jobController;
 
+    /**
+     * Instantiates a new Register job gui.
+     */
     public RegisterJobGUI() {
         this.jobController = new JobController();
     }
 
+    /**
+     * Gets register job gui.
+     *
+     * @return the register job gui
+     */
     public GridPane getRegisterJobGUI() {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);

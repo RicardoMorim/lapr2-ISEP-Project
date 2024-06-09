@@ -7,10 +7,16 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Register vehicle ui.
+ */
 public class RegisterVehicleUI implements Runnable {
 
     private VehicleController vehicleController;
 
+    /**
+     * Instantiates a new Register vehicle ui.
+     */
     public RegisterVehicleUI() {
         this.vehicleController = new VehicleController();
     }

@@ -20,11 +20,21 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+/**
+ * The type Cancel gui.
+ */
 public class CancelGUI {
 
     private final AgendaController agendaController = new AgendaController();
     private final TeamController teamController = new TeamController();
 
+    /**
+     * Get cancel entry grid pane grid pane.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the grid pane
+     */
     public GridPane getCancelEntryGridPane(double height, double width){
         GridPane grid = new GridPane(height, width);
         grid.setVgap(5);

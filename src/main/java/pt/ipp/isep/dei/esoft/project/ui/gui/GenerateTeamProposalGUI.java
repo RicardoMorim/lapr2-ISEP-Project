@@ -16,6 +16,9 @@ import pt.ipp.isep.dei.esoft.project.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Generate team proposal gui.
+ */
 public class GenerateTeamProposalGUI {
 
     private SkillController skillController = new SkillController();
@@ -24,6 +27,13 @@ public class GenerateTeamProposalGUI {
     private List<Team> teamProposals = new ArrayList<>();
     private int currentTeamIndex = 0;
 
+    /**
+     * Gets generate team proposal gui.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the generate team proposal gui
+     */
     public GridPane getGenerateTeamProposalGUI(double height, double width) {
 
         GridPane grid = new GridPane(height, width);

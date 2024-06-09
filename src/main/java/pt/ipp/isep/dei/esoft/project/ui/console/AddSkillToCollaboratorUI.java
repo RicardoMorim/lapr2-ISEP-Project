@@ -8,12 +8,18 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.List;
 
+/**
+ * The type Add skill to collaborator ui.
+ */
 public class AddSkillToCollaboratorUI implements Runnable {
 
     private final CollaboratorController collaboratorController;
     private final SkillController skillController;
 
 
+    /**
+     * Instantiates a new Add skill to collaborator ui.
+     */
     public AddSkillToCollaboratorUI(){
         this.collaboratorController = new CollaboratorController();
         this.skillController = new SkillController();

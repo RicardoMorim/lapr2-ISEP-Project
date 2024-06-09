@@ -19,12 +19,20 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 
+/**
+ * The type Irrigation system.
+ */
 public class IrrigationSystem {
     private int[][] graph;
 
     private int totalEdges;
     private int numberOfConnections;
 
+    /**
+     * Import csv.
+     *
+     * @param filename the filename
+     */
     public void importCsv(String filename) {
         List<String> nodes = new ArrayList<>();
         int totalEdges = 0;
@@ -63,6 +71,11 @@ public class IrrigationSystem {
         }
     }
 
+    /**
+     * Sort edges.
+     *
+     * @param edges the edges
+     */
     public void sortEdges(List<Edge> edges) {
         int n = edges.size();
         for (int i = 0; i < n - 1; i++) {
@@ -77,6 +90,12 @@ public class IrrigationSystem {
         }
     }
 
+    /**
+     * Plan irrigation system.
+     *
+     * @param inputFilePath the input file path
+     * @param openGUI       the open gui
+     */
     public void planIrrigationSystem(String inputFilePath, boolean openGUI) {
         int vertices = graph.length;
         List<Edge> edges = new ArrayList<>();
@@ -117,6 +136,14 @@ public class IrrigationSystem {
         visualizeGraph(mst, "Minimum Spanning Tree", openGUI, inputFilePath);
     }
 
+    /**
+     * Visualize graph.
+     *
+     * @param graph         the graph
+     * @param title         the title
+     * @param openGUI       the open gui
+     * @param inputFilePath the input file path
+     */
     public void visualizeGraph(int[][] graph, String title, boolean openGUI, String inputFilePath) {
         Graph g = new SingleGraph(title);
 
@@ -225,6 +252,11 @@ public class IrrigationSystem {
     }
 
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         System.setProperty("org.graphstream.ui", "swing");
         IrrigationSystem irrigationSystem = new IrrigationSystem();
@@ -283,6 +315,11 @@ public class IrrigationSystem {
     }
 
 
+    /**
+     * Test execution time.
+     *
+     * @param folderPath the folder path
+     */
     public void testExecutionTime(String folderPath) {
         try {
             // Create the output directory if it does not exist
@@ -325,6 +362,11 @@ public class IrrigationSystem {
         }
     }
 
+    /**
+     * Generate execution time graph.
+     *
+     * @param outputPath the output path
+     */
     public void generateExecutionTimeGraph(String outputPath) {
         XYSeries series = new XYSeries("Execution Time");
 

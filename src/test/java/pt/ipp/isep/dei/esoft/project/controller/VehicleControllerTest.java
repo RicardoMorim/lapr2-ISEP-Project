@@ -166,4 +166,21 @@ class VehicleControllerTest {
         Collaborator collaborator = controller.registerCollaborator("John Doe", "john.doe@example.com", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), skills, new Date(), new Date(), "ID", 123456, 123456);
         assertEquals(skills, collaborator.getSkills());
     }
+
+    @Test
+    void testValidatePlate() {
+        assertTrue(vehicleController.validatePlate("AB-12-23"));
+        assertFalse(vehicleController.validatePlate("123-ABC"));
+        assertFalse(vehicleController.validatePlate(""));
+    }
+
+    @Test
+    void testSetVehicleList() {
+        Vehicle vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
+        List<Vehicle> expected = List.of(vehicle);
+        vehicleController.setVehicleList(expected);
+        assertEquals(expected, vehicleController.getVehicleList());
+    }
+
+
 }

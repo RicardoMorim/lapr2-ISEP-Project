@@ -24,16 +24,27 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Predicate;
 
+/**
+ * The type Check emails gui.
+ */
 public class checkEmailsGUI {
 
     private Collaborator loggedInCollaborator;
 
+    /**
+     * Instantiates a new Check emails gui.
+     */
     public checkEmailsGUI() {
         CollaboratorController collaboratorController = new CollaboratorController();
         loggedInCollaborator = collaboratorController.getCollaboratorByEmail(String.valueOf((Repositories.getInstance().getAuthenticationRepository().getCurrentUserSession().getUserId())));
     }
 
 
+    /**
+     * Gets check emails grid pane.
+     *
+     * @return the check emails grid pane
+     */
     public GridPane getCheckEmailsGridPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

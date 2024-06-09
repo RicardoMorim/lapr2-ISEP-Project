@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Register vehicle maintenance ui.
+ */
 public class RegisterVehicleMaintenanceUI implements Runnable {
 
     private VehicleController vehicleController;
     private AgendaController agendaController;
 
+    /**
+     * Instantiates a new Register vehicle maintenance ui.
+     */
     public RegisterVehicleMaintenanceUI() {
         this.vehicleController = new VehicleController();
         this.agendaController = new AgendaController();

@@ -12,11 +12,21 @@ import pt.ipp.isep.dei.esoft.project.application.controller.SkillController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+/**
+ * The type Add skill to collaborator gui.
+ */
 public class AddSkillToCollaboratorGUI {
 
     private CollaboratorController collaboratorController = new CollaboratorController();
     private SkillController skillController = new SkillController();
 
+    /**
+     * Gets add skill to collaborator gui.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the add skill to collaborator gui
+     */
     public GridPane getAddSkillToCollaboratorGUI(double height, double width) {
         GridPane grid = new GridPane(height, width);
         grid.setAlignment(Pos.CENTER); // Center the grid

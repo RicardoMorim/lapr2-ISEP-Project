@@ -22,6 +22,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Constructs a new GreenSpaceRepository with the specified list of GreenSpaces.
+     *
      * @param greenSpaces the list of GreenSpaces
      */
     public GreenSpaceRepository(List<GreenSpace> greenSpaces) {
@@ -37,10 +38,11 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Updates the specified GreenSpace with the given parameters.
-     * @param g the GreenSpace to update
-     * @param name the new name
-     * @param type the new type
-     * @param area the new area
+     *
+     * @param g       the GreenSpace to update
+     * @param name    the new name
+     * @param type    the new type
+     * @param area    the new area
      * @param address the new address
      * @return an Optional containing the updated GreenSpace if it exists, otherwise an empty Optional
      * @throws IllegalArgumentException if the GreenSpace does not exist
@@ -61,6 +63,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Adds the specified GreenSpace to the repository.
+     *
      * @param greenSpace the GreenSpace to add
      * @throws IllegalArgumentException if the GreenSpace is null or already exists
      */
@@ -75,6 +78,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Removes the specified GreenSpace from the repository.
+     *
      * @param greenSpace the GreenSpace to remove
      * @throws IllegalArgumentException if the GreenSpace does not exist
      */
@@ -86,6 +90,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Updates the specified old GreenSpace with the new GreenSpace in the repository.
+     *
      * @param old_greenSpace the old GreenSpace to update
      * @param new_greenSpace the new GreenSpace to replace the old one
      * @return the new GreenSpace
@@ -101,6 +106,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Returns a list of all GreenSpaces in the repository.
+     *
      * @return a list of all GreenSpaces
      */
     public List<GreenSpace> getGreenSpaces() {
@@ -109,6 +115,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Returns the GreenSpace with the specified name.
+     *
      * @param name the name of the GreenSpace to return
      * @return the GreenSpace with the specified name
      * @throws IllegalArgumentException if the GreenSpace does not exist
@@ -124,6 +131,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Checks if a GreenSpace with the specified name exists in the repository.
+     *
      * @param name the name of the GreenSpace to check
      * @return true if the GreenSpace exists, false otherwise
      */
@@ -138,6 +146,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Checks if a GreenSpace with the specified address exists in the repository.
+     *
      * @param address the address of the GreenSpace to check
      * @return true if the GreenSpace exists, false otherwise
      */
@@ -152,6 +161,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Validates the specified zip code.
+     *
      * @param zipCode the zip code to validate
      * @return true if the zip code is valid, false otherwise
      */
@@ -165,6 +175,7 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Sets the list of GreenSpaces in the repository.
+     *
      * @param greenSpaces the new list of GreenSpaces
      */
     public void setGreenSpaces(List<GreenSpace> greenSpaces) {
@@ -172,6 +183,12 @@ public class GreenSpaceRepository implements Serializable {
     }
 
 
+    /**
+     * Gets green spaces managed by user.
+     *
+     * @param user the user
+     * @return the green spaces managed by user
+     */
     public List<GreenSpace> getGreenSpacesManagedByUser(EmailWrapper user) {
         List<GreenSpace> greenSpacesManaged = new ArrayList<>();
         for (GreenSpace greenSpace : greenSpaces) {

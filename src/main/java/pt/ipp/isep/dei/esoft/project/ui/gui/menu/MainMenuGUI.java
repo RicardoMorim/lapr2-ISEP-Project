@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.authentication.LoginGUI;
 
+/**
+ * The type Main menu gui.
+ */
 public class MainMenuGUI extends Application {
 
     @Override

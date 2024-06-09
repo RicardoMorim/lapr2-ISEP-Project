@@ -7,6 +7,9 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.List;
 
+/**
+ * The type Complete task status ui.
+ */
 public class CompleteTaskStatusUI implements Runnable{
 
     @Override

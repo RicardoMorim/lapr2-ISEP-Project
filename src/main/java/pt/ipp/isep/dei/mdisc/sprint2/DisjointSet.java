@@ -1,9 +1,17 @@
 package pt.ipp.isep.dei.mdisc.sprint2;
 
+/**
+ * The type Disjoint set.
+ */
 public class DisjointSet {
     private int[] parent;
     private int[] rank;
 
+    /**
+     * Instantiates a new Disjoint set.
+     *
+     * @param size the size
+     */
     public DisjointSet(int size) {
         parent = new int[size];
         rank = new int[size];
@@ -13,6 +21,12 @@ public class DisjointSet {
         }
     }
 
+    /**
+     * Find int.
+     *
+     * @param element the element
+     * @return the int
+     */
     public int find(int element) {
         if (parent[element] != element) {
             parent[element] = find(parent[element]);
@@ -20,6 +34,12 @@ public class DisjointSet {
         return parent[element];
     }
 
+    /**
+     * Union.
+     *
+     * @param element1 the element 1
+     * @param element2 the element 2
+     */
     public void union(int element1, int element2) {
         int root1 = find(element1);
         int root2 = find(element2);

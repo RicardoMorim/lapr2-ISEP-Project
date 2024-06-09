@@ -6,14 +6,27 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
+/**
+ * The type Main collaborator menu.
+ */
 public class MainCollaboratorMenu {
 
     private Pane content;
 
+    /**
+     * Instantiates a new Main collaborator menu.
+     *
+     * @param content the content
+     */
     public MainCollaboratorMenu(Pane content) {
         this.content = content;
     }
 
+    /**
+     * Gets grid pane.
+     *
+     * @return the grid pane
+     */
     public GridPane getGridPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

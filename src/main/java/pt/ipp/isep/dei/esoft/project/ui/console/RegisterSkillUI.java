@@ -6,9 +6,18 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.lang.Runnable;
 
+/**
+ * The type Register skill ui.
+ */
 public class RegisterSkillUI implements Runnable {
+    /**
+     * The Skill controller.
+     */
     SkillController skillController;
 
+    /**
+     * Instantiates a new Register skill ui.
+     */
     public RegisterSkillUI() {
         this.skillController = new SkillController();
     }

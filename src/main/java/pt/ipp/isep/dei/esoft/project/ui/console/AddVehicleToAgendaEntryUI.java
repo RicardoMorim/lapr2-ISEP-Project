@@ -8,6 +8,9 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.List;
 
+/**
+ * The type Add vehicle to agenda entry ui.
+ */
 public class AddVehicleToAgendaEntryUI implements Runnable{
     private AgendaController agendaController = new AgendaController();
     private VehicleController vehicleController = new VehicleController();

@@ -7,10 +7,19 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.lang.Runnable;
 
+/**
+ * The type Register job ui.
+ */
 public class RegisterJobUI implements Runnable {
 
+    /**
+     * The Job controller.
+     */
     JobController jobController;
 
+    /**
+     * Instantiates a new Register job ui.
+     */
     public RegisterJobUI() {
         this.jobController = new JobController();
     }

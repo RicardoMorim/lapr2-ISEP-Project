@@ -10,16 +10,29 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.ui.gui.*;
 
+/**
+ * The type Main grm menu.
+ */
 public class MainGRMMenu {
 
 
     private Pane content;
 
+    /**
+     * Instantiates a new Main grm menu.
+     *
+     * @param content the content
+     */
     public MainGRMMenu(Pane content) {
         this.content = content;
     }
 
 
+    /**
+     * Gets grid pane.
+     *
+     * @return the grid pane
+     */
     public GridPane getGridPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

@@ -6,8 +6,15 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.List;
 
+/**
+ * The type Cancel ui.
+ */
 public class CancelUI implements Runnable {
     private final AgendaController agendaController;
+
+    /**
+     * Instantiates a new Cancel ui.
+     */
     public CancelUI() {
         this.agendaController = new AgendaController();
     }

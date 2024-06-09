@@ -8,6 +8,9 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Postpone entry ui.
+ */
 public class PostponeEntryUI implements Runnable {
 
     private final AgendaController agendaController = new AgendaController();

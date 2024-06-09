@@ -9,14 +9,27 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamProposalGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterCollaboratorGUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.RegisterJobGUI;
 
+/**
+ * The type Main hrm menu gui.
+ */
 public class MainHRMMenuGUI {
 
     private Pane content;
 
+    /**
+     * Instantiates a new Main hrm menu gui.
+     *
+     * @param content the content
+     */
     public MainHRMMenuGUI(Pane content) {
         this.content = content;
     }
 
+    /**
+     * Gets grid pane.
+     *
+     * @return the grid pane
+     */
     public GridPane getGridPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

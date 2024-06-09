@@ -17,11 +17,12 @@ public class GreenSpace implements Serializable {
 
     /**
      * Constructs a new GreenSpace with the specified name, address, area, type, and user.
-     * @param name the name of the GreenSpace
+     *
+     * @param name    the name of the GreenSpace
      * @param address the address of the GreenSpace
-     * @param area the area of the GreenSpace
-     * @param type the type of the GreenSpace
-     * @param user the user associated with the GreenSpace
+     * @param area    the area of the GreenSpace
+     * @param type    the type of the GreenSpace
+     * @param user    the user associated with the GreenSpace
      */
     public GreenSpace(String name, Address address, double area, Type type, Email user) {
         this.name = name;
@@ -34,6 +35,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns the user associated with the GreenSpace.
+     *
      * @return the user
      */
     public EmailWrapper getUser() {
@@ -42,6 +44,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns the name of the GreenSpace.
+     *
      * @return the name
      */
     public String getName() {
@@ -50,6 +53,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Sets the name of the GreenSpace.
+     *
      * @param name the new name
      * @throws IllegalArgumentException if the name is invalid
      */
@@ -60,6 +64,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns the type of the GreenSpace.
+     *
      * @return the type
      */
     public Type getType() {
@@ -68,6 +73,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Sets the type of the GreenSpace.
+     *
      * @param type the new type
      * @throws IllegalArgumentException if the type is invalid
      */
@@ -85,6 +91,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns the address of the GreenSpace.
+     *
      * @return the address
      */
     public Address getAddress() {
@@ -93,6 +100,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Sets the address of the GreenSpace.
+     *
      * @param address the new address
      * @throws IllegalArgumentException if the address is invalid
      */
@@ -110,6 +118,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns the area of the GreenSpace.
+     *
      * @return the area
      */
     public double getArea() {
@@ -119,6 +128,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Sets the area of the GreenSpace.
+     *
      * @param area the new area
      * @throws IllegalArgumentException if the area is invalid
      */
@@ -136,6 +146,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Returns a list of the GreenSpace's values.
+     *
      * @return a list of values
      */
     public List<String> getParkValues() {
@@ -168,6 +179,7 @@ public class GreenSpace implements Serializable {
 
     /**
      * Validates the GreenSpace.
+     *
      * @return true if the GreenSpace is valid
      * @throws IllegalArgumentException if the GreenSpace is invalid
      */

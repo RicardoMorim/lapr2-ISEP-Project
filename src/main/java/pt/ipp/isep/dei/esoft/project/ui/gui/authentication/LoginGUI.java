@@ -19,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 
+/**
+ * The type Login gui.
+ */
 public class LoginGUI {
 
     private AuthenticationController authController = new AuthenticationController();
@@ -26,10 +29,20 @@ public class LoginGUI {
     private String userRole;
     private Runnable onLoginSuccess;
 
+    /**
+     * Sets on login success.
+     *
+     * @param onLoginSuccess the on login success
+     */
     public void setOnLoginSuccess(Runnable onLoginSuccess) {
         this.onLoginSuccess = onLoginSuccess;
     }
 
+    /**
+     * Get user role string.
+     *
+     * @return the string
+     */
     public String getUserRole(){
         return userRole;
     }
@@ -60,6 +73,13 @@ public class LoginGUI {
         });
     }
 
+    /**
+     * Gets login form.
+     *
+     * @param height the height
+     * @param width  the width
+     * @return the login form
+     */
     public GridPane getLoginForm(double height, double width) {
         GridPane formGrid = new GridPane();
         formGrid.setPadding(new Insets(10, 10, 10, 10));

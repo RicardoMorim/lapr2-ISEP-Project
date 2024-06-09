@@ -13,16 +13,32 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The type Evacuation signs.
+ */
 public class EvacuationSigns {
     private int graph[][];
     private String locationNames[];
+    /**
+     * The Scanner.
+     */
     static Scanner scanner = new Scanner(System.in);
     private List<String> assemblyPoints;
 
+    /**
+     * Instantiates a new Evacuation signs.
+     */
     public EvacuationSigns() {
         assemblyPoints = new ArrayList<>();
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException          the io exception
+     * @throws InterruptedException the interrupted exception
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
         final String defaultPath = "src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/input/";
         EvacuationSigns es = new EvacuationSigns();
@@ -105,12 +121,25 @@ public class EvacuationSigns {
     }
 
 
+    /**
+     * Calculate path to ap and generate dot file.
+     *
+     * @param startPoint     the start point
+     * @param matrixFileName the matrix file name
+     * @throws IOException          the io exception
+     * @throws InterruptedException the interrupted exception
+     */
     public void calculatePathToAPAndGenerateDotFile(String startPoint, String matrixFileName) throws IOException, InterruptedException {
         String[] path1 = calculatePathToAP(startPoint);
         String[][] path = getNecessaryInformationForDot(path1);
         generateDotFile(path, "PartialGraph", matrixFileName + "/" + startPoint);
     }
 
+    /**
+     * Read csv containing costs.
+     *
+     * @param fileName the file name
+     */
     public void readCSVContainingCosts(String fileName) {
         List<String[]> values = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -134,6 +163,11 @@ public class EvacuationSigns {
         }
     }
 
+    /**
+     * Read csv containing names.
+     *
+     * @param fileName the file name
+     */
     public void readCSVContainingNames(String fileName) {
         List<String> names = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -156,6 +190,12 @@ public class EvacuationSigns {
     }
 
 
+    /**
+     * Dijkstra dijkstra result.
+     *
+     * @param source the source
+     * @return the dijkstra result
+     */
     public DijkstraResult dijkstra(int source) {
         int n = graph.length;
         int[] shortestDistances = new int[n];
@@ -189,6 +229,13 @@ public class EvacuationSigns {
     }
 
 
+    /**
+     * Print shortest path.
+     *
+     * @param startVertex the start vertex
+     * @param endVertex   the end vertex
+     * @param parents     the parents
+     */
     public void printShortestPath(int startVertex, int endVertex, int[] parents) {
         if (startVertex == endVertex) {
             System.out.print(locationNames[startVertex]);
@@ -198,6 +245,11 @@ public class EvacuationSigns {
         }
     }
 
+    /**
+     * Find shortest path to ap.
+     *
+     * @param matrixFileName the matrix file name
+     */
     public void findShortestPathToAP(String matrixFileName) {
         if (assemblyPoints.isEmpty()) {
             System.out.println("No assembly points found");
@@ -236,6 +288,12 @@ public class EvacuationSigns {
         }
     }
 
+    /**
+     * Write paths to csv.
+     *
+     * @param fileName       the file name
+     * @param matrixFileName the matrix file name
+     */
     public void writePathsToCSV(String fileName, String matrixFileName) {
         String[] paths = fileName.split("input/");
         String p = paths[0];
@@ -284,6 +342,14 @@ public class EvacuationSigns {
         }
     }
 
+    /**
+     * Visualize graph.
+     *
+     * @param graph          the graph
+     * @param title          the title
+     * @param openGUI        the open gui
+     * @param matrixFileName the matrix file name
+     */
     public void visualizeGraph(int[][] graph, String title, boolean openGUI, String matrixFileName) {
         Graph g = new SingleGraph(title);
 
@@ -338,6 +404,12 @@ public class EvacuationSigns {
         }
     }
 
+    /**
+     * Calculate path to ap string [ ].
+     *
+     * @param startPoint the start point
+     * @return the string [ ]
+     */
     public String[] calculatePathToAP(String startPoint) {
         int startIndex = -1;
         for (int i = 0; i < locationNames.length; i++) {
@@ -389,6 +461,13 @@ public class EvacuationSigns {
         return pathNodes;
     }
 
+    /**
+     * Gets cost between places.
+     *
+     * @param place1 the place 1
+     * @param place2 the place 2
+     * @return the cost between places
+     */
     public int getCostBetweenPlaces(String place1, String place2) {
         int index1 = -1;
         int index2 = -1;
@@ -407,6 +486,12 @@ public class EvacuationSigns {
         return graph[index1][index2];
     }
 
+    /**
+     * Get necessary information for dot string [ ] [ ].
+     *
+     * @param calculatePathToAP the calculate path to ap
+     * @return the string [ ] [ ]
+     */
     public String[][] getNecessaryInformationForDot(String[] calculatePathToAP) {
         String[][] necessaryInformation = new String[calculatePathToAP.length - 1][3];
         for (int i = 0; i < calculatePathToAP.length - 1; i++) {
@@ -417,6 +502,15 @@ public class EvacuationSigns {
         return necessaryInformation;
     }
 
+    /**
+     * Generate dot file.
+     *
+     * @param array     the array
+     * @param title     the title
+     * @param subfolder the subfolder
+     * @throws IOException          the io exception
+     * @throws InterruptedException the interrupted exception
+     */
     public void generateDotFile(String[][] array, String title, String subfolder) throws IOException, InterruptedException {
         File directory = new File("src/main/java/pt/ipp/isep/dei/mdisc/sprint3/database/output/" + subfolder);
         if (!directory.exists()) {
@@ -446,6 +540,16 @@ public class EvacuationSigns {
     }
 
 
+    /**
+     * Visualize graph with path.
+     *
+     * @param graph             the graph
+     * @param title             the title
+     * @param openGUI           the open gui
+     * @param matrixFileName    the matrix file name
+     * @param shortestPathEdges the shortest path edges
+     * @param point             the point
+     */
     public void visualizeGraphWithPath(int[][] graph, String title, boolean openGUI, String matrixFileName, List<String[]> shortestPathEdges, String point) {
         Graph g = new SingleGraph(title);
 
