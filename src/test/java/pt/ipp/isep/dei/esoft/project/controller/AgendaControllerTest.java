@@ -21,7 +21,6 @@ class AgendaControllerTest {
     private AgendaController agendaController;
     private Agenda agenda;
     private AgendaEntry entry;
-    private List<Vehicle> vehicle;
 
     private Entry todoEntry;
     private Team team;

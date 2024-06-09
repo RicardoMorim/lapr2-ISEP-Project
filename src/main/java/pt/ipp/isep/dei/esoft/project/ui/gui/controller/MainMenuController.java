@@ -26,16 +26,11 @@ public class MainMenuController {
     private Button btnShowDevTeam;
     @FXML
     private Pane content;
-    public double oldWidth;
 
     @FXML
     public void initialize() {
         // Set the default selected button
         btnLogin.fire();
-
-        oldWidth = menu.getWidth();
-
-        menu.setPrefWidth(0);
 
         // Remove the margin between the buttons
         menu.setSpacing(0);
@@ -100,7 +95,7 @@ public class MainMenuController {
     }
 
     @FXML
-    private void showCollaboratorMenu(){
+    private void showCollaboratorMenu() {
         MainCollaboratorMenu mainCollaboratorMenu = new MainCollaboratorMenu(content);
         menu.getChildren().setAll(mainCollaboratorMenu.getGridPane().getChildren());
         content.getChildren().clear();
@@ -123,7 +118,6 @@ public class MainMenuController {
 
     @FXML
     private void showLogin() {
-        // Delay the execution of the showLogin method
         Platform.runLater(() -> {
             // Create and show the LoginGUI
             LoginGUI loginGUI = new LoginGUI();
@@ -141,23 +135,19 @@ public class MainMenuController {
                             showAdminMenu();
                         } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                             showVFMMenu();
-                        }
-                        else if(role.getDescription().equals(AuthenticationController.ROLE_GRM)){
+                        } else if (role.getDescription().equals(AuthenticationController.ROLE_GRM)) {
                             showGRMMenu();
-                        }
-                        else if (role.getDescription().equals(AuthenticationController.ROLE_EMPLOYEE)){
+                        } else if (role.getDescription().equals(AuthenticationController.ROLE_EMPLOYEE)) {
                             showCollaboratorMenu();
                         }
                     }
                 }
 
-                menu.setPrefWidth(250);
             });
 
-            menu.getChildren().clear();
 
             // Get the login form and set it as the content of the Pane
-            content.getChildren().setAll(loginGUI.getLoginForm(content.getHeight(), content.getWidth() + menu.getWidth()));
+            content.getChildren().setAll(loginGUI.getLoginForm(content.getHeight(), content.getWidth()));
         });
     }
 
