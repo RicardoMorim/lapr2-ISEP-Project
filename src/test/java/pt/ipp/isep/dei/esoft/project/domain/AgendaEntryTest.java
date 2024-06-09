@@ -2,10 +2,10 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,15 +16,29 @@ class AgendaEntryTest {
     private Team team;
     private Vehicle vehicle;
 
+    public static Date getNextWorkingDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == Calendar.SATURDAY) {
+            calendar.add(Calendar.DAY_OF_MONTH, 2);
+        } else if (dayOfWeek == Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return calendar.getTime();
+    }
+
     @BeforeEach
     void setUp() {
         GreenSpace greenSpace = new GreenSpace("Park", new Address("porto", "maia", "1234-123"), 1000, Type.GARDEN, new Email("admin@this.app"));
-        entry = new Entry( greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
+        entry = new Entry(greenSpace, "Title", "Description", Urgency.HIGH, 2.0f);
         Collaborator collaborator = new Collaborator("email@example.com", "John Doe", new Address("456 Street", "Porto", "123-456"), "123456789", new Job("Job Title", "Job Description"), new Date(), new Date(), "ID Type", 123, 456);
         team = new Team(Arrays.asList(collaborator));
         vehicle = new Vehicle("ABC-1234", "Brand", "Model", "Type", 1000, 2000, 0, new Date(), new Date(), 10000, 0);
-
-        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "10", new Date());
+        Date startDate = getNextWorkingDay(new Date());
+        agendaEntry = new AgendaEntry(entry, team, Arrays.asList(vehicle), "10", startDate);
     }
 
     @Test
@@ -110,10 +124,17 @@ class AgendaEntryTest {
         assertFalse(agendaEntry.getVehicles().contains(vehicle));
     }
 
- //TODO fix these tests
+    //TODO fix these tests
     @Test
     void getEndDateFromDurationReturnsCorrectEndDate() {
-        Date expectedEndDate = new Date(agendaEntry.getStartDate().getTime() + 3600000);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(agendaEntry.getStartDate());
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date expectedEndDate = calendar.getTime();
         assertEquals(expectedEndDate, agendaEntry.getEndDateFromDuration());
     }
 
@@ -125,7 +146,7 @@ class AgendaEntryTest {
 
     @Test
     void postPoneEntryChangesStartDateAndStatus() {
-        Date newStartDate = new Date(agendaEntry.getStartDate().getTime() + 7200000); // 2 hours later
+        Date newStartDate = new Date(agendaEntry.getStartDate().getTime() + 7200000);
         agendaEntry.postPoneEntry(newStartDate);
         assertEquals(newStartDate, agendaEntry.getStartDate());
         assertEquals(Status.POSTPONED, agendaEntry.getStatus());
