@@ -52,14 +52,11 @@ class CollaboratorControllerTest {
 
     @Test
     void removeCollaboratorRemovesCollaboratorFromRepository() {
-        Collaborator collaborator = new Collaborator("john.doe@example.com","John Doe",  new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, Arrays.asList(new Skill("Java", "Code")));
         repository.add(collaborator);
         controller.removeCollaborator(collaborator);
         assertThrows(IllegalArgumentException.class, () -> controller.getCollaboratorByEmail("john.doe@example.com"));
     }
-
-
-
 
 
     @Test
@@ -145,5 +142,32 @@ class CollaboratorControllerTest {
         controller.removeSkillFromACollaborator(skill, collaborator);
 
         assertFalse(collaborator.getSkills().contains(skill));
+    }
+
+
+    @Test
+    void testGetCollaboratorRepository() {
+        CollaboratorRepository expected = new CollaboratorRepository();
+        CollaboratorController controller = new CollaboratorController(expected);
+        assertEquals(expected, controller.getCollaboratorRepository());
+    }
+
+    @Test
+    void testGetCollaboratorList() {
+        CollaboratorRepository repository = new CollaboratorRepository();
+        CollaboratorController controller = new CollaboratorController(repository);
+        Collaborator collaborator = new Collaborator("john.doe@example.com", "John Doe", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), new Date(), new Date(), "ID", 123456, 123456, List.of(new Skill("Java", "Code")));
+        repository.add(collaborator);
+        List<Collaborator> expected = List.of(collaborator);
+        assertEquals(expected, controller.getCollaboratorList());
+    }
+
+    @Test
+    void testRegisterCollaboratorWithSkills() {
+        CollaboratorRepository repository = new CollaboratorRepository();
+        CollaboratorController controller = new CollaboratorController(repository);
+        List<Skill> skills = List.of(new Skill("Java", "Code"));
+        Collaborator collaborator = controller.registerCollaborator("John Doe", "john.doe@example.com", new Address("123 Street", "Porto", "123-456"), "1234567890", new Job("Developer", "java developer"), skills, new Date(), new Date(), "ID", 123456, 123456);
+        assertEquals(skills, collaborator.getSkills());
     }
 }
