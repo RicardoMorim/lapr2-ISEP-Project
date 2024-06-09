@@ -102,11 +102,7 @@ public class JobController {
      * @param newJob the new job
      */
     public void updateJob(Job oldJob, Job newJob) {
-        try {
-            this.jobRepository.update(oldJob, newJob);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        this.jobRepository.update(oldJob, newJob);
     }
 
     /**
@@ -115,11 +111,7 @@ public class JobController {
      * @param job the job
      */
     public void removeJob(Job job) {
-        try {
-            jobRepository.remove(job);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        jobRepository.remove(job);
     }
 
     /**
