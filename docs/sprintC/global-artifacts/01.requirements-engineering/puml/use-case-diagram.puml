@@ -14,7 +14,7 @@ left to right direction
     actor "Collaborator (CLB)" as CLB
 
 
-rectangle "Use Cases" as usecases{
+
     usecase "UC1 - Register a skill" as UC1
     usecase "UC2 - Register a job" as UC2
     usecase "UC3 - Register a collaborator and characteristics" as UC3
@@ -77,5 +77,5 @@ rectangle "Use Cases" as usecases{
 
     CLB --> UC28
     CLB --> UC29
-}
+
 @enduml

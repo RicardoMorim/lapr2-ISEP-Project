@@ -36,6 +36,14 @@ class Collaborator{
 
 }
 
+class Notification{
+    Title
+    Message
+    Timestamp
+    readStatus
+    collaboratorName
+}
+
 class Address{
     streetAddress
     city
@@ -87,18 +95,19 @@ class Status{
     inProgress
 }
 
-Team "0,1" -- "*"Collaborator : has >
-Collaborator "1" -- "1"Address : resides in >
-Collaborator "*" -- "1"Job : has >
-Collaborator "*" -- "*"Skill : has >
-Vehicle "1" - "*" VehicleCheckup: has >
-GreenSpace "1"--"1" Address : is located in >
-GreenSpace "*" - "1" Type : has >
-Entry "*"--"1" GreenSpace : has >
-Entry "*"--"1" Urgency : has a degree >
-AgendaEntry "0,1" -- "0,1" Team : has >
-AgendaEntry "0,1" -- "*" Vehicle : has >
-AgendaEntry "*" - "1" Status : has >
-AgendaEntry "0,1" --- "1" Entry : has >
+Collaborator "1" -- "*"Notification: receives >
+Team "0,1" -- "*"Collaborator : has
+Collaborator "1" -- "1"Address : resides in
+Collaborator "*" -- "1"Job : has
+Collaborator "*" -- "*"Skill : has
+Vehicle "1" - "*" VehicleCheckup: has
+GreenSpace "1"--"1" Address : is located in
+GreenSpace "*" - "1" Type : has
+Entry "*"--"1" GreenSpace : has
+Entry "*"--"1" Urgency : has a degree of >
+AgendaEntry "*" -- "0,1" Team : has
+AgendaEntry "*" -- "*" Vehicle : is assigned to <
+AgendaEntry "*" - "1" Status : has
+AgendaEntry "0,1" --- "1" Entry : has
 @enduml
 
