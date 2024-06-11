@@ -1,27 +1,696 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class ApplicationSession
+
+class RegisterSkillUI
 {
-  +static getInstance()
-  +getCurrentSession()
 }
 
-class UserSession
+class SkillsController
 {
-  +isLoggedInWithRole(USER_ROLE)
+    - List<String> skillList
+    - Collaborator collaborator
+
+    + getCollaborators()
+    +addSkills(collaborator,skillList)
 }
 
-class "{NameOfUC}Controller" {
-    + {NameOfUC}Controller()
-    + methodX(...)
+class Repositories {
+    + getInstance()
+    + getCollaboratorRepository()
 }
 
-class "{NameOfUC}UI" {
+class CollaboratorRepository {
+    + getAllCollaborator()
+    + addSkills(collaborator,skillList)
 }
 
-"{NameOfUC}UI" ..> "{NameOfUC}Controller"
-"{NameOfUC}Controller" ..> ApplicationSession
-"{NameOfUC}Controller" ..> UserSession
+class RegisterJobGUI{
+}
+
+class RegisterJobController {
+    +registerJob(jobName)
+}
+
+
+class JobRepository {
+    +addJob(jobName) : boolean
+    +validate(job) : boolean
+    +add(job) : boolean
+}
+
+class Job {
+    -name
+}
+
+class RegisterCollaboratorUI {
+}
+
+class CollaboratorController {
+    + createCLB(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType, identificationNumber, admissionDate : String, identificationNumber : String, job : Job)
+    + assignJob(job : Job) : void
+    + getInstance() : JobRepository
+    + getInstance() : CollaboratorRepository
+
+}
+
+
+class CollaboratorRepository {
+    + create(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
+    + checkForDuplicates() : void
+    + addCollaborator(collaborator) : void
+
+}
+
+class JobRepository {
+    +createJob(title : String) : Job
+    +checkForDuplicates() : void
+    +validateJob() : void
+}
+
+class Collaborator {
+    - name : String
+    - birthdate : String
+    - contactMobile : String
+    - email : String
+    - address : String
+    - city : String
+    - admissionDate : Date
+    - job : Job
+    - taxpayerNumber : int
+    + Collaborator(name : String, birthdate : String, contactMobile : String,\nemail : String, address : String, zipCode : String, city : String,\ndocumentType : String, identificationNumber : String, \nadmissionDate : String, taxpayerNumber : int, job : Job)
+    + verifyCollaborator(collaborator) : void
+    - documentType : String
+    - identificationNumber : String
+}
+
+class Job {
+    - title : String
+    + Job(title : String)
+    +verifyJob(job : Job) : void
+}
+
+
+class Skill {
+    - String name
+    - String shortDescription
+    - String Description
+
+    + Skill(name, shortDescription, Description)
+}
+
+class SkillController {
+    + getSkillList()
+    + registerSkill(skill)
+    + updateSkill(skill, name, shortDescription, Description)
+    + removeSkill(skill)
+}
+
+class Collaborator {
+    - String email
+    - String name
+    - String address
+    - String phone
+    - Job job
+    - List<Skill> skills
+    - Date birthDate
+    - Date admissionDate
+    - String IDtype
+    - int taxpayerNumber
+    - int citizenNumber
+    - boolean isFree
+
+    + Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber, skills)
+    + addSkill(skill)
+    + removeSkill(skill)
+}
+
+class CollaboratorController {
+    + checkForDuplicateCollaborator(collaborator)
+    + registerCollaborator(name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + updateCollaborator(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + removeCollaborator(collaborator)
+    + addSkillToACollaborator(skill, collaborator)
+    + removeSkillFromACollaborator(skill, collaborator)
+}
+
+
+
+class SkillRepository {
+    + add(skill)
+    + remove(skill)
+    + update(skill, name, shortDescription, Description)
+    + getSkills()
+}
+
+class CollaboratorRepository {
+    + add(collaborator)
+    + remove(collaborator)
+    + update(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + getCollaborators()
+}
+
+class Repositories {
+    + getInstance()
+    + getSkillRepository()
+    + getCollaboratorRepository()
+}
+
+'us5
+class Skill {
+    - String name
+    - String informalDescription
+    - String technicalDescription
+    + Skill(name, skillCategory, informalDescription, technicalDescription)
+}
+
+class SkillController {
+    + getSkillList()
+}
+
+class Collaborator {
+    - String name
+    - String birthdate
+    - String admission date
+    - String address
+    - Int contact
+    - String identification document
+    - String identification number
+    - List<Skill> skills
+}
+
+class CollaboratorController {
+    + getCollaboratorList()
+    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
+}
+
+class AddSkillToACollaboratorUI {
+    + generateATeamProposal(minimumSize, maximumSize, requiredSkillList)
+    + getSkillList()
+}
+
+class CollaboratorRepository {
+    + getCollaborators()
+}
+
+class SkillRepository {
+    + getSkillList()
+}
+
+class Repositories {
+    + getInstance()
+    + getCollaboratorRepository()
+    + getSkillRepository()
+}
+
+'us6
+class RegisterVehicleUI {
+
+}
+class VehicleController {
+     + getVehicleByPlate(plate)
+     + getVehicleBrandsList()
+     + getVehicleModelsList(brand)
+     + getVehicleTypesList(model)
+     + saveNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+ }
+
+
+class Vehicle {
+    - String brand
+    - String model
+    - String type
+    - String plate
+    - double tareWeight
+    - double grossWeight
+    - double currentKm
+    - String registerDate
+    - String acquisitionDate
+    - double maintenanceFrequency
+
+    + createNewVehicle(tareWeight, grossWeight, currentKm, \nregisterDate, acquisitionDate, maintenanceFrequency, \nplate, brand, model, type)
+}
+class VehicleRepository {
+    - List<Vehicle> vehicles
+
+    + storeVehicle(vehicle)
+    + getVehicleByPlate(plate)
+    + getVehicleBrandsList()
+        + getVehicleModelsList(brand)
+        + getVehicleTypesList(model)
+}
+
+class VehicleController{
+__
++getVehicleRepository()
++RegisterVehicleMaintenance()
++UpdateVehicle()
+}
+
+class Repositories{
+__
+-Repositories()
++getInstance(): Repositories
++getVehicleRepository()
+}
+
+
+
+class VehicleRepository{
+- List Vehicles
+}
+
+'us8
+class Vehicle {
+    plate;
+    brand;
+    model;
+    type;
+    tareWeight;
+    grossWeight;
+    currentKM;
+    registerDate;
+    acquisitionDate;
+    checkupIntervalKM;
+    kmLastMaintenance;
+    kmNextMaintenance;
+    maintenanceList;
+
+
+     public Vehicle( plate,  brand,  model,  type, tareWeight, grossWeight, CurrentKM, Date registerDate, Date acquisitionDate, checkupIntervalKM, kmLastMaintenance)
+}
+
+class VehicleRepository {
+     registerVehicle(vin, brand, model, vehiclePlate, tareWeight,grossWeight, currentKm, acquisitionDate, maintenanceFrequency)
+     getVehiclesNeedingMaintenance()
+     getMaintenanceList(vehicle)
+}
+
+
+
+class Repositories {
+     Repositories()
+     getInstance() : Repositories
+     getBrandRepository()
+     getVehicleRepository()
+}
+
+class VehicleController {
+     getVehiclesList()
+     generateMaintenanceList(vehiclesList)
+}
+
+
+class RegisterGreenSpaceUI {
+}
+
+class GreenSpaceController {
+    + getGreenSpace(name, address)
+    + getGreenSpaceType()
+    + saveNewGreenSpace(name, address, area, type)
+    +  storeGreenSpace(greenSpace)
+}
+
+
+
+class GreenSpaceRepository {
+    - List<GreenSpace> greenSpaces
+    + getGreenSpace(name, address)
+    + getGreenSpaceType()
+    + storeGreenSpace(greenSpace)
+}
+class GreenSpace {
+    - String name
+    - Type type
+    - Double area
+
+   + saveNewGreenSpace(name, address, area, type)
+}
+class Repositories {
+    + getInstance()
+    + getGreenSpaceRepository()
+}
+class Address {
+    - String street
+    - String city
+    - String zipCode
+
+    + createAddress(street, city, zipCode)
+    }
+
+'us21
+class ToDoListGUI {
+}
+
+class GreenSpaceController {
+    + getGreenSpaces() : GreenSpace[]
+}
+
+class ToDoListController {
+    + createToDoList(title : String, description : String, degreeOfUrgency : String, expectedDuration : String, status : String) : ToDoList
+}
+
+class Repositories {
+    + getInstance() : Repositories
+    + getGreenSpaceRepository() : GreenSpaceRepository
+    + getToDoList() : ToDoList
+}
+
+class GreenSpaceRepository {
+    + getGreenSpaces() : GreenSpace[]
+}
+
+class ToDoList {
+    + addToDoListEntry() : void
+    + validateEntry() : void
+}
+
+
+class Repositories {
+    + getInstance()
+    + getAgenda()
+    + getToDoList()
+}
+
+
+class AgendaController{
+    + getAgenda()
+    + getEntries()
+}
+
+class Agenda{
+    getEntries()
+}
+
+class ToDoList{
+    + getToDoList()
+    + AddEntry(entry)
+}
+
+class AgendaEntry{
+    Entry
+    Team
+    Vehicle
+    startDate
+    endDate
+    duration
+}
+
+'us23
+class Collaborator {
+    - String email
+    - String name
+    - String address
+    - String phone
+    - Job job
+    - List<Skill> skills
+    - Date birthDate
+    - Date admissionDate
+    - String IDtype
+    - int taxpayerNumber
+    - int citizenNumber
+    - boolean isFree
+
+    + Collaborator(email, name, address, phone, job, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber, skills)
+    + addSkill(skill)
+    + removeSkill(skill)
+}
+
+class Agenda {
+    + add(collaborator)
+    + remove(collaborator)
+    + update(collaborator, name, email, address, phone, job, skills, birthDate, admissionDate, IDtype, taxpayerNumber, citizenNumber)
+    + getCollaborators()
+}
+
+class Repositories {
+    + getInstance()
+    + getTeamRepository()
+    + getCollaboratorRepository()
+}
+
+class AgendaEntry{
+    entry
+    startDate
+    endDate
+    status
+    vehicles
+}
+
+
+class AgendaController{
+    + getTeamsFreeAtDate(startDate, endDate, teams)
+    + addTeamToAgendaEntry()
+}
+
+'us24
+class EntryController {
+    -Agenda agenda
+    +EntryController()
+    -void getAgenda()
+    +AgendaEntry displayAndSelectEntry()
+    +boolean postponeEntry(AgendaEntry entry, Date newDate)
+}
+
+class AgendaEntry {
+    -String entryTitle
+    -Date date
+    -Team team
+    +String getEntryTitle()
+    +String getDateToString()
+    +void setDate(Date date)
+    +Date getDate()
+    +Date validateDate()
+    +Date validatePostponeDate()
+    +String toString()
+}
+
+
+class Agenda {
+    -static final List<AgendaEntry> agenda
+    +void addEntry(Entry entry)
+    +static void printEntryAt(int nList)
+    +static List<AgendaEntry> getAgenda()
+    +static AgendaEntry getEntryAt(int nList)
+    +static int getSize()
+}
+
+class PostponeEntryGUI {
+}
+
+class Repositories{
+    +getInstance()
+    + getAgenda(): Agenda
+    + getTeamRepository(): TeamRepository
+}
+
+'us25
+class AgendaController {
+    -Agenda agenda
+    +CancelEntryController()
+    +List<AgendaEntry> getAgendaEntries()
+    +boolean cancelAgendaEntry(AgendaEntry entry)
+}
+
+class AgendaEntry {
+    -Entry entry
+    -Date startDate
+    -Date endDate
+    -String duration
+    -Status status
+    -Team team
+    -List<Vehicle> vehicle
+    +void setNewEntryState()
+    +String getEntry()
+    +Date getStartDate()
+    +Date getEndDate()
+    +String getDuration()
+}
+
+class Agenda {
+    +List<AgendaEntry> getEntryList()
+    +boolean cancelEntry(AgendaEntry entry)
+}
+
+class CancelEntryGUI {
+}
+
+class Repositories {
+    +getInstance()
+    +getAgenda(): Agenda
+}
+
+'us26
+class AgendaController {
+    + getAgendaEntries()
+    + addVehicleToAgendaEntry(vehicle, entry)
+}
+
+class VehicleController {
+    + getVehicles()
+}
+
+class AddVehicleToAgendaEntryUI {
+}
+
+class VehicleRepository {
+    - List<Vehicle> vehicles
+    + getVehicles()
+}
+
+class Agenda {
+    - List<AgendaEntry> entries
+    + getAgendaEntries()
+    + addVehicleToAgendaEntry(vehicle, entry)
+}
+
+class Repositories {
+    + getInstance()
+    + getAgenda()
+    + getVehicleRepository()
+}
+
+
+class GreenSpaceController {
+    + getGreenSpacesByUser(userEmail : String) : GreenSpace[]
+}
+
+class Repositories {
+    + getInstance() : Repositories
+    + getGreenSpaceRepository() : GreenSpaceRepository
+}
+
+class GreenSpaceRepository {
+    + getGreenSpacesByUser(userEmail : String) : GreenSpace[]
+}
+
+class GreenSpace {
+    - String name
+    - int size
+    - String manager
+}
+
+
+class Collaborator {
+    -email: String
+    -name: String
+    -address: Address
+    -phone: String
+    -job: Job
+    -skills: List<Skill>
+    -birthDate: Date
+    -admissionDate: Date
+    -IDtype: String
+    -taxpayerNumber: int
+    -citizenNumber: int
+    -isFree: boolean
+}
+
+class Agenda {
+    -entries: List<AgendaEntry>
+}
+
+class AgendaEntry {
+    -team: Team
+    -vehicles: List<Vehicle>
+    -duration: String
+    -status: Status
+    -entry: Entry
+    -date: Date
+}
+
+
+class Repositories {
+}
+
+'us29
+class CompleteTaskStatusUI {
+    -run(): void
+}
+
+class Repositories {
+    +getInstance(): Repositories
+    +getAgenda(): Agenda
+}
+
+class Agenda {
+    -entries: List<AgendaEntry>
+    +getEntries(): List<AgendaEntry>
+    +addEntry(entry: AgendaEntry): void
+    +removeEntry(entry: AgendaEntry): void
+    +updateEntry(old: AgendaEntry, newEntry: AgendaEntry): void
+}
+
+class AgendaEntry {
+    -team: Team
+    -vehicles: List<Vehicle>
+    -duration: String
+    -status: Status
+    -entry: Entry
+    -date: Date
+    +getTeam(): Team
+    +getEntry(): Entry
+    +setEntry(entry: Entry): void
+    +setTeam(team: Team): void
+    +getVehicles(): List<Vehicle>
+    +setVehicles(vehicles: List<Vehicle>): void
+    +getStatus(): Status
+    +setStatus(status: Status): void
+    +getDuration(): String
+    +setDuration(duration: String): void
+    +addVehicle(vehicle: Vehicle): void
+    +removeVehicle(vehicle: Vehicle): void
+}
+
+class AgendaController {
+    -agenda: Agenda
+    +postponeEntry(entry: AgendaEntry, date: Date): AgendaEntry
+    +addEntry(entry: AgendaEntry): void
+    +removeEntry(entry: AgendaEntry): void
+    +getAgenda(): Agenda
+    +assignTeamToEntry(team: Team, entry: AgendaEntry): void
+    +addVehiclesToAgendaEntry(agendaEntry: AgendaEntry, vehicle: Vehicle): void
+    +removeVehiclesFromAgendaEntry(agendaEntry: AgendaEntry, vehicles: List<Vehicle>): void
+    +cancelAgendaEntry(entry: AgendaEntry): void
+    +getVehiclesNotAssignedToAnyAgendaEntry(vehicles: List<Vehicle>): List<Vehicle>
+    +getVehiclesAssignedToAgendaEntry(entry: AgendaEntry): List<Vehicle>
+    +updateVehicle(vehicle: Vehicle, date: Date, km: int): void
+}
+
+RegisterSkillUI --> SkillsController
+SkillsController --> Repositories
+Repositories --> CollaboratorRepository
+RegisterJobGUI --> RegisterJobController
+RegisterJobController --> Repositories
+Repositories --> JobRepository
+JobRepository --> Job
+RegisterCollaboratorUI --> CollaboratorController
+CollaboratorController --> Repositories
+CollaboratorRepository --> Collaborator
+Collaborator --> Skill
+SkillController --> Repositories
+AddSkillToACollaboratorUI --> SkillController
+SkillRepository --> Skill
+RegisterVehicleUI --> VehicleController
+VehicleController --> Repositories
+Repositories --> VehicleRepository
+VehicleRepository --> Vehicle
+RegisterGreenSpaceUI --> GreenSpaceController
+GreenSpaceController --> Repositories
+Repositories --> GreenSpaceRepository
+GreenSpaceRepository --> GreenSpace
+GreenSpace --> Address
+ToDoListGUI --> ToDoListController
+ToDoListController --> Repositories
+Repositories --> ToDoList
+EntryController --> Repositories
+Repositories --> Agenda
+Agenda --> AgendaEntry
+PostponeEntryGUI --> EntryController
+CancelEntryGUI --> AgendaController
+AddVehicleToAgendaEntryUI --> AgendaController
+CompleteTaskStatusUI --> Repositories
+AgendaController --> Repositories
+
 
 @enduml
