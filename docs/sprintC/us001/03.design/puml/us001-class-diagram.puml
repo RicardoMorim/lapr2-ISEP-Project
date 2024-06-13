@@ -29,14 +29,8 @@ class Repositories {
     + getCollaboratorRepository()
 }
 
-class CollaboratorRepository {
-    + getAllCollaborator()
-    + addSkills(collaborator,skillList)
-}
 
 RegisterSkillUI ..> SkillsController
 SkillsController ..> Repositories: repositories
-SkillsController ..> CollaboratorRepository: collaboratorRepository
-Repositories  --> "1..." CollaboratorRepository
-CollaboratorRepository --> CollaboratorRepository: instance
+
 @enduml
