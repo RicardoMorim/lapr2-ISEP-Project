@@ -1,5 +1,0 @@
-graph G {
-"Fontaine" -- "Miradouro" [label="8"];
-"Miradouro" -- "Topo" [label="3"];
-"Topo" -- "AP" [label="9"];
-}

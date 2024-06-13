@@ -8,19 +8,15 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as HRM
-participant ":RegisterSkillsUI" as RSUI
-participant ":RegisterSkillsController" as RSC
+participant ":GUI" as UI
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "collaboratorRepository\n:CollaboratorRepository" as TCR
-participant ":RegisterCollaboratorUI" as UI
 participant ":CollaboratorController" as CollaboratorController
 participant "collaboratorRepository:\nCollaboratorRepository" as CLBREP
 participant ":Collaborator" as CLB
 participant "jobRepository:\nJobRepository" as jobRepository
 
-
-participant ":RegisterVehicleUI" as UI
 participant ":VehicleController" as VehicleController
 participant "vehicleRepository\n:VehicleRepository" as vehicleRep
 participant "vehicle\n:Vehicle" as vehicle
@@ -30,50 +26,50 @@ participant "GreenSpaceRepository" as GreenSpaceRepository
 
 
 activate HRM
-HRM -> RSUI: asks to register a new skill that a collaborator may have
-activate RSUI
-    RSUI -> RSC: get all skill categories
-    activate RSC
-        RSC -> RepositorySingleton: get Instance()
+HRM -> UI: asks to register a new skill that a collaborator may have
+activate UI
+    UI -> UI: get all skill categories
+    activate UI
+        UI -> RepositorySingleton: get Instance()
         activate RepositorySingleton
-        RSC <-- RepositorySingleton: repositories
+        UI <-- RepositorySingleton: repositories
         deactivate RepositorySingleton
-        RSC -> PLAT: getCollaboratorRepository()
+        UI -> PLAT: getCollaboratorRepository()
         activate PLAT
-        RSC <-- PLAT: CollaboratorRepository
+        UI <-- PLAT: CollaboratorRepository
         deactivate PLAT
-        RSC -> TCR: getAllCollaborators()
+        UI -> TCR: getAllCollaborators()
         activate TCR
-        RSC <-- TCR: collaboratorsList
+        UI <-- TCR: collaboratorsList
         deactivate TCR
-    RSUI <-- RSC: collaboratorList
-    deactivate RSC
-HRM <-- RSUI : shows the list of collaborators to select
-deactivate RSUI
-HRM -> RSUI: selects a collaborator
-activate RSUI
-RSUI --> HRM: requests skill(s) to be registered
+    UI <-- UI: collaboratorList
+    deactivate UI
+HRM <-- UI : shows the list of collaborators to select
+deactivate UI
+HRM -> UI: selects a collaborator
+activate UI
+UI --> HRM: requests skill(s) to be registered
 
 loop while HRM enters y
-deactivate RSUI
-HRM -> RSUI: selects a skill category
-activate RSUI
-HRM <-- RSUI: asks if there are more skill(s) to be registered
-deactivate RSUI
-HRM -> RSUI: enter x to stop or y to continue entering skills
-activate RSUI
+deactivate UI
+HRM -> UI: selects a skill category
+activate UI
+HRM <-- UI: asks if there are more skill(s) to be registered
+deactivate UI
+HRM -> UI: enter x to stop or y to continue entering skills
+activate UI
 end
-    RSUI -> RSC: addSkills(collaborator, skillList)
-    activate RSC
-        RSC -> TCR  : addSkills(collaborator, skillList)
+    UI -> UI: addSkills(collaborator, skillList)
+    activate UI
+        UI -> TCR  : addSkills(collaborator, skillList)
         activate TCR
             TCR -> TCR  : addSkills(collaborator, skillList)
-            RSC <-- TCR : operation success
+            UI <-- TCR : operation success
         deactivate TCR
-        RSUI <-- RSC: operation success
-    deactivate RSC
-HRM <-- RSUI: displays operation success
-deactivate RSUI
+        UI <-- UI: operation success
+    deactivate UI
+HRM <-- UI: displays operation success
+deactivate UI
 
 
 
@@ -296,7 +292,7 @@ deactivate RSUI
         UI -> CollaboratorController: addSkills(collaborator, skills)
         activate CollaboratorController
         loop for each skill in skills
-            CollaboratorController -> Collaborator** : addSkill(skill)
+            CollaboratorController -> CollaboratorActor** : addSkill(skill)
         end
         CollaboratorController -> UI: returns success
     deactivate CollaboratorController
@@ -1272,6 +1268,54 @@ deactivate GSM
 
 
 
+actor "Actor Collaborator" as CollaboratorActor
+participant ":CheckAssignedTasksGUI" as GUI
+
+activate CollaboratorActor
+CollaboratorActor -> GUI: asks to check assigned tasks
+
+activate GUI
+GUI -> AgendaController: getAssignedEntries()
+activate AgendaController
+
+AgendaController -> Repositories: getInstance()
+activate Repositories
+Repositories --> AgendaController: return instance
+deactivate Repositories
+
+AgendaController -> Repositories: getAgenda()
+activate Repositories
+Repositories --> AgendaController: return agenda
+deactivate Repositories
+
+AgendaController -> Agenda: getAssignedEntries()
+activate Agenda
+Agenda <-- AgendaController: return AssignedEntries
+deactivate Agenda
+
+AgendaController --> GUI: return AssignedEntries
+deactivate AgendaController
+
+GUI --> CollaboratorActor: display returned Entries
+deactivate GUI
+
+CollaboratorActor --> GUI: asks to filter by date or status
+activate GUI
+
+GUI -> AgendaController: filterByDateAndStatus()
+activate AgendaController
+
+AgendaController -> Agenda: filterByDateAndStatus()
+activate Agenda
+
+Agenda --> AgendaController: return filteredEntries
+deactivate Agenda
+
+AgendaController --> GUI: return filteredEntries
+deactivate AgendaController
+
+GUI -> CollaboratorActor: displays updated entries
+deactivate GUI
 
 
 
@@ -1279,49 +1323,9 @@ deactivate GSM
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-actor "Collaborator" as actorCollaborator
 participant ":CompleteTaskStatusUI" as CTSUI
 
-activate actorCollaborator
-actorCollaborator -> CTSUI: run()
+CollaboratorActor -> CTSUI: asks to set a task as completed
 activate CTSUI
 CTSUI -> RepositoriesSingleton: getInstance()
 activate RepositoriesSingleton
@@ -1336,7 +1340,7 @@ CTSUI -> AgendaEntry: setStatus(Status.DONE)
 activate AgendaEntry
 CTSUI <-- AgendaEntry: status updated
 deactivate AgendaEntry
-actorCollaborator <-- CTSUI: "Task status has been updated to DONE."
+CollaboratorActor <-- CTSUI: "Task status has been updated to DONE."
 deactivate CTSUI
 
 

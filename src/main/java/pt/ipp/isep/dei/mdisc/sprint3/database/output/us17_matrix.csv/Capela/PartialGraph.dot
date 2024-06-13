@@ -1,4 +1,0 @@
-graph G {
-"Capela" -- "Topo" [label="4"];
-"Topo" -- "AP" [label="9"];
-}

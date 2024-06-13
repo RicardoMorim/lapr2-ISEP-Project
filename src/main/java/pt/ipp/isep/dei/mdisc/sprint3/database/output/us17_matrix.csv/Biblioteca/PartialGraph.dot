@@ -1,3 +1,0 @@
-graph G {
-"Biblioteca" -- "AP" [label="10"];
-}

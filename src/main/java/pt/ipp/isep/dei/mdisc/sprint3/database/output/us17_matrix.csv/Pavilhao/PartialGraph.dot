@@ -1,3 +1,0 @@
-graph G {
-"Pavilhao" -- "AP" [label="5"];
-}

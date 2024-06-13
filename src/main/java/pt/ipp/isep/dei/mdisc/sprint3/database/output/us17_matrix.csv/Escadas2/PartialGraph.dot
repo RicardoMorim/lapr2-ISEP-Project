@@ -1,4 +1,0 @@
-graph G {
-"Escadas2" -- "Escadas1" [label="3"];
-"Escadas1" -- "AP" [label="10"];
-}
