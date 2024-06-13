@@ -8,11 +8,11 @@ autonumber
 
 'hide footbox
 actor "Human Resources Manager" as HRM
-participant ":RegisterSkillsUI" as RSUI
+participant ":RegisterSkillsGUI" as RSUI
 participant ":RegisterSkillsController" as RSC
-participant ":Repositories" as R
-participant "repositories\n:Repositories" as RR
-participant "collaboratorRepository\n:CollaboratorRepository" as TCR
+participant ":Repository" as R
+participant ":CollaboratorRepository" as RR
+participant ":SkillRepository" as TCR
 
 activate HRM
 HRM -> RSUI: asks to register a new skill that a collaborator may have
@@ -27,13 +27,13 @@ activate RSUI
         activate RR
         RSC <-- RR: CollaboratorRepository
         deactivate RR
-        RSC -> TCR: getAllCollaborators()
+        RSC -> TCR: getSkill()
         activate TCR
-        RSC <-- TCR: collaboratorsList
+        RSC <-- TCR: getSkill
         deactivate TCR
-    RSUI <-- RSC: collaboratorList
+    RSUI <-- RSC: registered skill categories
     deactivate RSC
-HRM <-- RSUI : shows the list of collaborators to select
+HRM <-- RSUI : shows the list of skills to register
 deactivate RSUI
 HRM -> RSUI: selects a collaborator
 activate RSUI
@@ -45,14 +45,14 @@ HRM -> RSUI: selects a skill category
 activate RSUI
 HRM <-- RSUI: asks if there are more skill(s) to be registered
 deactivate RSUI
-HRM -> RSUI: enter x to stop or y to continue entering skills
+HRM -> RSUI: enter x to stop or y to continue registered skills
 activate RSUI
 end
-    RSUI -> RSC: addSkills(collaborator, skillList)
+    RSUI -> RSC: registerSkill(collaborator, skillList)
     activate RSC
-        RSC -> TCR  : addSkills(collaborator, skillList)
+        RSC -> TCR  : registerSkill(collaborator, skillList)
         activate TCR
-            TCR -> TCR  : addSkills(collaborator, skillList)
+            TCR -> TCR  : registerSkill(collaborator, skillList)
             RSC <-- TCR : operation success
         deactivate TCR
         RSUI <-- RSC: operation success

@@ -1,50 +1,55 @@
 @startuml
-skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
+actor Collaborator
+participant Collaborator
+participant ":CheckAssignedTasksGUI" as GUI
+participant AgendaController
+participant Repositories
+participant Agenda
 
-autonumber
+activate Collaborator
+Collaborator -> GUI: asks to check assigned tasks
 
-actor "Collaborator"
-participant ":System"
-participant ":TaskRepository"
+activate GUI
+GUI -> AgendaController: getAssignedEntries()
+activate AgendaController
 
-activate "Collaborator"
+AgendaController -> Repositories: getInstance()
+activate Repositories
+Repositories --> AgendaController: return instance
+deactivate Repositories
 
-"Collaborator" -> ":System" : requests to consult assigned tasks
-activate ":System"
+AgendaController -> Repositories: getAgenda()
+activate Repositories
+Repositories --> AgendaController: return agenda
+deactivate Repositories
 
-":System" --> "Collaborator" : asks for the start and end dates
-deactivate ":System"
+AgendaController -> Agenda: getAssignedEntries()
+activate Agenda
+Agenda <-- AgendaController: return AssignedEntries
+deactivate Agenda
 
-"Collaborator" -> ":System" : provides the dates
-activate ":System"
+AgendaController --> GUI: return AssignedEntries
+deactivate AgendaController
 
-":System" -> ":TaskRepository" : retrieves tasks assigned between the provided dates
-activate ":TaskRepository"
+GUI --> Collaborator: display returned Entries
+deactivate GUI
 
-":TaskRepository" --> ":System" : returns tasks
-deactivate ":TaskRepository"
+Collaborator --> GUI: asks to filter by date or status
+activate GUI
 
-":System" --> "Collaborator" : displays tasks sorted by date
-deactivate ":System"
+GUI -> AgendaController: filterByDateAndStatus()
+activate AgendaController
 
-"Collaborator" -> ":System" : requests to filter tasks by status
-activate ":System"
+AgendaController -> Agenda: filterByDateAndStatus()
+activate Agenda
 
-":System" --> "Collaborator" : asks for the status to filter by
-deactivate ":System"
+Agenda --> AgendaController: return filteredEntries
+deactivate Agenda
 
-"Collaborator" -> ":System" : provides the status
-activate ":System"
+AgendaController --> GUI: return filteredEntries
+deactivate AgendaController
 
-":System" -> ":TaskRepository" : retrieves tasks with the provided status
-activate ":TaskRepository"
-
-":TaskRepository" --> ":System" : returns filtered tasks
-deactivate ":TaskRepository"
-
-":System" --> "Collaborator" : displays filtered tasks
-deactivate ":System"
+GUI -> Collaborator: displays updated entries
+deactivate GUI
 
 @enduml
