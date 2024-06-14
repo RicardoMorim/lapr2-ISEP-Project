@@ -32,6 +32,17 @@ activate AppSession
 AppSession --> ListCtrl : UserSession
 deactivate AppSession
 
+    ListCtrl -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> ListCtrl: repositories
+                                        deactivate RepositorySingleton
+    ListCtrl -> PLAT : getGreenSpaceRepository()
+    activate PLAT
+    PLAT --> ListCtrl : GreenSpaceRepository
+    deactivate PLAT
+
+
 ListCtrl -> Repo : getGreenSpacesByUser(UserSession.getUserEmail())
 activate Repo
 Repo -> Repo : sort()
