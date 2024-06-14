@@ -9,15 +9,8 @@ class Agenda {
 }
 
 class AgendaEntry {
-  urgencyStatus
-  estimatedDate
+  startingDate
   progressStatus
-}
-
-class ToDoEntry {
-  title
-  description
-  duration
 }
 
 class GreenSpace {
@@ -27,8 +20,47 @@ class GreenSpace {
   manager
 }
 
+class Team {
+  maxNumberElements
+  minNumberElements
+}
+
+class Entry {
+  title
+  description
+  duration
+  urgency
+  Status
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    contact
+    taxpayer number
+    identification document
+    identification number
+}
+
+
+class Status {
+    TOBEDONE
+    DONE
+    IN_PROGRESS
+    POSTPONED
+    CANCELED
+    PLANNED
+
+}
+
+
+AgendaEntry "*" --"1" Status : has
 Agenda "1" -- "1..*" AgendaEntry : has
-AgendaEntry "1" -- "1" ToDoEntry : is
-ToDoEntry "1..*" -- "1" GreenSpace : assigned to
+Entry "*" -- "1" GreenSpace : is associated to
+AgendaEntry "*" -- "1" Team : assigned to
+AgendaEntry "1" -- "1" Entry : is assigned
+Team "1" -- "1..*" Collaborator : has
 
 @enduml

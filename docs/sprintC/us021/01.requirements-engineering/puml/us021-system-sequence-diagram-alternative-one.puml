@@ -33,7 +33,7 @@ activate GSM
     GSM -> System : confirms the data
     activate System
 
-    System --> GSM : displays success message (Vehicle registered successfully)
+    System --> GSM : displays success message
     deactivate System
 
 @enduml

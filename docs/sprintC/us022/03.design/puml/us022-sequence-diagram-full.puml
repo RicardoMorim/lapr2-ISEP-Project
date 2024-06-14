@@ -1,4 +1,4 @@
-@startuml
+    @startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -51,7 +51,7 @@ activate ADM
             ADM -> UI : enters the start date,\n and end date or duration
             activate UI
 
-       UI -> EntryCTRL: create
+       UI -> EntryCTRL**: create
        UI -> EntryCTRL : addEntry()
        activate EntryCTRL
                        EntryCTRL -> RepositorySingleton : getInstance()

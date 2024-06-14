@@ -20,6 +20,6 @@ class ToDoList {
     Tasks
 }
 
-Entry "1..*" - "1" ToDoList: is in >
+Entry "0..*" - "1" ToDoList: is in >
 
 @enduml

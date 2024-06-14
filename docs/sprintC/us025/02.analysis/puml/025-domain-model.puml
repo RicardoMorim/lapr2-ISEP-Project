@@ -44,8 +44,21 @@ class Collaborator {
     identification number
 }
 
+
+class Status {
+    TOBEDONE
+    DONE
+    IN_PROGRESS
+    POSTPONED
+    CANCELED
+    PLANNED
+
+}
+
+
+AgendaEntry "*" --"1" Status : has
 Agenda "1" -- "1..*" AgendaEntry : has
-AgendaEntry "*" -- "1" GreenSpace : is associated to
+Entry "*" -- "1" GreenSpace : is associated to
 AgendaEntry "*" -- "1" Team : assigned to
 AgendaEntry "1" -- "1" Entry : is assigned
 Team "1" -- "1..*" Collaborator : has
