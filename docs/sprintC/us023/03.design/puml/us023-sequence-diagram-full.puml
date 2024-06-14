@@ -90,7 +90,12 @@ activate ADM
         deactivate Agenda
     AgendaCTRL -> UI: returns success
     deactivate AgendaCTRL
+    UI -> TeamCTRL: NotifyNewTeamAssignment(team, entry)
+    activate TeamCTRL
+    TeamCTRL -> UI: returns success
+    deactivate TeamCTRL
     UI -> ADM: shows success message
+   
 deactivate UI
 
 deactivate ADM
